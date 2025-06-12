@@ -1,0 +1,131 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Tengu Air
+desc = Tengu flies, attacks and distracts enemies
+prefab = Characters/PFTengushingenair
+HUDIcon = Sprites/Icons/Tengushinnnn
+weaponMeleePrefab = Props/PF
+waveToUnlock = 2
+resourcesCost = 55
+cooldownTimer = 1.0
+attackFrequency = 1.0
+usesBladeWeapon = 
+Flying = true
+autoHealthRecovery = -5.0
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 2000
+	health = 1000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 20
+	knockbackPower = 5
+	knockbackResistance = 70
+
+[002]
+	cost = 2500
+	health = 1200
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 25
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[003]
+	cost = 3600
+	health = 1400
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 30
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[004]
+	cost = 4500
+	health = 1600
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 35
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[005]
+	cost = 6750
+	health = 1800
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 40
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[006]
+	cost = 8900
+	health = 2000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 45
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[007]
+	cost = 12060
+	health = 2200
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 50
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[008]
+	cost = 14700
+	health = 2400
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 55
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[009]
+	cost = 17430
+	health = 2600
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 60
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[010]
+	cost = 20000
+	health = 3000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 70
+	knockbackPower = 5
+	knockbackResistance = 10
+
+
+
+
+
+
+
+
+

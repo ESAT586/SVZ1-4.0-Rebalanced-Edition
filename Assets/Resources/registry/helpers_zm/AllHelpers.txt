@@ -1,0 +1,22 @@
+/ List all helpers in the folder
+
+CrawlingTorso
+ZombieMelee
+ZombieSpearman
+ZombieArcher
+GhostRonin
+ZombieHorseman
+Onibaba
+Oni
+Chochinobake
+Komusou
+Necromancer
+Jurogumo
+Shogun
+Wayundo
+Tengu
+
+/ Special ones
+JurogumoBaby
+Nobusuma
+ZombieMelee_Summon

@@ -1,0 +1,56 @@
+
+displayName = @legion_name
+desc = Legion Zombies coming out of Hell Gate attack samurai. lvl 1-CrawlingTorso lvl 2-ZombieMelee lvl 3-Zombiespearman lvl 4-ZombieHorseman lvl 5-Chochinobake lvl 6-Wayundo lvl 7-Tengu lvl 8-Oni
+icon = Sprites/Icons/upgrade_legion_on_the_loose
+waveToUnlock = 5
+maxHelpers = 9
+inBetweenDelay = 1.0
+
+
+[001]
+	cost = 5500
+	delay = 25.0
+	helperID = CrawlingTorso
+	num = 3
+
+[002]
+	cost = 10000
+	delay = 25.0
+	helperID = ZombieMelee
+	num = 3
+
+[003]
+	cost = 15000
+	delay = 25.0
+	helperID = ZombieSpearman
+	num = 3
+
+[004]
+	cost = 20000
+	delay = 25.0
+	helperID = ZombieHorseman
+	num = 3
+
+[005]
+	cost = 22500
+	delay = 25.0
+	helperID = Chochinobake
+	num = 3
+
+[006]
+	cost = 0,30
+	delay = 25.0
+	helperID = Wayundo
+	num = 3
+
+[007]
+	cost = 0,40
+	delay = 25.0
+	helperID = Tengu
+	num = 3
+	
+[008]
+	cost = 0,50
+	delay = 25.0
+	helperID = Oni
+	num = 3

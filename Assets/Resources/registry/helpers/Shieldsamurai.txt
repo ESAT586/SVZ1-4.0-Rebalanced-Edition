@@ -1,0 +1,122 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Shield Samurai
+desc = Front lane Tank Samurai
+prefab = Characters/PFSamuraiShield
+HUDIcon = Sprites/Icons/Shieldsamurai
+weaponMeleePrefab = Props/PFSamuraishield
+waveToUnlock = 10
+resourcesCost = 40
+cooldownTimer = 1.0
+attackFrequency = 2.0
+usesBladeWeapon = false
+
+achievementGC = SAMUZOMBIE_ACHIEVE_FROM_THE_FIELDS
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+    cost = 200,0
+    health = 2000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 15
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[002]
+    cost = 700,0
+    health = 3000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 18
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[003]
+    cost = 1350,0
+    health = 4000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 22
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[004]
+    cost = 4200,0
+    health = 5000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 25
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[005]
+    cost = 9000,0
+    health = 6000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 29
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[006]
+    cost = 0,8
+    health = 7000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 36
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[007]
+    cost = 0,14
+    health = 8000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 43
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[008]
+    cost = 0,18
+    health = 9000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 60
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[009]
+    cost = 0,22
+    health = 10000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 73
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[010]
+    cost = 0,26
+    health = 11000
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 83
+    knockbackPower = 15
+    knockbackResistance = 80
