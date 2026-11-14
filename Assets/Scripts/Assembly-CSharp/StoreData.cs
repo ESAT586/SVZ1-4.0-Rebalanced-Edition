@@ -27,6 +27,8 @@ public class StoreData
 
 		public bool locked;
 
+		public bool isMaxLevel;
+
 		public int unlockAtWave;
 
 		public List<SpoilsDisplay.Entry> contentList;

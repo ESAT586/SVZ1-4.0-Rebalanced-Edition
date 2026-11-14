@@ -428,6 +428,7 @@ public class PachinkoMachineImpl : WeakGlobalSceneBehavior<PachinkoMachineImpl>
 			}
 		};
 		WeakGlobalInstance<SUIScreen>.instance.fader.FadeToBlack();
+		Singleton<Profile>.instance.Save();
 	}
 
 	private void UpdateSlotMachine()

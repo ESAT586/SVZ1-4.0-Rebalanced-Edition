@@ -37,7 +37,14 @@ public class SavedData
 
 	public void Save()
 	{
-		SDFTree.Save(mSavedData, saveFilePath);
+		try
+		{
+			SDFTree.Save(mSavedData, saveFilePath);
+		}
+		catch (System.Exception ex)
+		{
+			Debug.LogWarning("[SavedData] Save failed: " + ex.Message);
+		}
 	}
 
 	public bool Load()
@@ -127,7 +134,12 @@ public class SavedData
 		{
 			return 0;
 		}
-		return int.Parse(value);
+		int result;
+		if (int.TryParse(value, out result))
+		{
+			return result;
+		}
+		return 0;
 	}
 
 	public float GetValueFloat(string attrib)
@@ -137,12 +149,17 @@ public class SavedData
 
 	public float GetValueFloat(string attrib, string subSection)
 	{
-		string value = GetValue(attrib);
+		string value = GetValue(attrib, subSection);
 		if (value.Length == 0)
 		{
 			return 0f;
 		}
-		return float.Parse(value);
+		float result;
+		if (float.TryParse(value, out result))
+		{
+			return result;
+		}
+		return 0f;
 	}
 
 	public bool GetValueBool(string attrib)
@@ -152,12 +169,17 @@ public class SavedData
 
 	public bool GetValueBool(string attrib, string subSection)
 	{
-		string value = GetValue(attrib);
+		string value = GetValue(attrib, subSection);
 		if (value.Length == 0)
 		{
 			return false;
 		}
-		return bool.Parse(value);
+		bool result;
+		if (bool.TryParse(value, out result))
+		{
+			return result;
+		}
+		return false;
 	}
 
 	public void SetDictionaryValue<T>(string subNode, string attrib, T val)
@@ -314,22 +336,44 @@ public class SavedData
 
 	public byte[] GetAsByteArray()
 	{
-		TextReader textReader = new StreamReader(mSaveFilePath);
-		string s = textReader.ReadToEnd();
 		Encoding encoding = new ASCIIEncoding();
-		return encoding.GetBytes(s);
+		string text = string.Empty;
+		string error = string.Empty;
+		if (FileEncryptAndDecrypt.TryDecryptFile(mSaveFilePath, out text, out error))
+		{
+			return encoding.GetBytes(text);
+		}
+		Debug.LogWarning("[SavedData] Export decrypt failed: " + error);
+		return new byte[0];
 	}
 
 	public void SetWithByteArray(byte[] data)
+	{
+		TrySetWithByteArray(data);
+	}
+
+	public bool TrySetWithByteArray(byte[] data)
 	{
 		Encoding aSCII = Encoding.ASCII;
 		char[] array = new char[aSCII.GetCharCount(data, 0, data.Length)];
 		aSCII.GetChars(data, 0, data.Length, array, 0);
 		string text = new string(array);
-		Debug.Log("SavedData::SetWithByteArray: str = " + text);
-		SDFTreeNode sDFTreeNode = new SDFTreeNode();
-		sDFTreeNode = SDFTree.LoadFromSingleString(text);
-		SetSDFTreeNode(sDFTreeNode);
+		try
+		{
+			SDFTreeNode sDFTreeNode = SDFTree.LoadFromSingleString(text);
+			if (sDFTreeNode == null || (sDFTreeNode.attributeCount == 0 && sDFTreeNode.childCount == 0))
+			{
+				Debug.LogWarning("[SavedData] Import failed: parsed save is empty");
+				return false;
+			}
+			SetSDFTreeNode(sDFTreeNode);
+			return true;
+		}
+		catch (System.Exception ex)
+		{
+			Debug.LogWarning("[SavedData] Import failed: " + ex.Message);
+			return false;
+		}
 	}
 
 	private SDFTreeNode GetSubSection(string subSection)

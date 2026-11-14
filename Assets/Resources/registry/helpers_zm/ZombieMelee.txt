@@ -3,10 +3,10 @@
 / General
 /--------------------------------------------------
 
-displayName = @helper_zombie_name
-desc = @helper_zombie_desc
+displayName = zombie sword
+desc = Zombie Sword
 prefab = Characters/PFLZombieSword
-HUDIcon = Sprites/Icons/enemy_zombie_melee
+HUDIcon = Sprites/Icons/enemy_zombie_sword
 weaponMeleePrefab = Props/samuraibasesword
 waveToUnlock = 4
 resourcesCost = 5.0

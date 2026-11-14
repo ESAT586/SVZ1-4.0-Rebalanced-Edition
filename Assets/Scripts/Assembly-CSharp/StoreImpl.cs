@@ -225,6 +225,22 @@ public class StoreImpl : SceneBehaviour
 
 	private void Start()
 	{
+		UnityEngine.Time.timeScale = 1f;
+		UnityEngine.AudioListener.pause = false;
+		if (WeakGlobalInstance<SUIScreen>.instance != null)
+		{
+			WeakGlobalInstance<SUIScreen>.instance.inputs.processInputs = true;
+		}
+		bool previousStoreCrash = UnityEngine.PlayerPrefs.GetString("SVZ_LastEnteredScene", "Safe") == "Store";
+		UnityEngine.PlayerPrefs.SetString("SVZ_LastEnteredScene", "Store");
+		UnityEngine.PlayerPrefs.Save();
+		if (previousStoreCrash)
+		{
+			Singleton<Profile>.instance.SetTutorialDone("StoreDealPacks", "dealpacks");
+			Singleton<Profile>.instance.SetTutorialDone("Store", "intro");
+			Singleton<Profile>.instance.Save();
+			mSelectedTab = 0;
+		}
 		SingletonMonoBehaviour<ResourcesManager>.instance.CheckOnlineUpdates();
 		Singleton<Profile>.instance.ClearBonusWaveData();
 		WeakGlobalInstance<SUIScreen>.instance.fader.speed = 1f;
@@ -270,7 +286,14 @@ public class StoreImpl : SceneBehaviour
 			int index = num;
 			TabData tabData = new TabData(mLayout, num);
 			tabData.storeGroup = (StoreAvailability.Group)num;
-			tabData.ReloadItems();
+			try
+			{
+				tabData.ReloadItems();
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogWarning("[StoreImpl] Error reloading tab " + num + ": " + ex.Message);
+			}
 			if (num == mSelectedTab)
 			{
 				tabData.selected = true;
@@ -287,28 +310,33 @@ public class StoreImpl : SceneBehaviour
 			num++;
 		}
 		UpdateTabsLayout();
-		mListController = new StoreListController(kPurchaseListArea, kCellSize, mTabs[mSelectedTab].items);
-		mPurchaseList = new SUIScrollList(mListController, kPurchaseListArea, kCellSize, SUIScrollList.ScrollDirection.Vertical, 4);
-		mPurchaseList.TransitInFromBelow();
-		mPurchaseList.onItemTouched = OnItemTouched;
+		if (mTabs.Count > 0)
+		{
+			mSelectedTab = Mathf.Clamp(mSelectedTab, 0, mTabs.Count - 1);
+			mListController = new StoreListController(kPurchaseListArea, kCellSize, mTabs[mSelectedTab].items);
+			mPurchaseList = new SUIScrollList(mListController, kPurchaseListArea, kCellSize, SUIScrollList.ScrollDirection.Vertical, 4);
+			mPurchaseList.TransitInFromBelow();
+			mPurchaseList.onItemTouched = OnItemTouched;
+		}
 		Singleton<Profile>.instance.storeVisitCount++;
-		mPlayingSpecialDealPackTutorial = Singleton<Profile>.instance.storeVisitCount == 4 && !Singleton<Profile>.instance.IsTutorialDone("StoreDealPacks", "dealpacks");
+		mPlayingSpecialDealPackTutorial = !previousStoreCrash && Singleton<Profile>.instance.storeVisitCount == 4 && !Singleton<Profile>.instance.IsTutorialDone("StoreDealPacks", "dealpacks");
 		if (mPlayingSpecialDealPackTutorial)
 		{
 			mTutorial = new TutorialManager("StoreDealPacks", string.Empty);
-			WeakGlobalInstance<SUIScreen>.instance.inputs.processInputs = false;
 		}
 		else
 		{
 			mTutorial = new TutorialManager("Store", string.Empty);
 		}
 		finishedStart = true;
+		UnityEngine.PlayerPrefs.SetString("SVZ_LastEnteredScene", "Safe");
+		UnityEngine.PlayerPrefs.Save();
 		Singleton<PlayHavenTowerControl>.instance.InvokeContent("store_launch");
 		if (Application.internetReachability != 0)
 		{
 		}
 		CheckForCompletionistAchievement();
-		if (mPlayingSpecialDealPackTutorial)
+		if (mPlayingSpecialDealPackTutorial && mTabs.Count > 0)
 		{
 			OnTabTouched(mTabs.Count - 1);
 		}
@@ -352,8 +380,14 @@ public class StoreImpl : SceneBehaviour
 			}
 			return;
 		}
-		mLayout.Update();
-		mPurchaseList.Update();
+		if (mLayout != null)
+		{
+			mLayout.Update();
+		}
+		if (mPurchaseList != null)
+		{
+			mPurchaseList.Update();
+		}
 		foreach (TabData mTab in mTabs)
 		{
 			mTab.Update();

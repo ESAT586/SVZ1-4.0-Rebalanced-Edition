@@ -1,0 +1,122 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = WanyudoMetal
+desc = Low health but high damage
+prefab = Characters/PFWayundoMetal
+HUDIcon = Sprites/Icons/enemy_wanyudometal
+weaponMeleePrefab = 
+waveToUnlock = 19
+resourcesCost = 55
+cooldownTimer = 1.0
+attackFrequency = 1.0
+usesBladeWeapon = true
+
+achievementGC = SAMUZOMBIE_ACHIEVE_FROM_THE_FIELDS
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 750
+	health = 3000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 75
+	knockbackPower = 5
+	knockbackResistance = 100
+
+[002]
+	cost = 1400
+	health = 3600
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 88
+	knockbackPower = 5
+	knockbackResistance = 100
+
+[003]
+	cost = 2000
+	health = 4300
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 105
+	knockbackPower = 5
+	knockbackResistance = 100
+
+[004]
+	cost = 3200
+	health = 5100
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 122
+	knockbackPower = 5
+	knockbackResistance = 100
+
+[005]
+	cost = 4500
+	health = 6000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 140
+	knockbackPower = 5
+	knockbackResistance = 100
+
+[006]
+	cost = 5900
+	health = 7000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 160
+	knockbackPower = 5
+	knockbackResistance = 100
+
+[007]
+	cost = 7850,0
+	health = 8100
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 185
+	knockbackPower = 5
+	knockbackResistance = 100
+
+[008]
+	cost = 10000,0
+	health = 9300
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 210
+	knockbackPower = 5
+	knockbackResistance = 100
+
+[009]
+	cost = 14000,0
+	health = 10600
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 240
+	knockbackPower = 5
+	knockbackResistance = 100
+
+[010]
+	cost = 20000,0
+	health = 12000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 100
+	meleeDamage = 280
+	knockbackPower = 5
+	knockbackResistance = 100

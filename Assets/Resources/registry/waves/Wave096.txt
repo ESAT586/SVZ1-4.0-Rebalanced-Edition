@@ -1,0 +1,32 @@
+scene = InGame_hell
+
+[rewards]
+	coins, 3000
+	gems, 120
+
+[Commands]
+	H_Zombie_Warhammer
+	H_Zombie_Warhammer
+	H_Zombie_Warhammer
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	0.5,0.5
+	Evil_Ice
+	Evil_Ice
+	Evil_Ice
+	Tengu_air
+	Tengu_air
+	1.0,1.0
+	(
+	H_Zombie_Warhammer
+	Evil_Ninja
+	Evil_Ice
+	Tengu_air
+	)
+	1.0,1.0
+	Jurogumo
+	Wayundo_Metal
+	Chochinobake_alt
+	Chochinobake_alt

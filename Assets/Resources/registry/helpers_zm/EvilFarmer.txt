@@ -1,0 +1,121 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Evil Farmer
+desc = Evil Farmer
+prefab = Characters/PFFarmerZombie
+HUDIcon = Sprites/Icons/enemy_evil_farmer
+weaponMeleePrefab = Props/PFFarmerssword
+waveToUnlock = 28
+resourcesCost = 8.0
+cooldownTimer = 1.0
+attackFrequency = 1.0
+usesBladeWeapon = true
+
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 250,0
+	health = 85
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 18
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[002]
+	cost = 750,0
+	health = 125
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 26
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[003]
+	cost = 1800,0
+	health = 180
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 38
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[004]
+	cost = 3600,0
+	health = 260
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 55
+	knockbackPower = 10
+	knockbackResistance = 15
+
+[005]
+	cost = 6500,0
+	health = 370
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 80
+	knockbackPower = 10
+	knockbackResistance = 18
+
+[006]
+	cost = 10500,0
+	health = 520
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 115
+	knockbackPower = 10
+	knockbackResistance = 18
+
+[007]
+	cost = 15000,0
+	health = 720
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 160
+	knockbackPower = 12
+	knockbackResistance = 20
+
+[008]
+	cost = 20000,0
+	health = 980
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 215
+	knockbackPower = 12
+	knockbackResistance = 20
+
+[009]
+	cost = 28000,0
+	health = 1290
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 285
+	knockbackPower = 15
+	knockbackResistance = 22
+
+[010]
+	cost = 38000,0
+	health = 1650
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 100
+	meleeDamage = 360
+	knockbackPower = 15
+	knockbackResistance = 22

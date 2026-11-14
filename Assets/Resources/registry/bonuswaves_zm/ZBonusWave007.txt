@@ -1,0 +1,68 @@
+scene = InGame_hell_green
+bonusHint = Kahraman savas disi; Necromancer ve Jurogumo ile samuray baskisini yavaslat.
+
+[rewards]
+	coins, 12000
+	gems, 6
+	leadershipSmallZ, 2
+
+selectedCharm = z+wanyudofire
+initialleadershiplevel = 5
+baselevel = 3
+belllevel = 4
+archerlevel = 5
+
+[abilitylevels]
+	NightOfTheDead = 8
+	DragonAttack = 3
+
+[selectedabilities]
+	000 = NightOfTheDead
+	001 = DragonAttack
+
+[helperlevels]
+	TenguAir = 7
+	ZombieRifleman = 7
+	EvilIceArcher = 7
+	Necromancer = 6
+	Jurogumo = 6
+
+[selectedhelpers]
+	000 = TenguAir
+	001 = ZombieRifleman
+	002 = EvilIceArcher
+	003 = Necromancer
+	004 = Jurogumo
+
+[Commands]
+	ArcherElite
+	RiflemanElite
+	SamuraiShield_Ice
+	Frostie
+	Priest
+	Swordsmith
+	1,1
+	Takeda
+	Nobunaga
+	Cart
+	NinjaGirl
+	SpearHorseman
+	1,1
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite
+	Takeda
+	Nobunaga
+	1,1
+	Cart
+	NinjaGirl
+	SamuraiShield_Ice
+	Frostie
+	Priest
+	Swordsmith
+	1,1
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite

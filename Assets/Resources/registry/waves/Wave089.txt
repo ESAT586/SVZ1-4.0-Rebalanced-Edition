@@ -1,0 +1,30 @@
+scene = InGame_evil
+
+[rewards]
+	coins, 2400
+	gems, 95
+
+[Commands]
+	Evil_Taiko_Drummer
+	Evil_Oni
+	Evil_Oni
+	Evil_Komusou
+	Evil_Komusou
+	0.5,0.5
+	Evil_Ice
+	Evil_Ice
+	Evil_Ice
+	Tengu_air
+	Tengu_air
+	1.0,1.0
+	(
+	Evil_Oni
+	Evil_Ice
+	Evil_Taiko_Drummer
+	Tengu_air
+	)
+	1.0,1.0
+	Evil_Wayundo_Metal
+	Nobusuma_alt
+	Nobusuma_alt
+	Chochinobake_alt

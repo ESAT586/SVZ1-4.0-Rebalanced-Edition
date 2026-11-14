@@ -412,49 +412,41 @@ public class ApplicationUtilities : MonoBehaviour
 
 	private IEnumerator CheckVersion()
 	{
-		WWW www = (IsBuildType("amazon") ? ((!Debug.isDebugBuild) ? new WWW(Singleton<Localizer>.instance.Get("amazon_version_file_location_live")) : new WWW(Singleton<Localizer>.instance.Get("amazon_version_file_location_stage"))) : ((!Debug.isDebugBuild) ? new WWW(Singleton<Localizer>.instance.Get("version_file_location_live")) : new WWW(Singleton<Localizer>.instance.Get("version_file_location_stage"))));
-		yield return www;
-		if (Application.internetReachability == NetworkReachability.NotReachable)
-		{
-			yield break;
-		}
-		Singleton<Profile>.instance.latestDetectedOnlineVersion = www.text;
-		if (!string.IsNullOrEmpty(Singleton<Profile>.instance.latestDetectedOnlineVersion))
-		{
-			string[] version = Singleton<Profile>.instance.latestDetectedOnlineVersion.Split('.');
-			if (version.Length >= 3 && (Singleton<GameVersion>.instance.major < int.Parse(version[0]) || (Singleton<GameVersion>.instance.major == int.Parse(version[0]) && Singleton<GameVersion>.instance.minor < int.Parse(version[1])) || (Singleton<GameVersion>.instance.major == int.Parse(version[0]) && Singleton<GameVersion>.instance.minor == int.Parse(version[1]) && Singleton<GameVersion>.instance.revision < int.Parse(version[2]))) && Application.loadedLevelName != "MainMenu")
-			{
-				Application.LoadLevel("MainMenu");
-			}
-		}
+		yield break;
 	}
 
 	private void CheckForDailyReward()
 	{
-		Profile profile = Singleton<Profile>.instance;
-		DateTime now = DateTime.Now;
-		if (profile.lastYearPlayed == 0 || profile.lastMonthPlayed == 0 || profile.lastDayPlayed == 0)
+		try
 		{
-			profile.lastYearPlayed = now.Year;
-			profile.lastMonthPlayed = now.Month;
-			profile.lastDayPlayed = now.Day;
-		}
-		DateTime value = new DateTime(profile.lastYearPlayed, profile.lastMonthPlayed, profile.lastDayPlayed);
-		TimeSpan timeSpan = now.Subtract(value);
-		if (timeSpan.Days == 1)
-		{
-			if (Application.loadedLevel != 0)
+			Profile profile = Singleton<Profile>.instance;
+			DateTime now = DateTime.Now;
+			if (profile.lastYearPlayed < 2000 || profile.lastMonthPlayed < 1 || profile.lastMonthPlayed > 12 || profile.lastDayPlayed < 1 || profile.lastDayPlayed > 31)
 			{
-				Application.LoadLevel("MainMenu");
+				profile.lastYearPlayed = now.Year;
+				profile.lastMonthPlayed = now.Month;
+				profile.lastDayPlayed = now.Day;
+			}
+			DateTime value = new DateTime(profile.lastYearPlayed, profile.lastMonthPlayed, profile.lastDayPlayed);
+			TimeSpan timeSpan = now.Subtract(value);
+			if (timeSpan.Days == 1)
+			{
+				if (Application.loadedLevel != 0)
+				{
+					Application.LoadLevel("MainMenu");
+				}
+			}
+			else if (timeSpan.Days > 1)
+			{
+				profile.currentDailyRewardNumber = 0;
+				profile.Save();
+				profile.lastYearPlayed = now.Year;
+				profile.lastMonthPlayed = now.Month;
+				profile.lastDayPlayed = now.Day;
 			}
 		}
-		else if (timeSpan.Days > 1)
+		catch
 		{
-			profile.currentDailyRewardNumber = 0;
-			profile.Save();
-			profile.lastYearPlayed = now.Year;
-			profile.lastMonthPlayed = now.Month;
-			profile.lastDayPlayed = now.Day;
 		}
 	}
 

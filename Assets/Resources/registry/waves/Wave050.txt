@@ -75,6 +75,8 @@ scene = InGame_evilnight
 	@bossalert
 	Shogun
 	4,4
+	Necromancer_Boss
+	1,1
 	L_Zombie_Warhammer
 	1,1
 	L_Zombie_Warhammer

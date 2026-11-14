@@ -80,7 +80,9 @@ public class HUDIconButton
 		}
 	}
 
-	public HUDIconButton(SUILayout layoutRef, Vector2 position, string iconFile, string groupName, int index, IsIconAvailableCallback isAvailCallback, GetCooldownCallback getCoolDownCallback)
+	private float mIconScale = 1f;
+
+	public HUDIconButton(SUILayout layoutRef, Vector2 position, string iconFile, string groupName, int index, IsIconAvailableCallback isAvailCallback, GetCooldownCallback getCoolDownCallback, float iconScale = 1f)
 	{
 		mPosition = position;
 		mGroupName = groupName;
@@ -88,6 +90,7 @@ public class HUDIconButton
 		mIndex = index;
 		mIsAvailCallback = isAvailCallback;
 		mGetCoolDownCallback = getCoolDownCallback;
+		mIconScale = iconScale;
 		CreateHUDElements(layoutRef);
 	}
 
@@ -139,12 +142,14 @@ public class HUDIconButton
 		mIcon = new SUISprite(mIconFile);
 		mIcon.position = mPosition;
 		mIcon.priority = 0.1f;
+		if (mIconScale != 1f) mIcon.scale = new Vector2(mIconScale, mIconScale);
 		mCooldown = new SUISprite(GetCooldownTextureForRatio(0f));
 		mCooldown.priority = 0.5f;
 		mCooldown.alpha = 0.4f;
 		mCooldown.visible = false;
 		mCooldown.position = mPosition + kCooldownOffset;
-		mTrigger = new SUITouchArea(GetTriggerRect(mIcon.position));
+		if (mIconScale != 1f) mCooldown.scale = new Vector2(mIconScale, mIconScale);
+		mTrigger = new SUITouchArea(GetTriggerRect(mIcon.position, mIconScale));
 		mTrigger.onAreaTouched = OnTouched;
 		if (layout != null)
 		{
@@ -190,8 +195,14 @@ public class HUDIconButton
 		mCooldown.alpha = 0.4f * mClientAlpha;
 	}
 
-	private static Rect GetTriggerRect(Vector2 pos)
+	private static Rect GetTriggerRect(Vector2 pos, float scale = 1f)
 	{
+		if (scale < 0.99f)
+		{
+			float hw = 47f;
+			float hh = 56f;
+			return new Rect(pos.x - hw, pos.y - hh, hw * 2f, hh * 2f);
+		}
 		return new Rect(pos.x - 64f, pos.y - 64f, 128f, 128f);
 	}
 

@@ -26,6 +26,17 @@ public class HUDAbilities
 
 	private List<CoolDownData> mCooldown = new List<CoolDownData>();
 
+	public void ResetAllCooldowns()
+	{
+		for (int i = 0; i < mCooldown.Count; i++)
+		{
+			if (mCooldown[i] != null)
+			{
+				mCooldown[i].current = mCooldown[i].max;
+			}
+		}
+	}
+
 	private OnSUIStringCallback mOnAbilityTrigger;
 
 	private int? mQueuedAbility;
@@ -54,16 +65,26 @@ public class HUDAbilities
 
 	public void Update()
 	{
-		if (!Application.isMobilePlatform)
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive &&
+		    SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly)
 		{
-			if (mAbilityButtons.Count > 0 && Input.GetKeyDown(KeyCode.R))
+			if (mAbilityButtons.Count > 0)
 			{
-				mAbilityButtons[0].Trigger();
+				DestroyHUD();
 			}
-			else if (mAbilityButtons.Count > 1 && Input.GetKeyDown(KeyCode.E))
-			{
-				mAbilityButtons[1].Trigger();
-			}
+			return;
+		}
+		if (mAbilityButtons.Count > 0 && PCInput.GetButtonDown("Skill1"))
+		{
+			mAbilityButtons[0].Trigger();
+		}
+		else if (mAbilityButtons.Count > 1 && PCInput.GetButtonDown("Ability1"))
+		{
+			mAbilityButtons[1].Trigger();
+		}
+		else if (mAbilityButtons.Count > 2 && PCInput.GetButtonDown("Ability2"))
+		{
+			mAbilityButtons[2].Trigger();
 		}
 		if (mAbilityButtons.Count == 0)
 		{
@@ -112,10 +133,45 @@ public class HUDAbilities
 		mCooldown.Clear();
 	}
 
+	private List<string> GetActiveAbilitiesList()
+	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			if (SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly)
+			{
+				return new List<string>();
+			}
+			SVZMultiplayerManager.Instance.EnsureValidSpellsForPlayer(1);
+			SVZMultiplayerManager.Instance.EnsureValidSpellsForPlayer(2);
+			if (SVZMultiplayerManager.Instance.IsOnlineClient)
+			{
+				List<string> p2 = SVZMultiplayerManager.Instance.P2Spells;
+				if (p2 != null && p2.Count > 0)
+				{
+					return new List<string>(p2);
+				}
+			}
+			else
+			{
+				List<string> p1 = SVZMultiplayerManager.Instance.P1Spells;
+				if (p1 != null && p1.Count > 0)
+				{
+					return new List<string>(p1);
+				}
+			}
+			if (Singleton<PlayModesManager>.instance != null && Singleton<PlayModesManager>.instance.selectedMode == "zombies")
+			{
+				return new List<string> { "DragonAttack", "LethargyZM" };
+			}
+			return new List<string> { "GiantWave", "Lethargy" };
+		}
+		return Singleton<Profile>.instance.GetSelectedAbilities();
+	}
+
 	private void CreateHUD()
 	{
 		DestroyHUD();
-		List<string> selectedAbilities = Singleton<Profile>.instance.GetSelectedAbilities();
+		List<string> selectedAbilities = GetActiveAbilitiesList();
 		for (int i = 0; i < selectedAbilities.Count; i++)
 		{
 			int index = i;
@@ -127,7 +183,9 @@ public class HUDAbilities
 				mCooldown.Add(new CoolDownData());
 				continue;
 			}
-			float m = float.Parse(sDFTreeNode["coolDown"]);
+			string cdStr = sDFTreeNode.hasAttribute("coolDown") ? sDFTreeNode["coolDown"] : (sDFTreeNode.hasAttribute("cooldown") ? sDFTreeNode["cooldown"] : "15");
+			float m = 15f;
+			float.TryParse(cdStr, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out m);
 			mCooldown.Add(new CoolDownData(0f, m));
 			HUDIconButton hUDIconButton = new HUDIconButton(mLayoutRef, GetIconPosition(i), sDFTreeNode["icon"], "Ability", i, isAvailCallback, getCoolDownCallback);
 			hUDIconButton.tag = text;
@@ -141,6 +199,20 @@ public class HUDAbilities
 
 	private bool isAvailCallback(int index)
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			if (SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly)
+			{
+				return mCooldown[index].current == mCooldown[index].max && !WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver;
+			}
+			if (SVZMultiplayerManager.Instance.IsOnlineClient)
+			{
+				OpponentHero oppHero = SVZMultiplayerManager.Instance.CurrentOpponentHero;
+				bool p2Alive = oppHero == null || oppHero.health > 0f;
+				return mCooldown[index].current == mCooldown[index].max && p2Alive && !WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver;
+			}
+			return mCooldown[index].current == mCooldown[index].max && WeakGlobalSceneBehavior<InGameImpl>.instance.hero.health > 0f && !WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver;
+		}
 		if (mCooldown[index].current != mCooldown[index].max || !(WeakGlobalSceneBehavior<InGameImpl>.instance.hero.health > 0f))
 		{
 			goto IL_0070;
@@ -164,11 +236,28 @@ public class HUDAbilities
 
 	private bool isAvailWithoutQueue(int index)
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			if (SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly)
+			{
+				return mCooldown[index].current == mCooldown[index].max && !WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver;
+			}
+			if (SVZMultiplayerManager.Instance.IsOnlineClient)
+			{
+				OpponentHero oppHero = SVZMultiplayerManager.Instance.CurrentOpponentHero;
+				bool p2Alive = oppHero == null || oppHero.health > 0f;
+				return mCooldown[index].current == mCooldown[index].max && p2Alive && !WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver;
+			}
+		}
 		return mCooldown[index].current == mCooldown[index].max && WeakGlobalSceneBehavior<InGameImpl>.instance.hero.health > 0f && !WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver;
 	}
 
 	private bool shouldQueueAbility()
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			return false;
+		}
 		return !WeakGlobalSceneBehavior<InGameImpl>.instance.hero.canUseSpecialAttack;
 	}
 
@@ -193,12 +282,20 @@ public class HUDAbilities
 		}
 		else if (isAvailCallback(index) && mOnAbilityTrigger != null)
 		{
-			mOnAbilityTrigger(Singleton<Profile>.instance.GetSelectedAbilities()[index]);
-			mCooldown[index].current = 0f;
-			mQueuedAbility = null;
-			if (WeakGlobalInstance<TutorialHookup>.instance != null)
+			List<string> activeList = GetActiveAbilitiesList();
+			if (index >= 0 && index < activeList.Count)
 			{
-				WeakGlobalInstance<TutorialHookup>.instance.usedAbility = true;
+				mOnAbilityTrigger(activeList[index]);
+				mCooldown[index].current = 0f;
+				mQueuedAbility = null;
+				if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+				{
+					SVZMultiplayerManager.Instance.P1AbilitiesUsed++;
+				}
+				if (WeakGlobalInstance<TutorialHookup>.instance != null)
+				{
+					WeakGlobalInstance<TutorialHookup>.instance.usedAbility = true;
+				}
 			}
 		}
 	}

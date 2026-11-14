@@ -761,6 +761,11 @@ gemsNum  = 宝石 {0} 個
 ballsNum  = パチンコ玉 {0} 個
 
 
+chapter_title_zombiehell4 = Chaos Rising
+chapter_title_zombiehell5 = Final Chaos
+chapter_title_zombiehell6 = Doom Gate
+chapter_title_zombiehell7 = Final Doom
+
 /------------------------------------------------------------------
 / Sub Files
 /------------------------------------------------------------------

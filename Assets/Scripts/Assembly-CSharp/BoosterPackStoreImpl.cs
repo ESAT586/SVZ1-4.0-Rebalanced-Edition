@@ -136,9 +136,9 @@ public class BoosterPackStoreImpl : SceneBehaviour
 
 	private void OnRequestCurrencyPurchase()
 	{
-		PurchaseCurrencyDialog purchaseCurrencyDialog = new PurchaseCurrencyDialog();
-		purchaseCurrencyDialog.priority = 500f;
-		mDialogHandler = new DialogHandler(499.5f, purchaseCurrencyDialog);
+		StoreNotEnoughDialog notEnoughDialog = new StoreNotEnoughDialog(null);
+		notEnoughDialog.priority = 500f;
+		mDialogHandler = new DialogHandler(499.5f, notEnoughDialog);
 	}
 
 	private void OnPackSelected(int index)
@@ -228,10 +228,19 @@ public class BoosterPackStoreImpl : SceneBehaviour
 		SDFTreeNode packData = Singleton<BoosterPackCodex>.instance.GetPackData(mSelectedPack);
 		if (packData.hasAttribute("warningCheck"))
 		{
-			SDFTreeNode sDFTreeNode = SDFTree.LoadFromResources("Registry/Helpers/" + packData["warningCheck"]);
+			SDFTreeNode sDFTreeNode = SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/Helpers/" + packData["warningCheck"]);
 			string text = string.Format(Singleton<Localizer>.instance.Get("boosterstore_warning_helper"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]));
-			YesNoDialog yesNoDialog = new YesNoDialog(text, true, DoPurchaseSelectedPack, delegate
+			if (mCardScrollList != null)
 			{
+				mCardScrollList.visible = false;
+			}
+			YesNoDialog yesNoDialog = new YesNoDialog(text, true, delegate
+			{
+				if (mCardScrollList != null) mCardScrollList.visible = true;
+				DoPurchaseSelectedPack();
+			}, delegate
+			{
+				if (mCardScrollList != null) mCardScrollList.visible = true;
 			});
 			yesNoDialog.priority = 100f;
 			if (mDialogHandler != null)

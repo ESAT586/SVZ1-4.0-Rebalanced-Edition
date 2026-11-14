@@ -363,15 +363,8 @@ public class TapjoyInterface
 		if (!_isInitialized)
 		{
 			_isInitialized = true;
-			if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android)
-			{
-				simulationMode = false;
-			}
+			simulationMode = true;
 			TapjoyEventHandler.Init();
-			if (!simulationMode)
-			{
-				TJ_initialize(resId, secretKey, showVideoAds);
-			}
 		}
 	}
 
@@ -512,11 +505,19 @@ public class TapjoyInterface
 
 	public static uint GetServerTapjoyPoints()
 	{
+		if (simulationMode)
+		{
+			return simulationPoints;
+		}
 		return TJ_getServerTapjoyPoints();
 	}
 
 	public static bool ConsumeServerTapjoyPoints(uint points)
 	{
+		if (simulationMode)
+		{
+			return ConsumeTapjoyPoints(points);
+		}
 		return TJ_consumeServerTapjoyPoints(points);
 	}
 
@@ -578,7 +579,10 @@ public class TapjoyInterface
 
 	public static void showFeaturedAppFullScreenAd()
 	{
-		TJ_showFeaturedAppFullScreenAd();
+		if (!simulationMode)
+		{
+			TJ_showFeaturedAppFullScreenAd();
+		}
 	}
 
 	public static void resetFeaturedApp()

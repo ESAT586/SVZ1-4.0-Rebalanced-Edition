@@ -45,6 +45,10 @@ public class SelectHelpersController : SUIScrollList.IController
 		string[] allIDs = Singleton<HelpersDatabase>.instance.allIDs;
 		foreach (string text in allIDs)
 		{
+			if (SVZMultiplayerManager.IsHiddenOrSubHelper(text))
+			{
+				continue;
+			}
 			if (Singleton<Profile>.instance.GetHelperLevel(text) > 0)
 			{
 				Data item = new Data

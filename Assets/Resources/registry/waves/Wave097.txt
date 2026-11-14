@@ -1,0 +1,35 @@
+scene = InGame_hell_purple
+
+[rewards]
+	coins, 3200
+	gems, 130
+
+[Commands]
+	Nobusuma_alt
+	Nobusuma_alt
+	Nobusuma_alt
+	Nobusuma_alt
+	Nobusuma_alt
+	Nobusuma_alt
+	0.5,0.5
+	Tengu_air
+	Tengu_air
+	Tengu_air
+	Tengu_air
+	Tengu_air
+	Tengu_air
+	1.0,1.0
+	Komusou_2
+	Komusou_2
+	Wayundo_Metal
+	Wayundo_Metal
+	(
+	Nobusuma_alt
+	Tengu_air
+	Wayundo_Metal
+	Komusou_2
+	)
+	1.0,1.0
+	Chochinobake_alt
+	Chochinobake_alt
+	Evil_Panzer

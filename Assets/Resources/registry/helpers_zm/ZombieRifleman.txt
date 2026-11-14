@@ -1,0 +1,108 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Zombie Rifleman
+desc = Zombie Rifleman Strong Shot
+prefab = Characters/PFSamuraiRiflemanZombie
+HUDIcon = Sprites/Icons/enemy_zombierifleman
+weaponRangedPrefab = Props/PFRifle
+waveToUnlock = 25
+resourcesCost = 15
+cooldownTimer = 3.0
+attackFrequency = 2.0
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 500,0
+	health = 60
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 24
+	projectile = Bullet
+
+[002]
+	cost = 1200,0
+	health = 85
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 35
+	projectile = Bullet
+
+[003]
+	cost = 2500,0
+	health = 120
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 48
+	projectile = Bullet
+
+[004]
+	cost = 5500,0
+	health = 170
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 66
+	projectile = Bullet
+
+[005]
+	cost = 10500,0
+	health = 235
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 90
+	projectile = Bullet
+
+[006]
+	cost = 0,10
+	health = 330
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 120
+	projectile = Bullet
+
+[007]
+	cost = 0,15
+	health = 450
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 152
+	projectile = Bullet
+
+[008]
+	cost = 0,20
+	health = 620
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 186
+	projectile = Bullet
+
+[009]
+	cost = 0,30
+	health = 840
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 222
+	projectile = Bullet
+
+[010]
+	cost = 0,50
+	health = 1100
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 260
+	projectile = Bullet

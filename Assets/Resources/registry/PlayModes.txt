@@ -10,10 +10,14 @@
 	allowBowOnFirstWave1 = no
 
 	/ Misc
-	maxBaseWave = 50
+	maxBaseWave = 100
 	gameDirection = leftToRight
 	revivePotionID = revivePotion
 	wavesPath = Waves/Wave
+	bonusWavesPath = BonusWaves/BonusWave
+	wavesPerBonusWave = 5
+	bonusWaveCount = 9
+	bonusWaveMaxBaseWave = 45
 	giantWaveID = GiantWave
 	equipSlot = Sprites/Menus/slot
 
@@ -55,10 +59,14 @@
 	allowBowOnFirstWave1 = yes
 
 	/ Misc
-	maxBaseWave = 30
+	maxBaseWave = 100
 	gameDirection = rightToLeft
 	revivePotionID = revivePotionZ
 	wavesPath = Waves_ZM/ZWave
+	bonusWavesPath = bonuswaves_zm/ZBonusWave
+	wavesPerBonusWave = 5
+	bonusWaveCount = 10
+	bonusWaveMaxBaseWave = 50
 	giantWaveID = DragonAttack
 	equipSlot = Sprites/Menus/slot_zombie
 

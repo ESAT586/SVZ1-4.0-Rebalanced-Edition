@@ -7,8 +7,12 @@ bell = 5
 [Commands]
 	5,5
 	@bossalert
+	Nobunaga_Hero
+	1,1
 	Samurai_Hero
 	4,4
+	Takeda_Hero
+	1,1
 	Samurai
 	1,1
 	Samurai

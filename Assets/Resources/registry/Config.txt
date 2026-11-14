@@ -25,6 +25,7 @@
 	endGameTime = 9.0
 	runbackspeedmult = 1.25
 	wavesPerBonusWave = 5
+	revivesPerWave = 1
 
 [DefaultCriticals]
 	chance = 0.01

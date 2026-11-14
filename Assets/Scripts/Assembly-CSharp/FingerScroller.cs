@@ -288,8 +288,8 @@ public class FingerScroller
 	private void UpdateAutoScroll()
 	{
 		mSwipeVelocity = Vector2.zero;
-		mScrollPosition.x = (mAutoScrollTarget.x - mScrollPosition.x) * SUIScreen.deltaTime + mScrollPosition.x;
-		mScrollPosition.y = (mAutoScrollTarget.y - mScrollPosition.y) * SUIScreen.deltaTime + mScrollPosition.y;
+		mScrollPosition.x = (mAutoScrollTarget.x - mScrollPosition.x) * SUIScreen.deltaTime * 15f + mScrollPosition.x;
+		mScrollPosition.y = (mAutoScrollTarget.y - mScrollPosition.y) * SUIScreen.deltaTime * 15f + mScrollPosition.y;
 		if (Mathf.Abs(mScrollPosition.x - mAutoScrollTarget.x) < 1f && Mathf.Abs(mScrollPosition.y - mAutoScrollTarget.y) < 1f)
 		{
 			mScrollPosition = mAutoScrollTarget;

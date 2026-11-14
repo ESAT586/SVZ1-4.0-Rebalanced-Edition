@@ -1,0 +1,121 @@
+
+/ NOTE: Small Oni - Fast 10-cost Club Bruiser (Balanced against ZombieAxe & GhostRonin)
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = SmallOni
+desc = @helper_oni_desc
+prefab = Characters/PFOniSmall
+HUDIcon = Sprites/Icons/enemy_smalloni
+weaponMeleePrefab = Props/PFClub
+waveToUnlock = 8
+resourcesCost = 10
+cooldownTimer = 1.5
+attackFrequency = 2.0
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 300,0
+	health = 380
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 34
+	knockbackPower = 40
+	knockbackResistance = 50
+
+[002]
+	cost = 650,0
+	health = 520
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 46
+	knockbackPower = 40
+	knockbackResistance = 50
+
+[003]
+	cost = 1400,0
+	health = 720
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 62
+	knockbackPower = 40
+	knockbackResistance = 50
+
+[004]
+	cost = 2800,0
+	health = 990
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 84
+	knockbackPower = 40
+	knockbackResistance = 50
+
+[005]
+	cost = 5500,0
+	health = 1360
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 114
+	knockbackPower = 40
+	knockbackResistance = 50
+
+[006]
+	cost = 0,10
+	health = 1860
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 154
+	knockbackPower = 40
+	knockbackResistance = 50
+
+[007]
+	cost = 0,15
+	health = 2550
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 208
+	knockbackPower = 40
+	knockbackResistance = 50
+
+[008]
+	cost = 0,20
+	health = 3500
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 280
+	knockbackPower = 40
+	knockbackResistance = 50
+
+[009]
+	cost = 0,30
+	health = 4800
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 378
+	knockbackPower = 40
+	knockbackResistance = 50
+
+[010]
+	cost = 0,50
+	health = 6600
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 90
+	meleeDamage = 510
+	knockbackPower = 40
+	knockbackResistance = 50

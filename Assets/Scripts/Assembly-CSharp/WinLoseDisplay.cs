@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class WinLoseDisplay : IDialog
 {
 	private const float kAnimSpeed = 1f;
@@ -57,6 +59,12 @@ public class WinLoseDisplay : IDialog
 			return;
 		}
 		mLayout.Update();
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			Time.timeScale = 1f;
+			Singleton<MenusFlow>.instance.LoadScene("InGame");
+			return;
+		}
 		if (!mLayout.isAnimating && ((SUITouchArea)mLayout["trigger"]).onAreaTouched == null)
 		{
 			((SUITouchArea)mLayout["trigger"]).onAreaTouched = onTriggered;

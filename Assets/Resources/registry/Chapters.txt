@@ -11,6 +11,9 @@
 	Chaos
 	Hell1
 	Hell2
+	Hell3
+	Hell4
+	Hell5
 
 
 /---------------------------------------------------------------
@@ -51,3 +54,18 @@
 	displayName = @chapter_title_new2
 	icon = Sprites/Icons/wave_hell
 	wavesRange = 61, 70
+
+[Hell3]
+	displayName = @chapter_title_new3
+	icon = Sprites/Icons/wave_winter
+	wavesRange = 71, 80
+
+[Hell4]
+	displayName = @chapter_title_new4
+	icon = Sprites/Icons/wave_chaos
+	wavesRange = 81, 90
+
+[Hell5]
+	displayName = @chapter_title_new5
+	icon = Sprites/Icons/wave_hell
+	wavesRange = 91, 100

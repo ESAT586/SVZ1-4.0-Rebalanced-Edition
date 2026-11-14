@@ -59,6 +59,16 @@ public class WaveBanner
 		{
 			((SUILabel)mLayout["wave"]).text = "Wave " + WaveManager.GetNextWaveNumberDisplay();
 		}
+		SUILabel sUILabel = (SUILabel)mLayout["hint"];
+		if (sUILabel != null)
+		{
+			string text = string.Empty;
+			if (Singleton<Profile>.instance.inBonusWave)
+			{
+				text = Singleton<Profile>.instance.activeSavedData.GetValue("bonusHint");
+			}
+			sUILabel.text = text;
+		}
 		mLayout.frame = 0f;
 		mTimer = 1.5f;
 		mUpdateFunc = UpdateInitialWait;

@@ -42,7 +42,7 @@
 	pressedSound = Sounds/UI_BigSushi_Eat_ST_OS_01
 	playmode = classic
 	gameHud = True
-	cost = 0,15
+	cost = 3500,0
 	storePack = 3
 	storeDesc = @potion_healbig_desc
 	displayName = @potion_healbig_name
@@ -53,7 +53,7 @@
 	pressedSound = Sounds/UI_BigSushi_Eat_ST_OS_01
 	playmode = zombies
 	gameHud = True
-	cost = 0,15
+	cost = 3500,0
 	storePack = 3
 	storeDesc = @potion_z_healbig_desc
 	displayName = @potion_z_healbig_name
@@ -86,7 +86,7 @@
 	pressedSound = Sounds/UI_HeroismBig_Drink_ST_01
 	playmode = classic
 	gameHud = True
-	cost = 0,15
+	cost = 5000,0
 	storePack = 3
 	storeDesc = @potion_leaderbig_desc
 	displayName = @potion_leaderbig_name
@@ -97,7 +97,7 @@
 	pressedSound = Sounds/UI_HeroismBig_Drink_ST_01
 	playmode = zombies
 	gameHud = True
-	cost = 0,15
+	cost = 5000,0
 	storePack = 3
 	storeDesc = @potion_z_leaderbig_desc
 	displayName = @potion_z_leaderbig_name
@@ -108,7 +108,7 @@
 	pressedSound = Sounds/UI_Revive_Drink_ST_OS_01
 	playmode = classic
 	gameHud = False
-	cost = 0,10
+	cost = 5000,0
 	storePack = 3
 	storeDesc = @potion_revive_desc
 	displayName = @potion_revive_name
@@ -118,7 +118,7 @@
 	pressedSound = Sounds/UI_Revive_Drink_ST_OS_01
 	playmode = zombies
 	gameHud = False
-	cost = 0,10
+	cost = 5000,0
 	storePack = 3
 	storeDesc = @potion_z_revive_desc
 	displayName = @potion_z_revive_name

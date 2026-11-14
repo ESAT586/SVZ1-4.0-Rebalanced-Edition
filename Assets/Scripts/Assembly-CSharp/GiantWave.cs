@@ -17,26 +17,46 @@ public class GiantWave : MonoBehaviour
 
 	private string mAbilityID = string.Empty;
 
+	public bool useCustomSettings = false;
+	public bool targetEnemies = true;
+	public bool moveLeftToRight = true;
+	public string customAbilityID = string.Empty;
+
 	private void Start()
 	{
-		mAbilityID = Singleton<PlayModesManager>.instance.selectedModeData["giantWaveID"];
-		mSpeed = float.Parse(Singleton<AbilitiesDatabase>.instance.GetAttribute(mAbilityID, "speed"));
-		mDamageRemaining = Singleton<AbilitiesDatabase>.instance.Extrapolate<float>(mAbilityID, "infiniteUpgradeDamage", "damage");
-		if (Singleton<PlayModesManager>.instance.gameDirection == PlayModesManager.GameDirection.RightToLeft)
+		if (useCustomSettings && !string.IsNullOrEmpty(customAbilityID))
 		{
-			mEndZ = WeakGlobalSceneBehavior<InGameImpl>.instance.hero.controller.constraintLeft;
+			mAbilityID = customAbilityID;
 		}
 		else
 		{
-			mEndZ = WeakGlobalSceneBehavior<InGameImpl>.instance.hero.controller.constraintRight;
+			mAbilityID = Singleton<PlayModesManager>.instance.selectedModeData["giantWaveID"];
+			moveLeftToRight = (Singleton<PlayModesManager>.instance.gameDirection != PlayModesManager.GameDirection.RightToLeft);
+			targetEnemies = true;
 		}
+		string speedStr = Singleton<AbilitiesDatabase>.instance.GetAttribute(mAbilityID, "speed");
+		mSpeed = !string.IsNullOrEmpty(speedStr) ? float.Parse(speedStr) : 450f;
+		mDamageRemaining = Singleton<AbilitiesDatabase>.instance.Extrapolate<float>(mAbilityID, "infiniteUpgradeDamage", "damage");
+		if (mDamageRemaining <= 0f) mDamageRemaining = 1200f;
+
+		InGameImpl inGame = WeakGlobalSceneBehavior<InGameImpl>.instance;
+		if (inGame == null)
+		{
+			Destroy(gameObject);
+			return;
+		}
+		float leftZ = (inGame.heroWalkLeftEdge != null) ? inGame.heroWalkLeftEdge.position.z : ((inGame.hero != null && inGame.hero.controller != null) ? inGame.hero.controller.constraintLeft : -500f);
+		float rightZ = (inGame.heroWalkRightEdge != null) ? inGame.heroWalkRightEdge.position.z : ((inGame.hero != null && inGame.hero.controller != null) ? inGame.hero.controller.constraintRight : 500f);
+		float minZ = Mathf.Min(leftZ, rightZ);
+		float maxZ = Mathf.Max(leftZ, rightZ);
+		mEndZ = moveLeftToRight ? maxZ : minZ;
 	}
 
 	private void Update()
 	{
 		Vector3 position = base.transform.position;
 		float num = mSpeed * Time.deltaTime;
-		if (Singleton<PlayModesManager>.instance.gameDirection == PlayModesManager.GameDirection.RightToLeft)
+		if (!moveLeftToRight)
 		{
 			num = 0f - num;
 		}
@@ -45,21 +65,25 @@ public class GiantWave : MonoBehaviour
 		if (mTimeUntilNextDamage <= 0f)
 		{
 			mTimeUntilNextDamage = 0.2f;
-			List<Character> list = ((Singleton<PlayModesManager>.instance.gameDirection != PlayModesManager.GameDirection.RightToLeft) ? WeakGlobalInstance<CharactersManager>.instance.GetCharactersInRange(position.z, position.z + 200f, true) : WeakGlobalInstance<CharactersManager>.instance.GetCharactersInRange(position.z - 200f, position.z, true));
+			List<Character> list = (moveLeftToRight ? WeakGlobalInstance<CharactersManager>.instance.GetCharactersInRange(position.z, position.z + 200f, targetEnemies) : WeakGlobalInstance<CharactersManager>.instance.GetCharactersInRange(position.z - 200f, position.z, targetEnemies));
 			foreach (Character item in list)
 			{
 				if (item != null && mDamageRemaining > 0f && item.health > 0f)
 				{
+					if (item.isBase)
+					{
+						continue;
+					}
 					float health = item.health;
 					item.RecievedAttack(EAttackType.Trample, mDamageRemaining);
 					mDamageRemaining -= health;
 				}
 			}
 		}
-		bool flag = (Singleton<PlayModesManager>.instance.gameDirection == PlayModesManager.GameDirection.LeftToRight && position.z >= mEndZ) || (Singleton<PlayModesManager>.instance.gameDirection == PlayModesManager.GameDirection.RightToLeft && position.z <= mEndZ);
+		bool flag = (moveLeftToRight && position.z >= mEndZ) || (!moveLeftToRight && position.z <= mEndZ);
 		if (mDamageRemaining <= 0f || flag)
 		{
-			if (Singleton<PlayModesManager>.instance.gameDirection == PlayModesManager.GameDirection.RightToLeft)
+			if (!moveLeftToRight)
 			{
 				position.z = Mathf.Max(position.z, mEndZ);
 			}

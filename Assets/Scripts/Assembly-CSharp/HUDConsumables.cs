@@ -109,17 +109,25 @@ public class HUDConsumables : SUISlideStripList.IController
 
 	private SUISlideStripList mStrip;
 
-	private SUISprite mArrowLeftRef;
+	private SUIButton mArrowLeftRef;
 
-	private SUISprite mArrowRightRef;
+	private SUIButton mArrowRightRef;
 
 	private event OnSUIGenericCallback OnDirtyCellCounters;
 
 	public HUDConsumables(SUILayout layout)
 	{
 		bool flag = WeakGlobalInstance<Smithy>.instance.numTypes > 0;
-		mArrowLeftRef = (SUISprite)layout["consumArrowLeft"];
-		mArrowRightRef = (SUISprite)layout["consumArrowRight"];
+		mArrowLeftRef = (SUIButton)layout["consumArrowLeft"];
+		mArrowLeftRef.onButtonPressed = delegate
+		{
+			mStrip.scroller.ScrollTo(new Vector2((float)(mStrip.selected - 1) * kCellSize.x, 0f));
+		};
+		mArrowRightRef = (SUIButton)layout["consumArrowRight"];
+		mArrowRightRef.onButtonPressed = delegate
+		{
+			mStrip.scroller.ScrollTo(new Vector2((float)(mStrip.selected + 1) * kCellSize.x, 0f));
+		};
 		string[] allIDsForActivePlayMode = Singleton<PotionsDatabase>.instance.allIDsForActivePlayMode;
 		foreach (string text in allIDsForActivePlayMode)
 		{
@@ -130,6 +138,11 @@ public class HUDConsumables : SUISlideStripList.IController
 		}
 		mStrip = new SUISlideStripList(this, kCenterPosition, kCellSize);
 		mStrip.onIconTouched = OnIconTouched;
+        
+        // Hit area padding for arrows without overlapping the center consumable item
+        mArrowLeftRef.hitAreaExpansion = 6f;
+        mArrowRightRef.hitAreaExpansion = 6f;
+
 		UpdateArrows();
 	}
 
@@ -144,9 +157,30 @@ public class HUDConsumables : SUISlideStripList.IController
 
 	public void Update()
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			Destroy();
+			if (mArrowLeftRef != null) mArrowLeftRef.visible = false;
+			if (mArrowRightRef != null) mArrowRightRef.visible = false;
+			return;
+		}
 		if (mStrip != null)
 		{
 			mStrip.Update();
+			if (PCInput.GetButtonDown("CycleItems") && mAvailablePotions.Count > 1)
+			{
+				int nextIndex = (mStrip.selected + 1) % mAvailablePotions.Count;
+				mStrip.scroller.ScrollTo(new Vector2((float)nextIndex * kCellSize.x, 0f));
+			}
+
+			// Mouse wheel cycle support
+			float scroll = PCInput.mouseScrollDelta;
+			if (scroll != 0f && mAvailablePotions.Count > 1)
+			{
+				int direction = (scroll > 0f) ? -1 : 1;
+				int nextIndex = Mathf.Clamp(mStrip.selected + direction, 0, mAvailablePotions.Count - 1);
+				mStrip.scroller.ScrollTo(new Vector2((float)nextIndex * kCellSize.x, 0f));
+			}
 		}
 		UpdateArrows();
 	}
@@ -179,13 +213,25 @@ public class HUDConsumables : SUISlideStripList.IController
 
 	private void UpdateArrows()
 	{
-		mArrowLeftRef.visible = mStrip.selected != 0;
-		mArrowRightRef.visible = mStrip.selected != mAvailablePotions.Count - 1;
+		if (mStrip == null || mAvailablePotions == null || mAvailablePotions.Count <= 1)
+		{
+			if (mArrowLeftRef != null) mArrowLeftRef.visible = false;
+			if (mArrowRightRef != null) mArrowRightRef.visible = false;
+			return;
+		}
+		if (mArrowLeftRef != null)
+		{
+			mArrowLeftRef.visible = mStrip.selected > 0;
+		}
+		if (mArrowRightRef != null)
+		{
+			mArrowRightRef.visible = mStrip.selected < mAvailablePotions.Count - 1;
+		}
 	}
 
 	private void OnIconTouched(int index)
 	{
-		if (WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver || WeakGlobalSceneBehavior<InGameImpl>.instance.hero.health == 0f)
+		if (WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver)
 		{
 			return;
 		}

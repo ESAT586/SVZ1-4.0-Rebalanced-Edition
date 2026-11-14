@@ -79,3 +79,21 @@ weaponRangedPrefab = Props/PFsamuraibow
 	bowDamage = 35
 	attackFrequency = 2.0
 	projectile = Arrow
+
+[009]
+	numberOfArchers = 3
+	riflemen = true
+	cost = 30000,0
+	bowRange = 1050
+	bowDamage = 42
+	attackFrequency = 1.8
+	projectile = Arrow
+
+[010]
+	numberOfArchers = 3
+	riflemen = true
+	cost = 45000,0
+	bowRange = 1100
+	bowDamage = 50
+	attackFrequency = 1.6
+	projectile = Arrow

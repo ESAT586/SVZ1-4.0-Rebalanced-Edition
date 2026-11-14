@@ -199,39 +199,50 @@ public class PurchaseCurrencyDialog : IDialog
 		}
 		mTabs[mSelectedTab].selected = true;
 		((SUIButton)mLayout["back"]).onButtonPressed = Close;
-		((SUIButton)mLayout["free"]).onButtonPressed = OnFreeGemsButtonPressed;
-		instance = this;
-		if (Application.loadedLevelName == "Store" || Application.loadedLevelName == "Pachinko")
+		SUIButton freeBtn = mLayout["free"] as SUIButton;
+		if (freeBtn != null)
 		{
-			Singleton<PlayHavenTowerControl>.instance.InvokeContent("bank_launch");
+			freeBtn.visible = false;
+			freeBtn.onButtonPressed = null;
 		}
+		instance = this;
 		InitOnlineStore();
 	}
 
 	public void Destroy()
 	{
-		mLayout.Destroy();
-		mLayout = null;
+		if (instance == this)
+		{
+			instance = null;
+		}
+		if (mPurchaseList != null)
+		{
+			mPurchaseList.Destroy();
+			mPurchaseList = null;
+		}
+		if (mLayout != null)
+		{
+			mLayout.Destroy();
+			mLayout = null;
+		}
 	}
 
 	public void Update()
 	{
-		mLayout.Update();
-		if (mTapJoyActivated && m_onResume)
+		if (mLayout == null)
 		{
-			Singleton<PlayHavenTowerControl>.instance.InvokeContent("tj_closed");
-			mTapJoyActivated = false;
-			Camera.main.GetComponent<AudioSource>().volume = mMusicVolume;
+			return;
 		}
+		mLayout.Update();
 		if (Input.GetKeyUp(KeyCode.Escape))
 		{
 			Close();
+			return;
 		}
-		if (ApplicationUtilities.instance.bShouldTimeoutIAPs || ((SUISprite)mLayout["waitIcon"]).visible)
+		if (mPurchaseList != null)
 		{
-			IAPTimeOutTick();
+			mPurchaseList.Update();
 		}
-		mPurchaseList.Update();
 		m_onResume = false;
 	}
 
@@ -255,12 +266,23 @@ public class PurchaseCurrencyDialog : IDialog
 
 	private void Close()
 	{
+		if (mDone)
+		{
+			return;
+		}
 		for (int i = 0; i < kEntriesPerTabs; i++)
 		{
-			((SUIButton)mLayout["btn" + i]).onButtonPressed = null;
+			SUIButton btn = mLayout["btn" + i] as SUIButton;
+			if (btn != null)
+			{
+				btn.onButtonPressed = null;
+			}
 		}
 		mDone = true;
-		mLayout.AnimateOut(0.3f);
+		if (mLayout != null)
+		{
+			mLayout.AnimateOut(0.3f);
+		}
 		if (WeakGlobalInstance<DialogHandler>.instance != null)
 		{
 			WeakGlobalInstance<DialogHandler>.instance.FadeOut();
@@ -316,12 +338,17 @@ public class PurchaseCurrencyDialog : IDialog
 
 	private void SetAllButtonsVisible(bool v)
 	{
-		if (!v)
+		if (!v && mListController != null)
 		{
 			mListController.HideAllCells();
 		}
-		((SUIButton)mLayout["free"]).visible = v;
-		((SUISprite)mLayout["waitIcon"]).visible = !v;
+		SUIButton freeBtn = mLayout["free"] as SUIButton;
+		if (freeBtn != null)
+		{
+			freeBtn.visible = false;
+			freeBtn.onButtonPressed = null;
+		}
+		((SUISprite)mLayout["waitIcon"]).visible = false;
 		((SUILabel)mLayout["errorMessage"]).visible = !v;
 	}
 
@@ -331,6 +358,23 @@ public class PurchaseCurrencyDialog : IDialog
 
 	private void InitOnlineStore()
 	{
+		SUIButton freeBtn = mLayout["free"] as SUIButton;
+		if (freeBtn != null)
+		{
+			freeBtn.visible = false;
+			freeBtn.onButtonPressed = null;
+		}
+		SUISprite waitIcon = mLayout["waitIcon"] as SUISprite;
+		if (waitIcon != null)
+		{
+			waitIcon.visible = false;
+		}
+		SUILabel errLabel = mLayout["errorMessage"] as SUILabel;
+		if (errLabel != null)
+		{
+			errLabel.text = "Not enough currency.";
+			errLabel.visible = true;
+		}
 	}
 
 	private void OnIAPItemsInfoReceived(IAPItemDescriptor[] items)
@@ -341,40 +385,15 @@ public class PurchaseCurrencyDialog : IDialog
 
 	public void OnIAPError(int code, string msg)
 	{
-		ApplicationUtilities.instance.bShouldTimeoutIAPs = false;
-		if (ApplicationUtilities.IsBuildType("amazon"))
+		if (ApplicationUtilities.instance != null)
 		{
-			RedrawButtons();
-			return;
+			ApplicationUtilities.instance.bShouldTimeoutIAPs = false;
 		}
 		RedrawButtons();
-		string text = null;
-		switch (msg)
-		{
-		case "RESULT_OK":
-			return;
-		case "SUCCESSFUL":
-			SetAllButtonsVisible(true);
-			return;
-		case "REFUNDED":
-			text = "Purchase has been refunded.";
-			break;
-		case "CANCELED":
-		case "RESULT_USER_CANCELED":
-			text = "Purchase Canceled.";
-			break;
-		case "IAP_TIMEOUT":
-			ApplicationUtilities.instance.IAPSyncTransactions();
-			text = "Purchase Timed-out.";
-			break;
-		default:
-			text = "Purchase Failed.";
-			break;
-		}
 		SetAllButtonsVisible(false);
 		((SUISprite)mLayout["waitIcon"]).visible = false;
 		((SUILabel)mLayout["errorMessage"]).visible = true;
-		((SUILabel)mLayout["errorMessage"]).text = text;
+		((SUILabel)mLayout["errorMessage"]).text = "Purchases are unavailable offline.";
 	}
 
 	private void OnIAPPurchaseCompleted(string eventInfo)
@@ -384,35 +403,20 @@ public class PurchaseCurrencyDialog : IDialog
 
 	private void OnFreeGemsButtonPressed()
 	{
-		if (Application.internetReachability != 0)
-		{
-			mMusicVolume = Camera.main.GetComponent<AudioSource>().volume;
-			Camera.main.GetComponent<AudioSource>().volume = 0f;
-			mTapJoyActivated = true;
-		}
 	}
 
 	public void StartPurchase(string id, OnlineItemsManager.ItemType type)
 	{
 		mSomethingPurchased = true;
-		Singleton<PlayHavenTowerControl>.instance.inIAPMode = true;
 		if (MultiLanguages.isCheatIAP)
 		{
 			Singleton<OnlineItemsManager>.instance.CompletePurchase(id);
 			return;
 		}
-		startTime = Time.realtimeSinceStartup;
-		if (ApplicationUtilities.IsBuildType("google"))
-		{
-			TimeOutInSecs = 60f;
-			ApplicationUtilities.instance.bShouldTimeoutIAPs = true;
-		}
-		else if (ApplicationUtilities.IsBuildType("amazon"))
-		{
-			TimeOutInSecs = 3f;
-			ApplicationUtilities.instance.bShouldTimeoutIAPs = true;
-		}
 		SetAllButtonsVisible(false);
+		((SUISprite)mLayout["waitIcon"]).visible = false;
+		((SUILabel)mLayout["errorMessage"]).visible = true;
+		((SUILabel)mLayout["errorMessage"]).text = "Purchases are unavailable offline.";
 	}
 
 	private void IAPTimeOutTick()

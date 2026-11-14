@@ -20,99 +20,100 @@ unique = true
 
 [001]
 	cost = 10000,0
-	health = 37
+	health = 175
 	speedMin = 75
 	speedMax = 75
-	bowRange = 425
+	bowRange = 500
 	knockbackPower = 5
 	knockbackResistance = 100
-	damageBuffPercent = .25
+	damageBuffPercent = .40
 
 [002]
 	cost = 0,12
-	health = 50
+	health = 240
 	speedMin = 75
 	speedMax = 75
-	bowRange = 425
+	bowRange = 500
 	knockbackPower = 5
 	knockbackResistance = 100
-	damageBuffPercent = .35
+	damageBuffPercent = .50
 
 [003]
 	cost = 0,12
-	health = 70
+	health = 330
 	speedMin = 75
 	speedMax = 75
-	bowRange = 425
+	bowRange = 500
 	knockbackPower = 5
 	knockbackResistance = 100
-	damageBuffPercent = .45
+	damageBuffPercent = .60
 
 [004]
 	cost = 0,12
-	health = 100
+	health = 450
 	speedMin = 75
 	speedMax = 75
-	bowRange = 425
+	bowRange = 500
 	knockbackPower = 5
 	knockbackResistance = 100
-	damageBuffPercent = .55
+	damageBuffPercent = .70
 
 [005]
 	cost = 0,24
-	health = 140
+	health = 610
 	speedMin = 75
 	speedMax = 75
-	bowRange = 425
+	bowRange = 500
 	knockbackPower = 5
 	knockbackResistance = 100
-	damageBuffPercent = .65
+	damageBuffPercent = .80
 
 [006]
 	cost = 0,24
-	health = 188
+	health = 820
 	speedMin = 75
 	speedMax = 75
-	bowRange = 425
+	bowRange = 500
 	knockbackPower = 5
 	knockbackResistance = 100
-	damageBuffPercent = .75
+	damageBuffPercent = .90
 
 [007]
 	cost = 0,24
-	health = 265
+	health = 1090
 	speedMin = 75
 	speedMax = 75
-	bowRange = 425
+	bowRange = 500
 	knockbackPower = 5
 	knockbackResistance = 100
-	damageBuffPercent = .85
+	damageBuffPercent = 1.00
 
 [008]
 	cost = 0,24
-	health = 370
+	health = 1420
 	speedMin = 75
 	speedMax = 75
-	bowRange = 425
-	knockbackPower = 5
-	knockbackResistance = 100
-	damageBuffPercent = .95
-[009]
-	cost = 0,24
-	health = 550
-	speedMin = 75
-	speedMax = 75
-	bowRange = 425
-	knockbackPower = 5
-	knockbackResistance = 100
-	damageBuffPercent = 1
-
-[010]
-	cost = 0,24
-	health = 845
-	speedMin = 75
-	speedMax = 75
-	bowRange = 425
+	bowRange = 500
 	knockbackPower = 5
 	knockbackResistance = 100
 	damageBuffPercent = 1.05
+
+[009]
+	cost = 0,24
+	health = 1800
+	speedMin = 75
+	speedMax = 75
+	bowRange = 500
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = 1.10
+
+[010]
+	cost = 0,24
+	health = 2200
+	speedMin = 75
+	speedMax = 75
+	bowRange = 500
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = 1.15

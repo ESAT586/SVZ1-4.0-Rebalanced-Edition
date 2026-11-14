@@ -34,11 +34,15 @@
 	z+haste
 	z+peace
 	z+oni
+	z+wanyudofire
+	z+wanyudometal
+	z+jurogumo
 	z+horde
 
 /---------------------- NORMAL CHARMS -----------------------
 
 [power]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_power_name
@@ -48,6 +52,7 @@
 	criticalMultiplier = 1.5
 
 [z+power]
+	store = yes
 	cost = 0,200
 	playmode = zombies
 	displayName = @charm_z_power_name
@@ -57,6 +62,7 @@
 	criticalMultiplier = 1.5
 
 [luck]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_luck_name
@@ -64,6 +70,7 @@
 	icon = Sprites/Icons/charm_purple
 
 [z+luck]
+	store = yes
 	cost = 0,200
 	playmode = zombies
 	displayName = @charm_z_luck_name
@@ -71,6 +78,7 @@
 	icon = Sprites/Icons/charm_zombie_purple
 
 [wealth]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_wealth_name
@@ -81,6 +89,7 @@
 	magnetMaxPullSpeed = 500
 
 [z+wealth]
+	store = yes
 	cost = 0,200
 	playmode = zombies
 	displayName = @charm_z_wealth_name
@@ -91,6 +100,7 @@
 	magnetMaxPullSpeed = 500
 
 [haste]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_haste_name
@@ -99,6 +109,7 @@
 	speedMultiplier = 1.5
 
 [z+haste]
+	store = yes
 	cost = 0,200
 	playmode = zombies
 	displayName = @charm_z_haste_name
@@ -107,6 +118,7 @@
 	speedMultiplier = 1.5
 
 [peace]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_peace_name
@@ -115,6 +127,7 @@
 	damageMultiplier = 0.5
 
 [z+peace]
+	store = yes
 	cost = 0,200
 	playmode = zombies
 	displayName = @charm_z_peace_name
@@ -127,6 +140,7 @@
 
 
 [friendship]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendship_name
@@ -135,6 +149,7 @@
 	helper = CharmSamurai
 
 [friendship+power]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendship_power_name
@@ -146,6 +161,7 @@
 
 
 [friend_panzer]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendpanzer_name
@@ -154,6 +170,7 @@
 	helper = CharmPanzer
 
 [friend_panzer+luck]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendpanzer_luck_name
@@ -163,6 +180,7 @@
 
 
 [friend_spearman]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendspearman_name
@@ -171,6 +189,7 @@
 	helper = CharmSpearman
 
 [friend_spearman+haste]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendspearman_haste_name
@@ -181,6 +200,7 @@
 
 
 [friend_nobunaga]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendnobunaga_name
@@ -189,6 +209,7 @@
 	helper = CharmNobunaga
 
 [friend_nobunaga+luck]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendnobunaga_luck_name
@@ -198,6 +219,7 @@
 
 	
 [friend_takeda]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendtakeda_name
@@ -206,6 +228,7 @@
 	helper = CharmTakeda
 
 [friend_takeda+wealth]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendtakeda_wealth_name
@@ -218,6 +241,7 @@
 
 
 [friend_assassin]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendassassin_name
@@ -226,6 +250,7 @@
 	helper = CharmAssassin
 
 [friend_assassin+peace]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendassassin_peace_name
@@ -236,6 +261,7 @@
 
 
 [friend_farmer]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendfarmer_name
@@ -244,6 +270,7 @@
 	helper = CharmFarmer
 
 [friend_farmer+wealth]
+	store = yes
 	cost = 0,200
 	playmode = classic
 	displayName = @charm_friendfarmer_wealth_name
@@ -255,20 +282,50 @@
 	magnetMaxPullSpeed = 500
 
 [z+oni]
+	store = yes
 	cost = 0,200
 	playmode = zombies
 	displayName = @charm_friendoni_name
 	storeDesc = @charm_friendoni_desc
 	icon = Sprites/Icons/charm_oni
-	helper = Oni
+	helper = CharmOni
+
+[z+wanyudofire]
+	store = yes
+	cost = 0,200
+	playmode = zombies
+	displayName = @charm_wanyudofire_name
+	storeDesc = @charm_wanyudofire_desc
+	icon = Sprites/Icons/enemy_wanyudofire
+	helper = CharmWanyudoFire
+
+[z+wanyudometal]
+	store = yes
+	cost = 0,200
+	playmode = zombies
+	displayName = @charm_wanyudometal_name
+	storeDesc = @charm_wanyudometal_desc
+	icon = Sprites/Icons/enemy_wanyudometal
+	helper = CharmWanyudoMetal
+
+[z+jurogumo]
+	store = yes
+	cost = 0,200
+	playmode = zombies
+	displayName = @charm_jurogumo_name
+	storeDesc = @charm_jurogumo_desc
+	icon = Sprites/Icons/enemy_jurogumo
+	helper = CharmJurogumo
 
 [z+horde]
+	store = yes
 	cost = 0,200
 	playmode = zombies
 	displayName = @charm_friendhorde_name
 	storeDesc = @charm_friendhorde_desc
 	icon = Sprites/Icons/charm_horde
 	legionOnTheLooseBonus = 1
+
 
 
 /---------------------- EVENTS CHARMS -----------------------
@@ -298,4 +355,3 @@
 	meleePrefab = Props/PFSparkler
 	[heroPrefabSwap]
 		Characters/PFHero01 = Characters/PFHeroJuly
-

@@ -1,0 +1,266 @@
+[all]
+	/booster_free -- Do not include the free one in the list!
+	booster_zm_1
+	booster_zm_flying
+	booster_zm_ranged
+	booster_zm_wanyudometal
+	booster_zm_onicharm
+	booster_zm_wanyudofire_charm
+	booster_zm_wanyudometal_charm
+	booster_zm_jurogumo_charm
+	booster_zm_evilnobunaga
+	booster_zm_eviltakeda
+	booster_zm_necromancer
+	booster_zm_warlord
+
+
+[booster_free]
+	cost = 0,0
+	title = @boosterpack_title_free_zm
+	desc = @boosterpack_desc_free_zm
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/charm_zombie_blue
+	[recipe]
+		numCards = 1
+		default = common
+
+[booster_zm_1]
+	cost = 0,15
+	title = @boosterpack_title_zm_1
+	desc = @boosterpack_desc_zm_1
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/charm_zombie_blue
+	[recipe]
+		numCards = 1
+		default = common
+		[random]
+			uncommon = 0.25
+
+[booster_zm_flying]
+	cost = 0,50
+	title = @boosterpack_title_zm_flying
+	desc = @boosterpack_desc_zm_flying
+	warningCheck = TenguAir
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/enemy_tenguair
+	[recipe]
+		numCards = 6
+		default = uncommon
+		[specific]
+			TenguAir:rare = 1
+		[fixed]
+			rare = 1
+			uncommon = 2
+		[random]
+			rare = 0.5
+			super = 0.1
+
+[booster_zm_ranged]
+	cost = 0,75
+	title = @boosterpack_title_zm_ranged
+	desc = @boosterpack_desc_zm_ranged
+	warningCheck = ZombieRifleman
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/enemy_zombierifleman
+	[recipe]
+		numCards = 6
+		default = uncommon
+		[specific]
+			ZombieRifleman:rare = 1
+			EvilIceArcher:rare = 1
+		[fixed]
+			rare = 1
+			uncommon = 1
+		[random]
+			rare = 0.7
+			super = 0.15
+
+[booster_zm_necromancer]
+	cost = 0,200
+	title = @boosterpack_title_zm_necromancer
+	desc = @boosterpack_desc_zm_necromancer
+	warningCheck = Necromancer
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/enemy_necromancer
+	[recipe]
+		numCards = 6
+		default = rare
+		[specific]
+			Necromancer:super = 1
+		[fixed]
+			extreme = 1
+			super = 1
+		[random]
+			rare = 0.8
+			super = 0.25
+			extreme = 0.1
+
+[booster_zm_wanyudometal]
+	cost = 0,100
+	title = @boosterpack_title_zm_wanyudometal
+	desc = @boosterpack_desc_zm_wanyudometal
+	warningCheck = WanyudoMetal
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/enemy_wanyudometal
+	[recipe]
+		numCards = 6
+		default = uncommon
+		[specific]
+			WanyudoMetal:rare = 1
+		[fixed]
+			rare = 1
+			uncommon = 2
+		[random]
+			rare = 0.7
+			super = 0.15
+
+[booster_zm_onicharm]
+	cost = 0,125
+	title = @boosterpack_title_zm_onicharm
+	desc = @boosterpack_desc_zm_onicharm
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/charm_oni
+	[recipe]
+		numCards = 6
+		default = rare
+		[specific]
+			z+oni:super = 1
+		[fixed]
+			super = 1
+			rare = 1
+		[random]
+			rare = 0.8
+			super = 0.25
+			extreme = 0.1
+
+[booster_zm_wanyudofire_charm]
+	cost = 0,150
+	title = @boosterpack_title_zm_wanyudofire_charm
+	desc = @boosterpack_desc_zm_wanyudofire_charm
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/enemy_wanyudofire
+	[recipe]
+		numCards = 6
+		default = rare
+		[specific]
+			z+wanyudofire:super = 1
+		[fixed]
+			super = 1
+			rare = 1
+		[random]
+			rare = 0.8
+			super = 0.25
+			extreme = 0.1
+
+[booster_zm_wanyudometal_charm]
+	cost = 0,175
+	title = @boosterpack_title_zm_wanyudometal_charm
+	desc = @boosterpack_desc_zm_wanyudometal_charm
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/enemy_wanyudometal
+	[recipe]
+		numCards = 6
+		default = rare
+		[specific]
+			z+wanyudometal:super = 1
+		[fixed]
+			super = 1
+			rare = 1
+		[random]
+			rare = 0.8
+			super = 0.25
+			extreme = 0.1
+
+[booster_zm_jurogumo_charm]
+	cost = 0,175
+	title = @boosterpack_title_zm_jurogumo_charm
+	desc = @boosterpack_desc_zm_jurogumo_charm
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/boosterpacks/booster_card_jurogumo
+	[recipe]
+		numCards = 6
+		default = rare
+		[specific]
+			z+jurogumo:super = 1
+		[fixed]
+			super = 1
+			rare = 1
+		[random]
+			rare = 0.8
+			super = 0.25
+			extreme = 0.1
+
+[booster_zm_evilnobunaga]
+	cost = 0,150
+	title = @boosterpack_title_zm_evilnobunaga
+	desc = @boosterpack_desc_zm_evilnobunaga
+	warningCheck = EvilNobunaga
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/boosterpacks/booster_pack_evil_nobunaga
+	[recipe]
+		numCards = 6
+		default = rare
+		[specific]
+			EvilNobunaga:super = 1
+		[fixed]
+			extreme = 1
+			super = 1
+		[random]
+			rare = 0.8
+			super = 0.25
+			extreme = 0.1
+
+[booster_zm_eviltakeda]
+	cost = 0,150
+	title = @boosterpack_title_zm_eviltakeda
+	desc = @boosterpack_desc_zm_eviltakeda
+	warningCheck = EvilTakeda
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/Icons/enemy_evil_takeda_shingen
+	[recipe]
+		numCards = 6
+		default = rare
+		[specific]
+			EvilTakeda:super = 1
+		[fixed]
+			extreme = 1
+			super = 1
+		[random]
+			rare = 0.8
+			super = 0.25
+			extreme = 0.1
+
+[booster_zm_warlord]
+	cost = 0,250
+	title = @boosterpack_title_zm_warlord
+	desc = @boosterpack_desc_zm_warlord
+	warningCheck = Shogun
+	[render]
+		layer1 = Sprites/BoosterPacks/booster_pack_standard
+		layer2 = Sprites/boosterpacks/booster_card_shogun
+	[recipe]
+		numCards = 9
+		default = rare
+		[specific]
+			EvilNobunaga:super = 1
+			EvilTakeda:super = 1
+			Shogun:extreme = 1
+		[fixed]
+			extreme = 1
+			super = 2
+		[random]
+			rare = 0.9
+			super = 0.35
+			extreme = 0.15

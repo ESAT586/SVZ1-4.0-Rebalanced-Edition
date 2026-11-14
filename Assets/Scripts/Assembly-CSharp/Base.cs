@@ -35,11 +35,21 @@ public class Base : Character
 
 	private void SetupBaseAttributes()
 	{
-		SDFTreeNode sDFTreeNode = SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/Base");
-		SDFTreeNode sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", Singleton<Profile>.instance.baseLevel));
-		if (sDFTreeNode2 == null)
+		string registryPath = (Singleton<PlayModesManager>.instance != null && Singleton<PlayModesManager>.instance.selectedMode == "zombies") ? "Registry/Base_ZM" : "Registry/Base";
+		SDFTreeNode sDFTreeNode = SingletonMonoBehaviour<ResourcesManager>.instance.Open(registryPath) ?? SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/Base");
+		if (sDFTreeNode == null)
 		{
-			Debug.Log("ERROR: Could not find proper Base data for level: " + Singleton<Profile>.instance.baseLevel);
+			base.maxHealth = 250f;
+			base.health = base.maxHealth;
+			return;
+		}
+
+		int level = Mathf.Clamp(Singleton<Profile>.instance.baseLevel, 1, Mathf.Max(1, sDFTreeNode.childCount));
+		SDFTreeNode sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", level)) ?? sDFTreeNode.to("001");
+		if (sDFTreeNode2 == null || !sDFTreeNode2.hasAttribute("health"))
+		{
+			base.maxHealth = 250f;
+			base.health = base.maxHealth;
 			return;
 		}
 		base.maxHealth = float.Parse(sDFTreeNode2["health"]);

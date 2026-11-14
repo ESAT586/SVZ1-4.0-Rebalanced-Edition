@@ -1,0 +1,36 @@
+scene = InGame_hell_purple
+
+[rewards]
+	coins, 3000
+	gems, 100
+
+[Commands]
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	Wayundo_Metal
+	Wayundo_Metal
+	1.0,1.0
+	Chochinobake_alt
+	Chochinobake_alt
+	Tengu_air
+	Tengu_air
+	1.0,1.0
+	(
+	Evil_Ninja
+	Wayundo_Metal
+	Tengu_air
+	H_Zombie_Bow_3
+	)
+	1.0,1.0
+	@bossalert
+	Evil_Onibaba
+	Evil_Panzer
+	Evil_Taiko_Drummer
+	Evil_Tengu_air
+	Evil_Tengu_air
+	Wayundo_Metal
+	Nobusuma_alt
+	Nobusuma_alt
+	H_Zombie_Warhammer

@@ -66,7 +66,7 @@ public class HUDSmithy
 		mNotchesRef.position = new Vector2(ConvX(mNotchesRef.position.x, 44f), mNotchesRef.position.y);
 		mUpgradeButtonXOriginal = mUpgradeRef.position.x;
 		mNotchesXOrigin = mNotchesRef.position.x;
-		if (WeakGlobalInstance<Smithy>.instance.numTypes > 0)
+		if (WeakGlobalInstance<Smithy>.instance.numTypes > 0 || (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive))
 		{
 			mTouchArea.onAreaTouched = OnTouched;
 			return;
@@ -85,6 +85,10 @@ public class HUDSmithy
 	{
 		if (WeakGlobalInstance<Smithy>.instance != null && mActive)
 		{
+			if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton6))
+			{
+				OnTouched();
+			}
 			UpdateUpgradeState();
 			UpdateBarScales();
 			UpdateResourceCounter();
@@ -170,6 +174,11 @@ public class HUDSmithy
 
 	private void OnTouched()
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive && SVZMultiplayerManager.Instance.IsOnlineClient)
+		{
+			SVZMultiplayerManager.Instance.UpgradePlayer2Forge();
+			return;
+		}
 		if (WeakGlobalInstance<Smithy>.instance.isUpgradable)
 		{
 			Singleton<SUISoundManager>.instance.Play("upgradeLeadership");

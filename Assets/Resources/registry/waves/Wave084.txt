@@ -1,0 +1,29 @@
+scene = InGame_winterday
+
+[rewards]
+	coins, 2000
+	gems, 85
+
+[Commands]
+	Nobusuma_alt
+	Nobusuma_alt
+	Nobusuma_alt
+	Tengu_air
+	Tengu_air
+	0.5,0.5
+	Komusou_2
+	Komusou_2
+	Wayundo_Metal
+	Wayundo_Metal
+	1.0,1.0
+	(
+	Nobusuma_alt
+	Tengu_air
+	Wayundo_Metal
+	Komusou_2
+	)
+	1.0,1.0
+	Evil_Horseman
+	Evil_Ninja
+	Evil_Ninja
+	Chochinobake_alt

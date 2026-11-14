@@ -39,6 +39,10 @@ public class LegionOnTheLooseManager : WeakGlobalInstance<LegionOnTheLooseManage
 	public LegionOnTheLooseManager()
 	{
 		SetUniqueInstance(this);
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			return;
+		}
 		int num = 0;
 		if (WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm == "horde" || WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm.Contains("+horde"))
 		{
@@ -48,13 +52,17 @@ public class LegionOnTheLooseManager : WeakGlobalInstance<LegionOnTheLooseManage
 		{
 		case "zombies":
 			AddModule("LegionOnTheLoose", Singleton<Profile>.instance.legionOnTheLooseLevel + num, num > 0);
-			AddModule("DeathFromAbove", Singleton<Profile>.instance.deathFromAboveLevel, false);
+			AddModule("DeathFromAbove", Singleton<Profile>.instance.deathFromAboveLevel, true);
 			break;
 		}
 	}
 
 	public void Update()
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			return;
+		}
 		foreach (Entry mEntry in mEntries)
 		{
 			if (mEntry.queuedSpawns > 0)

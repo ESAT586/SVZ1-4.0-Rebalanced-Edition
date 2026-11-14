@@ -92,6 +92,14 @@ public class SUISlideStripList : SUIProcess
 		}
 	}
 
+	public FingerScroller scroller
+	{
+		get
+		{
+			return mFingerScroller;
+		}
+	}
+
 	public SUISlideStripList(IController ctrl, Vector2 centerPos, Vector2 cellsSize)
 	{
 		mController = ctrl;
@@ -151,17 +159,18 @@ public class SUISlideStripList : SUIProcess
 		int num = 0;
 		foreach (Cell mCell in mCells)
 		{
-			float num2 = Mathf.Abs(position.x - mOrigin.x);
-			if (num2 >= mCellsSize.x)
+			float num2 = (mCellsSize.x > 0f) ? (Mathf.Abs(position.x - mOrigin.x) / mCellsSize.x) : 0f;
+			if (num2 >= 1f)
 			{
 				mCell.visible = false;
 			}
 			else
 			{
+				float num3 = Mathf.Clamp01(1f - num2);
 				mCell.visible = true;
 				mCell.position = position;
-				float num4 = (mCell.alpha = Mathf.Clamp((mCellsSize.x - num2) / mCellsSize.x, 0f, 1f));
-				if (num4 >= 0.5f)
+				mCell.alpha = num3;
+				if (num3 >= 0.5f)
 				{
 					mIconSelected = num;
 				}

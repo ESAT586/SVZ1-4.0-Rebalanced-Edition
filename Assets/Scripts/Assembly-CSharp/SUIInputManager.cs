@@ -164,15 +164,16 @@ public class SUIInputManager
 		}
 		for (int i = 0; i < PCInput.touchCount; i++)
 		{
-			TouchInfo touchInfo = FindIndexFromCode(PCInput.touches[i].fingerId);
+			int fingerId = PCInput.GetFingerId(i);
+			TouchInfo touchInfo = FindIndexFromCode(fingerId);
 			if (touchInfo == null)
 			{
-				touchInfo = new TouchInfo(PCInput.touches[i].fingerId);
+				touchInfo = new TouchInfo(fingerId);
 				mTouches.Add(touchInfo);
 			}
 			touchInfo._flag = false;
 			touchInfo.previousPosition = touchInfo.currentPosition;
-			touchInfo.currentPosition = SUIUtils.touchToUser(PCInput.touches[i].position);
+			touchInfo.currentPosition = SUIUtils.touchToUser(PCInput.GetPosition(i));
 		}
 		for (int num = mTouches.Count - 1; num >= 0; num--)
 		{

@@ -1,0 +1,119 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Zombie Drummer
+desc = Zombie Drummer 
+prefab = Characters/PFLzombietaiko
+HUDIcon = Sprites/Icons/enemy_zombie_drummer
+waveToUnlock = 5
+resourcesCost = 10.0
+cooldownTimer = 1.0
+attackFrequency = 1.0
+unique = true
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 1500,0
+	health = 40
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .20
+
+[002]
+	cost = 4000,0
+	health = 55
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .25
+
+[003]
+	cost = 8000,0
+	health = 75
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .30
+
+[004]
+	cost = 15000,0
+	health = 105
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .35
+
+[005]
+	cost = 25000,0
+	health = 145
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .40
+
+[006]
+	cost = 0,12
+	health = 195
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .45
+
+[007]
+	cost = 0,16
+	health = 260
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .50
+
+[008]
+	cost = 0,20
+	health = 350
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .55
+
+[009]
+	cost = 0,24
+	health = 480
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .60
+
+[010]
+	cost = 0,28
+	health = 650
+	speedMin = 75
+	speedMax = 75
+	bowRange = 375
+	knockbackPower = 5
+	knockbackResistance = 100
+	damageBuffPercent = .65

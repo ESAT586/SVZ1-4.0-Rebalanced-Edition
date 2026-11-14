@@ -1,0 +1,29 @@
+scene = InGame_evilnight
+
+[rewards]
+	coins, 2100
+	gems, 90
+
+[Commands]
+	Evil_Farmer_Charm
+	Evil_Farmer_Charm
+	Evil_Zombie_Gun
+	Evil_Zombie_Gun
+	Evil_Zombie_Gun
+	0.5,0.5
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	1.0,1.0
+	(
+	Evil_Zombie_Gun
+	Evil_Ninja
+	Evil_Farmer_Charm
+	Wayundo_Metal
+	)
+	1.0,1.0
+	H_Zombie_Warhammer
+	Chochinobake_alt
+	Nobusuma
+	Nobusuma

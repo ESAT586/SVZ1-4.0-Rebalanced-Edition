@@ -1,0 +1,121 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Evil Heavy Samurai
+desc = Evil Heavy Samurai
+prefab = Characters/PFHSamuraiZombie
+HUDIcon = Sprites/Icons/enemy_evil_heavy_samurai
+weaponMeleePrefab = Props/PFHeavysamuraisword
+waveToUnlock = 25
+resourcesCost = 30.0
+cooldownTimer = 5.0
+attackFrequency = 2.4
+usesBladeWeapon = true
+
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 750,0
+	health = 950
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 24
+	knockbackPower = 35
+	knockbackResistance = 55
+
+[002]
+	cost = 1500,0
+	health = 1250
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 32
+	knockbackPower = 35
+	knockbackResistance = 55
+
+[003]
+	cost = 3000,0
+	health = 1650
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 42
+	knockbackPower = 35
+	knockbackResistance = 55
+
+[004]
+	cost = 5800,0
+	health = 2150
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 55
+	knockbackPower = 38
+	knockbackResistance = 58
+
+[005]
+	cost = 14500,0
+	health = 2800
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 70
+	knockbackPower = 38
+	knockbackResistance = 58
+
+[006]
+	cost = 0,14
+	health = 3600
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 86
+	knockbackPower = 40
+	knockbackResistance = 60
+
+[007]
+	cost = 0,20
+	health = 4550
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 102
+	knockbackPower = 40
+	knockbackResistance = 60
+
+[008]
+	cost = 0,26
+	health = 5600
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 118
+	knockbackPower = 42
+	knockbackResistance = 62
+
+[009]
+	cost = 0,30
+	health = 6680
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 136
+	knockbackPower = 42
+	knockbackResistance = 62
+
+[010]
+	cost = 0,34
+	health = 7800
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 105
+	meleeDamage = 155
+	knockbackPower = 45
+	knockbackResistance = 65

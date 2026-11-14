@@ -1,0 +1,28 @@
+scene = InGame_underworld
+
+[rewards]
+	coins, 2600
+	gems, 100
+
+[Commands]
+	H_Zombie_Warhammer
+	H_Zombie_Warhammer
+	H_Zombie_Warhammer
+	Evil_Ice
+	Evil_Ice
+	0.5,0.5
+	Wayundo_Metal
+	Wayundo_Metal
+	Nobusuma_alt
+	Nobusuma_alt
+	1.0,1.0
+	(
+	H_Zombie_Warhammer
+	Evil_Ice
+	Wayundo_Metal
+	Nobusuma_alt
+	)
+	1.0,1.0
+	Jurogumo
+	Chochinobake_alt
+	Komusou_2

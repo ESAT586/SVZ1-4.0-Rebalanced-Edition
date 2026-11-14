@@ -21,13 +21,20 @@ public class WhirlWindDamageAura : MonoBehaviour
 
 	private ParticleEmitter[] mEmitters;
 
+	public bool targetEnemies = true;
+
 	private void Start()
 	{
 		mEmitters = GetComponentsInChildren<ParticleEmitter>();
-		mRemainingDuration = float.Parse(Singleton<AbilitiesDatabase>.instance.GetAttribute("SummonTornadoes", "duration"));
-		mDamagePerHit = Singleton<AbilitiesDatabase>.instance.Extrapolate<float>("SummonTornadoes", "infiniteUpgradeDamage", "damage") / (mRemainingDuration / 0.2f);
-		mFlierDamageMultiplier = float.Parse(Singleton<AbilitiesDatabase>.instance.GetAttribute("SummonTornadoes", "flyerDamageMultiplier"));
-		float num = float.Parse(Singleton<AbilitiesDatabase>.instance.GetAttribute("SummonTornadoes", "damageRadius"));
+		string durStr = Singleton<AbilitiesDatabase>.instance.GetAttribute("SummonTornadoes", "duration");
+		mRemainingDuration = !string.IsNullOrEmpty(durStr) ? float.Parse(durStr) : 6f;
+		float totalDmg = Singleton<AbilitiesDatabase>.instance.Extrapolate<float>("SummonTornadoes", "infiniteUpgradeDamage", "damage");
+		if (totalDmg <= 0f) totalDmg = 300f;
+		mDamagePerHit = totalDmg / (mRemainingDuration / 0.2f);
+		string flierStr = Singleton<AbilitiesDatabase>.instance.GetAttribute("SummonTornadoes", "flyerDamageMultiplier");
+		mFlierDamageMultiplier = !string.IsNullOrEmpty(flierStr) ? float.Parse(flierStr) : 1.5f;
+		string radStr = Singleton<AbilitiesDatabase>.instance.GetAttribute("SummonTornadoes", "damageRadius");
+		float num = !string.IsNullOrEmpty(radStr) ? float.Parse(radStr) : 140f;
 		mDamageRange.left = base.transform.position.z - num;
 		mDamageRange.right = mDamageRange.left + num * 2f;
 	}
@@ -57,10 +64,10 @@ public class WhirlWindDamageAura : MonoBehaviour
 		while (mTimeUntilNextDamage <= 0f)
 		{
 			mTimeUntilNextDamage += 0.2f;
-			List<Character> charactersInRange = WeakGlobalInstance<CharactersManager>.instance.GetCharactersInRange(mDamageRange, true);
+			List<Character> charactersInRange = WeakGlobalInstance<CharactersManager>.instance.GetCharactersInRange(mDamageRange, targetEnemies);
 			foreach (Character item in charactersInRange)
 			{
-				if (item != null)
+				if (item != null && !item.isBase)
 				{
 					if (item.isFlying)
 					{

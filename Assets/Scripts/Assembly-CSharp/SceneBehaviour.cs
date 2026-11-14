@@ -32,18 +32,28 @@ public class SceneBehaviour : MonoBehaviour
 		}
 	}
 
-	private void Awake()
+	protected virtual void Awake()
 	{
+		Time.timeScale = 1f;
+		AudioListener.pause = false;
 		mUniqueInstance = this;
 		Singleton<PlayHavenTowerControl>.instance.ClearHistory();
 		SingletonMonoBehaviour<Achievements>.instance.Init();
 		SingletonMonoBehaviour<ResourcesManager>.instance.Init();
 		ApplicationUtilities.instance.Init();
-		mScreen = new SUIScreen();
+		if (mScreen == null)
+		{
+			mScreen = new SUIScreen();
+		}
+		mScreen.inputs.processInputs = true;
 	}
 
 	protected bool SceneBehaviourUpdate()
 	{
+		if (mScreen == null)
+		{
+			mScreen = new SUIScreen();
+		}
 		if (mSkipNumUpdate > 0)
 		{
 			mScreen.UpdateTimeOnly();
@@ -55,7 +65,10 @@ public class SceneBehaviour : MonoBehaviour
 			return true;
 		}
 		UpdatePlayHavenGameLaunch();
-		mScreen.Update();
+		if (mScreen != null)
+		{
+			mScreen.Update();
+		}
 		return false;
 	}
 

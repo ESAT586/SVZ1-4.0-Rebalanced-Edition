@@ -94,31 +94,6 @@ public class ResourcesManager : SingletonMonoBehaviour<ResourcesManager>
 
 	private IEnumerator AcquireAssetBundle()
 	{
-		if (Application.platform != RuntimePlatform.IPhonePlayer && Application.platform != RuntimePlatform.Android)
-		{
-			yield break;
-		}
-		string assetbundleFilePath = Singleton<GameVersion>.instance.onlineAssetBundlePath;
-		WWW www = new WWW(assetbundleFilePath);
-		yield return www;
-		if (www.error == null && www.assetBundle != null)
-		{
-			if (mOnlineBundle != null)
-			{
-				mOnlineBundle.Unload(true);
-			}
-			Debug.Log("Successfully downloaded Bundle " + www.assetBundle);
-			mOnlineBundle = www.assetBundle;
-			Singleton<Profile>.instance.Save();
-			if (this.onInvalidateCache != null)
-			{
-				this.onInvalidateCache();
-			}
-		}
-		else if (www.error != null)
-		{
-			Debug.Log(www.error);
-		}
-		Debug.Log("Acquire asset bundle : " + ((!(mOnlineBundle != null)) ? "Failed." : "Success!"));
+		yield break;
 	}
 }

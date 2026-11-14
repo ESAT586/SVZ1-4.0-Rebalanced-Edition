@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SUIFader : SUIProcess
 {
+	private const float kEpsilon = 0.005f;
+
 	private static float kDefaultSpeed = 0.5f;
 
 	public OnFadingDoneCallback onFadingDone;
@@ -29,7 +31,7 @@ public class SUIFader : SUIProcess
 	{
 		get
 		{
-			return mSprite.alpha != mTargetAlpha;
+			return Mathf.Abs(mSprite.alpha - mTargetAlpha) > kEpsilon;
 		}
 	}
 
@@ -41,7 +43,7 @@ public class SUIFader : SUIProcess
 		}
 		set
 		{
-			mSpeed = value;
+			mSpeed = Mathf.Max(0.01f, value);
 		}
 	}
 
@@ -80,20 +82,35 @@ public class SUIFader : SUIProcess
 
 	public void Update()
 	{
-		if (mSprite.alpha != mTargetAlpha)
+		if (Mathf.Abs(mSprite.alpha - mTargetAlpha) <= kEpsilon)
 		{
-			float num = SUIScreen.deltaTime / mSpeed;
-			if (mSprite.alpha > mTargetAlpha)
+			mSprite.alpha = mTargetAlpha;
+			mSprite.visible = mSprite.alpha > 0f;
+			if (onFadingDone != null)
 			{
-				mSprite.alpha = Mathf.Max(mTargetAlpha, mSprite.alpha - num);
+				OnFadingDoneCallback cb = onFadingDone;
+				onFadingDone = null;
+				cb();
 			}
-			else
+			return;
+		}
+		float num = SUIScreen.deltaTime / mSpeed;
+		if (mSprite.alpha > mTargetAlpha)
+		{
+			mSprite.alpha = Mathf.Max(mTargetAlpha, mSprite.alpha - num);
+		}
+		else
+		{
+			mSprite.alpha = Mathf.Min(mTargetAlpha, mSprite.alpha + num);
+		}
+		if (Mathf.Abs(mSprite.alpha - mTargetAlpha) <= kEpsilon)
+		{
+			mSprite.alpha = mTargetAlpha;
+			if (onFadingDone != null)
 			{
-				mSprite.alpha = Mathf.Min(mTargetAlpha, mSprite.alpha + num);
-			}
-			if (mSprite.alpha == mTargetAlpha && onFadingDone != null)
-			{
-				onFadingDone();
+				OnFadingDoneCallback cb = onFadingDone;
+				onFadingDone = null;
+				cb();
 			}
 		}
 		mSprite.visible = mSprite.alpha > 0f;
@@ -101,6 +118,7 @@ public class SUIFader : SUIProcess
 
 	public void Destroy()
 	{
+		onFadingDone = null;
 		mSprite.Destroy();
 		mSprite = null;
 	}

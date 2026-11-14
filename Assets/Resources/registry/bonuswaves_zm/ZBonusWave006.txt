@@ -1,0 +1,67 @@
+scene = InGame_underworld
+bonusHint = Kahraman savas disi; Evil Nobunaga ve Evil Takeda ile karsi saldiri kur.
+
+[rewards]
+	coins, 9500
+	gems, 5
+	healthSmallZ, 2
+
+selectedCharm = z+oni
+initialleadershiplevel = 4
+baselevel = 2
+belllevel = 4
+archerlevel = 4
+
+[abilitylevels]
+	LethargyZM = 6
+	DragonAttack = 3
+
+[selectedabilities]
+	000 = LethargyZM
+	001 = DragonAttack
+
+[helperlevels]
+	TenguAir = 6
+	ZombieRifleman = 6
+	EvilIceArcher = 6
+	EvilNobunaga = 4
+	EvilTakeda = 4
+
+[selectedhelpers]
+	000 = TenguAir
+	001 = ZombieRifleman
+	002 = EvilIceArcher
+	003 = EvilNobunaga
+	004 = EvilTakeda
+
+[Commands]
+	ArcherElite
+	RiflemanElite
+	SamuraiShield_Ice
+	Frostie
+	Priest
+	1,1
+	Swordsmith
+	Takeda
+	Nobunaga
+	Cart
+	NinjaGirl
+	1,1
+	ArcherElite
+	RiflemanElite
+	SamuraiShield_Ice
+	Frostie
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	1,1
+	Takeda
+	Nobunaga
+	Cart
+	NinjaGirl
+	SpearHorseman
+	ArcherElite
+	RiflemanElite
+	1,1
+	PanzerElite
+	SpearElite

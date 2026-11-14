@@ -9,15 +9,33 @@ public class Billboard : MonoBehaviour
 	private void Start()
 	{
 		myTransform = base.transform;
-		cameraTransform = Camera.main.transform;
+		CacheCamera();
 	}
 
 	private void LateUpdate()
 	{
+		if (myTransform == null)
+		{
+			myTransform = base.transform;
+		}
+		if (cameraTransform == null || !cameraTransform.gameObject.activeInHierarchy)
+		{
+			CacheCamera();
+		}
 		if (cameraTransform == null)
 		{
-			cameraTransform = Camera.main.transform;
+			return;
 		}
 		myTransform.LookAt(myTransform.position + cameraTransform.rotation * new Vector3(0f, 0f, 1f));
+	}
+
+	private void CacheCamera()
+	{
+		Camera camera = Camera.main;
+		if (camera == null)
+		{
+			camera = Camera.current;
+		}
+		cameraTransform = ((camera != null) ? camera.transform : null);
 	}
 }

@@ -1,7 +1,73 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SUISprite : SUIWidget
 {
+	private static Dictionary<string, Texture2D> sOverrideTextureCache = new Dictionary<string, Texture2D>(StringComparer.OrdinalIgnoreCase);
+
+	public static Texture2D LoadOverrideTexture(string resourcePath)
+	{
+		if (string.IsNullOrEmpty(resourcePath))
+		{
+			return null;
+		}
+		Texture2D cached;
+		if (sOverrideTextureCache.TryGetValue(resourcePath, out cached))
+		{
+			return cached;
+		}
+		Texture2D loaded = null;
+		try
+		{
+			string rel = resourcePath.TrimStart('/').Replace('\\', '/');
+			if (!rel.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+			{
+				rel += ".png";
+			}
+			string[] roots = new string[]
+			{
+				Path.Combine(Application.persistentDataPath, "Overrides"),
+				Path.Combine(Application.dataPath, "Overrides")
+			};
+			for (int i = 0; i < roots.Length; i++)
+			{
+				string candidate = Path.Combine(roots[i], rel);
+				if (!File.Exists(candidate))
+				{
+					string lowerCandidate = Path.Combine(roots[i], rel.ToLower());
+					if (File.Exists(lowerCandidate))
+					{
+						candidate = lowerCandidate;
+					}
+					else
+					{
+						continue;
+					}
+				}
+				byte[] bytes = File.ReadAllBytes(candidate);
+				if (bytes != null && bytes.Length > 0)
+				{
+					Texture2D tex = new Texture2D(2, 2, TextureFormat.ARGB32, false);
+					if (tex.LoadImage(bytes))
+					{
+						tex.wrapMode = TextureWrapMode.Clamp;
+						loaded = tex;
+						break;
+					}
+					UnityEngine.Object.Destroy(tex);
+				}
+			}
+		}
+		catch
+		{
+			loaded = null;
+		}
+		sOverrideTextureCache[resourcePath] = loaded;
+		return loaded;
+	}
+
 	private string mTextureFile;
 
 	private string mLocalizedTextureFile;
@@ -53,7 +119,7 @@ public class SUISprite : SUIWidget
 	{
 		get
 		{
-			return mTexture.texture.width;
+			return (mTexture != null && mTexture.texture != null) ? mTexture.texture.width : 0f;
 		}
 	}
 
@@ -61,7 +127,7 @@ public class SUISprite : SUIWidget
 	{
 		get
 		{
-			return mTexture.texture.height;
+			return (mTexture != null && mTexture.texture != null) ? mTexture.texture.height : 0f;
 		}
 	}
 
@@ -123,6 +189,10 @@ public class SUISprite : SUIWidget
 	{
 		get
 		{
+			if (mTexture == null || mTexture.texture == null)
+			{
+				return Rect.zero;
+			}
 			return SUIUtils.unityToUser(mTexture.GetScreenRect());
 		}
 	}
@@ -154,7 +224,7 @@ public class SUISprite : SUIWidget
 
 	public override void Destroy()
 	{
-		Object.Destroy(mTexture);
+		UnityEngine.Object.Destroy(mTexture);
 		mTexture = null;
 		base.Destroy();
 	}
@@ -189,7 +259,11 @@ public class SUISprite : SUIWidget
 		Texture2D texture2D = null;
 		if (SUIScreen.isDevice_iPad3)
 		{
-			texture2D = (Texture2D)Resources.Load(mLocalizedTextureFile + "_ipad3", typeof(Texture2D));
+			texture2D = LoadOverrideTexture(mLocalizedTextureFile + "_ipad3");
+			if (texture2D == null)
+			{
+				texture2D = (Texture2D)Resources.Load(mLocalizedTextureFile + "_ipad3", typeof(Texture2D));
+			}
 			if (texture2D != null)
 			{
 				mHDScaleRatio = 0.5f;
@@ -197,14 +271,26 @@ public class SUISprite : SUIWidget
 		}
 		if (texture2D == null)
 		{
+			texture2D = LoadOverrideTexture(mLocalizedTextureFile);
+		}
+		if (texture2D == null)
+		{
 			texture2D = (Texture2D)Resources.Load(mLocalizedTextureFile, typeof(Texture2D));
+		}
+		if (texture2D == null && !string.IsNullOrEmpty(mTextureFile))
+		{
+			texture2D = LoadOverrideTexture(mTextureFile);
 			if (texture2D == null)
 			{
-				Debug.Log("SUISprite -> Could not load texture: " + mTextureFile);
-				return;
+				texture2D = (Texture2D)Resources.Load(mTextureFile, typeof(Texture2D));
 			}
-			mHDScaleRatio = 1f;
 		}
+		if (texture2D == null)
+		{
+			Debug.LogWarning("SUISprite -> Could not load texture: " + mTextureFile + " (Localized: " + mLocalizedTextureFile + ")");
+			return;
+		}
+		mHDScaleRatio = 1f;
 		mTexture.texture = texture2D;
 		mTexture.transform.localScale = Vector3.zero;
 		updateScale();
@@ -212,6 +298,10 @@ public class SUISprite : SUIWidget
 
 	private void updateScale()
 	{
+		if (mTexture == null || mTexture.texture == null)
+		{
+			return;
+		}
 		AutoScaler autoScaler = WeakGlobalInstance<SUIScreen>.instance.autoScaler;
 		Vector2 vector = ((!mAutoScaleKeepAspectRatio) ? new Vector2(autoScaler.toDeviceX((float)mTexture.texture.width * scale.x * mHDScaleRatio), autoScaler.toDeviceY((float)mTexture.texture.height * scale.y * mHDScaleRatio)) : new Vector2(autoScaler.toDevice((float)mTexture.texture.width * scale.x * mHDScaleRatio), autoScaler.toDevice((float)mTexture.texture.height * scale.y * mHDScaleRatio)));
 		mTexture.pixelInset = new Rect(0f - vector.x * mHotspot.x, 0f - vector.y * (1f - mHotspot.y), vector.x, vector.y);

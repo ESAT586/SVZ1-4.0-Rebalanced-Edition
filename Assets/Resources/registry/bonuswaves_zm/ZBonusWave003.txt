@@ -1,0 +1,64 @@
+scene = InGame_hell_purple
+bonusHint = Kahraman savas disi; Tengu ve Wanyudo ile samuray hattini boz.
+
+[rewards]
+	coins, 4000
+	gems, 2
+	z+wanyudofire, 1
+
+selectedCharm = z+wanyudofire
+initialleadershiplevel = 3
+baselevel = 1
+belllevel = 2
+archerlevel = 3
+
+[abilitylevels]
+	NightOfTheDead = 5
+	RaiseDead = 3
+
+[selectedabilities]
+	000 = NightOfTheDead
+	001 = RaiseDead
+
+[helperlevels]
+	Tengu = 4
+	Wanyudo = 3
+	GhostRonin = 3
+	ZombieHorseman = 3
+	Oni = 3
+
+[selectedhelpers]
+	000 = Tengu
+	001 = Wanyudo
+	002 = GhostRonin
+	003 = ZombieHorseman
+	004 = Oni
+
+[Commands]
+	SamuraiShield_Ice
+	SamuraiArcher
+	1,1
+	SamuraiRifleman
+	Frostie
+	1,1
+	Samurai
+	SamuraiSpear
+	SamuraiShield_Ice
+	1,1
+	Priest
+	SamuraiArcher
+	SamuraiRifleman
+	2,2
+	SamuraiShield_Ice
+	Frostie
+	SamuraiRifleman
+	Priest
+	1,1
+	Samurai
+	SamuraiSpear
+	SamuraiArcher
+	SamuraiRifleman
+	1,1
+	SamuraiShield_Ice
+	Frostie
+	Priest

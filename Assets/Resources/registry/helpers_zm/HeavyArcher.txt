@@ -1,0 +1,121 @@
+
+/ NOTE: Heavy Zombie Archer - 20-cost Armored Ranged Sniper (Proper Heavy Samurai Bow unit)
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = HeavyArcher
+desc = @enemy_h_zombie_b_name
+prefab = Characters/PFHZombieArcher
+HUDIcon = Sprites/Icons/enemy_heavyarcher
+weaponRangedPrefab = Props/PFhzombiebow
+waveToUnlock = 16
+resourcesCost = 20.0
+cooldownTimer = 2.5
+attackFrequency = 2.5
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 750,0
+	health = 125
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 22
+	projectile = Arrow
+	knockbackResistance = 25
+	
+[002]
+	cost = 1500,0
+	health = 175
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 35
+	projectile = Arrow
+	knockbackResistance = 25
+
+[003]
+	cost = 3000,0
+	health = 240
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 50
+	projectile = Arrow
+	knockbackResistance = 25
+
+[004]
+	cost = 6000,0
+	health = 330
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 70
+	projectile = Arrow
+	knockbackResistance = 25
+
+[005]
+	cost = 12000,0
+	health = 450
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 95
+	projectile = Arrow
+	knockbackResistance = 25
+
+[006]
+	cost = 0,10
+	health = 600
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 130
+	projectile = Arrow
+	knockbackResistance = 25
+
+[007]
+	cost = 0,15
+	health = 800
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 175
+	projectile = Arrow
+	knockbackResistance = 25
+
+[008]
+	cost = 0,20
+	health = 1100
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 230
+	projectile = Arrow
+	knockbackResistance = 25
+
+[009]
+	cost = 0,25
+	health = 1500
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 300
+	projectile = Arrow
+	knockbackResistance = 25
+
+[010]
+	cost = 0,35
+	health = 2000
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 380
+	projectile = Arrow
+	knockbackResistance = 25

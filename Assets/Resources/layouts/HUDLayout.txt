@@ -27,8 +27,8 @@ transitionSpeed = 1.0
 /----------------------------------------------------------
 
 [consumArrowLeft]
-	type = sprite
-	file = Sprites/Icons/potion_arrow
+	type = button
+	normalFrame = Sprites/Icons/potion_arrow
 	keepAspectRatio = true	
 	position = E-140, 130
 	priority = 5.2
@@ -38,8 +38,8 @@ transitionSpeed = 1.0
 			alpha = 0.0
 
 [consumArrowRight]
-	type = sprite
-	file = Sprites/Icons/potion_arrow
+	type = button
+	normalFrame = Sprites/Icons/potion_arrow
 	keepAspectRatio = true	
 	position = E-24, 130
 	priority = 5.2
@@ -234,8 +234,21 @@ transitionSpeed = 1.0
 	type = button
 	normalframe = Sprites/Menus/coin
 	priority = 0.1
-	position = C+320, 50
+	position = C+320, 74
 	offsetWhenPressed = 4, 4
+	[transition]
+		[alpha]
+			alpha = 0.0
+
+[cheatsLabel]
+	type = label
+	font = default32
+	priority = 0.2
+	position = C+320, 38
+	shadowOffset = 2, 2
+	shadowColor = 0, 0, 0
+	anchor = MiddleCenter
+	text = WIN
 	[transition]
 		[alpha]
 			alpha = 0.0

@@ -1,0 +1,917 @@
+﻿/------------------------------------------------------------------
+/ Play Modes
+/------------------------------------------------------------------
+
+playmode_classic = Klasik\nMod
+playmode_zombie = Zombi\nModu
+
+unlocked_zombies = Zombilerin Yükselişi modunu açtın!
+
+/------------------------------------------------------------------
+/ Freebies
+/------------------------------------------------------------------
+
+welcomeBack_title = Tekrar hoş geldin!
+welcomeBack_subtitle = Glu Mobile seni tekrar aramızda görmekten mutlu.
+welcomeBack_body = Takdirimizin bir göstergesi olarak lütfen bu hediyeyi kabul et.
+
+giveonce_title = Sana Bir Hediye!
+giveonce_subtitle = Glu Mobile seni oyuncularımız arasında görmekten mutlu.
+giveonce_body = Takdirimizin bir göstergesi olarak lütfen bu hediyeyi kabul et.
+
+
+/------------------------------------------------------------------
+/ Special Events Stuff
+/------------------------------------------------------------------
+
+charm_olympics_name = Olimpiyat Gücü Tılsımı
+charm_olympics_desc = Olimpiyatların gücünü kullanarak şu Zombilere ekstra hasar ver.
+dealpackolympics_name = Özel Olimpiyat Paketi
+dealpackolympics_desc = Bir Olimpiyat Partisi için ihtiyacın olan tüm ekipmanlar! Olimpiyat Tılsımları ve çok daha fazlası!
+
+charm_julyforth_name = Samuray Amca Tılsımı
+charm_julyforth_desc = 4 Temmuz'un gücünü kullanarak şu Zombilere ekstra hasar ver.
+dealpackjulyforth_name = Yıldızlı Paket
+dealpackjulyforth_desc = Bir 4 Temmuz Partisi için ihtiyacın olan tüm ekipmanlar! Samuray Amca Tılsımları ve çok daha fazlası!
+
+
+/------------------------------------------------------------------
+/ Abilities
+/------------------------------------------------------------------
+
+ab_divine_name = İlahi Müdahale
+ab_trample_name = İzdiham
+ab_groundshock_name = Yeri Sarsan Darbe
+ab_slash_name = Katana Kesişi
+ab_lethargy_name = Yavaşlatma
+ab_self_revive_name = Kendini Dirilt
+ab_lightning_name = Yıldırım Çağrısı
+ab_tornadoes_name = Kasırga Çağrısı
+
+ab_lifesteal_name = Can Çalma
+ab_gravehands_name = Mezar Elleri
+ab_raisedead_name = Ölüleri Dirilt
+ab_dragonattack_name = Zombi Ejderha
+ab_nightofthedead_name = Ölülerin Gecesi
+
+/------------------------------------------------------------------
+/ Ability Descriptions
+/------------------------------------------------------------------
+
+ab_slash_desc = Birden fazla düşmanı biçen güçlü bir saldırı.
+ab_lightning_desc = Yıldırımın gücünü çağırarak önündeki düşmanları çarp.
+ab_divine_desc = İlahi güce yakararak zırhlı müttefikler çağır, umarız işe yarar...
+ab_lethargy_desc = Tüm düşmanları geçici olarak yavaşlatan bir büyü yapar.
+ab_village_archers_desc = Köy kulelerini kalıcı olarak savunmaları için Okçular kirala.
+ab_warding_bell = Diğer diyarlardan gelen iblislere acı çektirdiği söylenen Kadim bir Çan.
+ab_gate = Kutsal Geçit'in (Sacred Gate) dayanabileceği maksimum Hasarı artırır.
+ab_gate_zombies = Cehennem Geçidi'nin (Hell Gate) dayanabileceği maksimum Hasarı artırır.
+ab_leadership = Kahramanın başlangıç Liderlik (Leadership) Seviyesini artırır. Savaşta Birlikler çağırmak için Liderliği kullan!
+ab_brains = Kahramanın başlangıç Beyin (Brains) Seviyesini artırır. Savaşta Birlikler çağırmak için Beyinleri kullan!
+ab_trample_desc = Topyekûn bir yakın dövüş cümbüşü için devasa bir birlik grubu çağır!
+ab_tornadoes_desc = Bir kasırganın gücünü çağır! Uçan Düşmanların bu işten hiç hoşlanmayacak.
+
+ab_lifesteal_desc = Düşmanlarının yaşam enerjisini çalan ölümcül bir vuruş.
+ab_gravehands_desc = Düşmanlarını yerin dibine, mezara doğru çek.
+ab_raisedead_desc = Ölülerin gücünü çağır ve saflarına kat!
+ab_dragonattack_desc = Topyekûn bir yakın dövüş için bir Ejderha çağır!
+ab_nightofthedead_desc = Tüm zombiler birkaç saniyeliğine durdurulamaz (unstoppable) olur.
+
+/------------------------------------------------------------------
+/ Weapon Descriptions
+/------------------------------------------------------------------
+
+katana_desc = Kahramanının ana silahı. Kullanmak için düşmana yaklaş.
+katanafire_desc = Kahramanının ana silahı. Ateş Hasarı eklendi!
+katanablue_desc = Kahramanının ana silahı. Mavi Ateş Hasarı eklendi!
+crossbow_desc = Kahramanının menzilli silahı. Kullanmak için savaşta geri adım at.
+crossbowfire_desc = Kahramanının menzilli silahı. Kullanmak için savaşta geri adım at. Ateşli Oklar!
+crossbowblue_desc = Kahramanının menzilli silahı. Kullanmak için savaşta geri adım at. Mavi Ateşli Oklar!
+crossbowexpl_desc = Kahramanının menzilli silahı. Kullanmak için savaşta geri adım at. Patlayıcı Oklar!
+crossbowexpl2_desc = Kahramanının menzilli silahı. Kullanmak için savaşta geri adım at. Daha Büyük Bir Patlama!
+
+/------------------------------------------------------------------
+/ Helpers
+/------------------------------------------------------------------
+
+helper_farmer_name = Çiftçi
+helper_samurai_name = Kılıç Ustası
+helper_samurai_archer = Okçu
+helper_samurai_spearman = Mızraklı Savaşçı
+helper_heavy_samurai = Panzer Samuray
+helper_Nobunaga = Nobunaga
+helper_swordsmith = Demirci
+helper_priest = Rahip
+helper_ice_archer = Buz Okçu
+helper_rifleman = Tüfekçi
+helper_takeda = Takeda Shingen
+helper_horseman = Mızraklı Süvari
+helper_ninja_girl = Suikastçı
+
+helper_crawler_name = Zıplayan Gövde
+helper_chochinobake_name = Lanetli Fener
+helper_ghostronin_name = Hayalet Ronin
+helper_jurogumo_name = Örümcek Kadın
+helper_komusou_name = Ölümsüz Ozan
+helper_necromancer_name = Ölü Çağıran
+helper_oni_name = Oni
+helper_onibaba_name = İblis Şifacı
+helper_shogun_name = Zombi Shogun
+helper_zombiearcher_name = Zombi Okçu
+helper_zombiehorseman_name = Zombi Süvari
+helper_zombie_name = Zombi
+helper_zombiespear_name = Mızraklı Zombi
+
+/------------------------------------------------------------------
+/ Helper Descriptions
+/------------------------------------------------------------------
+
+hero_desc = Köyün en cesur savaşçısı. Halkını zafere taşımak için onun gücünü kullan!
+helper_farmer_desc = Pek güçlü sayılmaz ama son derece sadık.
+helper_samurai_desc = Köyün yeminli koruyucuları. Ortalama Can ve Hasar.
+helper_samurai_archer_desc = Uzun menzilli ama yakından tek yer.
+helper_samurai_spearman_desc = Arka saflardan dövüşür ama kesinlikle korkak değildir.
+helper_heavy_samurai_desc = Son derece dayanıklıdır ama ağır zırhı saldırı hızını düşürür.
+helper_Nobunaga_desc = Efsanevi Savaşçı. Bazıları onun durdurulamaz olduğunu söyler.
+helper_priest_desc = şifa gücüyle müttefikleri iyileştirir (Heal).
+helper_ice_archer_desc = Seni görmek ne "buz"el! Okları düşmanları geçici olarak dondurur.
+helper_swordsmith_desc = Usta Demirci, savaş alanındaki tüm Çiftçileri yükseltir (Upgrade)!
+helper_rifleman_desc = Tüfekçi, savaş alanındaki tüm Okçuları yükseltir (Upgrade)!
+helper_takeda_desc = Efsanevi Kahraman! Bu kudretli savaşçı at sırtından uzun menzilli saldırılar yapar.
+helper_horseman_desc = At sırtından orta menzilli saldırılar!
+helper_ninja_girl_desc = Seri Suikastçı! Hızlı vurur ve hem yakın dövüş hem de menzilli saldırılar yapabilir!
+
+helper_crawler_desc = Bacaklar da neymiş...
+helper_chochinobake_desc = HIZLI KOŞ... ve GÜÜM!
+helper_ghostronin_desc = En havalı hayalet. Her saldırısıyla düşmanları yavaşlatır.
+helper_jurogumo_desc = Yarı kadın, yarı örümcek, tamamen ölümsüz.
+helper_komusou_desc = Ölüleri bile uyandıracak kadar yüksek sesle şarkı söyler.
+helper_necromancer_desc = Düzenli aralıklarla mezardan daha fazla zombi çağırır.
+helper_oni_desc = Son derece dayanıklıdır ama ağır silahı saldırı hızını düşürür.
+helper_onibaba_desc = Bir zombi şifacısı onları daha mı ölü yapar? Yoksa daha az mı canlı?
+helper_shogun_desc = Cehennemin kendi Shogun'u. Daha ne isteyebilirsin ki?
+helper_zombiearcher_desc = Uzun menzilli ama yakından tek yer.
+helper_zombiehorseman_desc = Bir zombi atını nasıl durdurursun? Beyinlerini çekerek.
+helper_zombie_desc = Ortalama bir dövüşçü... bir ölüye göre tabii.
+helper_zombiespear_desc = Tonla hasar... ama pek beyin yok.
+
+/------------------------------------------------------------------
+/ Enemies
+/------------------------------------------------------------------
+
+enemy_dummy_name = Kukla!
+enemy_l_zombie_u_name = Hafif Zombi (Silahsız)
+enemy_l_zombie_a_name = Hafif Zombi (Baltalı)
+enemy_l_zombie_s_name = Hafif Zombi (Kılıçlı)
+enemy_l_zombie_sp_name = Hafif Zombi (Mızraklı)
+enemy_l_zombie_b_name = Hafif Zombi (Okçu)
+enemy_h_zombie_u_name = Ağır Zombi (Silahsız)
+enemy_oni_name = Oni
+
+
+/------------------------------------------------------------------
+/ Heroes
+/------------------------------------------------------------------
+
+heroe_samurai_name = Samuray
+
+zombiehero_desc = Ölümsüzlerin en büyük şampiyonu. Ölüler diyarına girmeye cüret eden yaşayanları paramparça et.
+
+/------------------------------------------------------------------
+/ Charms
+/------------------------------------------------------------------
+
+charm_holy_name = Kutsal Tılsım
+charm_holy_desc = Kahramanı öldükten sonra diriltir ve ekrandaki tüm düşmanları katleder.
+
+charm_happiness_name = Mutluluk Tılsımı
+charm_happiness_desc = Altınları, jetonları ve düşen eşyaları (drop) kahramana doğru çeker.
+
+charm_power_name = Güç Tılsımı
+charm_power_desc = Kritik vuruş şansını artırır!
+
+charm_luck_name = Şans Tılsımı
+charm_luck_desc = Düşmanlardan düşen ganimet (drop) miktarını ikiye katlar!
+
+charm_wealth_name = Zenginlik Tılsımı
+charm_wealth_desc = Görünüşe göre parayı kendine çekiyorsun...
+
+charm_peace_name = Barış Tılsımı
+charm_peace_desc = Düşmanların verdiği hasar %50 azalır, üstelik tavuklar!
+
+charm_haste_name = Çeviklik Tılsımı
+charm_haste_desc = Çağrılan Müttefiklerin adımlarına hız katar.
+
+charm_friendship_name = Dost Savaşçı Tılsımı
+charm_friendship_desc = İri kıyım, gümüş zırhlı ve süper güçlü Savaşçı kankanı çağır! 
+
+charm_friendship_power_name = Güçlü Dost Savaşçı Tılsımı
+charm_friendship_power_desc = Güç Tılsımı kuşanmış iri kıyım, gümüş zırhlı ve süper güçlü Savaşçı kankanı çağır!
+
+charm_friendpanzer_name = Dost Panzer Tılsımı
+charm_friendpanzer_desc = İri kıyım, altın zırhlı ve süper güçlü Panzer kankanı çağır! 
+
+charm_friendpanzer_luck_name = Şanslı Panzer Tılsımı
+charm_friendpanzer_luck_desc = Şans Tılsımı kuşanmış iri kıyım, altın zırhlı ve süper güçlü Panzer kankanı çağır!
+
+charm_friendspearman_name = Dost Mızrakçı Tılsımı
+charm_friendspearman_desc = İri kıyım, mor zırhlı ve süper güçlü Mızrakçı kankanı çağır! 
+
+charm_friendspearman_haste_name = Çevik Mızrakçı Tılsımı
+charm_friendspearman_haste_desc = Çeviklik Tılsımı kuşanmış iri kıyım, mor zırhlı ve süper güçlü Mızrakçı kankanı çağır!
+
+charm_friendnobunaga_name = Dost Nobunaga Tılsımı
+charm_friendnobunaga_desc = İri kıyım yeni kankan Nobunaga'yı çağır!
+
+charm_friendnobunaga_luck_name = Şanslı Nobunaga Tılsımı
+charm_friendnobunaga_luck_desc = Şans Tılsımı kuşanmış iri kıyım Nobunaga'yı çağır!
+
+charm_friendtakeda_name = Dost Takeda Tılsımı
+charm_friendtakeda_desc = İri kıyım yeni kankan Takeda Shingen'i çağır!
+
+charm_friendtakeda_wealth_name = Zengin Takeda Tılsımı
+charm_friendtakeda_wealth_desc = Zenginlik Tılsımı kuşanmış iri kıyım Takeda'yı çağır!
+
+charm_friendassassin_name = Dost Suikastçı Tılsımı
+charm_friendassassin_desc = Dost canlısı Suikastçını çağır!
+
+charm_friendassassin_peace_name = Barışçıl Suikastçı Tılsımı
+charm_friendassassin_peace_desc = Barış Tılsımı kuşanmış dost canlısı Suikastçını çağır!
+
+charm_friendfarmer_name = Dost Çiftçi Tılsımı
+charm_friendfarmer_desc = İri kıyım ve sadık dostun Çiftçiyi çağır!
+
+charm_friendfarmer_wealth_name = Zengin Çiftçi Tılsımı
+charm_friendfarmer_wealth_desc = Zenginlik Tılsımı kuşanmış iri kıyım ve sadık Çiftçiyi çağır!
+
+charm_z_holy_name = Ölüleri Dirilt Tılsımı
+charm_z_holy_desc = Kahramanı öldükten sonra diriltir ve ekrandaki tüm düşmanları katleder.
+
+charm_z_happiness_name = Mutluluk Tılsımı
+charm_z_happiness_desc = Altınları, beyinleri ve düşen eşyaları kahramana doğru çeker.
+
+charm_z_power_name = Güç Tılsımı
+charm_z_power_desc = Kritik vuruş şansını artırır!
+
+charm_z_luck_name = Şans Tılsımı
+charm_z_luck_desc = Düşmanlardan düşen ganimet (drop) miktarını ikiye katlar!
+
+charm_z_wealth_name = Zenginlik Tılsımı
+charm_z_wealth_desc = Görünüşe göre parayı kendine çekiyorsun...
+
+charm_z_peace_name = Barış Tılsımı
+charm_z_peace_desc = Düşmanların verdiği hasar %50 azalır, üstelik tavuklar!
+
+charm_z_haste_name = Çeviklik Tılsımı
+charm_z_haste_desc = Çağrılan Müttefiklerin adımlarına hız katar.
+
+charm_friendoni_name = Oni Tılsımı
+charm_friendoni_desc = Oni Tılsımı en büyük en güçlü Oni'yi çağırır!
+charm_wanyudofire_name = Ateş Wanyudo Tılsımı
+charm_wanyudofire_desc = Ateş Wanyudo Tılsımı devasa ve yıkıcı bir ateş Wanyudo çağırır!
+charm_wanyudometal_name = Metal Wanyudo Tılsımı
+charm_wanyudometal_desc = Metal Wanyudo Tılsımı çok dayanıklı bir metal Wanyudo çağırır!
+charm_jurogumo_name = Jurogumo Tılsımı
+charm_jurogumo_desc = Jurogumo Tılsımı güçlü bir Jurogumo çağırır ve ölünce yavrular bırakır!
+helper_charm_wanyudofire_name = Ateş Wanyudo Tılsımı
+helper_charm_wanyudofire_desc = Devasa ve yıkıcı bir ateş Wanyudo çağırır.
+helper_charm_wanyudometal_name = Metal Wanyudo Tılsımı
+helper_charm_wanyudometal_desc = Çok dayanıklı bir metal Wanyudo çağırır.
+helper_charm_jurogumo_name = Jurogumo Tılsımı
+helper_charm_jurogumo_desc = Güçlü bir Jurogumo çağırır ve ölünce yavrular bırakır.
+
+charm_friendhorde_name = Sürü Tılsımı
+charm_friendhorde_desc = Yanına koca bir sürü (Horde) çağır!
+
+/------------------------------------------------------------------
+/ Potions
+/------------------------------------------------------------------
+
+potion_healsmall_name = Suşi
+potion_healsmall_desc = Canı (Health) tamamen doldurur!
+
+potion_healbig_name = Suşi Tabağı
+potion_healbig_desc = Kahramanın ve Müttefiklerin canını tamamen doldurur!
+
+potion_leadersmall_name = Bir Fincan Çay 
+potion_leadersmall_desc = +25 Liderlik! Savaşta Birlikler çağırmak için Liderliği kullan!
+
+potion_leaderbig_name = Bir Demlik Çay
+potion_leaderbig_desc = +50 Liderlik! Savaşta Birlikler çağırmak için Liderliği kullan!
+
+potion_revive_name = Dirilme
+potion_revive_desc = Öldükten sonra Kahramanı diriltir!
+
+potion_z_healsmall_name = Çürük Suşi
+potion_z_healsmall_desc = Canı tamamen doldurur!
+
+potion_z_healbig_name = Çürük Suşi Tabağı
+potion_z_healbig_desc = Kahramanın ve Müttefiklerin canını tamamen doldurur!
+
+potion_z_leadersmall_name = Mezar 
+potion_z_leadersmall_desc = +25 Beyin! Savaşta Zombiler çağırmak için Beyinleri kullan!
+
+potion_z_leaderbig_name = Mezarlık
+potion_z_leaderbig_desc = +50 Beyin! Savaşta Zombiler çağırmak için Beyinleri kullan!
+
+potion_z_revive_name = Dirilme
+potion_z_revive_desc = Öldükten sonra Kahramanı diriltir!
+
+
+/------------------------------------------------------------------
+/ Deal Packs
+/------------------------------------------------------------------
+
+dealpack1_name = Özel Hoş Geldin Paketi!
+dealpack1_desc = Başlangıç için sana çok yarayacak iki değerli Dirilme, iksirler ve tılsımlar!
+
+dealpack2_name = Harika Fırsat Paketi!
+dealpack2_desc = İşler sarpa sardığında bu paket seni gerçekten ipten alabilir!
+
+dealpack3_name = Süper Fırsat Paketi!
+dealpack3_desc = Bu paketteki eşyalar moralini adeta tavan yaptıracak!
+
+dealpack4_name = Hükmetme Paketi!
+dealpack4_desc = Nadir ve güçlü eşyaların karışımı olan bu paketle Zombi düşmanlarına tamamen hükmet!
+
+dealpack5_name = Dostluk Tılsımı Fırsat Paketi!
+dealpack5_desc = Bu özel ve sınırlı süreli fırsat paketiyle Zombi Sürüsünü (Horde) ezip geç!
+
+/------------------------------------------------------------------
+/ Store Menu
+/------------------------------------------------------------------
+
+store_title = Samuray Dükkanı
+store_meditate_btn = MEDİTASYONA GİT
+
+store_tap_joy = BEDAVA\nGlu Kredisi!
+
+store_unlockatwave = Dalga {0}'da Açılır
+store_findInPresent = İpucu: Bu hediyeleri gözden kaçırma!
+store_find_frostie = Ayaz Okçu'yu Bul!
+store_find_swordsmith = Demirci'yi Bul!
+store_find_rifleman = Tüfekçi'yi Bul!
+store_find_takeda = Takeda Shingen'i Bul!
+store_find_ninja_girl = Suikastçı'yı Bul!
+store_find_necromancer = Ölü Çağıran'ı Bul!
+
+store_leadership_desc = Liderlik barının {0}. seviyeden başlamasını sağlar.
+
+store_format_level_hero = Kahramanı {0}. Seviyeye Yükselt
+store_format_recruit = {0} Kirala
+store_format_levelup = {0}'i {1}. Seviyeye Yükselt
+store_format_smithy_levelup = Liderliği {0}. Seviyeye Yükselt
+store_format_sword_levelup = Kılıcı {0}. Seviyeye Yükselt
+store_format_bow_levelup = Yayı {0}. Seviyeye Yükselt
+store_format_gate_levelup = Kutsal Geçidi {0}. Seviyeye Yükselt
+store_format_purchase_atlevel = {0} Satın Al
+store_format_upgrade_tolevel = {0}'i {1}. Seviyeye Yükselt
+store_format_purchase_x_items = {0} {1} Satın Al
+store_format_purchase = {0} Satın Al
+
+store_format_zombiegate_levelup = Cehennem Geçidini {0}. Seviyeye Yükselt
+store_format_brains_levelup = Beyinleri {0}. Seviyeye Yükselt
+
+undeath_levelup_name = Ölümsüzlük (Undeath)
+undeath_levelup_desc = Zombilerin can yenileme (regen) hızını artırır.
+
+store_currencytab0 = Altın Satın Al.
+store_currencytab1 = Glu Kredisi Satın Al.
+
+store_percent_off = (-%{0})
+store_free = BEDAVA!
+
+earnsdoublecoins_title = Sonsuza dek iki kat altın kazan
+earnsdoublecoins_desc = Bu tek seferlik satın alma, her iki modda da Dalgalar sırasında topladığın altınların değerini ikiye katlar.
+pachinkopack_title = {0} Pachinko Topu
+pachinkopack_desc = Pachinko makinesinde kullanmak üzere {0} Pachinko Topu içeren paket.
+
+pachinkocounter_sing = {0} Top
+pachinkocounter_plurial = {0} Top
+
+revive_plural = {0} dirilme\nkaldı
+revive_singular = 1 dirilme\nkaldı
+revive_none = Dirilme\nkalmadı
+
+legion_name = Başıboş Lejyon
+legion_desc = Belirli aralıklarla ölümsüz birliklerden oluşan lejyonlar çağırır.
+
+deathfromabove_name = Gökten Gelen Ölüm
+deathfromabove_desc = Belirli aralıklarla uçan birliklerden oluşan bir sürü çağırır.
+
+bitten_name = Isırılmış
+bitten_desc = Köy okçularını senin için savaşan zombilere dönüştür!
+
+/------------------------------------------------------------------
+/ IAP Store Menu
+/------------------------------------------------------------------
+
+iap_error_syncfailed = Önceki satın alımlarını senkronize edemedik. Lütfen daha sonra tekrar dene.
+iap_error_syncunknown = Önceki satın alımlarını senkronize etmeye çalışırken bilinmeyen bir sorunla karşılaştık. Lütfen daha sonra tekrar dene.
+iap_error_requesttimedout = Bağlantı zaman aşımına uğradı. Lütfen internet bağlantını kontrol et ve daha sonra tekrar dene.
+iap_error_requestfailed = Bağlantı kuramadık. Lütfen internet bağlantını kontrol et ve daha sonra tekrar dene.
+iap_error_requestunknown = Bilinmeyen bir hata oluştu. Lütfen internet bağlantını kontrol et ve daha sonra tekrar dene.
+iap_error_buycancelled = Satın alma işlemin iptal edildi. Lütfen daha sonra tekrar dene.
+iap_error_buyfailed = Satın alma siparişin başarısız oldu. Lütfen daha sonra tekrar dene.
+iap_error_buyunknown = Siparişin işlenirken bilinmeyen bir sorun oluştu ve işlem iptal edildi. Lütfen daha sonra tekrar dene.
+iap_error_novalidproducts = Herhangi bir geçerli ürün bulamadık. Lütfen daha sonra tekrar dene.
+
+iap_error_parentalrestrictions = Sistem ayarların uygulama içi satın alımlara izin vermiyor.
+iap_error_unavailable = Satın alımlar şu anda kullanılamıyor. Lütfen daha sonra tekrar dene.
+
+/------------------------------------------------------------------
+/ TapJoy
+/------------------------------------------------------------------
+TapJoy_Awarded_Gems_Message_Pre_Text = TapJoy sana şunları kazandırdı: 
+TapJoy_Awarded_Gems_Message_Post_Text = Katıldığın için teşekkürler.
+
+/------------------------------------------------------------------
+/ iCloud
+/------------------------------------------------------------------
+iCloud_Message_Text = Oyununu iCloud hesabına kaydetmek mi yoksa oradan yüklemek mi istersin?
+iCloud_Load_Button_Text = Yükle
+iCloud_Save_Button_Text = Kaydet
+No_iCloud_Notification_Message_Text = iCloud Servisine ulaşılamadı. 
+iCloud_Save_Started_Notification_Message_Text = Kayıt dosyan iCloud Servisine yüklenmek üzere sıraya alındı.
+iCloud_File_Not_Found_Notification_Message_Text = iCloud Servisinde kayıt dosyası bulunamadı.	
+iCloud_Data_Loaded_Message_Text = Kayıt verilerin iCloud Servisinden başarıyla yüklendi.
+iCloud_Timed_Out_Message_Text = Verilerin yüklenemeden iCloud Servisi ile bağlantı koptu. Lütfen tekrar dene.
+
+
+/------------------------------------------------------------------
+/ Debriefing Menu
+/------------------------------------------------------------------
+
+debrief_title = Dalga {0}:
+debrief_title_bonus = Bonus Dalga: 
+
+debrief_you_unlocked = Şunun Kilidini Açtın:
+debrief_awarded = Zafer Ödülü:
+debrief_collected = Toplanan:
+debrief_total = Toplam:
+debrief_victory = Zafer!
+debrief_lost = Savaşı Kaybettin!
+
+
+/------------------------------------------------------------------
+/ Chapters
+/------------------------------------------------------------------
+
+chapter_title_summer = Yaz
+chapter_title_fall = Sonbahar
+chapter_title_winter = Kış
+chapter_title_spring = İlkbahar
+chapter_title_hell = Kaos
+chapter_title_new1 = Öte Diyar: Yaz
+chapter_title_new2 = Öte Diyar: Sonbahar
+chapter_title_new3 = Öte Diyar: Kış
+chapter_title_new4 = Öte Diyar: İlkbahar
+chapter_title_new5 = Son Kapı
+chapter_title_gemini8 = Öte Diyar: Kış
+chapter_title_gemini9 = Öte Diyar: İlkbahar
+chapter_title_gemini10 = Son Kapı
+chapter_title_codex8 = Öte Diyar: Kış
+chapter_title_codex9 = Öte Diyar: İlkbahar
+chapter_title_codex10 = Son Kapı
+
+chapter_title_zombiehell1 = Yeraltı Dünyası
+chapter_title_zombiehell2 = Araf
+chapter_title_zombiehell3 = Kaos
+chapter_title_zombiehell4 = Kaos Yukseliyor
+chapter_title_zombiehell5 = Son Kaos
+chapter_title_zombiehell6 = Kiyamet Kapisi
+chapter_title_zombiehell7 = Son Kiyamet
+chapter_title_zombiehell8 = Ucurum Taci
+chapter_title_zombiehell9 = Kiyamet Hakimiyeti
+chapter_title_zombiehell10 = Dunyanin Sonu
+zombie_endgame_message = Tebrikler, ölülerin komutanı!\nTüm dalgaları aştın ve son samuray ordusunu da yıktın.\nDünyanın Sonu tamamlandı, zombi sürüsü artık zaferin sahibi.\nFetih bitti; ama bu kabusu istediğin zaman yeniden başlatabilirsin.
+zombie_endgame_continue = Devam etmek için ekrana dokun.
+
+chapter_wave_num = Dalga\n{0}
+
+chapter_screen_locked = Dalga {0}'ı geçtikten sonra, tekrar oynamak istediğin dalgaları seçebileceksin!
+
+waveselect_inst = Dalga seçmek için dokun
+waveselect_inst_pc = Dalga seçmek için tıkla
+
+/------------------------------------------------------------------
+/ Push Notifications
+/------------------------------------------------------------------
+
+Push_Notification_Message_Text = Samurai Vs Zombies Defense'e geri dön ve günlük ödülünü hemen kap!
+Push_Notification_Button_Text = SvZ
+
+No_Internet_Notification_Message_Text = Bu özellik internet bağlantısı gerektirir.
+
+/------------------------------------------------------------------
+/ Tutorial
+/------------------------------------------------------------------
+
+tutorial_store_intro = Samuray Dükkanına hoş geldin! Buradan kahramanını güçlendirebilir (upgrade), köylüleri kiralayabilir ve köy savunmalarını geliştirebilirsin.
+tutorial_dealpacks = Samuray'ın güce susamış durumda. Onu bugün Hoş Geldin Paketindeki bu değerli eşyalarla besle!
+
+tutorial_ingame_gate = Kutsal Geçidi koru!
+tutorial_ingame_movements = Hareket etmek için ekranın sol veya sağ tarafına dokun.
+tutorial_ingame_attack = Düşmanlar menzile girdiğinde Kahraman otomatik olarak saldıracaktır.
+tutorial_ingame_ability = Özel bir saldırı yapmak için Katana Kesişi simgesine dokun!
+
+tutorial_ingame_leadership = Liderlik zamanla birikir. Müttefikler çağırmak için liderliği kullan.
+tutorial_ingame_allies = Yeterli liderliğin var. Onu çağırmak için müttefik simgesine dokun!
+tutorial_ingame_flying = Uçan düşmanlar sadece yay kullanarak alt edilebilir. Yayını kullanmak için geri adım at.
+
+tutorial_bonus_1 = Bir Bonus Dalganın kilidini açtın! Kahramanın bu dalga boyunca saldıramaz.
+tutorial_bonus_2 = Senin için özel müttefikler sağlandı. Zombileri yenmek için onları çağır!
+tutorial_bonus_3 = Bonus Dalgalarda varsayılan olarak bir tılsım kuşanılır. Artırılmış ganimet düşüşü (drop) için Şans Tılsımın aktif!
+tutorial_bonus_4 = Her beş dalgada bir Bonus Dalganın kilidi açılır!
+
+tutorial_pachinko_lever = Bir Pachinko Topu fırlatmak için kolu çek! Oyunda aynı anda birden fazla top olabilir! Topları olabildiğince hızlı fırlatmaya çalış!
+tutorial_pachinko_spin = Slot makinesini çevirmek ve ödüller kazanmak için ortayı hedefle! Ödüller arasında Altın, Glu Kredisi, Suşi, Çay ve Tılsımlar var!
+tutorial_pachinko_multiplier = Oyunda ne kadar çok topun olursa çarpan da o kadar artar. Çiçeklerden daha fazla altın kazanmak için çarpanı yükselt!
+
+tutorial_boosterpacks_free = Bedava bir takviye paketi (Booster Pack) kazandın, paketini açmak için buraya dokun!
+
+/------------------------------------------------------------------
+/ Tutorial PC
+/------------------------------------------------------------------
+
+tutorial_ingame_gate_pc = Kutsal Geçidi koru!
+tutorial_ingame_movements_pc = Hareket etmek için A/D tuşlarına bas.
+tutorial_ingame_attack_pc = Düşmanlar menzile girdiğinde Kahraman otomatik olarak saldıracaktır.
+tutorial_ingame_ability_pc = Özel bir saldırı yapmak için E/R tuşlarına bas!
+
+tutorial_ingame_leadership_pc = Liderlik zamanla birikir. Müttefikler çağırmak için liderliği kullan.
+tutorial_ingame_allies_pc = Yeterli liderliğin var. Onu çağırmak için 1'e bas!
+tutorial_ingame_flying_pc = Uçan düşmanlar sadece yay kullanarak alt edilebilir. Yayını kullanmak için geri adım at.
+
+/------------------------------------------------------------------
+/ Daily Reward Popup
+/------------------------------------------------------------------
+Daily_Rewards = Günlük Ödüller
+Daily_Reward_Unlock_Subtitle = Tebrikler!
+Daily_Reward_Unlock_Body = Üst üste birkaç gün oynayarak bir Günlük Ödül kazandın!
+
+/------------------------------------------------------------------
+/ Options menu
+/------------------------------------------------------------------
+
+options_confirmreset = Yaptığın satın alımlar da dahil olmak üzere tüm verilerini silmek üzeresin. Devam etmek istiyor musun?
+
+
+/------------------------------------------------------------------
+/ Revive
+/------------------------------------------------------------------
+
+revive_title = Öldün. Eğer bir Dirilme kullanmazsan şunları kaybedeceksin:
+revive_title_nospoil = Öldün.
+revive_use1 = Dirilme kullanılsın mı?
+revive_useX = Sahip olduğun {0} Dirilmeden birini kullanmak ister misin?
+revive_purchase = Dirilmek ister misin?
+
+/------------------------------------------------------------------
+/ Pachinko
+/------------------------------------------------------------------
+
+coin100 = 100 Altın
+coin1000 = 1000 Altın
+coin500 = 500 Altın
+coin5000 = 5000 Altın
+gem25 = 25 Glu Kredisi
+gem10 = 10 Glu Kredisi
+gem5 = 5 Glu Kredisi
+lucky = Şans Tılsımı
+power = Güç Tılsımı
+haste = Çeviklik Tılsımı
+friendship = Dostluk
+wealth = Zenginlik
+peace = Barış Tılsımı
+revive = Dirilme
+sushi = Suşi
+sushiplater = Suşi Tabağı
+teacup = Bir Fincan Çay
+teapot = Bir Demlik Çay
+
+pachinkohelp_title = Pachinko Kuralları
+pachinkohelp_desc = Topları fırlat ve slot makinesini çevirmek için onları ortaya sokmaya çalış. Kazanmak için aşağıdaki simgelerden 3 tanesini eşleştir:
+pachinkohelp_food = Suşi ve Çay
+pachinkohelp_revive = Dirilme
+pachinkohelp_charms = Tılsımlar
+pachinkohelp_coins = Altınlar
+pachinkohelp_gems = Glu Kredileri
+
+pachinkosum_title = Tebrikler!
+pachinkosum_desc = Pachinko oynayarak şu ödülleri kazandın:
+	
+
+/------------------------------------------------------------------
+/ Rate My Game dialog
+/------------------------------------------------------------------
+rate_me_title = Oyunumuza Puan Ver!
+like_our_game = Samurai Vs Zombies Defense'i oynamaktan keyif alıyor musun? Gelecekteki güncellemeleri garantilemek için lütfen oyunumuza puan ver!
+cancel_rating = Hayır, teşekkürler
+rate_it = Oyunumuza Puan Ver!
+rate_me_url = http://gcs.glu.com/gcs/iphone/iphone.jsp?t=samuzombie&src=samuzombie&p=iphone&page=review
+never_rate = Asla
+
+/------------------------------------------------------------------
+/ Version check
+/------------------------------------------------------------------
+New_Version_Notification_Message_Text = Uygulama mağazasında Samurai Vs Zombies: Defense'in yeni bir sürümü var. Lütfen devam etmeden önce güncellemeyi indir.
+New_Version_Notification_Message_Text_Google = Google Play'de Samurai Vs Zombies Defense'in yeni bir sürümü mevcut. Lütfen devam etmeden önce güncellemeyi indir.
+New_Version_Notification_Message_Text_Amazon = Amazon Store'da Samurai Vs Zombies Defense'in yeni bir sürümü mevcut. Lütfen devam etmeden önce güncellemeyi indir.
+version_file_location = https://s3.amazonaws.com/griptonite/svz/android/force_upgrade/version.txt
+version_file_location_live = https://d2lk18ssnvgdhj.cloudfront.net/svz/android/force_upgrade/live/version.txt
+version_file_location_stage = https://s3.amazonaws.com/griptonite/svz/android/force_upgrade/stage/version.txt
+amazon_version_file_location_live = https://d2lk18ssnvgdhj.cloudfront.net/svz/android/force_upgrade/live/amazon_version.txt
+amazon_version_file_location_stage = https://s3.amazonaws.com/griptonite/svz/android/force_upgrade/stage/amazon_version.txt
+
+/------------------------------------------------------------------
+/ Hints (Recommandations dialog)
+/------------------------------------------------------------------
+hints_title = İpucu!
+
+
+/------------------------------------------------------------------
+/ Booster Pack Store
+/------------------------------------------------------------------
+
+boosterstore_warning_helper = UYARI! {0} için seviye sınırına zaten ulaştın. Bu Paketi yine de satın almak istiyor musun?
+
+normal_store_link_title = \nTakviye\nPaketleri
+
+boosterpack_title_free = Ödül Paketi
+boosterpack_title_1 = Başlangıç Paketi
+boosterpack_title_2 = Standart Paket
+boosterpack_title_3 = Premium Paket
+boosterpack_title_4 = Jumbo Paket
+boosterpack_title_nobunaga = Nobunaga Paketi
+boosterpack_title_priest = Rahip Paketi
+boosterpack_title_swordsmith = Demirci Paketi
+boosterpack_title_rifleman = Tüfekçi Paketi
+boosterpack_title_takeda = Takeda Paketi
+boosterpack_title_frostee = Ayaz Okçu Paketi
+boosterpack_title_assassin = Suikastçı Paketi
+boosterpack_title_free_zm = Zombi Ödül Paketi
+boosterpack_title_zm_1 = Zombi Başlangıç Paketi
+boosterpack_title_zm_flying = Uçan Dehşet Paketi
+boosterpack_title_zm_ranged = Menzilli Sürü Paketi
+boosterpack_title_zm_wanyudometal = Metal Wanyudo Paketi
+boosterpack_title_zm_onicharm = Oni Tılsımı Paketi
+boosterpack_title_zm_wanyudofire_charm = Ateş Wanyudo Tılsımı Paketi
+boosterpack_title_zm_wanyudometal_charm = Metal Wanyudo Tılsımı Paketi
+boosterpack_title_zm_jurogumo_charm = Jurogumo Tılsımı Paketi
+boosterpack_title_zm_evilnobunaga = Evil Nobunaga Paketi
+boosterpack_title_zm_eviltakeda = Evil Takeda Paketi
+boosterpack_title_zm_necromancer = Ölü Dirilten Paketi
+boosterpack_title_zm_warlord = Savaş Lordu Paketi
+
+boosterpack_desc_free = 1 Yaygın (Common) Eşya.
+boosterpack_desc_1 = 1 Eşya. Kesin olarak 1 Yaygın (Common) veya Sıradışı (Uncommon) Eşya içerir.
+boosterpack_desc_2 = Toplam 6 Eşya. En az 1 Sıradışı (Uncommon) Eşyayı garantiler.
+boosterpack_desc_3 = Toplam 11 Eşya. En az 1 Nadir (Rare) Eşyayı garantiler.
+boosterpack_desc_4 = Toplam 21 Eşya. En az 1 Süper-Nadir (Super-Rare) Eşyayı garantiler.
+boosterpack_desc_nobunaga = Toplam 31 Eşya. En az 1 Aşırı-Nadir (Extreme-Rare) Eşyayı ve Nobunaga yükseltmesini (upgrade) garantiler.
+boosterpack_desc_priest = Toplam 31 Eşya. En az 1 Aşırı-Nadir Eşyayı ve Rahip yükseltmesini garantiler.
+boosterpack_desc_swordsmith = Toplam 31 Eşya. En az 1 Aşırı-Nadir Eşyayı garantiler ve Demirci'nin kilidini açar.
+boosterpack_desc_rifleman = Toplam 31 Eşya. En az 1 Aşırı-Nadir Eşyayı garantiler ve Tüfekçi'nin kilidini açar.
+boosterpack_desc_takeda = Toplam 31 Eşya. En az 1 Aşırı-Nadir Eşyayı ve Takeda yükseltmesini garantiler.
+boosterpack_desc_frostee = Toplam 31 Eşya. En az 1 Aşırı-Nadir Eşyayı ve Ayaz Okçu yükseltmesini garantiler.
+boosterpack_desc_assassin = Toplam 31 Eşya. En az 1 Aşırı-Nadir Eşyayı ve Suikastçı yükseltmesini garantiler.
+boosterpack_desc_free_zm = 1 Yaygın zombi eşyası.
+boosterpack_desc_zm_1 = 1 Eşya. Kesin olarak 1 Yaygın veya Sıradışı zombi eşyası içerir.
+boosterpack_desc_zm_flying = Toplam 6 Eşya. Tengu Air yükseltmesini garantiler.
+boosterpack_desc_zm_ranged = Toplam 6 Eşya. Zombie Rifleman ve Evil Ice Archer yükseltmelerini garantiler.
+boosterpack_desc_zm_wanyudometal = Toplam 6 Eşya. Metal Wanyudo yükseltmesini garantiler.
+boosterpack_desc_zm_onicharm = Toplam 6 Eşya. Oni Tılsımı ve nadir zombi eşyalarını garantiler.
+boosterpack_desc_zm_wanyudofire_charm = Toplam 6 Eşya. Ateş Wanyudo Tılsımı ve nadir zombi eşyalarını garantiler.
+boosterpack_desc_zm_wanyudometal_charm = Toplam 6 Eşya. Metal Wanyudo Tılsımı ve nadir zombi eşyalarını garantiler.
+boosterpack_desc_zm_jurogumo_charm = Toplam 6 Eşya. Jurogumo Tılsımı ve nadir zombi eşyalarını garantiler.
+boosterpack_desc_zm_evilnobunaga = Toplam 6 Eşya. Evil Nobunaga yükseltmesini garantiler.
+boosterpack_desc_zm_eviltakeda = Toplam 6 Eşya. Evil Takeda yükseltmesini garantiler.
+boosterpack_desc_zm_necromancer = Toplam 6 Eşya. Necromancer yükseltmesini ve en az 1 Aşırı-Nadir eşyayı garantiler.
+boosterpack_desc_zm_warlord = Toplam 9 Eşya. Evil Nobunaga, Evil Takeda ve Shogun yükseltmelerini garantiler.
+
+boosterpack_rarity_common = Yaygın
+boosterpack_rarity_uncommon = Sıradışı
+boosterpack_rarity_rare = Nadir
+boosterpack_rarity_super = Süper Nadir
+boosterpack_rarity_extreme = Aşırı Nadir
+
+boosterpack_card_coins_title = {0} Altın
+boosterpack_card_coins_desc = Bu kart {0} Altın kazandırır!
+boosterpack_card_gems_title = {0} Glu Kredisi
+boosterpack_card_gems_desc = Bu kart {0} Glu Kredisi kazandırır!
+boosterpack_card_balls_title = {0} Pachinko Topu
+boosterpack_card_balls_desc = Bu kart {0} Pachinko Topu kazandırır!
+
+boosterpack_card_revive_title = Dirilme x{0}
+boosterpack_card_revive_desc = Bu kart {0} Dirilme kazandırır!
+boosterpack_card_healthSmall_title = Suşi x{0}
+boosterpack_card_healthSmall_desc = Bu kart {0} Suşi kazandırır!
+boosterpack_card_healthBig_title = Suşi Tabağı x{0}
+boosterpack_card_healthBig_desc = Bu kart {0} Suşi Tabağı kazandırır!
+boosterpack_card_leadershipSmall_title = Çay Fincanı x{0}
+boosterpack_card_leadershipSmall_desc = Bu kart {0} Çay Fincanı kazandırır!
+boosterpack_card_leadershipBig_title = Çaydanlık x{0}
+boosterpack_card_leadershipBig_desc = Bu kart {0} Çaydanlık kazandırır!
+boosterpack_card_revive_zm_title = Zombi Dirilme x{0}
+boosterpack_card_revive_zm_desc = Bu kart {0} Zombi Dirilme kazandırır!
+boosterpack_card_health_zm_title = Zombi Can İksiri x{0}
+boosterpack_card_health_zm_desc = Bu kart {0} Zombi Can İksiri kazandırır!
+boosterpack_card_leadership_zm_title = Zombi Liderlik İksiri x{0}
+boosterpack_card_leadership_zm_desc = Bu kart {0} Zombi Liderlik İksiri kazandırır!
+boosterpack_card_oni_charm_title = Oni Tılsımı x{0}
+boosterpack_card_oni_charm_desc = Bu kart {0} Oni Tılsımı kazandırır!
+boosterpack_card_wanyudofire_charm_title = Ateş Wanyudo Tılsımı x{0}
+boosterpack_card_wanyudofire_charm_desc = Bu kart {0} Ateş Wanyudo Tılsımı kazandırır!
+boosterpack_card_wanyudometal_charm_title = Metal Wanyudo Tılsımı x{0}
+boosterpack_card_wanyudometal_charm_desc = Bu kart {0} Metal Wanyudo Tılsımı kazandırır!
+boosterpack_card_jurogumo_charm_title = Jurogumo Tılsımı x{0}
+boosterpack_card_jurogumo_charm_desc = Bu kart {0} Jurogumo Tılsımı kazandırır!
+
+boosterpack_card_power_title = Güç Tılsımı x{0}
+boosterpack_card_power_desc = Bu kart {0} Güç Tılsımı kazandırır!
+boosterpack_card_luck_title = Şans Tılsımı x{0}
+boosterpack_card_luck_desc = Bu kart {0} Şans Tılsımı kazandırır!
+boosterpack_card_wealth_title = Zenginlik Tılsımı x{0}
+boosterpack_card_wealth_desc = Bu kart {0} Zenginlik Tılsımı kazandırır!
+boosterpack_card_haste_title = Çeviklik Tılsımı x{0}
+boosterpack_card_haste_desc = Bu kart {0} Çeviklik Tılsımı kazandırır!
+boosterpack_card_peace_title = Barış Tılsımı x{0}
+boosterpack_card_peace_desc = Bu kart {0} Barış Tılsımı kazandırır!
+
+boosterpack_card_friendship_title = Savaşçı Tılsımı x{0}
+boosterpack_card_friendship_desc = Bu kart {0} Savaşçı Tılsımı kazandırır!
+boosterpack_card_friendship+power_title = Güçlü Dost Savaşçı Tılsımı x{0}
+boosterpack_card_friendship+power_desc = Bu kart {0} Güçlü Dost Savaşçı Tılsımı kazandırır!
+boosterpack_card_panzer_title = Panzer Tılsımı x{0}
+boosterpack_card_panzer_desc = Bu kart {0} Panzer Tılsımı kazandırır!
+boosterpack_card_panzer+luck_title = Şanslı Panzer Tılsımı x{0}
+boosterpack_card_panzer+luck_desc = Bu kart {0} Şanslı Panzer Tılsımı kazandırır!
+boosterpack_card_spear_title = Mızrakçı Tılsımı x{0}
+boosterpack_card_spear_desc = Bu kart {0} Mızrakçı Tılsımı kazandırır!
+boosterpack_card_spear+haste_title = Çevik Mızrakçı Tılsımı x{0}
+boosterpack_card_spear+haste_desc = Bu kart {0} Çevik Mızrakçı Tılsımı kazandırır!
+boosterpack_card_nobu_title = Nobunaga Tılsımı x{0}
+boosterpack_card_nobu_desc = Bu kart {0} Nobunaga Tılsımı kazandırır!
+boosterpack_card_nobu+luck_title = Şanslı Nobunaga Tılsımı x{0}
+boosterpack_card_nobu+luck_desc = Bu kart {0} Şanslı Nobunaga Tılsımı kazandırır!
+boosterpack_card_takedacharm_title = Takeda Tılsımı x{0}
+boosterpack_card_takedacharm_desc = Bu kart {0} Takeda Tılsımı kazandırır!
+boosterpack_card_takedacharm+wealth_title = Zengin Takeda Tılsımı x{0}
+boosterpack_card_takedacharm+wealth_desc = Bu kart {0} Zengin Takeda Tılsımı kazandırır!
+boosterpack_card_assassincharm_title = Suikastçı Tılsımı x{0}
+boosterpack_card_assassincharm_desc = Bu kart {0} Suikastçı Tılsımı kazandırır!
+boosterpack_card_assassincharm+peace_title = Barışçıl Suikastçı Tılsımı x{0}
+boosterpack_card_assassincharm+peace_desc = Bu kart {0} Barışçıl Suikastçı Tılsımı kazandırır!
+boosterpack_card_farmer_title = Çiftçi Tılsımı x{0}
+boosterpack_card_farmer_desc = Bu kart {0} Çiftçi Tılsımı kazandırır!
+boosterpack_card_farmer+wealth_title = Zengin Çiftçi Tılsımı x{0}
+boosterpack_card_farmer+wealth_desc = Bu kart {0} Zengin Çiftçi Tılsımı kazandırır!
+
+boosterpack_card_swordsmith_title = Demirci Kilidini Aç
+boosterpack_card_swordsmith_desc = Demirci'nin kilidini aç!
+boosterpack_card_rifleman_title = Tüfekçi Kilidini Aç
+boosterpack_card_rifleman_desc = Tüfekçi'nin kilidini aç!
+boosterpack_card_nobunaga_title = Nobunaga Yükseltmesi x{0}
+boosterpack_card_nobunaga_desc = Nobunaga'nı {0} seviye yükselt!
+boosterpack_card_priest_title = Rahip Yükseltmesi x{0}
+boosterpack_card_priest_desc = Rahibini {0} seviye yükselt!
+boosterpack_card_takeda_title = Takeda Yükseltmesi x{0}
+boosterpack_card_takeda_desc = Takeda'nı {0} seviye yükselt!
+boosterpack_card_frosty_title = Ayaz Okçu Yükseltmesi x{0}
+boosterpack_card_frosty_desc = Ayaz Okçu'nu {0} seviye yükselt!
+boosterpack_card_assassin_title = Suikastçı Yükseltmesi x{0}
+boosterpack_card_assassin_desc = Suikastçını {0} seviye yükselt!
+boosterpack_card_tenguair_title = Tengu Air Yükseltmesi x{0}
+boosterpack_card_tenguair_desc = Tengu Air'ini {0} seviye yükselt!
+boosterpack_card_zombierifleman_title = Zombie Rifleman Yükseltmesi x{0}
+boosterpack_card_zombierifleman_desc = Zombie Rifleman'ını {0} seviye yükselt!
+boosterpack_card_evilicearcher_title = Evil Ice Archer Yükseltmesi x{0}
+boosterpack_card_evilicearcher_desc = Evil Ice Archer'ını {0} seviye yükselt!
+boosterpack_card_necromancer_title = Necromancer Yükseltmesi x{0}
+boosterpack_card_necromancer_desc = Necromancer'ını {0} seviye yükselt!
+boosterpack_card_jurogumo_title = Jurogumo Yükseltmesi x{0}
+boosterpack_card_jurogumo_desc = Jurogumo'nu {0} seviye yükselt!
+boosterpack_card_wanyudometal_title = Metal Wanyudo Yükseltmesi x{0}
+boosterpack_card_wanyudometal_desc = Metal Wanyudo'nu {0} seviye yükselt!
+boosterpack_card_evilnobunaga_title = Evil Nobunaga Yükseltmesi x{0}
+boosterpack_card_evilnobunaga_desc = Evil Nobunaga'nı {0} seviye yükselt!
+boosterpack_card_eviltakeda_title = Evil Takeda Yükseltmesi x{0}
+boosterpack_card_eviltakeda_desc = Evil Takeda'nı {0} seviye yükselt!
+boosterpack_card_shogun_title = Shogun Yükseltmesi x{0}
+boosterpack_card_shogun_desc = Shogun'unu {0} seviye yükselt!
+
+
+/------------------------------------------------------------------
+/ Achievements
+/------------------------------------------------------------------
+
+achievement_notext = Başarım Kazanıldı!
+
+SAMUZOMBIE_ACHIEVE_TAKE_AIM = Nişan Al
+SAMUZOMBIE_ACHIEVE_NEVER_GIVE_UP = Asla Pes Etme
+SAMUZOMBIE_ACHIEVE_RIDE_LIKE_THE_WIND = Rüzgar Gibi Sür
+SAMUZOMBIE_ACHIEVE_HIS_AMBITION = Onun İhtirası
+SAMUZOMBIE_ACHIEVE_PANZER_BLITZ = Panzer Baskını
+SAMUZOMBIE_ACHIEVE_THE_HORSE_LORD = Atların Efendisi
+SAMUZOMBIE_ACHIEVE_HOLY_MOLEY = Kutsal Aşkına!
+SAMUZOMBIE_ACHIEVE_AT_THE_READY = Hazır Ol
+SAMUZOMBIE_ACHIEVE_MUST_HAVE_MAGIC = Kesinlikle bir sihir olmalı...
+SAMUZOMBIE_ACHIEVE_FROM_THE_FIELDS = Tarlalardan Gelenler
+SAMUZOMBIE_ACHIEVE_NEVER_SAW_IT_COMING = Hiç Beklemiyordu
+SAMUZOMBIE_ACHIEVE_SOMEONE_UP_THERE = Yukarıda Birileri Var...
+SAMUZOMBIE_ACHIEVE_LAST_STAND = Son Direniş
+SAMUZOMBIE_ACHIEVE_FOLLOW_ANYWHERE = Seninle Ölüme Bile Gider...
+SAMUZOMBIE_ACHIEVE_DING_DONG = Ding Dong
+SAMUZOMBIE_ACHIEVE_FROM_THE_HEAVENS = Göklerden Gelen
+SAMUZOMBIE_ACHIEVE_GIVE_THEM_A_VOLLEY = Üstlerine Ok Yağdır
+SAMUZOMBIE_ACHIEVE_MUSHASHI = Musashi
+SAMUZOMBIE_ACHIEVE_SLOTH = Uyuşuk
+SAMUZOMBIE_ACHIEVE_CATEGORY_5 = Kategori 5
+SAMUZOMBIE_ACHIEVE_ALL_OUT_MELEE = Amansız Göğüs Göğüse Çarpışma
+SAMUZOMBIE_ACHIEVE_FIGHT_WITH_HONOR = Onurunla Savaş
+SAMUZOMBIE_ACHIEVE_WITHOUT_A_TRACE = İz Bırakmadan
+SAMUZOMBIE_ACHIEVE_THIS_LAND_IS_SAFE = Bu Topraklar Güvende
+SAMUZOMBIE_ACHIEVE_MONEY_BAGS = Para Babası
+SAMUZOMBIE_ACHIEVE_SPIDER_DEMON = İblis Örümcek
+SAMUZOMBIE_ACHIEVE_NO_WAY = Yok Artık...
+SAMUZOMBIE_ACHIEVE_HALFWAY_THERE = Yolun Yarısı
+SAMUZOMBIE_ACHIEVE_GET_BACK_HERE = Buraya Geri Dön!
+SAMUZOMBIE_ACHIEVE_DONT_SPEND_ONE_PLACE = Hepsini Tek Bir Yerde Harcama
+SAMUZOMBIE_ACHIEVE_SEND_THEM_BACK = Onları Geri Gönder
+SAMUZOMBIE_ACHIEVE_ALL_WE_NEED = Tek İhtiyacımız Olan
+SAMUZOMBIE_ACHIEVE_CLEAR_THE_ROOM = Odayı Temizle
+SAMUZOMBIE_ACHIEVE_EVERY_ABLE_BODY = Eli Silah Tutan Herkes
+SAMUZOMBIE_ACHIEVE_WE_NEED_SHOTGUNS = Bize Pompalar Lazım
+SAMUZOMBIE_ACHIEVE_MUST_PROTECT_HOUSE = Bu Evi Korumalıyız
+SAMUZOMBIE_ACHIEVE_SO_LONG = Elveda
+SAMUZOMBIE_ACHIEVE_COMPLETIONIST = Başarım Avcısı
+SAMUZOMBIE_ACHIEVE_COWARD = Korkak
+SAMUZOMBIE_ACHIEVE_THEY_GOT_THIS = Bu İş Onlarda
+SAMUZOMBIE_ACHIEVE_RAZOR_SHARP = Jilet Gibi Keskin
+SAMUZOMBIE_ACHIEVE_WHOS_ALL_HERE = Kimler Gelmiş Kimler?
+SAMUZOMBIE_ACHIEVE_FINALLY = Sonunda...
+SAMUZOMBIE_ACHIEVE_THAT_TOOK_FOREVER = Bir Asır Sürdü Be
+SAMUZOMBIE_ACHIEVE_YOU_ARE_WINNER = Kazanan Sensin hahaha
+SAMUZOMBIE_ACHIEVE_SO_SHARP = Çok Keskin
+SAMUZOMBIE_ACHIEVE_TAKE_THE_SHOT = İşi Bitir
+SAMUZOMBIE_ACHIEVE_TEA_EARL_GREY_HOT = Çay, Earl Grey, Sıcak
+SAMUZOMBIE_ACHIEVE_WHERES_THE_WASABI = Wasabi Nerede?
+
+
+/------------------------------------------------------------------
+/ Narratives
+/------------------------------------------------------------------
+
+narrative_01 = Zombiler köyümüze açılan bir portal buldu. Kutsal Geçidi koru! Eğer geçidi yıkarlarsa köyümüzün hiç şansı kalmaz!
+narrative_04 = Sonbahar yaklaşıyor! Zombi Lord Oni geliyor! Hayatta kalmak için birliklerini güçlendir (upgrade)! Efsanevi Takeda Shingen sana yardım edebilir. Savaş alanındaki özel Altın Hediyelerin içinde bu nadir, kudretli savaşçıyı ara. Onu mutlaka bulmalısın! Dayanman gereken altı dalga kaldı!
+narrative_07 = Harika iş çıkardın Samuray, ama korkunç Lord Oni yaklaşıyor. Karanlıkla yüzleşmek için daha da güçlenmelisin! Sadece üç dalga kaldı!
+narrative_10 = Vakit geldi Samuray! Zombi Lord Oni'yi yenersen 5 Glu Kredisi, 1 Dirilme ve bir Şans Tılsımı kazanacaksın!
+narrative_11 = Zafer senin, ama işimiz daha bitmedi. Artık sonbahardayız ve portaldan daha fazla Zombi akın ediyor. Korkarım ki bunun arkasında yeni bir Zombi Lord var...
+narrative_12 = Ayaz Okçu (Frostie) sana yardım edebilir! Onun ölümcül okları düşmanlarını yavaşlatır. Savaş alanındaki özel Altın Hediyelerin içinde bu nadir, güçlü okçuyu ara.
+narrative_15 = Yıkım getiren Zombi Lord Tengu yakında burada olacak. Hazır olmalısın! Sadece beş dalga kaldı!
+narrative_18 = Tengu iyice yaklaştı ve yanında çetin bir Kış getiriyor. Birliklerini hazırla! Sadece iki dalga kaldı!
+narrative_20 = Büyük savaş kapıya dayandı! Tengu'yu yenersen 5 Glu Kredisi, 1 Dirilme ve bir Dostluk Tılsımı kazanacaksın!
+
+/------------------------------------------------------------------
+/ Misc
+/------------------------------------------------------------------
+
+bell_name = Koruyucu Çan
+village_archers_name = Köy Okçuları
+yes = EVET
+no = HAYIR
+ok = TAMAM
+exit = ÇIKIŞ
+leadership_level = svy {0}
+stat_level = Seviye {0}
+
+coins = Altın
+gems = Glu Kredisi
+coinsNum = {0} Altın
+gemsNum = {0} Glu Kredisi
+ballsNum = {0} Pachinko Topu
+
+add_wave = Dalga {0}
+add_bonus_wave = Bonus Dalga
+
+
+/------------------------------------------------------------------
+/ Sub Files
+/------------------------------------------------------------------
+
+credits_file = DefaultCredits
+legal_file = DefaultLegal
+
+/------------------------------------------------------------------
+/ Android
+/------------------------------------------------------------------
+
+quit_confirm = Çıkmak istediğinden emin misin?
+like_our_game_android = Samurai Vs Zombies Defense oynamaktan keyif alıyor musun?\n\nLütfen bize puan vererek 5 BEDAVA Glu Kredisi kazan!
+like_our_game_android_amazon = Samurai Vs Zombies Defense oynamaktan keyif alıyor musun?\n\nLütfen bize puan ver!
+rating_award = Tebrikler!\n5 Glu Kredisi ile ödüllendirildin!
+cancel_rating_android = Şimdi değil
+rate_it_android = Oyuna\npuan ver
+vip_btn_title = BEDAVA GLU KREDİSİ AL
+vip_btn_title_with_plan = avantajları gör

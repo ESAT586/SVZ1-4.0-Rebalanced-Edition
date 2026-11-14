@@ -10,7 +10,7 @@ HUDIcon = Sprites/Icons/enemy_jurogumo
 waveToUnlock = 21
 resourcesCost = 70.0
 cooldownTimer = 1.0
-attackFrequency = 1.0
+attackFrequency = 1.2
 
 spawnOnDeath = JurogumoBaby
 spawnOnDeathCount = 3
@@ -21,106 +21,101 @@ spawnOnDeathCount = 3
 /--------------------------------------------------
 
 [001]
-	cost = 0,34
-	health = 1810
+	cost = 0,24
+	health = 1550
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 405
-	knockbackPower = 50
-	knockbackResistance = 75
+	meleeRange = 110
+	meleeDamage = 240
+	knockbackPower = 40
+	knockbackResistance = 70
 
 [002]
-	cost = 0,34
-	health = 1965
+	cost = 0,24
+	health = 1900
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 450
-	knockbackPower = 50
-	knockbackResistance = 75
+	meleeRange = 110
+	meleeDamage = 280
+	knockbackPower = 40
+	knockbackResistance = 70
 
 [003]
-	cost = 0,34
-	health = 2145
+	cost = 0,26
+	health = 2300
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 490
-	knockbackPower = 50
-	knockbackResistance = 75
+	meleeRange = 110
+	meleeDamage = 325
+	knockbackPower = 42
+	knockbackResistance = 72
 
 [004]
-	cost = 0,40
-	health = 2357
+	cost = 0,28
+	health = 2750
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 523
-	knockbackPower = 55
-	knockbackResistance = 75
+	meleeRange = 110
+	meleeDamage = 375
+	knockbackPower = 42
+	knockbackResistance = 72
 
 [005]
-	cost = 0,40
-	health = 2591
+	cost = 0,30
+	health = 3250
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 585
-	knockbackPower = 55
+	meleeRange = 110
+	meleeDamage = 430
+	knockbackPower = 45
 	knockbackResistance = 75
 
 [006]
-	cost = 0,40
-	health = 2850
+	cost = 0,32
+	health = 3800
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 632
-	knockbackPower = 55
+	meleeRange = 110
+	meleeDamage = 485
+	knockbackPower = 45
 	knockbackResistance = 75
 
 [007]
-	cost = 0,46
-	health = 3135
+	cost = 0,36
+	health = 4400
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 670
-	knockbackPower = 60
-	knockbackResistance = 75
+	meleeRange = 110
+	meleeDamage = 540
+	knockbackPower = 48
+	knockbackResistance = 78
 
 [008]
-	cost = 0,46
-	health = 3450
+	cost = 0,40
+	health = 5000
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 750
-	knockbackPower = 60
-	knockbackResistance = 75
+	meleeRange = 110
+	meleeDamage = 595
+	knockbackPower = 48
+	knockbackResistance = 78
 
 [009]
-	cost = 0,46
-	health = 4140
+	cost = 0,44
+	health = 5600
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 818
-	knockbackPower = 60
-	knockbackResistance = 75
+	meleeRange = 110
+	meleeDamage = 640
+	knockbackPower = 50
+	knockbackResistance = 80
 
 [010]
-	cost = 0,50
-	health = 4965
+	cost = 0,48
+	health = 6200
 	speedMin = 150
 	speedMax = 150
-	meleeRange = 100
-	meleeDamage = 891
-	knockbackPower = 60
-	knockbackResistance = 75
-
-
-
-
-
+	meleeRange = 110
+	meleeDamage = 685
+	knockbackPower = 50
+	knockbackResistance = 80

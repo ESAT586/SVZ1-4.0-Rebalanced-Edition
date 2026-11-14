@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class WaveManager : WeakGlobalInstance<WaveManager>
@@ -46,6 +47,8 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 	private GameObject mSpawnEffect;
 
 	private GameObject mAltSpawnEffect;
+
+	private Dictionary<string, GameObject> mCachedPrefabs = new Dictionary<string, GameObject>();
 
 	private WaveRecyclingMultipliers mLevelMultipliers = new WaveRecyclingMultipliers();
 
@@ -235,45 +238,151 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 		return string.Format("{0}-{1}", waveNum.ToString(), waveLevel.ToString());
 	}
 
+	private SDFTreeNode mCachedNormalEnemies;
+	private SDFTreeNode mCachedZmEnemies;
+
+	private SDFTreeNode ResolveEnemyNode(string enemyID)
+	{
+		if (string.IsNullOrEmpty(enemyID)) return null;
+		SDFTreeNode node = (enemiesData != null) ? enemiesData.to(enemyID) : null;
+		if (node == null)
+		{
+			if (mCachedNormalEnemies == null && SingletonMonoBehaviour<ResourcesManager>.instance != null)
+			{
+				mCachedNormalEnemies = SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/Enemies");
+			}
+			if (mCachedNormalEnemies != null) node = mCachedNormalEnemies.to(enemyID);
+		}
+		if (node == null)
+		{
+			if (mCachedZmEnemies == null && SingletonMonoBehaviour<ResourcesManager>.instance != null)
+			{
+				mCachedZmEnemies = SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/Enemies_ZM");
+			}
+			if (mCachedZmEnemies != null) node = mCachedZmEnemies.to(enemyID);
+		}
+		return node;
+	}
+
+	private void PreloadEnemyById(string enemyID)
+	{
+		SDFTreeNode sDFTreeNode = ResolveEnemyNode(enemyID);
+		if (sDFTreeNode == null) return;
+		string prefabPath = sDFTreeNode["prefab"];
+		if (!string.IsNullOrEmpty(prefabPath))
+		{
+			WeakGlobalInstance<PrefabPreloader>.instance.Preload(prefabPath);
+		}
+		if (sDFTreeNode.hasAttribute("weaponMeleePrefab"))
+		{
+			string meleePath = sDFTreeNode["weaponMeleePrefab"];
+			if (!string.IsNullOrEmpty(meleePath) && !mCachedPrefabs.ContainsKey(meleePath))
+			{
+				mCachedPrefabs[meleePath] = Resources.Load(meleePath) as GameObject;
+			}
+		}
+		if (sDFTreeNode.hasAttribute("weaponRangedPrefab"))
+		{
+			string rangedPath = sDFTreeNode["weaponRangedPrefab"];
+			if (!string.IsNullOrEmpty(rangedPath) && !mCachedPrefabs.ContainsKey(rangedPath))
+			{
+				mCachedPrefabs[rangedPath] = Resources.Load(rangedPath) as GameObject;
+			}
+		}
+	}
+
 	public void PreloadEnemies()
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			List<string> p1Deck = SVZMultiplayerManager.Instance.P1Deck;
+			for (int i = 0; i < p1Deck.Count; i++)
+			{
+				if (SVZMultiplayerManager.IsZombieUnit(p1Deck[i]))
+				{
+					PreloadEnemyById(p1Deck[i]);
+				}
+			}
+			List<string> p2Deck = SVZMultiplayerManager.Instance.P2Deck;
+			for (int i = 0; i < p2Deck.Count; i++)
+			{
+				if (SVZMultiplayerManager.IsZombieUnit(p2Deck[i]))
+				{
+					PreloadEnemyById(p2Deck[i]);
+				}
+			}
+			return;
+		}
 		foreach (string mAllDifferentEnemy in mAllDifferentEnemies)
 		{
 			SDFTreeNode sDFTreeNode = enemiesData.to(mAllDifferentEnemy);
-			WeakGlobalInstance<PrefabPreloader>.instance.Preload(sDFTreeNode["prefab"]);
+			if (sDFTreeNode != null)
+			{
+				WeakGlobalInstance<PrefabPreloader>.instance.Preload(sDFTreeNode["prefab"]);
+			}
 		}
 	}
 
 	public SDFTreeNode GetEnemyData(string id)
 	{
-		return enemiesData.to(id);
+		return ResolveEnemyNode(id);
 	}
 
 	public void AddSpecialRewardsToCollectables()
 	{
-		if (rewards == null || rewards.attributeCount == 0 || Singleton<Profile>.instance.GetWaveLevel(mWaveIndex) != 1)
+		if (Singleton<Profile>.instance.GetWaveLevel(mWaveIndex) != 1)
 		{
 			return;
 		}
-		for (int i = 0; i < rewards.attributeCount; i++)
+		if (rewards != null && rewards.attributeCount > 0)
 		{
-			string[] array = rewards[i].Split(',');
-			switch (array[0])
+			for (int i = 0; i < rewards.attributeCount; i++)
 			{
-			case "coins":
-				WeakGlobalInstance<CollectableManager>.instance.GiveResource(ECollectableType.coin, int.Parse(array[1]));
-				break;
-			case "gems":
-				WeakGlobalInstance<CollectableManager>.instance.GiveResource(ECollectableType.gem, int.Parse(array[1]));
-				break;
-			case "balls":
-				WeakGlobalInstance<CollectableManager>.instance.GiveResource(ECollectableType.pachinkoball, int.Parse(array[1]));
-				break;
-			default:
-				WeakGlobalInstance<CollectableManager>.instance.GiveSpecificPresent(array[0]);
-				break;
+				string[] array = rewards[i].Split(',');
+				switch (array[0])
+				{
+				case "coins":
+					WeakGlobalInstance<CollectableManager>.instance.GiveResource(ECollectableType.coin, int.Parse(array[1]));
+					break;
+				case "gems":
+					WeakGlobalInstance<CollectableManager>.instance.GiveResource(ECollectableType.gem, int.Parse(array[1]));
+					break;
+				case "balls":
+					WeakGlobalInstance<CollectableManager>.instance.GiveResource(ECollectableType.pachinkoball, int.Parse(array[1]));
+					break;
+				default:
+					WeakGlobalInstance<CollectableManager>.instance.GiveSpecificPresent(array[0]);
+					break;
+				}
 			}
 		}
+		AddZombieMilestoneRewards();
+	}
+
+	private void AddZombieMilestoneRewards()
+	{
+		if (Singleton<PlayModesManager>.instance.selectedMode != "zombies" || mWaveIndex < 1 || mWaveIndex > 100 || mWaveIndex % 5 != 0)
+		{
+			return;
+		}
+		bool flag = mWaveIndex % 10 == 0;
+		WeakGlobalInstance<CollectableManager>.instance.GiveResource(ECollectableType.coin, mWaveIndex * ((!flag) ? 150 : 300));
+		int num = ((!flag) ? 1 : 2);
+		for (int i = 0; i < num; i++)
+		{
+			WeakGlobalInstance<CollectableManager>.instance.GiveSpecificPresent(GetRandomZombieMilestoneCharm());
+		}
+		float num2 = ((!flag) ? 0.1f : 0.25f);
+		if (UnityEngine.Random.value < num2)
+		{
+			WeakGlobalInstance<CollectableManager>.instance.GiveSpecificPresent("booster_free");
+		}
+	}
+
+	private string GetRandomZombieMilestoneCharm()
+	{
+		string[] array = new string[5] { "z+power", "z+luck", "z+wealth", "z+haste", "z+peace" };
+		return array[UnityEngine.Random.Range(0, array.Length)];
 	}
 
 	public static void ApplySpecialEvent(SDFTreeNode enemiesData)
@@ -295,13 +404,17 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 	public static SDFTreeNode GetWaveData(int waveID, bool bonusWave)
 	{
 		int num = waveID;
-		while (num > 0)
+		while (num > 0 && num < 1000)
 		{
-			string waveFilePath = GetWaveFilePath(waveID, bonusWave);
+			string waveFilePath = GetWaveFilePath(num, bonusWave);
 			if (Resources.Load(waveFilePath, typeof(TextAsset)) == null)
 			{
-				Debug.Log("WARNING: Could not find wave #" + num + ", will try with " + (num - 1));
-				num--;
+				Debug.Log("WARNING: Could not find wave #" + num + ", will try next one or fallback.");
+				num++;
+				if (num > waveID + 5)
+				{
+					break;
+				}
 				continue;
 			}
 			return FilterEventData(SingletonMonoBehaviour<ResourcesManager>.instance.Open(waveFilePath));
@@ -345,15 +458,37 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 	public static string GetWaveFilePath(int waveID, bool bonusWave)
 	{
 		string text = "Registry/";
-		text = ((!bonusWave && !Singleton<Profile>.instance.inBonusWave) ? (text + Singleton<PlayModesManager>.instance.selectedModeData["wavesPath"]) : (text + "BonusWaves/BonusWave"));
+		if (!bonusWave && !Singleton<Profile>.instance.inBonusWave)
+		{
+			text += Singleton<PlayModesManager>.instance.selectedModeData["wavesPath"];
+		}
+		else
+		{
+			string selectedModeBonusWavesPath = Singleton<Profile>.instance.selectedModeBonusWavesPath;
+			if (selectedModeBonusWavesPath == string.Empty)
+			{
+				selectedModeBonusWavesPath = "BonusWaves/BonusWave";
+			}
+			text += selectedModeBonusWavesPath;
+		}
 		return text + string.Format("{0:000}", waveID);
 	}
 
 	private void LoadData()
 	{
 		enemiesData = SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/Enemies");
-		ApplySpecialEvent(enemiesData);
+		if (enemiesData != null)
+		{
+			ApplySpecialEvent(enemiesData);
+		}
 		waveRootData = GetWaveData(mWaveIndex);
+		if (waveRootData == null)
+		{
+			Debug.LogError("WaveManager: waveRootData is null for wave " + mWaveIndex);
+			waveCommands = new SDFTreeNode();
+			rewards = new SDFTreeNode();
+			return;
+		}
 		waveCommands = waveRootData.to("Commands");
 		rewards = waveRootData.to("rewards");
 		if (waveRootData.hasAttribute("tutorial"))
@@ -362,11 +497,11 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 		}
 		if (waveRootData.hasAttribute("villageArchers"))
 		{
-			mVillageArchersLevel = int.Parse(waveRootData["villageArchers"]);
+			mVillageArchersLevel = int.Parse(waveRootData["villageArchers"], CultureInfo.InvariantCulture);
 		}
 		if (waveRootData.hasAttribute("bell"))
 		{
-			mBellLevel = int.Parse(waveRootData["bell"]);
+			mBellLevel = int.Parse(waveRootData["bell"], CultureInfo.InvariantCulture);
 		}
 		LoadLevelMultipliers();
 	}
@@ -377,10 +512,14 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 		if (num >= 2)
 		{
 			SDFTreeNode sDFTreeNode = Singleton<Config>.instance.root.to("waveLevelMultipliers");
-			mLevelMultipliers.enemiesHealth = CalcMultiplier(float.Parse(sDFTreeNode["enemiesHealth"]), num - 1);
-			mLevelMultipliers.enemiesDamages = CalcMultiplier(float.Parse(sDFTreeNode["enemiesDamages"]), num - 1);
-			mLevelMultipliers.drops = CalcMultiplier(float.Parse(sDFTreeNode["drops"]), num - 1);
+			mLevelMultipliers.enemiesHealth = CalcMultiplier(float.Parse(sDFTreeNode["enemiesHealth"], CultureInfo.InvariantCulture), num - 1);
+			mLevelMultipliers.enemiesDamages = CalcMultiplier(float.Parse(sDFTreeNode["enemiesDamages"], CultureInfo.InvariantCulture), num - 1);
+			mLevelMultipliers.drops = CalcMultiplier(float.Parse(sDFTreeNode["drops"], CultureInfo.InvariantCulture), num - 1);
 		}
+		// Dynamic Difficulty Scaling (Kolay / Normal / Zor / Kabus)
+		mLevelMultipliers.enemiesHealth *= PCQoLManager.DifficultyHealthMultiplier;
+		mLevelMultipliers.enemiesDamages *= PCQoLManager.DifficultyDamageMultiplier;
+		mLevelMultipliers.drops *= PCQoLManager.DifficultyDropMultiplier;
 	}
 
 	private void RunNextCommand()
@@ -478,7 +617,7 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 		{
 			return new KeyValuePair<float, float>(-1f, -1f);
 		}
-		return new KeyValuePair<float, float>(float.Parse(array[0]), float.Parse(array[1]));
+		return new KeyValuePair<float, float>(float.Parse(array[0], CultureInfo.InvariantCulture), float.Parse(array[1], CultureInfo.InvariantCulture));
 	}
 
 	private void UpdateDelayTimer()
@@ -487,31 +626,89 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 		{
 			return;
 		}
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			return;
+		}
 		mSpawnDelayTimer -= Time.deltaTime;
 		if (!(mSpawnDelayTimer > 0f))
 		{
 			mSpawnDelayTimer = 0f;
-			if (WeakGlobalInstance<CharactersManager>.instance.enemiesCount < 10)
+			if (WeakGlobalInstance<CharactersManager>.instance != null && WeakGlobalInstance<CharactersManager>.instance.enemiesCount < GetEnemiesMax())
 			{
 				RunNextCommand();
 			}
 		}
 	}
 
-	private Enemy ConstructEnemy(string enemyID)
+	private int GetEnemiesMax()
 	{
-		SDFTreeNode sDFTreeNode = enemiesData.to(enemyID);
+		if (Singleton<PlayModesManager>.instance != null && Singleton<PlayModesManager>.instance.selectedMode == "zombies")
+		{
+			if (mWaveIndex >= 86)
+			{
+				return 42;
+			}
+			if (mWaveIndex >= 71)
+			{
+				return 36;
+			}
+			if (mWaveIndex >= 61)
+			{
+				return 30;
+			}
+			if (mWaveIndex >= 45)
+			{
+				return 24;
+			}
+			if (mWaveIndex >= 31)
+			{
+				return 18;
+			}
+		}
+		return kEnemiesMax;
+	}
+
+	public Enemy SpawnEnemy(string enemyID)
+	{
+		Enemy e = ConstructEnemy(enemyID);
+		if (e != null && WeakGlobalInstance<CharactersManager>.instance != null)
+		{
+			WeakGlobalInstance<CharactersManager>.instance.AddCharacter(e);
+		}
+		return e;
+	}
+
+	public Enemy ConstructEnemy(string enemyID)
+	{
+		SDFTreeNode sDFTreeNode = ResolveEnemyNode(enemyID);
 		if (sDFTreeNode == null)
 		{
-			Debug.Log("ERROR: Unkown enemy: " + enemyID);
+			Debug.Log("ERROR: Unknown enemy: " + enemyID);
 			return null;
 		}
-		return SpawnEnemy(enemyID, sDFTreeNode, mEnemiesSpawnArea.size.x, mEnemiesSpawnArea.transform.position, false);
+
+		float spawnWidth = 100f;
+		Vector3 spawnPos = Vector3.zero;
+		if (mEnemiesSpawnArea != null)
+		{
+			spawnWidth = mEnemiesSpawnArea.size.x;
+			spawnPos = mEnemiesSpawnArea.transform.position;
+		}
+		else
+		{
+			InGameImpl inGame = WeakGlobalSceneBehavior<InGameImpl>.instance;
+			if (inGame != null && inGame.heroWalkRightEdge != null)
+			{
+				spawnPos = inGame.heroWalkRightEdge.position;
+			}
+		}
+		return SpawnEnemy(enemyID, sDFTreeNode, spawnWidth, spawnPos, false);
 	}
 
 	public Enemy ConstructEnemy(string enemyID, float sizeOfSpawnArea, Vector3 spawnPos, bool dynamicSpawn)
 	{
-		SDFTreeNode sDFTreeNode = enemiesData.to(enemyID);
+		SDFTreeNode sDFTreeNode = ResolveEnemyNode(enemyID);
 		if (sDFTreeNode == null)
 		{
 			Debug.Log("ERROR: Unkown enemy: " + enemyID);
@@ -520,33 +717,90 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 		return SpawnEnemy(enemyID, sDFTreeNode, sizeOfSpawnArea, spawnPos, dynamicSpawn);
 	}
 
-	private Enemy SpawnEnemy(string uniqueID, SDFTreeNode data, float sizeOfSpawnArea, Vector3 spawnPos, bool dynamicSpawn)
+	public Enemy ConstructEnemyAt(string enemyID, Vector3 spawnPos, bool isAllyTeam)
 	{
-		mSpawnedEnemiesSoFar++;
-		bool result = false;
-		bool.TryParse(data["flying"], out result);
-		float result2 = 0f;
-		float.TryParse(data["bowRange"], out result2);
-		CharactersManager.ELanePreference preference = CharactersManager.ELanePreference.any;
-		if (data.hasAttribute("lane"))
+		SDFTreeNode sDFTreeNode = ResolveEnemyNode(enemyID);
+		if (sDFTreeNode == null)
 		{
-			preference = (CharactersManager.ELanePreference)(int)Enum.Parse(typeof(CharactersManager.ELanePreference), data["lane"]);
+			Debug.Log("ERROR: Unknown enemy: " + enemyID);
+			return null;
 		}
-		spawnPos.x = WeakGlobalInstance<CharactersManager>.instance.GetBestSpawnXPos(spawnPos, sizeOfSpawnArea, preference, true, result, result2 > 0f);
+
+		float areaWidth = (mEnemiesSpawnArea != null) ? mEnemiesSpawnArea.size.x : 100f;
+		Enemy e = SpawnEnemy(enemyID, sDFTreeNode, areaWidth, spawnPos, false);
+		if (e != null)
+		{
+			e.isEnemy = !isAllyTeam;
+			InGameImpl inGame = WeakGlobalSceneBehavior<InGameImpl>.instance;
+			float leftZ = (inGame != null && inGame.enemiesTargetLeft != null) ? inGame.enemiesTargetLeft.transform.position.z : ((inGame != null && inGame.heroWalkLeftEdge != null) ? inGame.heroWalkLeftEdge.position.z : 0f);
+			float rightZ = (inGame != null && inGame.enemiesTargetRight != null) ? inGame.enemiesTargetRight.transform.position.z : ((inGame != null && inGame.heroWalkRightEdge != null) ? inGame.heroWalkRightEdge.position.z : 3800f);
+			e.controller.constraintLeft = Mathf.Min(leftZ, spawnPos.z);
+			e.controller.constraintRight = Mathf.Max(rightZ, spawnPos.z);
+
+			bool marchRight = SVZMultiplayerManager.ShouldUnitMarchRight(e.isEnemy, true);
+			e.controller.StopWalking();
+			if (marchRight)
+			{
+				e.controller.facing = FacingType.Right;
+				e.controller.StartWalkRight();
+			}
+			else
+			{
+				e.controller.facing = FacingType.Left;
+				e.controller.StartWalkLeft();
+			}
+			if (isAllyTeam)
+			{
+				e.RefreshHealthBarColor();
+			}
+
+			if (WeakGlobalInstance<CharactersManager>.instance != null)
+			{
+				WeakGlobalInstance<CharactersManager>.instance.AddCharacter(e);
+			}
+		}
+		return e;
+	}
+
+    public Enemy SpawnEnemy(string uniqueID, SDFTreeNode data, float sizeOfSpawnArea, Vector3 spawnPos, bool dynamicSpawn)
+    {
+        // --- BİZİM EKLEDİĞİMİZ HAYAT KURTARAN GÜVENLİK KODU ---
+        if (data == null)
+        {
+            data = this.enemiesData.to(uniqueID); // Eğer data boşsa, Enemies.txt içinden ID'yi arayıp bulur!
+            if (data == null) return null; // Eğer Enemies.txt içinde de bulamazsa oyunu çökertmeden iptal eder.
+        }
+        // ------------------------------------------------------
+
+        mSpawnedEnemiesSoFar++;
+        bool result = false;
+        bool.TryParse(data["flying"], out result);
+        float result2 = 0f;
+        float.TryParse(data["bowRange"], out result2);
+        CharactersManager.ELanePreference preference = CharactersManager.ELanePreference.any;
+        if (data.hasAttribute("lane"))
+        {
+            preference = (CharactersManager.ELanePreference)(int)Enum.Parse(typeof(CharactersManager.ELanePreference), data["lane"]);
+        }
+
+        // ... Fonksiyonun geri kalanı sende nasılsa aynen öyle devam etsin ...
+        spawnPos.x = WeakGlobalInstance<CharactersManager>.instance.GetBestSpawnXPos(spawnPos, sizeOfSpawnArea, preference, true, result, result2 > 0f);
 		Enemy e = new Enemy(data["prefab"], mZTarget, spawnPos);
 		e.uniqueID = uniqueID;
 		UnityEngine.Object.Instantiate((!dynamicSpawn) ? mSpawnEffect : mAltSpawnEffect, e.position, Quaternion.identity);
-		e.maxHealth = float.Parse(data["health"]);
+		float tempFloat = 0f;
+		float.TryParse(data["health"], NumberStyles.Float, CultureInfo.InvariantCulture, out tempFloat);
+		e.maxHealth = tempFloat;
 		e.health = e.maxHealth;
 		float result3 = 0f;
-		float.TryParse(data["meleeRange"], out result3);
+		float.TryParse(data["meleeRange"], NumberStyles.Float, CultureInfo.InvariantCulture, out result3);
 		e.meleeAttackRange = result3;
-		float.TryParse(data["meleeDamage"], out result3);
+		float.TryParse(data["meleeDamage"], NumberStyles.Float, CultureInfo.InvariantCulture, out result3);
 		e.meleeDamage = result3;
 		e.bowAttackRange = result2;
-		float.TryParse(data["bowDamage"], out result3);
+		float.TryParse(data["bowDamage"], NumberStyles.Float, CultureInfo.InvariantCulture, out result3);
 		e.bowDamage = result3;
-		float.TryParse(data["damageBuffPercent"], out result3);
+		float.TryParse(data["damageBuffPercent"], NumberStyles.Float, CultureInfo.InvariantCulture, out result3);
 		e.damageBuffPercent = result3;
 		if (data.hasAttribute("projectile"))
 		{
@@ -559,18 +813,21 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 		e.isGateRusher = result4;
 		bool.TryParse(data["exploseOnMelee"], out result4);
 		e.exploseOnMelee = result4;
-		float.TryParse(data["meleeFreeze"], out result3);
+		float.TryParse(data["meleeFreeze"], NumberStyles.Float, CultureInfo.InvariantCulture, out result3);
 		e.meleeFreeze = result3;
 		e.isFlying = result;
-		float.TryParse(data["autoHealthRecovery"], out result3);
+		float.TryParse(data["autoHealthRecovery"], NumberStyles.Float, CultureInfo.InvariantCulture, out result3);
 		e.autoHealthRecovery = result3;
 		bool.TryParse(data["boss"], out result4);
 		e.isBoss = result4;
-		e.meleeAttackFrequency = float.Parse(data["attackFrequency"]);
+		float.TryParse(data["attackFrequency"], NumberStyles.Float, CultureInfo.InvariantCulture, out tempFloat);
+		e.meleeAttackFrequency = tempFloat;
 		e.bowAttackFrequency = e.meleeAttackFrequency;
 		e.spawnFriendID = data["spawnFriendID"];
-		float num = float.Parse(data["speedMin"]);
-		float num2 = float.Parse(data["speedMax"]);
+		float num = 0f;
+		float.TryParse(data["speedMin"], NumberStyles.Float, CultureInfo.InvariantCulture, out num);
+		float num2 = 0f;
+		float.TryParse(data["speedMax"], NumberStyles.Float, CultureInfo.InvariantCulture, out num2);
 		e.controller.speed = UnityEngine.Random.value * (num2 - num) + num;
 		if (data.hasAttribute("knockbackPower"))
 		{
@@ -595,15 +852,30 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 		}
 		if (data.hasAttribute("weaponMeleePrefab"))
 		{
-			e.meleeWeaponPrefab = Resources.Load(data["weaponMeleePrefab"]) as GameObject;
+			string meleePath = data["weaponMeleePrefab"];
+			if (!mCachedPrefabs.ContainsKey(meleePath))
+			{
+				mCachedPrefabs[meleePath] = Resources.Load(meleePath) as GameObject;
+			}
+			e.meleeWeaponPrefab = mCachedPrefabs[meleePath];
 		}
 		if (e.meleeWeaponPrefab != null && (WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm == "peace" || WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm.Contains("+peace")))
 		{
-			e.meleeWeaponPrefab = Resources.Load("Props/PFChickenSword") as GameObject;
+			string chickenPath = "Props/PFChickenSword";
+			if (!mCachedPrefabs.ContainsKey(chickenPath))
+			{
+				mCachedPrefabs[chickenPath] = Resources.Load(chickenPath) as GameObject;
+			}
+			e.meleeWeaponPrefab = mCachedPrefabs[chickenPath];
 		}
 		if (data.hasAttribute("weaponRangedPrefab"))
 		{
-			e.rangedWeaponPrefab = Resources.Load(data["weaponRangedPrefab"]) as GameObject;
+			string rangedPath = data["weaponRangedPrefab"];
+			if (!mCachedPrefabs.ContainsKey(rangedPath))
+			{
+				mCachedPrefabs[rangedPath] = Resources.Load(rangedPath) as GameObject;
+			}
+			e.rangedWeaponPrefab = mCachedPrefabs[rangedPath];
 		}
 		if (data.hasAttribute("spawnOnDeath"))
 		{

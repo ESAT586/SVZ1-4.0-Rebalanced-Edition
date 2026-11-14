@@ -71,17 +71,31 @@ public class AutoScaler
 		return new Rect(v.xMin / mCoordinateScale.x, v.yMin / mCoordinateScale.y, v.width / mCoordinateScale.x, v.height / mCoordinateScale.y);
 	}
 
+	private int mLastScreenW;
+
+	private int mLastScreenH;
+
+	public void RefreshIfResolutionChanged()
+	{
+		if (Screen.width != mLastScreenW || Screen.height != mLastScreenH)
+		{
+			SetGameResolution(mGameResolution);
+		}
+	}
+
 	private void SetGameResolution(Vector2 nativeRez)
 	{
 		mGameResolution = nativeRez;
-		mAspectRatioModifier = nativeRez.y / nativeRez.x / ((float)Screen.height / (float)Screen.width);
-		int num = Screen.width;
-		int num2 = Screen.height;
+		mLastScreenW = Screen.width;
+		mLastScreenH = Screen.height;
+		int num = Mathf.Max(1, Screen.width);
+		int num2 = Mathf.Max(1, Screen.height);
 		if (num < num2)
 		{
 			num = Screen.height;
 			num2 = Screen.width;
 		}
+		mAspectRatioModifier = nativeRez.y / nativeRez.x / ((float)num2 / (float)num);
 		mCoordinateScale = new Vector2((float)num / mGameResolution.x, (float)num2 / mGameResolution.y);
 		if (mCoordinateScale.x < mCoordinateScale.y)
 		{

@@ -73,3 +73,17 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# OS / Scratch / Local PC Build & Save Artifacts
+desktop.ini
+desktop.ini.meta
+/SaveData/
+/scratch/
+/SVZ1-*-Rebalanced-Edition_Data/
+/SVZ1-*-Rebalanced-Edition.exe
+/UnityPlayer.dll
+/compare.ps1
+/compare_result.txt
+/compare_result_utf8.txt
+/unity2017_files.txt
+/unity6000_files.txt

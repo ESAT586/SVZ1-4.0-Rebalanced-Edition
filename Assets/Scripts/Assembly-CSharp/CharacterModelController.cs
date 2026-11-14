@@ -68,6 +68,8 @@ public class CharacterModelController : MonoBehaviour
 	public Action onMeleeAttackDelivery;
 
 	public Action onRangedAttackDelivery;
+    
+    public List<GameObject> meleeWeaponInstances = new List<GameObject>();
 
 	private Transform mCachedTransform;
 
@@ -84,6 +86,10 @@ public class CharacterModelController : MonoBehaviour
 	private FacingType mWalkDirection;
 
 	private FacingType mFacing = FacingType.Right;
+
+	public FacingType nativeFacing = FacingType.Right;
+
+	private Vector3 mInitialScale = Vector3.one;
 
 	private bool mAttackDeliveryTriggered;
 
@@ -197,11 +203,42 @@ public class CharacterModelController : MonoBehaviour
 		}
 	}
 
+	public static bool IsZombieModel(string modelOrPrefabName)
+	{
+		if (string.IsNullOrEmpty(modelOrPrefabName)) return false;
+		string n = modelOrPrefabName.ToLowerInvariant();
+		return n.Contains("zombie") || n.Contains("undead") || n.Contains("necromancer") ||
+		       n.Contains("jurogumo") || n.Contains("nobosuma") || n.Contains("oni") ||
+		       n.Contains("onibaba") || n.Contains("torso") || n.Contains("chochin");
+	}
+
+	public static FacingType GetModelNativeFacing(string modelOrPrefabName)
+	{
+		if (string.IsNullOrEmpty(modelOrPrefabName)) return FacingType.Right;
+		string n = modelOrPrefabName.ToLowerInvariant();
+		if (n.Contains("samurai") || n.Contains("farmer") || n.Contains("femalewarrior") ||
+		    n.Contains("nobunaga") || n.Contains("takeda") || n.Contains("priest") ||
+		    n.Contains("riflesmith") || n.Contains("swordsmith") || n.Contains("handmaiden") ||
+		    n.Contains("ronin") || n.Contains("yarihorse") || n.Contains("cartofdoom") ||
+		    n.Contains("bellringer") || n.Contains("villagearcher") || n.Contains("pfhero"))
+		{
+			return FacingType.Right;
+		}
+		if (n.Contains("zombie") || n.Contains("undead") || n.Contains("necromancer") ||
+		    n.Contains("jurogumo") || n.Contains("nobosuma") || n.Contains("oni") ||
+		    n.Contains("onibaba") || n.Contains("torso") || n.Contains("chochin") ||
+		    n.Contains("tengu") || n.Contains("wayundo"))
+		{
+			return FacingType.Left;
+		}
+		return FacingType.Right;
+	}
+
 	public float baseFacingAngle
 	{
 		get
 		{
-			return (mFacing == FacingType.Left) ? 180 : 0;
+			return (mFacing == FacingType.Left) ? 180f : 0f;
 		}
 	}
 
@@ -343,6 +380,9 @@ public class CharacterModelController : MonoBehaviour
 	{
 		mSpeed = 100f;
 		mCachedTransform = base.transform;
+		Vector3 s = mCachedTransform.localScale;
+		mInitialScale = new Vector3((Mathf.Abs(s.x) > 0.0001f) ? Mathf.Abs(s.x) : 1f, (Mathf.Abs(s.y) > 0.0001f) ? Mathf.Abs(s.y) : 1f, (Mathf.Abs(s.z) > 0.0001f) ? Mathf.Abs(s.z) : 1f);
+		nativeFacing = GetModelNativeFacing(base.gameObject.name);
 		mAnimPlayer = GetComponent<TaggedAnimPlayer>();
 		if (mAnimPlayer == null)
 		{
@@ -911,12 +951,17 @@ public class CharacterModelController : MonoBehaviour
 
 	private void SetFacing(FacingType newFacing)
 	{
-		if (mFacing != newFacing)
+		mFacing = newFacing;
+		if (mCachedTransform != null && newFacing != FacingType.Unchanged)
 		{
 			Vector3 eulerAngles = mCachedTransform.eulerAngles;
-			eulerAngles.y = ((newFacing == FacingType.Left) ? 180 : 0);
+			eulerAngles.y = ((newFacing == FacingType.Left) ? 180f : 0f);
 			mCachedTransform.eulerAngles = eulerAngles;
-			mFacing = newFacing;
+			float absX = (mInitialScale.x > 0.0001f) ? Mathf.Abs(mInitialScale.x) : Mathf.Abs(mCachedTransform.localScale.x);
+			if (absX < 0.0001f) absX = 1f;
+			Vector3 localScale = mCachedTransform.localScale;
+			localScale.x = ((newFacing == nativeFacing) ? absX : (0f - absX));
+			mCachedTransform.localScale = localScale;
 		}
 	}
 
@@ -1002,7 +1047,7 @@ public class CharacterModelController : MonoBehaviour
 	private void SetBaseAnim(string anim)
 	{
 		if (!(mAnimPlayer.baseAnim == LastRandomAnim(anim)))
-		{
+	{
 			mAnimPlayer.SetBaseAnim(GetRandomAnim(anim));
 			mAnimPlayer.baseAnimSpeed = speedModifier;
 		}
@@ -1024,8 +1069,61 @@ public class CharacterModelController : MonoBehaviour
 		}
 	}
 
+	public static Vector3 sPriestHatEulerOffset = Vector3.zero;
+	private static bool sPriestHatEulerLoaded = false;
+	private Transform mPriestHatBone;
+	private bool mPriestHatSearched = false;
+
+	public static void LoadPriestHatConfig()
+	{
+		if (sPriestHatEulerLoaded) return;
+		sPriestHatEulerLoaded = true;
+		if (PlayerPrefs.HasKey("asvz.priest_hat_v2_x"))
+		{
+			sPriestHatEulerOffset = new Vector3(
+				PlayerPrefs.GetFloat("asvz.priest_hat_v2_x", 0f),
+				PlayerPrefs.GetFloat("asvz.priest_hat_v2_y", 0f),
+				PlayerPrefs.GetFloat("asvz.priest_hat_v2_z", 0f)
+			);
+		}
+	}
+
+	public static void SavePriestHatConfig(Vector3 euler)
+	{
+		sPriestHatEulerOffset = euler;
+		PlayerPrefs.SetFloat("asvz.priest_hat_v2_x", euler.x);
+		PlayerPrefs.SetFloat("asvz.priest_hat_v2_y", euler.y);
+		PlayerPrefs.SetFloat("asvz.priest_hat_v2_z", euler.z);
+		PlayerPrefs.Save();
+	}
+
+	private void UpdatePriestHatRotation()
+	{
+		if (!mPriestHatSearched)
+		{
+			mPriestHatSearched = true;
+			LoadPriestHatConfig();
+			Transform[] transforms = GetComponentsInChildren<Transform>(true);
+			for (int i = 0; i < transforms.Length; i++)
+			{
+				if (transforms[i].name.IndexOf("priest_head_b_jnt", StringComparison.OrdinalIgnoreCase) >= 0)
+				{
+					mPriestHatBone = transforms[i];
+					break;
+				}
+			}
+		}
+
+		if (mPriestHatBone != null && sPriestHatEulerOffset != Vector3.zero)
+		{
+			mPriestHatBone.localRotation = mPriestHatBone.localRotation * Quaternion.Euler(sPriestHatEulerOffset);
+		}
+	}
+
 	private void LateUpdate()
 	{
+		UpdatePriestHatRotation();
+
 		if (!mAimAngle.HasValue || mAnimPlayer.paused)
 		{
 			return;
@@ -1033,6 +1131,12 @@ public class CharacterModelController : MonoBehaviour
 		AutoPaperdoll.LabeledJoint jointData = autoPaperdoll.GetJointData("aim_angle");
 		if (jointData != null && !(jointData.joint == null))
 		{
+			Vector3 savedScale = mCachedTransform.localScale;
+			bool wasFlippedX = savedScale.x < 0f;
+			if (wasFlippedX)
+			{
+				mCachedTransform.localScale = new Vector3(0f - savedScale.x, savedScale.y, savedScale.z);
+			}
 			Vector3 axis = mCachedTransform.rotation * Vector3.right;
 			Quaternion quaternion = Quaternion.AngleAxis(0f - mAimAngle.Value, axis);
 			Transform joint = jointData.joint;
@@ -1043,6 +1147,10 @@ public class CharacterModelController : MonoBehaviour
 				quaternion = Quaternion.AngleAxis(0f - mHeadAngle.Value, axis);
 				joint = jointData.joint;
 				joint.rotation = quaternion * joint.rotation;
+			}
+			if (wasFlippedX)
+			{
+				mCachedTransform.localScale = savedScale;
 			}
 		}
 	}

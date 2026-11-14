@@ -156,6 +156,18 @@ public class SUIScrollList : SUIProcess
 		}
 	}
 
+	public bool visible
+	{
+		get
+		{
+			return mAlpha > 0.001f;
+		}
+		set
+		{
+			alpha = (value ? 1f : 0f);
+		}
+	}
+
 	public float alpha
 	{
 		get

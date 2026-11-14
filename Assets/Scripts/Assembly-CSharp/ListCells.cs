@@ -195,6 +195,10 @@ public class ListCells
 		public void CheckIfRecommended(string id)
 		{
 			SDFTreeNode waveData = WaveManager.GetWaveData(Singleton<Profile>.instance.waveToBeat);
+			if (waveData == null)
+			{
+				return;
+			}
 			SDFTreeNode sDFTreeNode = waveData.to("RecommendedUseForThisWave");
 			if (sDFTreeNode == null)
 			{

@@ -1,0 +1,29 @@
+scene = InGame_winternight
+
+[rewards]
+	coins, 1800
+	gems, 80
+
+[Commands]
+	Evil_Ice
+	Evil_Ice
+	Evil_Ice
+	Evil_Ice
+	Evil_Ice
+	0.5,0.5
+	Wayundo_Fire
+	Wayundo_Metal
+	H_Zombie_Warhammer
+	H_Zombie_Warhammer
+	1.0,1.0
+	(
+	Evil_Ice
+	Evil_Ice
+	Wayundo_Metal
+	H_Zombie_Warhammer
+	)
+	1.0,1.0
+	Chochinobake_alt
+	Tengu_air
+	Nobusuma
+	Nobusuma

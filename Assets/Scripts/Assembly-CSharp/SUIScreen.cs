@@ -140,6 +140,10 @@ public class SUIScreen : WeakGlobalInstance<SUIScreen>, SUIProcess
 
 	public void Update()
 	{
+		if (mAutoScaler != null)
+		{
+			mAutoScaler.RefreshIfResolutionChanged();
+		}
 		UpdateTimeOnly();
 		mInputManager.Update();
 		mFader.Update();

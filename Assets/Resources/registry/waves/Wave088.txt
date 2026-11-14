@@ -1,0 +1,30 @@
+scene = InGame_evil
+
+[rewards]
+	coins, 2300
+	gems, 95
+
+[Commands]
+	Evil_Panzer
+	Evil_Panzer
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	0.5,0.5
+	Chochinobake_alt
+	Chochinobake_alt
+	Chochinobake_alt
+	Nobusuma
+	Nobusuma
+	Nobusuma
+	1.0,1.0
+	(
+	Evil_Panzer
+	Evil_Ninja
+	Chochinobake_alt
+	Nobusuma
+	)
+	1.0,1.0
+	Wayundo_Metal
+	H_Zombie_Warhammer
+	Komusou_2

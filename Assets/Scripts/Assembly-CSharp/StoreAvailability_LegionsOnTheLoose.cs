@@ -25,11 +25,28 @@ public class StoreAvailability_LegionsOnTheLoose
 		}
 		int num = currentLevel + 1;
 		SDFTreeNode sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+		bool isMaxLevel = false;
 		if (sDFTreeNode2 == null)
 		{
-			return;
+			num--;
+			sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+			isMaxLevel = true;
+			if (sDFTreeNode2 == null)
+			{
+				return;
+			}
 		}
-		StoreData.Item item = new StoreData.Item(onPurchase);
+		StoreData.Item item = new StoreData.Item(delegate
+		{
+			if (!isMaxLevel)
+			{
+				onPurchase();
+			}
+		});
+		if (isMaxLevel)
+		{
+			item.isMaxLevel = true;
+		}
 		if (num != 1)
 		{
 			SDFTreeNode sDFTreeNode3 = sDFTreeNode.to(string.Format("{0:000}", num - 1));
@@ -55,7 +72,7 @@ public class StoreAvailability_LegionsOnTheLoose
 		}
 		item.details.AddSmallDescription(Singleton<Localizer>.instance.Parse(sDFTreeNode["desc"]));
 		item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
-		item.cost = new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(powerID));
+		item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(powerID));
 		item.isEvent = sDFTreeNode["eventID"] != string.Empty;
 		items.Add(item);
 	}

@@ -94,15 +94,113 @@ public class FileEncryptAndDecrypt
 			}
 		}
 		File.Copy(text, _inFile, true);
-		if (!File.Exists(Profile.prevSaveFilePath))
-		{
-			File.Copy(text, Profile.prevSaveFilePath, true);
-		}
 		File.Delete(text);
+	}
+
+	public static bool TryDecryptFile(string inFile, out string text, out string error)
+	{
+		text = string.Empty;
+		error = string.Empty;
+		try
+		{
+			if (!File.Exists(inFile))
+			{
+				error = "File does not exist";
+				return false;
+			}
+			using (FileStream fileStream = File.OpenRead(inFile))
+			{
+				StringBuilder stringBuilder = new StringBuilder();
+				Encoding aSCII = Encoding.ASCII;
+				int num = -1;
+				int num2 = 0;
+				byte[] array = new byte[16];
+				if (fileStream.Read(array, 0, 16) != 16)
+				{
+					error = "Missing IV";
+					return false;
+				}
+				byte[] array2 = new byte[16];
+				if (fileStream.Read(array2, 0, 16) != 16)
+				{
+					error = "Missing salt";
+					return false;
+				}
+				SymmetricAlgorithm symmetricAlgorithm = CreateRijndael(password, array2);
+				symmetricAlgorithm.IV = array;
+				long num3 = -1L;
+				HashAlgorithm hashAlgorithm = SHA256.Create();
+				using (CryptoStream cryptoStream = new CryptoStream(fileStream, symmetricAlgorithm.CreateDecryptor(), CryptoStreamMode.Read))
+				{
+					using (CryptoStream cryptoStream2 = new CryptoStream(Stream.Null, hashAlgorithm, CryptoStreamMode.Write))
+					{
+						BinaryReader binaryReader = new BinaryReader(cryptoStream);
+						num3 = binaryReader.ReadInt64();
+						if (num3 < 0 || num3 > 10485760)
+						{
+							error = "Invalid file size";
+							return false;
+						}
+						if (num3 > 0)
+						{
+							byte[] array3 = new byte[num3];
+							num = cryptoStream.Read(array3, 0, array3.Length);
+							if (num != num3)
+							{
+								error = "File size mismatch";
+								return false;
+							}
+							stringBuilder.Append(aSCII.GetString(array3));
+							cryptoStream2.Write(array3, 0, num);
+							num2 += num;
+						}
+						cryptoStream2.Flush();
+						cryptoStream2.Close();
+						byte[] hash = hashAlgorithm.Hash;
+						byte[] array4 = new byte[hashAlgorithm.HashSize / 8];
+						num = cryptoStream.Read(array4, 0, array4.Length);
+						if (array4.Length != num || !CheckByteArrays(array4, hash))
+						{
+							error = "Hash mismatch";
+							return false;
+						}
+					}
+				}
+				if (num2 != num3)
+				{
+					error = "File size mismatch";
+					return false;
+				}
+				text = stringBuilder.ToString();
+				return true;
+			}
+		}
+		catch (Exception ex)
+		{
+			error = ex.Message;
+			return false;
+		}
 	}
 
 	public static string DecryptFile(string inFile, bool prevCorrupted)
 	{
+		string text = string.Empty;
+		string error = string.Empty;
+		if (TryDecryptFile(inFile, out text, out error))
+		{
+			return text;
+		}
+		if (prevCorrupted || !File.Exists(Profile.prevSaveFilePath))
+		{
+			Singleton<Analytics>.instance.LogEvent("SAVE_DATA_CORRUPTION", "<Resetting save data>");
+			Singleton<Profile>.instance.ResetData();
+			return DecryptFile(inFile, false);
+		}
+		Singleton<Analytics>.instance.LogEvent("SAVE_DATA_CORRUPTION", "Restore save data <START>");
+		File.Copy(Profile.prevSaveFilePath, inFile, true);
+		Singleton<Analytics>.instance.LogEvent("SAVE_DATA_CORRUPTION", "Restore sava data <SUCCESS>");
+		return DecryptFile(inFile, true);
+		/*
 		using (FileStream fileStream = File.OpenRead(inFile))
 		{
 			StringBuilder stringBuilder = new StringBuilder();
@@ -173,5 +271,6 @@ public class FileEncryptAndDecrypt
 			}
 			return stringBuilder.ToString();
 		}
+		*/
 	}
 }

@@ -1,0 +1,109 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = HandMaiden
+desc = Rookie Healer
+prefab = Characters/PFHandmaiden
+HUDIcon = Sprites/Icons/ally_handmaiden
+weaponMeleePrefab = Props/PFHandmaidenfan
+waveToUnlock = 8
+resourcesCost = 20.0
+cooldownTimer = 2.0
+attackFrequency = 3.0
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 300,0
+	health = 55
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 16
+	projectile = HealBolt
+
+[002]
+	cost = 750,0
+	health = 80
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 22
+	projectile = HealBolt
+
+[003]
+	cost = 1500,0
+	health = 115
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 31
+	projectile = HealBolt
+
+[004]
+	cost = 4500,0
+	health = 160
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 42
+	projectile = HealBolt
+
+[005]
+	cost = 9500,0
+	health = 220
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 58
+	projectile = HealBolt
+
+[006]
+	cost = 0,12
+	health = 300
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 78
+	projectile = HealBolt
+
+[007]
+	cost = 0,18
+	health = 400
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 100
+	projectile = HealBolt
+
+[008]
+	cost = 0,22
+	health = 530
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 125
+	projectile = HealBolt
+
+[009]
+	cost = 0,26
+	health = 690
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 152
+	projectile = HealBolt
+
+[010]
+	cost = 0,30
+	health = 880
+	speedMin = 100
+	speedMax = 100
+	bowRange = 450
+	bowDamage = 185
+	projectile = HealBolt

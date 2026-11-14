@@ -4,6 +4,23 @@ using UnityEngine;
 public class Helper : Character
 {
 	private bool mIsLeftToRightGameplay = true;
+	private static System.Collections.Generic.Dictionary<string, GameObject> sWeaponPrefabCache = new System.Collections.Generic.Dictionary<string, GameObject>();
+
+	private static GameObject GetCachedWeaponPrefab(string path)
+	{
+		if (string.IsNullOrEmpty(path)) return null;
+		GameObject cached;
+		if (sWeaponPrefabCache.TryGetValue(path, out cached) && cached != null)
+		{
+			return cached;
+		}
+		cached = Resources.Load(path) as GameObject;
+		if (cached != null)
+		{
+			sWeaponPrefabCache[path] = cached;
+		}
+		return cached;
+	}
 
 	public Helper(GameObject prefab, float zTarget, Vector3 pos, string weaponPropLocation, bool weaponIsRanged)
 	{
@@ -11,16 +28,13 @@ public class Helper : Character
 		ActivateHealthBar();
 		InitializeModel(prefab, weaponPropLocation, weaponIsRanged);
 		base.controller.position = pos;
-		if (mIsLeftToRightGameplay)
+		float spawnZ = pos.z;
+		if (WeakGlobalInstance<Smithy>.instance != null && WeakGlobalInstance<Smithy>.instance.helperSpawnArea != null)
 		{
-			base.controller.constraintLeft = WeakGlobalInstance<Smithy>.instance.helperSpawnArea.transform.position.z;
-			base.controller.constraintRight = zTarget;
+			spawnZ = WeakGlobalInstance<Smithy>.instance.helperSpawnArea.transform.position.z;
 		}
-		else
-		{
-			base.controller.constraintLeft = zTarget;
-			base.controller.constraintRight = WeakGlobalInstance<Smithy>.instance.helperSpawnArea.transform.position.z;
-		}
+		base.controller.constraintLeft = Mathf.Min(spawnZ, zTarget);
+		base.controller.constraintRight = Mathf.Max(spawnZ, zTarget);
 		StartWalkingTowardGoal();
 	}
 
@@ -37,18 +51,28 @@ public class Helper : Character
 		StartWalkingTowardGoal();
 	}
 
-	private void InitializeModel(GameObject prefab, string weaponPropLocation, bool weaponIsRanged)
-	{
-		base.controlledObject = (GameObject)UnityEngine.Object.Instantiate(prefab);
-		if (weaponPropLocation != null)
-		{
+    private void InitializeModel(GameObject prefab, string weaponPropLocation, bool weaponIsRanged)
+    {
+        // EKLENEN KISIM
+        if (prefab == null)
+        {
+            Debug.LogError("DİKKAT: Helper (Dost Birlik) prefabı bulunamadı! Lütfen bu birliğin dosyalarını kontrol et.");
+            return; // Obje yoksa devam etme.
+        }
+
+        base.controlledObject = (GameObject)UnityEngine.Object.Instantiate(prefab);
+        if (base.controller != null)
+        {
+            base.controller.nativeFacing = CharacterModelController.GetModelNativeFacing(prefab.name);
+        }
+        {
 			if (weaponIsRanged)
 			{
-				base.rangedWeaponPrefab = Resources.Load(weaponPropLocation) as GameObject;
+				base.rangedWeaponPrefab = GetCachedWeaponPrefab(weaponPropLocation);
 			}
 			else
 			{
-				base.meleeWeaponPrefab = Resources.Load(weaponPropLocation) as GameObject;
+				base.meleeWeaponPrefab = GetCachedWeaponPrefab(weaponPropLocation);
 			}
 		}
 		if (base.bowAttackRange > 0f && base.meleeAttackRange == 0f)
@@ -64,13 +88,17 @@ public class Helper : Character
 		{
 			return;
 		}
-		bool flag = ((!mIsLeftToRightGameplay) ? (base.controller.position.z <= base.controller.constraintLeft) : (base.controller.position.z >= base.controller.constraintRight));
+		bool marchRight = SVZMultiplayerManager.ShouldUnitMarchRight(base.isEnemy, mIsLeftToRightGameplay);
+		bool flag = marchRight
+			? (base.controller.position.z >= base.controller.constraintRight)
+			: (base.controller.position.z <= base.controller.constraintLeft);
 		if (WeakGlobalSceneBehavior<InGameImpl>.instance.playerWon)
 		{
 			base.controller.PlayVictoryAnim();
 		}
 		else if (base.canMeleeAttack && IsInMeleeRangeOfOpponent(true))
 		{
+			base.controller.facing = marchRight ? FacingType.Right : FacingType.Left;
 			base.controller.SetUseCowerIdle(false);
 			SetRangeAttackMode(false);
 			if (base.exploseOnMelee)
@@ -83,6 +111,7 @@ public class Helper : Character
 		}
 		else if ((base.isSpellCasterOnAllies && base.canUseRangedAttack && IsInRangeOfHurtAlly(false)) || (base.canUseRangedAttack && base.stats.projectile == Projectile.EProjectileType.SpawnFriend && IsInBowRangeOfOpponent()))
 		{
+			base.controller.facing = marchRight ? FacingType.Right : FacingType.Left;
 			StartRangedAttackDelayTimer();
 			if (base.bowProjectile == Projectile.EProjectileType.SpawnFriend)
 			{
@@ -96,6 +125,7 @@ public class Helper : Character
 		}
 		else if (base.canUseRangedAttack && base.hasRangedAttack && IsInBowRangeOfOpponent())
 		{
+			base.controller.facing = marchRight ? FacingType.Right : FacingType.Left;
 			SetRangeAttackMode(true);
 			StartRangedAttackDelayTimer();
 			base.singleAttackTarget = WeakGlobalInstance<CharactersManager>.instance.GetBestRangedAttackTarget(this, base.bowAttackExtGameRange);
@@ -106,11 +136,13 @@ public class Helper : Character
 		}
 		else if (IsInMeleeRangeOfOpponent(false))
 		{
+			base.controller.facing = marchRight ? FacingType.Right : FacingType.Left;
 			base.controller.SetUseCowerIdle(!IsInMeleeRangeOfOpponent(true));
 			base.controller.Idle();
 		}
 		else if (!base.canMove || flag || IsInBowRangeOfOpponent() || (base.isSpellCasterOnAllies && IsInRangeOfHurtAlly()))
 		{
+			base.controller.facing = marchRight ? FacingType.Right : FacingType.Left;
 			base.controller.SetUseCowerIdle(false);
 			base.controller.Idle();
 		}
@@ -136,12 +168,15 @@ public class Helper : Character
 
 	private void StartWalkingTowardGoal()
 	{
-		if (mIsLeftToRightGameplay)
+		bool marchRight = SVZMultiplayerManager.ShouldUnitMarchRight(base.isEnemy, mIsLeftToRightGameplay);
+		if (marchRight)
 		{
+			base.controller.facing = FacingType.Right;
 			base.controller.StartWalkRight();
 		}
 		else
 		{
+			base.controller.facing = FacingType.Left;
 			base.controller.StartWalkLeft();
 		}
 	}

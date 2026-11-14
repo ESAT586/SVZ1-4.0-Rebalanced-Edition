@@ -1,0 +1,65 @@
+scene = InGame_underworld
+bonusHint = Kahraman savas disi; samuraylari zombi askerleri ve buyulerle durdur.
+
+tutorial = TutorialBonusWave1
+
+[rewards]
+	coins, 1500
+	gems, 1
+	z+oni, 1
+
+selectedCharm =
+initialleadershiplevel = 2
+baselevel = 1
+belllevel = 1
+archerlevel = 1
+
+[abilitylevels]
+	NightOfTheDead = 3
+	GraveHands = 2
+
+[selectedabilities]
+	000 = NightOfTheDead
+	001 = GraveHands
+
+[helperlevels]
+	Zombie = 3
+	ZombieAxe = 3
+	ZombieArcher = 2
+	SmallOni = 2
+	ZombieDrummer = 1
+
+[selectedhelpers]
+	000 = Zombie
+	001 = ZombieAxe
+	002 = ZombieArcher
+	003 = SmallOni
+	004 = ZombieDrummer
+
+[Commands]
+	Samurai
+	2,2
+	Samurai
+	1,1
+	SamuraiSpear
+	1,1
+	SamuraiArcher
+	2,2
+	Samurai
+	SamuraiSpear
+	1,1
+	SamuraiArcher
+	1,1
+	SamuraiRifleman
+	2,2
+	Samurai
+	Samurai
+	SamuraiSpear
+	1,1
+	SamuraiArcher
+	1,1
+	SamuraiRifleman
+	1,1
+	Samurai
+	SamuraiSpear
+	SamuraiArcher

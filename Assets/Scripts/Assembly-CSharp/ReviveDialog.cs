@@ -263,7 +263,7 @@ public class ReviveDialog : IDialog
 		{
 			priority = dialogPriority
 		});
-		WeakGlobalInstance<DialogHandler>.instance.PushCreator(() => new PurchaseCurrencyDialog(mReviveItemDesc.cost)
+		WeakGlobalInstance<DialogHandler>.instance.PushCreator(() => new StoreNotEnoughDialog(mReviveItemDesc)
 		{
 			priority = 1000f
 		});

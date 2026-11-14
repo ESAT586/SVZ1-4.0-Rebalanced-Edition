@@ -17,6 +17,11 @@ internal class FontSetFinder : Singleton<FontSetFinder>
 
 	public FontSetFinder()
 	{
+		Reload();
+	}
+
+	public void Reload()
+	{
 		mConfig = SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/FontsConfig");
 		string text = string.Empty;
 		if (text == string.Empty)
@@ -31,7 +36,20 @@ internal class FontSetFinder : Singleton<FontSetFinder>
 		}
 		Debug.Log("Using font REZ: " + text.ToString());
 		mBasePath = Singleton<Localizer>.instance.LocalizeFontPath("Fonts/" + text + "/");
-		string fontSet = Singleton<GameVersion>.instance.fontSet;
+		
+		string lang = "Default";
+		if (LocalizationManager.instance != null) 
+		{
+			lang = LocalizationManager.instance.GetCurrentLanguage();
+		}
+		else
+		{
+			lang = Singleton<GameVersion>.instance.fontSet;
+		}
+
+		string fontSet = lang;
+        if (lang == "English" || lang == "Turkish" || lang == "Default") fontSet = "Default";
+
 		mConfig = mConfig.to(fontSet);
 		if (mConfig != null)
 		{

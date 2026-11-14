@@ -110,7 +110,10 @@ public class SUIWidget : SUIProcess, IHasVisualAttributes
 	public virtual void Destroy()
 	{
 		mGOTransformRef = null;
-		Object.Destroy(mGameObject);
+		if (mGameObject != null)
+		{
+			Object.Destroy(mGameObject);
+		}
 		mGameObject = null;
 	}
 
@@ -124,6 +127,10 @@ public class SUIWidget : SUIProcess, IHasVisualAttributes
 
 	protected virtual void updatePosition()
 	{
+		if (mGOTransformRef == null || mGameObject == null)
+		{
+			return;
+		}
 		Vector2 vector = SUIUtils.userToUnity(mPosition);
 		mGOTransformRef.position = new Vector3(vector.x, vector.y, mPriority);
 	}

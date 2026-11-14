@@ -1,0 +1,120 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Tengu Air
+desc = Tengu flies, attacks and distracts enemies
+prefab = Characters/PFTengushingenair
+HUDIcon = Sprites/Icons/enemy_tenguair
+waveToUnlock = 23
+resourcesCost = 55
+cooldownTimer = 10.0
+attackFrequency = 1.0
+flying = true
+autoHealthRecovery = 0
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 2500,0
+	health = 1800
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 175
+	meleeDamage = 75
+	knockbackPower = 35
+	knockbackResistance = 70
+
+[002]
+	cost = 4000,0
+	health = 2200
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 175
+	meleeDamage = 92
+	knockbackPower = 35
+	knockbackResistance = 75
+
+[003]
+	cost = 6500,0
+	health = 2650
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 175
+	meleeDamage = 112
+	knockbackPower = 38
+	knockbackResistance = 78
+
+[004]
+	cost = 10000,0
+	health = 3150
+	speedMin = 135
+	speedMax = 135
+	meleeRange = 175
+	meleeDamage = 134
+	knockbackPower = 38
+	knockbackResistance = 82
+
+[005]
+	cost = 15000,0
+	health = 3700
+	speedMin = 135
+	speedMax = 135
+	meleeRange = 175
+	meleeDamage = 158
+	knockbackPower = 40
+	knockbackResistance = 85
+
+[006]
+	cost = 0,14
+	health = 4250
+	speedMin = 135
+	speedMax = 135
+	meleeRange = 175
+	meleeDamage = 184
+	knockbackPower = 40
+	knockbackResistance = 88
+
+[007]
+	cost = 0,20
+	health = 4800
+	speedMin = 135
+	speedMax = 135
+	meleeRange = 175
+	meleeDamage = 210
+	knockbackPower = 42
+	knockbackResistance = 90
+
+[008]
+	cost = 0,26
+	health = 5400
+	speedMin = 140
+	speedMax = 140
+	meleeRange = 175
+	meleeDamage = 235
+	knockbackPower = 42
+	knockbackResistance = 94
+
+[009]
+	cost = 0,32
+	health = 6000
+	speedMin = 140
+	speedMax = 140
+	meleeRange = 175
+	meleeDamage = 260
+	knockbackPower = 45
+	knockbackResistance = 97
+
+[010]
+	cost = 0,40
+	health = 6600
+	speedMin = 140
+	speedMax = 140
+	meleeRange = 175
+	meleeDamage = 285
+	knockbackPower = 45
+	knockbackResistance = 100

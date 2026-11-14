@@ -1,0 +1,29 @@
+scene = InGame_hell_purple
+
+[rewards]
+	coins, 3500
+	gems, 140
+
+[Commands]
+	Evil_Panzer
+	Evil_Panzer
+	Evil_Panzer
+	Evil_Wayundo_Metal
+	Evil_Wayundo_Metal
+	0.5,0.5
+	Evil_Panzer
+	Evil_Panzer
+	Evil_Ice
+	Evil_Ice
+	1.0,1.0
+	(
+	Evil_Panzer
+	Evil_Wayundo_Metal
+	Evil_Panzer
+	Evil_Ice
+	)
+	1.0,1.0
+	Nobusuma_alt
+	Nobusuma_alt
+	Chochinobake_alt
+	Chochinobake_alt

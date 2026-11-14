@@ -1,0 +1,119 @@
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Zombie Axe
+desc = Zombie Axe
+prefab = Characters/PFLzombieAxe
+HUDIcon = Sprites/Icons/enemy_zombieaxe
+weaponMeleePrefab = Props/PFAxe
+waveToUnlock = 4
+resourcesCost = 10.0
+cooldownTimer = 1.0
+attackFrequency = 1.0
+usesBladeWeapon = true
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 300,0
+	health = 386
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 18
+	knockbackPower = 22
+	knockbackResistance = 12
+
+[002]
+	cost = 1000,0
+	health = 615
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 24
+	knockbackPower = 22
+	knockbackResistance = 12
+
+[003]
+	cost = 3000,0
+	health = 794
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 34
+	knockbackPower = 22
+	knockbackResistance = 12
+
+[004]
+	cost = 9000,0
+	health = 995
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 44
+	knockbackPower = 22
+	knockbackResistance = 12
+
+[005]
+	cost = 25000,0
+	health = 1248
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 58
+	knockbackPower = 22
+	knockbackResistance = 12
+
+[006]
+	cost = 0,14
+	health = 1578
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 72
+	knockbackPower = 22
+	knockbackResistance = 12
+
+[007]
+	cost = 0,20
+	health = 2147
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 86
+	knockbackPower = 22
+	knockbackResistance = 12
+
+[008]
+	cost = 0,28
+	health = 2696
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 120
+	knockbackPower = 22
+	knockbackResistance = 12
+
+[009]
+	cost = 0,36
+	health = 3323
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 146
+	knockbackPower = 22
+	knockbackResistance = 12
+
+[010]
+	cost = 0,44
+	health = 3765
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 166
+	knockbackPower = 22
+	knockbackResistance = 12

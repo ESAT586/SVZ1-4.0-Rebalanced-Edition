@@ -8,23 +8,33 @@ public class HUDHelpersBar
 
 	private List<HUDIconButton> mHelperHUDs = new List<HUDIconButton>();
 
+	private bool mCreatedForPvP = false;
+
 	public HUDHelpersBar(SUILayout layoutRef)
 	{
 		mLayoutRef = layoutRef;
 	}
 
-	private static Vector2 GetIconPosition(int index)
+	private static Vector2 GetIconPosition(int index, int totalCount = 5)
 	{
+		if (totalCount > 5)
+		{
+			float startX = 56f;
+			float endX = SUIScreen.width - 56f;
+			float step = (endX - startX) / (float)Mathf.Max(1, totalCount - 1);
+			return new Vector2(startX + index * step, SUIScreen.height - 64f);
+		}
 		return new Vector2(index * 110 + 70, SUIScreen.height - 70f);
 	}
 
 	public void Update()
 	{
-		if (!Application.isMobilePlatform)
+		bool isPvP = mCreatedForPvP || (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive);
+		if (!isPvP)
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				if (mHelperHUDs.Count > i && Input.GetKeyDown((KeyCode)Enum.Parse(typeof(KeyCode), "Alpha" + (i + 1))))
+				if (mHelperHUDs.Count > i && PCInput.GetButtonDown("Helper" + (i + 1)))
 				{
 					mHelperHUDs[i].Trigger();
 				}
@@ -68,6 +78,28 @@ public class HUDHelpersBar
 	private void CreateHUD()
 	{
 		DestroyHUD();
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			mCreatedForPvP = true;
+			bool isClientP2 = SVZMultiplayerManager.Instance.IsOnlineClient;
+			List<string> deck = isClientP2 ? SVZMultiplayerManager.Instance.P2Deck : SVZMultiplayerManager.Instance.P1Deck;
+			int total = deck.Count;
+			float iconScale = (total > 5) ? 0.85f : 1f;
+			for (int i = 0; i < total; i++)
+			{
+				int index = i;
+				string unitId = deck[i];
+				string iconFile = SVZMultiplayerManager.GetUnitIconPath(unitId);
+				HUDIconButton hUDIconButton = new HUDIconButton(mLayoutRef, GetIconPosition(i, total), iconFile, "Helper", i, isAvailCallback, getCoolDownCallback, iconScale);
+				hUDIconButton.onTriggered = delegate
+				{
+					onHelperTriggered(index);
+				};
+				mHelperHUDs.Add(hUDIconButton);
+			}
+			return;
+		}
+		mCreatedForPvP = false;
 		if (WeakGlobalInstance<Smithy>.instance.numTypes <= 0)
 		{
 			return;
@@ -90,6 +122,22 @@ public class HUDHelpersBar
 		{
 			return false;
 		}
+		if (mCreatedForPvP || (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive))
+		{
+			if (SVZMultiplayerManager.Instance == null || !SVZMultiplayerManager.Instance.IsActive)
+			{
+				return false;
+			}
+			if (WeakGlobalSceneBehavior<InGameImpl>.instance == null || WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver)
+			{
+				return false;
+			}
+			if (SVZMultiplayerManager.Instance.IsOnlineClient)
+			{
+				return SVZMultiplayerManager.Instance.IsP2SlotAvailable(index);
+			}
+			return SVZMultiplayerManager.Instance.IsP1SlotAvailable(index);
+		}
 		return WeakGlobalInstance<Smithy>.instance.IsAvailable(index);
 	}
 
@@ -99,11 +147,39 @@ public class HUDHelpersBar
 		{
 			return 0f;
 		}
+		if (mCreatedForPvP || (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive))
+		{
+			if (SVZMultiplayerManager.Instance == null || !SVZMultiplayerManager.Instance.IsActive)
+			{
+				return 0f;
+			}
+			if (SVZMultiplayerManager.Instance.IsOnlineClient)
+			{
+				return SVZMultiplayerManager.Instance.GetP2SlotCooldownRatio(index);
+			}
+			return SVZMultiplayerManager.Instance.GetP1SlotCooldownRatio(index);
+		}
 		return WeakGlobalInstance<Smithy>.instance.GetCoolDown(index);
 	}
 
 	private void onHelperTriggered(int index)
 	{
+		if (mCreatedForPvP || (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive))
+		{
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive &&
+			    WeakGlobalSceneBehavior<InGameImpl>.instance != null && !WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver)
+			{
+				if (SVZMultiplayerManager.Instance.IsOnlineClient)
+				{
+					SVZMultiplayerManager.Instance.SummonPlayer2Unit(index);
+				}
+				else
+				{
+					SVZMultiplayerManager.Instance.SummonPlayer1Slot(index);
+				}
+			}
+			return;
+		}
 		if (WeakGlobalInstance<Smithy>.instance != null && !WeakGlobalSceneBehavior<InGameImpl>.instance.gameOver && WeakGlobalInstance<Smithy>.instance.IsAvailable(index))
 		{
 			WeakGlobalInstance<Smithy>.instance.Spawn(index);

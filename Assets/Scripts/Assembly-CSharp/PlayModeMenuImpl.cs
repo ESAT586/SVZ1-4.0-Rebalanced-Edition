@@ -77,7 +77,7 @@ public class PlayModeMenuImpl : SceneBehaviour
 		((SUIButton)mLayout["backBtn"]).onButtonPressed = null;
 		((SUITouchArea)mLayout["mode_classic"]).onAreaTouched = null;
 		((SUITouchArea)mLayout["mode_zombies"]).onAreaTouched = null;
-		if (mode == "classic" && ((Singleton<Profile>.instance.waveToBeat == 1 && Singleton<Profile>.instance.GetWaveLevel(2) == 0) || Singleton<Profile>.instance.readyToStartBonusWave))
+		if ((mode == "classic" && Singleton<Profile>.instance.waveToBeat == 1 && Singleton<Profile>.instance.GetWaveLevel(2) == 0) || Singleton<Profile>.instance.readyToStartBonusWave)
 		{
 			GotoScene(delegate
 			{

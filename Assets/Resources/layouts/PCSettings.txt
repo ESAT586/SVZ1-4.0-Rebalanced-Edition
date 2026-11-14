@@ -1,0 +1,238 @@
+
+transitionSpeed = 0.5
+
+[bg_dim]
+	type = sprite
+	file = Sprites/Menus/bg_default
+	keepAspectRatio = no
+	priority = 490
+	hotspot = 0, 0
+	position = 0, 0
+	color = 0.1, 0.1, 0.1, 0.8
+
+[panel]
+	type = sprite
+	file = Sprites/Menus/pop_up_screen
+	priority = 500
+	position = C, C
+	keepAspectRatio = no
+	scale = 1.5, 1.6
+
+[title]
+	type = label
+	font = default32
+	text = PC SETTINGS
+	color = white
+	position = C, 120
+	priority = 501
+	anchor = Middle
+
+/--- Left Column: Graphics & Performance ---
+
+[graphicsLabel]
+	type = label
+	font = default18
+	text = GRAPHICS QUALITY
+	color = yellow
+	position = C-220, 180
+	priority = 501
+	anchor = Middle
+
+[qLow]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C-330, 220
+	priority = 510
+	scale = 0.5, 0.5
+	[label]
+		text = LOW
+		font = default18
+[qMed]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C-220, 220
+	priority = 510
+	scale = 0.5, 0.5
+	[label]
+		text = MED
+		font = default18
+[qHigh]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C-110, 220
+	priority = 510
+	scale = 0.5, 0.5
+	[label]
+		text = HIGH
+		font = default18
+[qExt]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C-220, 270
+	priority = 510
+	scale = 1.0, 0.5
+	[label]
+		text = EXTREME
+		font = default18
+
+[fpsLabel]
+	type = label
+	font = default18
+	text = FPS LIMIT
+	color = yellow
+	position = C-220, 340
+	priority = 501
+	anchor = Middle
+
+[fps30]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C-330, 380
+	priority = 510
+	scale = 0.5, 0.5
+	[label]
+		text = 30
+[fps60]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C-220, 380
+	priority = 510
+	scale = 0.5, 0.5
+	[label]
+		text = 60
+[fps120]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C-110, 380
+	priority = 510
+	scale = 0.5, 0.5
+	[label]
+		text = 120
+[fpsInf]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C-220, 430
+	priority = 510
+	scale = 1.0, 0.5
+	[label]
+		text = UNLIMITED
+
+/--- Right Column: Audio ---
+
+[audioHeader]
+	type = label
+	font = default18
+	text = AUDIO LEVELS
+	color = yellow
+	position = C+220, 180
+	priority = 501
+	anchor = Middle
+
+/ Master
+[volLabel]
+	type = label
+	font = default18
+	text = MASTER
+	position = C+220, 220
+	priority = 501
+[volPct]
+	type = label
+	font = default18
+	text = 100%
+	position = C+220, 250
+	priority = 501
+[volDown]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C+150, 250
+	priority = 510
+	scale = 0.3, 0.4
+	[label]
+		text = -
+[volUp]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C+290, 250
+	priority = 510
+	scale = 0.3, 0.4
+	[label]
+		text = +
+
+/ Music
+[musicLabel]
+	type = label
+	font = default18
+	text = MUSIC
+	position = C+220, 310
+	priority = 501
+[musicPct]
+	type = label
+	font = default18
+	text = 100%
+	position = C+220, 340
+	priority = 501
+[musicDown]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C+150, 340
+	priority = 510
+	scale = 0.3, 0.4
+	[label]
+		text = -
+[musicUp]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C+290, 340
+	priority = 510
+	scale = 0.3, 0.4
+	[label]
+		text = +
+
+/ SFX
+[sfxLabel]
+	type = label
+	font = default18
+	text = SFX
+	position = C+220, 400
+	priority = 501
+[sfxPct]
+	type = label
+	font = default18
+	text = 100%
+	position = C+220, 430
+	priority = 501
+[sfxDown]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C+150, 430
+	priority = 510
+	scale = 0.3, 0.4
+	[label]
+		text = -
+[sfxUp]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C+290, 430
+	priority = 510
+	scale = 0.3, 0.4
+	[label]
+		text = +
+
+/--- Bottom Section ---
+
+[fullscreenBtn]
+	type = button
+	normalFrame = Sprites/Menus/wave_button
+	position = C, 530
+	priority = 510
+	scale = 1.5, 0.6
+	[label]
+		text = TOGGLE FULLSCREEN
+		font = default18
+
+[back]
+	type = button
+	normalFrame = Sprites/Menus/continue_button
+	position = C, 620
+	priority = 510
+	keepAspectRatio = true

@@ -405,11 +405,11 @@
 [Wayundo_wood]
 	displayName = @enemy_l_zombie_u_name
 	prefab = Characters/PFWayundo
-	health = 1000
-	speedMin = 75
-	speedMax = 75
+	health = 750
+	speedMin = 58
+	speedMax = 58
 	meleeRange = 100
-	meleeDamage = 150
+	meleeDamage = 130
 	attackFrequency = 5
 	knockbackPower = 30
 	knockbackResistance = 100
@@ -421,11 +421,11 @@
 [Wayundo_Fire]
 	displayName = @enemy_l_zombie_u_name
 	prefab = Characters/PFWayundoFire
-	health = 1500
-	speedMin = 75
-	speedMax = 75
+	health = 1150
+	speedMin = 58
+	speedMax = 58
 	meleeRange = 100
-	meleeDamage = 200
+	meleeDamage = 175
 	attackFrequency = 5
 	knockbackPower = 40
 	knockbackResistance = 100
@@ -437,11 +437,11 @@
 [Wayundo_Metal]
 	displayName = @enemy_l_zombie_u_name
 	prefab = Characters/PFWayundoMetal
-	health = 2050
-	speedMin = 75
-	speedMax = 75
+	health = 1550
+	speedMin = 58
+	speedMax = 58
 	meleeRange = 100
-	meleeDamage = 250
+	meleeDamage = 210
 	attackFrequency = 5
 	knockbackPower = 50
 	knockbackResistance = 100
@@ -835,11 +835,11 @@
 [Evil_Wayundo_wood]
 	displayName = @enemy_l_zombie_u_name
 	prefab = Characters/PFWayundo
-	health = 2000
-	speedMin = 95
-	speedMax = 95
+	health = 1450
+	speedMin = 70
+	speedMax = 70
 	meleeRange = 100
-	meleeDamage = 250
+	meleeDamage = 200
 	attackFrequency = 5
 	knockbackPower = 30
 	knockbackResistance = 100
@@ -852,11 +852,11 @@
 [Evil_Wayundo_Fire]
 	displayName = @enemy_l_zombie_u_name
 	prefab = Characters/PFWayundoFire
-	health = 2500
-	speedMin = 95
-	speedMax = 95
+	health = 1850
+	speedMin = 70
+	speedMax = 70
 	meleeRange = 100
-	meleeDamage = 350
+	meleeDamage = 275
 	attackFrequency = 5
 	knockbackPower = 40
 	knockbackResistance = 100
@@ -869,11 +869,11 @@
 [Evil_Wayundo_Metal]
 	displayName = @enemy_l_zombie_u_name
 	prefab = Characters/PFWayundoMetal
-	health = 3000	
-	speedMin = 95
-	speedMax = 95
+	health = 2200	
+	speedMin = 70
+	speedMax = 70
 	meleeRange = 100
-	meleeDamage = 450
+	meleeDamage = 350
 	attackFrequency = 5
 	knockbackPower = 50
 	knockbackResistance = 100
@@ -1039,12 +1039,14 @@
 	displayName = @enemy_l_zombie_s_name
 	prefab = Characters/PFHSamuraiZombie
 	weaponMeleePrefab = Props/PFHeavysamuraisword
-	health = 7500
+	usesBladeWeapon = true
+	lane = center
+	health = 3500
 	speedMin = 110
 	speedMax = 110
-	meleeRange = 100
-	meleeDamage = 270
-	attackFrequency = 2
+	meleeRange = 125
+	meleeDamage = 160
+	attackFrequency = 2.0
 	knockbackPower = 20
 	knockbackResistance = 100
 	award = 500
@@ -1073,4 +1075,24 @@
 	previewPriority = 2
 
 
+[Necromancer_Boss]
+	displayName = @helper_necromancer_name
+	prefab = Characters/PFNecromancer
+	weaponMeleePrefab = Props/PFNecromancerStaff
+	usesBladeWeapon = true
+	health = 12000
+	speedMin = 60
+	speedMax = 60
+	bowRange = 400
+	bowDamage = 0
+	damageBuffPercent = 0.10
+	projectile = SpawnEnemy
+	spawnFriendID = Evil_Panzer
+	attackFrequency = 2.0
+	knockbackPower = 50
+	knockbackResistance = 100
+	award = 750
+	resourceDropMin = 10
+	resourceDropMax = 15
+	previewPriority = 2
 

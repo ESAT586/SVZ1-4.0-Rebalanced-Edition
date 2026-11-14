@@ -8,7 +8,7 @@ desc = @zombiehero_desc
 store_levelup = @store_format_level_hero
 icon = Sprites/Icons/hero_zombie01
 prefab = Characters/PFZombieHero
-ghostPrefab = Characters/PFHeroGhost
+ghostPrefab = Characters/PFZombieHero
 rangedWeaponPrefab = Props/PFZombieHeroBow
 meleeSlashFXPrefab = FX/LifeSteal
 

@@ -7,6 +7,13 @@
 	ZombieHell1
 	ZombieHell2
 	ZombieHell3
+	ZombieHell4
+	ZombieHell5
+	ZombieHell6
+	ZombieHell7
+	ZombieHell8
+	ZombieHell9
+	ZombieHell10
 
 
 /---------------------------------------------------------------
@@ -27,3 +34,38 @@
 	displayName = @chapter_title_zombiehell3
 	icon = Sprites/Icons/wave_zombie_underworld
 	wavesRange = 21, 30
+
+[ZombieHell4]
+	displayName = @chapter_title_zombiehell4
+	icon = Sprites/Icons/wave_zombie_underworld
+	wavesRange = 31, 40
+
+[ZombieHell5]
+	displayName = @chapter_title_zombiehell5
+	icon = Sprites/Icons/wave_zombie_underworld
+	wavesRange = 41, 50
+
+[ZombieHell6]
+	displayName = @chapter_title_zombiehell6
+	icon = Sprites/Icons/wave_zombie_underworld
+	wavesRange = 51, 60
+
+[ZombieHell7]
+	displayName = @chapter_title_zombiehell7
+	icon = Sprites/Icons/wave_zombie_underworld
+	wavesRange = 61, 70
+
+[ZombieHell8]
+	displayName = @chapter_title_zombiehell8
+	icon = Sprites/Icons/wave_zombie_hell
+	wavesRange = 71, 80
+
+[ZombieHell9]
+	displayName = @chapter_title_zombiehell9
+	icon = Sprites/Icons/wave_zombie_underworld
+	wavesRange = 81, 90
+
+[ZombieHell10]
+	displayName = @chapter_title_zombiehell10
+	icon = Sprites/Icons/wave_zombie_hell
+	wavesRange = 91, 100

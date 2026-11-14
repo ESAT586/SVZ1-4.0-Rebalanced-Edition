@@ -6,6 +6,8 @@ public class PlayStatistics : Singleton<PlayStatistics>
 	{
 		public bool zombieModeStartedUnlocked;
 
+		public string lastPlayMode;
+
 		public int lastWavePlayed;
 
 		public int lastWaveLevel;
@@ -41,6 +43,7 @@ public class PlayStatistics : Singleton<PlayStatistics>
 	{
 		stats = default(Stats);
 		stats.previousStoreItems = StoreAvailability.GetList();
+		stats.lastPlayMode = Singleton<PlayModesManager>.instance.selectedMode;
 		stats.lastWavePlayed = forWave;
 		stats.lastWaveLevel = Singleton<Profile>.instance.GetWaveLevel(forWave);
 		stats.zombieModeStartedUnlocked = Singleton<Profile>.instance.zombieModeUnlocked;

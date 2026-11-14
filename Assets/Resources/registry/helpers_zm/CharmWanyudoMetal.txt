@@ -1,0 +1,31 @@
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_charm_wanyudometal_name
+desc = @helper_charm_wanyudometal_desc
+prefab = Characters/PFWayundoMetalCharm
+HUDIcon = Sprites/Icons/enemy_wanyudometal
+weaponMeleePrefab = 
+hideInStore = True
+waveToUnlock = 999
+resourcesCost = 0.0
+cooldownTimer = 3.0
+attackFrequency = 1.0
+usesBladeWeapon = true
+auraFX = FX/SamuraiSilver
+auraJoint = impact_target
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	health = 78000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 125
+	meleeDamage = 1150
+	knockbackPower = 85
+	knockbackResistance = 100

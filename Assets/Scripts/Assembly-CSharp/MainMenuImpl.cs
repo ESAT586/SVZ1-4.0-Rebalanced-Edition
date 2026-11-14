@@ -37,19 +37,54 @@ public class MainMenuImpl : SceneBehaviour
 
 	private SUIButton m_cheatsBtn;
 
+	private static MainMenuImpl sActiveInstance;
+
+	public static bool IsAnyMainMenuDialogOpen
+	{
+		get
+		{
+			return sActiveInstance != null && sActiveInstance.mDialogHandler != null && !sActiveInstance.mDialogHandler.isDone;
+		}
+	}
+
+	private void OnDestroy()
+	{
+		if (sActiveInstance == this)
+		{
+			sActiveInstance = null;
+		}
+	}
+
 	private IEnumerator Start()
 	{
+		Time.timeScale = 1f;
+		AudioListener.pause = false;
+		if (PlayerPrefs.GetString("SVZ_LastEnteredScene", "Safe") == "Store")
+		{
+			Singleton<Profile>.instance.SetTutorialDone("StoreDealPacks", "dealpacks");
+			Singleton<Profile>.instance.SetTutorialDone("Store", "intro");
+			Singleton<Profile>.instance.Save();
+		}
+		PlayerPrefs.SetString("SVZ_LastEnteredScene", "Safe");
+		PlayerPrefs.Save();
+		sActiveInstance = this;
+		SVZMultiplayerUI.EnsureExists();
 		WeakGlobalInstance<SUIScreen>.instance.fader.FadeFromBlack();
+		WeakGlobalInstance<SUIScreen>.instance.inputs.processInputs = true;
+		PCSettingsDialog.ApplyStartupSettings();
 		mLayout = new SUILayout("Layouts/StartScreen");
 		mLayout.AnimateIn();
 		((SUILabel)mLayout["version"]).text = Singleton<GameVersion>.instance.ToString() + ((!SingletonMonoBehaviour<ResourcesManager>.instance.hasOnlineBundleLoaded) ? string.Empty : "+");
 		mGameCenter = (SUIButton)mLayout["gameCenter"];
+		mGameCenter.visible = true;
 		mGameCenter.onButtonPressed = delegate
 		{
+			AchievementsDialog dlg = new AchievementsDialog();
+			dlg.priority = 500f;
+			StartDialog(dlg);
 		};
 		mICloud = (SUIButton)mLayout["iCloud"];
 		mICloud.onButtonPressed = ShowICloudScreen;
-		mGameCenter.visible = false;
 		mICloud.visible = false;
 		m_cheatsBtn = (SUIButton)mLayout["cheats"];
 		m_cheatsBtn.scale = new Vector2(2f, 2f);
@@ -98,10 +133,7 @@ public class MainMenuImpl : SceneBehaviour
 		};
 		((SUIButton)mLayout["options"]).onButtonPressed = delegate
 		{
-			GoToScene(delegate
-			{
-				Singleton<MenusFlow>.instance.LoadScene("Options");
-			});
+			StartDialog(new PCSettingsDialog());
 		};
 		((SUIButton)mLayout["otherGames"]).onButtonPressed = onOtherGames;
 		ApplicationUtilities.instance.ShowAds((ApplicationUtilities.AdPosition)17);
@@ -193,41 +225,8 @@ public class MainMenuImpl : SceneBehaviour
 
 	private IEnumerator CheckVersion()
 	{
-		if (!Singleton<Profile>.instance.newVersionDetected)
-		{
-			WWW www = (ApplicationUtilities.IsBuildType("amazon") ? ((!Debug.isDebugBuild) ? new WWW(Singleton<Localizer>.instance.Get("amazon_version_file_location_live")) : new WWW(Singleton<Localizer>.instance.Get("amazon_version_file_location_stage"))) : ((!Debug.isDebugBuild) ? new WWW(Singleton<Localizer>.instance.Get("version_file_location_live")) : new WWW(Singleton<Localizer>.instance.Get("version_file_location_stage"))));
-			yield return www;
-			if (www == null)
-			{
-				yield break;
-			}
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("*** Version Found:" + Singleton<Profile>.instance.latestDetectedOnlineVersion);
-			}
-			Singleton<Profile>.instance.latestDetectedOnlineVersion = www.text;
-		}
-		if (string.IsNullOrEmpty(Singleton<Profile>.instance.latestDetectedOnlineVersion))
-		{
-			yield break;
-		}
-		string[] version = Singleton<Profile>.instance.latestDetectedOnlineVersion.Split('.');
-		if (version.Length >= 3)
-		{
-			if (Singleton<GameVersion>.instance.major < int.Parse(version[0]) || (Singleton<GameVersion>.instance.major == int.Parse(version[0]) && Singleton<GameVersion>.instance.minor < int.Parse(version[1])) || (Singleton<GameVersion>.instance.major == int.Parse(version[0]) && Singleton<GameVersion>.instance.minor == int.Parse(version[1]) && Singleton<GameVersion>.instance.revision < int.Parse(version[2])))
-			{
-				Singleton<Profile>.instance.newVersionDetected = true;
-			}
-			else
-			{
-				Singleton<Profile>.instance.newVersionDetected = false;
-			}
-		}
-		else
-		{
-			Singleton<Profile>.instance.newVersionDetected = false;
-		}
-		Singleton<Profile>.instance.Save();
+		Singleton<Profile>.instance.newVersionDetected = false;
+		yield break;
 	}
 
 	private void ShowNewVersionScreen()

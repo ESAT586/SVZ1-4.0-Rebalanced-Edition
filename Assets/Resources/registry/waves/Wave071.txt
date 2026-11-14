@@ -1,0 +1,32 @@
+scene = InGame_hell_green
+
+[rewards]
+	coins, 1200
+	gems, 60
+
+[Commands]
+	L_Zombie_Melee
+	L_Zombie_Melee
+	L_Zombie_Sword
+	L_Zombie_Sword
+	0.5,0.5
+	H_Zombie_Bow_3
+	H_Zombie_Bow_3
+	Nobusuma
+	Nobusuma
+	1.0,1.0
+	Wayundo_Metal
+	H_Zombie_Warhammer
+	H_Zombie_Bow_3
+	Tengu_air
+	(
+	L_Zombie_Melee
+	L_Zombie_Sword
+	H_Zombie_Bow_3
+	Nobusuma
+	)
+	1.5,1.5
+	Oni
+	H_Zombie_Warhammer
+	Chochinobake_alt
+	Chochinobake_alt

@@ -1,0 +1,31 @@
+scene = InGame_hell_purple
+
+[rewards]
+	coins, 1700
+	gems, 75
+
+[Commands]
+	Komusou_2
+	Komusou_2
+	Evil_Zombie_Gun
+	Evil_Zombie_Gun
+	Evil_Zombie_Gun
+	0.5,0.5
+	Oni
+	Oni
+	Nobusuma
+	Nobusuma
+	Nobusuma
+	1.0,1.0
+	(
+	Evil_Zombie_Gun
+	Evil_Zombie_Gun
+	Wayundo_Metal
+	Nobusuma
+	Oni
+	)
+	1.0,1.0
+	Chochinobake_alt
+	Chochinobake_alt
+	H_Zombie_Warhammer
+	Tengu_air

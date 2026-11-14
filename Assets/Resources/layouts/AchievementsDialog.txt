@@ -1,0 +1,188 @@
+[bg]
+	type = sprite
+	file = Sprites/Menus/pop_up_screen
+	priority = 1000
+	scale = 3.5, 4.5
+	position = C, C
+
+[title]
+	type = label
+	font = default32
+	shadowOffset = 2,2
+	shadowColor = black
+	position = C, 80
+	priority = 1001
+	anchor = MiddleCenter
+	text = ACHIEVEMENTS
+
+[backBtn]
+	type = button
+	normalFrame = Sprites/Menus/close_button
+	position = 120, 100
+	priority = 1001
+	offsetWhenPressed = 4, 4
+
+[prevBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button_small
+	scale = 0.5, 0.5
+	position = 450, 680
+	priority = 1001
+	text = <
+
+[nextBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button_small
+	scale = 0.5, 0.5
+	position = 574, 680
+	priority = 1001
+	text = >
+
+[pageLbl]
+	type = label
+	font = default18
+	position = 512, 680
+	priority = 1001
+	anchor = MiddleCenter
+	text = PAGE 1/1
+
+/ Rows (Item 1-4)
+[row1Bg]
+	type = sprite
+	file = Sprites/Menus/stats_button
+	scale = 1.1, 0.6
+	position = C, 220
+	priority = 1001
+[row1Icon]
+	type = sprite
+	file = Sprites/Menus/achievement_kill
+	scale = 0.5, 0.5
+	position = 360, 220
+	priority = 1002
+[row1Title]
+	type = label
+	font = default18
+	position = 440, 205
+	priority = 1002
+	anchor = MiddleLeft
+	text = ACHIEVEMENT NAME
+[row1Desc]
+	type = label
+	font = default18
+	position = 440, 235
+	priority = 1002
+	anchor = MiddleLeft
+	scale = 0.8, 0.8
+	text = Achievement description goes here.
+[row1Status]
+	type = label
+	font = default18
+	position = 760, 220
+	priority = 1002
+	anchor = MiddleRight
+	text = LOCKED
+
+[row2Bg]
+	type = sprite
+	file = Sprites/Menus/stats_button
+	scale = 1.1, 0.6
+	position = C, 320
+	priority = 1001
+[row2Icon]
+	type = sprite
+	file = Sprites/Menus/achievement_kill
+	scale = 0.5, 0.5
+	position = 360, 320
+	priority = 1002
+[row2Title]
+	type = label
+	font = default18
+	position = 440, 305
+	priority = 1002
+	anchor = MiddleLeft
+	text = ACHIEVEMENT NAME
+[row2Desc]
+	type = label
+	font = default18
+	position = 440, 335
+	priority = 1002
+	anchor = MiddleLeft
+	scale = 0.8, 0.8
+	text = Achievement description goes here.
+[row2Status]
+	type = label
+	font = default18
+	position = 760, 320
+	priority = 1002
+	anchor = MiddleRight
+	text = LOCKED
+
+[row3Bg]
+	type = sprite
+	file = Sprites/Menus/stats_button
+	scale = 1.1, 0.6
+	position = C, 420
+	priority = 1001
+[row3Icon]
+	type = sprite
+	file = Sprites/Menus/achievement_kill
+	scale = 0.5, 0.5
+	position = 360, 420
+	priority = 1002
+[row3Title]
+	type = label
+	font = default18
+	position = 440, 405
+	priority = 1002
+	anchor = MiddleLeft
+	text = ACHIEVEMENT NAME
+[row3Desc]
+	type = label
+	font = default18
+	position = 440, 435
+	priority = 1002
+	anchor = MiddleLeft
+	scale = 0.8, 0.8
+	text = Achievement description goes here.
+[row3Status]
+	type = label
+	font = default18
+	position = 760, 420
+	priority = 1002
+	anchor = MiddleRight
+	text = LOCKED
+
+[row4Bg]
+	type = sprite
+	file = Sprites/Menus/stats_button
+	scale = 1.1, 0.6
+	position = C, 520
+	priority = 1001
+[row4Icon]
+	type = sprite
+	file = Sprites/Menus/achievement_kill
+	scale = 0.5, 0.5
+	position = 360, 520
+	priority = 1002
+[row4Title]
+	type = label
+	font = default18
+	position = 440, 505
+	priority = 1002
+	anchor = MiddleLeft
+	text = ACHIEVEMENT NAME
+[row4Desc]
+	type = label
+	font = default18
+	position = 440, 535
+	priority = 1002
+	anchor = MiddleLeft
+	scale = 0.8, 0.8
+	text = Achievement description goes here.
+[row4Status]
+	type = label
+	font = default18
+	position = 760, 520
+	priority = 1002
+	anchor = MiddleRight
+	text = LOCKED

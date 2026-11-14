@@ -1,0 +1,28 @@
+scene = InGame_evilnight
+
+[rewards]
+	coins, 2200
+	gems, 90
+
+[Commands]
+	Evil_Wayundo_Metal
+	Evil_Wayundo_Metal
+	Evil_Panzer
+	Evil_Panzer
+	0.5,0.5
+	Tengu_air
+	Tengu_air
+	Jurogumo
+	Jurogumo
+	1.0,1.0
+	(
+	Evil_Wayundo_Metal
+	Evil_Panzer
+	Tengu_air
+	Jurogumo
+	)
+	1.0,1.0
+	Chochinobake_alt
+	Chochinobake_alt
+	Nobusuma
+	Nobusuma

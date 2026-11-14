@@ -12,7 +12,7 @@ availableAtWave = 19
 resourcesCost = 40.0
 cooldownTimer = 1.0
 attackFrequency = 5.0
-unique = false
+unique = true
 weaponMeleePrefab = Props/PFNecromancerStaff
 
 /--------------------------------------------------

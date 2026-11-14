@@ -1,5 +1,5 @@
 
-/ NOTE: stats based on the "Heavy Samurai" helper
+/ NOTE: Big Oni - 35-cost Giant Demon Tank & Boss (Matches Enemies.txt Boss Oni reach and presence)
 
 /--------------------------------------------------
 / General
@@ -12,7 +12,7 @@ HUDIcon = Sprites/Icons/enemy_oni
 weaponMeleePrefab = Props/PFClub
 waveToUnlock = 14
 resourcesCost = 35
-cooldownTimer = 1.0
+cooldownTimer = 3.0
 attackFrequency = 2.5
 
 
@@ -25,49 +25,49 @@ attackFrequency = 2.5
 	health = 1052
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 30
+	meleeRange = 150
+	meleeDamage = 45
 	knockbackPower = 75
 	knockbackResistance = 100
 
 [002]
-	cost = 4500
+	cost = 4500,0
 	health = 1537
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 41
+	meleeRange = 150
+	meleeDamage = 62
 	knockbackPower = 75
 	knockbackResistance = 100
 
 [003]
-	cost = 7600
+	cost = 7600,0
 	health = 2150
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 50
+	meleeRange = 150
+	meleeDamage = 85
 	knockbackPower = 75
 	knockbackResistance = 100
 
 [004]
-	cost = 12000
+	cost = 12000,0
 	health = 2760
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 70
+	meleeRange = 150
+	meleeDamage = 115
 	knockbackPower = 75
 	knockbackResistance = 100
 
 [005]
-	cost = 18600
+	cost = 18600,0
 	health = 3280
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 80
-	knockbackPower = 30
+	meleeRange = 150
+	meleeDamage = 150
+	knockbackPower = 75
 	knockbackResistance = 100
 
 [006]
@@ -75,8 +75,8 @@ attackFrequency = 2.5
 	health = 3973
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 102
+	meleeRange = 150
+	meleeDamage = 190
 	knockbackPower = 75
 	knockbackResistance = 100
 
@@ -85,8 +85,8 @@ attackFrequency = 2.5
 	health = 4260
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 120
+	meleeRange = 150
+	meleeDamage = 230
 	knockbackPower = 75
 	knockbackResistance = 100
 
@@ -95,8 +95,8 @@ attackFrequency = 2.5
 	health = 5635
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 140
+	meleeRange = 150
+	meleeDamage = 280
 	knockbackPower = 75
 	knockbackResistance = 100
 
@@ -105,8 +105,8 @@ attackFrequency = 2.5
 	health = 6560
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 160
+	meleeRange = 150
+	meleeDamage = 340
 	knockbackPower = 75
 	knockbackResistance = 100
 
@@ -115,7 +115,7 @@ attackFrequency = 2.5
 	health = 7675
 	speedMin = 65
 	speedMax = 65
-	meleeRange = 90
-	meleeDamage = 250
+	meleeRange = 150
+	meleeDamage = 420
 	knockbackPower = 75
 	knockbackResistance = 100

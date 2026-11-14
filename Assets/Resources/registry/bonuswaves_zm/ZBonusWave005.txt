@@ -1,0 +1,66 @@
+scene = InGame_hell
+bonusHint = Kahraman savas disi; hava ve menzilli zombilerle elit samuraylari erit.
+
+[rewards]
+	coins, 7500
+	gems, 4
+	z+jurogumo, 1
+
+selectedCharm = z+jurogumo
+initialleadershiplevel = 4
+baselevel = 2
+belllevel = 3
+archerlevel = 4
+
+[abilitylevels]
+	LethargyZM = 5
+	DragonAttack = 2
+
+[selectedabilities]
+	000 = LethargyZM
+	001 = DragonAttack
+
+[helperlevels]
+	TenguAir = 5
+	ZombieRifleman = 5
+	EvilIceArcher = 5
+	Necromancer = 4
+	Jurogumo = 4
+
+[selectedhelpers]
+	000 = TenguAir
+	001 = ZombieRifleman
+	002 = EvilIceArcher
+	003 = Necromancer
+	004 = Jurogumo
+
+[Commands]
+	SamuraiShield_Ice
+	Frostie
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	1,1
+	Takeda
+	Nobunaga
+	SamuraiShield_Ice
+	Frostie
+	SamuraiRifleman
+	1,1
+	NinjaGirl
+	Cart
+	Takeda
+	Nobunaga
+	Priest
+	Swordsmith
+	1,1
+	SamuraiShield_Ice
+	Frostie
+	SamuraiRifleman
+	NinjaGirl
+	Cart
+	Takeda
+	Nobunaga
+	1,1
+	ArcherElite
+	RiflemanElite

@@ -1,0 +1,34 @@
+scene = InGame_winternight
+
+[rewards]
+	coins, 3500
+	gems, 120
+
+[Commands]
+	Evil_Horseman
+	Evil_Horseman
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	1.0,1.0
+	Wayundo_Metal
+	Evil_Ice
+	Tengu_air
+	Tengu_air
+	1.0,1.0
+	(
+	Evil_Horseman
+	Evil_Ninja
+	Wayundo_Metal
+	Tengu_air
+	)
+	1.0,1.0
+	@bossalert
+	Evil_Takeda
+	Necromancer_Boss
+	Evil_Taiko_Drummer
+	Evil_Horseman
+	Evil_Horseman
+	Nobusuma_alt
+	Nobusuma_alt
+	Wayundo_Metal

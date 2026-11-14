@@ -1,0 +1,117 @@
+/--------------------------------------------------
+
+displayName = Evil Ice Archer
+desc = EvilIceArcher
+prefab = Characters/PFSamuraiarchericeZombie
+HUDIcon = Sprites/Icons/IceArcherZomibe
+weaponRangedPrefab = Props/PFsamuraibow
+waveToUnlock = 28
+resourcesCost = 25.0
+cooldownTimer = 3.0
+attackFrequency = 3.0
+availableAtWave = 1
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 1000,0
+	health = 110
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 24
+	projectile = IceArrow
+	knockbackResistance = 20
+
+[002]
+	cost = 2000,0
+	health = 160
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 35
+	projectile = IceArrow
+	knockbackResistance = 20
+
+[003]
+	cost = 3550,0
+	health = 225
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 50
+	projectile = IceArrow
+	knockbackResistance = 20
+
+[004]
+	cost = 6000,0
+	health = 315
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 70
+	projectile = IceArrow
+	knockbackResistance = 20
+
+[005]
+	cost = 9550,0
+	health = 435
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 95
+	projectile = IceArrow
+	knockbackResistance = 20
+
+[006]
+	cost = 0,12
+	health = 600
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 128
+	projectile = IceArrow
+	knockbackResistance = 20
+
+[007]
+	cost = 0,18
+	health = 810
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 165
+	projectile = IceArrow
+	knockbackResistance = 20
+
+[008]
+	cost = 0,22
+	health = 1060
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 205
+	projectile = IceArrow
+	knockbackResistance = 20
+
+[009]
+	cost = 0,26
+	health = 1340
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 245
+	projectile = IceArrow
+	knockbackResistance = 20
+
+[010]
+	cost = 0,30
+	health = 1650
+	speedMin = 100
+	speedMax = 100
+	bowRange = 475
+	bowDamage = 290
+	projectile = IceArrow
+	knockbackResistance = 20

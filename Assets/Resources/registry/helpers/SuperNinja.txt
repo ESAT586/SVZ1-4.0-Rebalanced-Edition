@@ -1,0 +1,147 @@
+/--------------------------------------------------
+
+displayName = Super Ninja
+desc = @helper_ninja_girl_desc
+prefab = Characters/PFFemalewarrior
+HUDIcon = Sprites/Icons/ally_assassin
+weaponMeleePrefab = Props/PFFarmerssword
+waveToUnlock = 40
+resourcesCost = 15.0
+cooldownTimer = 2.0
+attackFrequency = 0.8
+usesBladeWeapon = true
+availableAtWave = 35
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 5000,0
+	health = 500
+	speedMin = 250
+	speedMax = 250
+	meleeRange = 100
+	meleeDamage = 80
+	knockbackPower = 10
+	knockbackResistance = 10
+	bowRange = 400
+	bowDamage = 25
+	projectile = Shuriken
+	
+[002]
+	cost = 8000,0
+	health = 750
+	speedMin = 250
+	speedMax = 250
+	meleeRange = 100
+	meleeDamage = 120
+	knockbackPower = 10
+	knockbackResistance = 15
+	bowRange = 400
+	bowDamage = 40
+	projectile = Shuriken
+
+[003]
+	cost = 14000,0
+	health = 1100
+	speedMin = 255
+	speedMax = 255
+	meleeRange = 100
+	meleeDamage = 170
+	knockbackPower = 11
+	knockbackResistance = 20
+	bowRange = 410
+	bowDamage = 58
+	projectile = Shuriken
+
+[004]
+	cost = 22000,0
+	health = 1500
+	speedMin = 260
+	speedMax = 260
+	meleeRange = 100
+	meleeDamage = 230
+	knockbackPower = 12
+	knockbackResistance = 25
+	bowRange = 420
+	bowDamage = 76
+	projectile = Shuriken
+
+[005]
+	cost = 35000,0
+	health = 1950
+	speedMin = 265
+	speedMax = 265
+	meleeRange = 100
+	meleeDamage = 300
+	knockbackPower = 14
+	knockbackResistance = 30
+	bowRange = 435
+	bowDamage = 95
+	projectile = Shuriken
+
+[006]
+	cost = 0,15
+	health = 2450
+	speedMin = 270
+	speedMax = 270
+	meleeRange = 100
+	meleeDamage = 385
+	knockbackPower = 15
+	knockbackResistance = 35
+	bowRange = 450
+	bowDamage = 115
+	projectile = Shuriken
+
+[007]
+	cost = 0,22
+	health = 3000
+	speedMin = 275
+	speedMax = 275
+	meleeRange = 100
+	meleeDamage = 480
+	knockbackPower = 16
+	knockbackResistance = 38
+	bowRange = 460
+	bowDamage = 135
+	projectile = Shuriken
+
+[008]
+	cost = 0,30
+	health = 3600
+	speedMin = 285
+	speedMax = 285
+	meleeRange = 100
+	meleeDamage = 580
+	knockbackPower = 18
+	knockbackResistance = 42
+	bowRange = 475
+	bowDamage = 155
+	projectile = Shuriken
+
+[009]
+	cost = 0,40
+	health = 4250
+	speedMin = 290
+	speedMax = 290
+	meleeRange = 100
+	meleeDamage = 685
+	knockbackPower = 19
+	knockbackResistance = 46
+	bowRange = 485
+	bowDamage = 175
+	projectile = Shuriken
+
+[010]
+	cost = 0,50
+	health = 5000
+	speedMin = 300
+	speedMax = 300
+	meleeRange = 100
+	meleeDamage = 800
+	knockbackPower = 20
+	knockbackResistance = 50
+	bowRange = 500
+	bowDamage = 200
+	projectile = Shuriken

@@ -25,12 +25,36 @@ public class EnemiesPreview
 	private const int kMaxEnemyTypes = 9;
 
 	private List<Character> mChars = new List<Character>();
+	private List<string> mEnemyIDs = new List<string>();
+	private List<Vector3> mDefaultPositions = new List<Vector3>();
+	private int mWaveNumber;
 
 	private bool mNeedToForceIdle = true;
 
+	public List<Character> characters
+	{
+		get { return mChars; }
+	}
+
+	public List<string> enemyIDs
+	{
+		get { return mEnemyIDs; }
+	}
+
+	public List<Vector3> defaultPositions
+	{
+		get { return mDefaultPositions; }
+	}
+
+	public int waveNumber
+	{
+		get { return mWaveNumber; }
+	}
+
 	public EnemiesPreview(BoxCollider spawnArea)
 	{
-		WaveManager waveManager = new WaveManager(Singleton<Profile>.instance.waveToBeat, null, 0f);
+		mWaveNumber = Singleton<Profile>.instance.waveToBeat;
+		WaveManager waveManager = new WaveManager(mWaveNumber, null, 0f);
 		List<string> allDifferentEnemies = waveManager.allDifferentEnemies;
 		if (allDifferentEnemies.Count > 9)
 		{
@@ -47,7 +71,21 @@ public class EnemiesPreview
 			if (sDFTreeNode.hasChild(text))
 			{
 				Vector3 pos = ((i >= spotsList.Length) ? new Vector3(0f, 0f, 0f) : spotsList[i]);
-				Spawn(sDFTreeNode.to(text), pos);
+				mDefaultPositions.Add(pos);
+
+#if UNITY_EDITOR
+				// If custom formation was saved in Unity Editor, apply it
+				string key = "SVZ_Form_W" + mWaveNumber + "_" + i;
+				if (PlayerPrefs.HasKey(key + "_x"))
+				{
+					pos = new Vector3(
+						PlayerPrefs.GetFloat(key + "_x"),
+						PlayerPrefs.GetFloat(key + "_y"),
+						PlayerPrefs.GetFloat(key + "_z")
+					);
+				}
+#endif
+				Spawn(sDFTreeNode.to(text), pos, text);
 			}
 			else
 			{
@@ -70,7 +108,7 @@ public class EnemiesPreview
 		mNeedToForceIdle = false;
 	}
 
-	private void Spawn(SDFTreeNode data, Vector3 pos)
+	private void Spawn(SDFTreeNode data, Vector3 pos, string enemyId)
 	{
 		Character character = new Character();
 		character.controlledObject = (GameObject)Object.Instantiate(Resources.Load(data["prefab"]));
@@ -100,14 +138,15 @@ public class EnemiesPreview
 			character.controlledObject.transform.localScale = localScale;
 		}
 		mChars.Add(character);
+		mEnemyIDs.Add(enemyId);
 	}
 
-	private Vector3 GetSpotInGrid(int x, int z)
+	public Vector3 GetSpotInGrid(int x, int z)
 	{
 		return new Vector3(90f * (float)x + -50f, 25f, 70f * (float)z + 420f);
 	}
 
-	private Vector3[] GetSpotsList(int count)
+	public Vector3[] GetSpotsList(int count)
 	{
 		switch (count)
 		{

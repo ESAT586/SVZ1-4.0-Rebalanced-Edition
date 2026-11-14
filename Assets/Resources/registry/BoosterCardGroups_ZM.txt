@@ -1,0 +1,69 @@
+[common]
+	baseBG = Sprites/BoosterPacks/card_common_base
+	[cards]
+		coins(2500) = 30
+		gems(5) = 20
+		healthSmallZ(1) = 20
+		leadershipSmallZ(1) = 20
+		revivePotionZ(1) = 10
+
+[uncommon]
+	baseBG = Sprites/BoosterPacks/card_uncommon_base
+	[cards]
+		coins(6000) = 20
+		gems(10) = 15
+		healthSmallZ(2) = 20
+		leadershipSmallZ(2) = 20
+		TenguAir(1) = 10
+		ZombieRifleman(1) = 10
+		EvilIceArcher(1) = 10
+
+[rare]
+	baseBG = Sprites/BoosterPacks/card_rare_base
+	[cards]
+		gems(15) = 15
+		revivePotionZ(2) = 15
+		z+oni(1) = 5
+		z+wanyudofire(1) = 4
+		z+wanyudometal(1) = 4
+		z+jurogumo(1) = 4
+		TenguAir(1) = 20
+		ZombieRifleman(1) = 20
+		EvilIceArcher(1) = 20
+		Necromancer(1) = 10
+		Jurogumo(1) = 10
+		WanyudoMetal(1) = 12
+
+[super]
+	baseBG = Sprites/BoosterPacks/card_super_rare_base
+	[cards]
+		gems(25) = 10
+		z+oni(1) = 12
+		z+wanyudofire(1) = 12
+		z+wanyudometal(1) = 12
+		z+jurogumo(1) = 12
+		TenguAir(2) = 15
+		ZombieRifleman(2) = 15
+		EvilIceArcher(2) = 15
+		Necromancer(1) = 15
+		Jurogumo(1) = 15
+		WanyudoMetal(1) = 15
+		EvilNobunaga(1) = 10
+		EvilTakeda(1) = 10
+
+[extreme]
+	baseBG = Sprites/BoosterPacks/card_extreme_rare_base
+	[cards]
+		gems(50) = 10
+		z+oni(2) = 12
+		z+wanyudofire(2) = 10
+		z+wanyudometal(2) = 10
+		z+jurogumo(2) = 10
+		Necromancer(2) = 15
+		Jurogumo(2) = 15
+		WanyudoMetal(2) = 12
+		EvilNobunaga(1) = 15
+		EvilTakeda(1) = 15
+		Shogun(1) = 10
+		EvilIceArcher(3) = 10
+		ZombieRifleman(3) = 10

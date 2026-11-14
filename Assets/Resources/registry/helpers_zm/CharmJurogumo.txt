@@ -1,0 +1,32 @@
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_charm_jurogumo_name
+desc = @helper_charm_jurogumo_desc
+prefab = Characters/PFJurogumoCharm
+HUDIcon = Sprites/Icons/enemy_jurogumo
+hideInStore = True
+waveToUnlock = 999
+resourcesCost = 0.0
+cooldownTimer = 3.0
+attackFrequency = 1.0
+auraFX = FX/SamuraiPurple
+auraJoint = impact_target
+
+spawnOnDeath = Jurogumo
+spawnOnDeathCount = 3
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	health = 65000
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 125
+	meleeDamage = 1450
+	knockbackPower = 80
+	knockbackResistance = 100

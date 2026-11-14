@@ -1,0 +1,65 @@
+scene = InGame_hell_green
+bonusHint = Kahraman savas disi; temel zombi ordusuyla samuray dalgasini kir.
+
+[rewards]
+	coins, 2500
+	gems, 2
+	revivePotionZ, 1
+
+selectedCharm = z+oni
+initialleadershiplevel = 2
+baselevel = 1
+belllevel = 2
+archerlevel = 2
+
+[abilitylevels]
+	NightOfTheDead = 4
+	GraveHands = 3
+
+[selectedabilities]
+	000 = NightOfTheDead
+	001 = GraveHands
+
+[helperlevels]
+	Zombie = 4
+	ZombieAxe = 4
+	ZombieArcher = 3
+	SmallOni = 3
+	ZombieDrummer = 2
+
+[selectedhelpers]
+	000 = Zombie
+	001 = ZombieAxe
+	002 = ZombieArcher
+	003 = SmallOni
+	004 = ZombieDrummer
+
+[Commands]
+	Samurai
+	SamuraiSpear
+	1,1
+	SamuraiArcher
+	1,1
+	SamuraiRifleman
+	2,2
+	Samurai
+	Samurai
+	SamuraiSpear
+	SamuraiArcher
+	1,1
+	SamuraiRifleman
+	1,1
+	SamuraiShield_Ice
+	2,2
+	Samurai
+	SamuraiSpear
+	SamuraiArcher
+	SamuraiRifleman
+	1,1
+	SamuraiShield_Ice
+	SamuraiArcher
+	SamuraiRifleman
+	1,1
+	Frostie
+	Samurai
+	SamuraiSpear

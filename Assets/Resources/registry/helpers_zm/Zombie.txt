@@ -1,0 +1,116 @@
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_zombie_name
+desc = @helper_zombie_desc
+prefab = Characters/PFLzombie
+HUDIcon = Sprites/Icons/enemy_zombie_melee
+waveToUnlock = 4
+resourcesCost = 3.0
+cooldownTimer = 1.0
+attackFrequency = 1.0
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 150,0
+	health = 154
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 6
+	knockbackPower = 12
+	knockbackResistance = 10
+
+[002]
+	cost = 525,0
+	health = 246
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 8
+	knockbackPower = 12
+	knockbackResistance = 10
+
+[003]
+	cost = 1575,0
+	health = 317
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 11
+	knockbackPower = 12
+	knockbackResistance = 10
+
+[004]
+	cost = 4725,0
+	health = 398
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 14
+	knockbackPower = 12
+	knockbackResistance = 10
+
+[005]
+	cost = 14000,0
+	health = 499
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 19
+	knockbackPower = 12
+	knockbackResistance = 10
+
+[006]
+	cost = 0,8
+	health = 631
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 23
+	knockbackPower = 12
+	knockbackResistance = 10
+
+[007]
+	cost = 0,11
+	health = 859
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 28
+	knockbackPower = 12
+	knockbackResistance = 10
+
+[008]
+	cost = 0,15
+	health = 1078
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 39
+	knockbackPower = 12
+	knockbackResistance = 10
+
+[009]
+	cost = 0,20
+	health = 1329
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 47
+	knockbackPower = 12
+	knockbackResistance = 10
+
+[010]
+	cost = 0,24
+	health = 1506
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 54
+	knockbackPower = 12
+	knockbackResistance = 10

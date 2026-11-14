@@ -3,29 +3,36 @@ using UnityEngine;
 
 public class PrefabPreloader : WeakGlobalInstance<PrefabPreloader>
 {
-	private Dictionary<string, GameObject> mPreloadedModels = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> mPreloadedModels = new Dictionary<string, GameObject>();
 
-	public PrefabPreloader()
-	{
-		SetUniqueInstance(this);
-	}
+    public PrefabPreloader()
+    {
+        SetUniqueInstance(this);
+    }
 
-	public void Preload(string prefabPath)
-	{
-		if (!mPreloadedModels.ContainsKey(prefabPath))
-		{
-			Preload(prefabPath, Resources.Load(prefabPath) as GameObject);
-		}
-	}
+    public void Preload(string prefabPath)
+    {
+        if (!mPreloadedModels.ContainsKey(prefabPath))
+        {
+            Preload(prefabPath, Resources.Load(prefabPath) as GameObject);
+        }
+    }
 
-	public void Preload(string prefabPath, GameObject prefab)
-	{
-		if (!mPreloadedModels.ContainsKey(prefabPath))
-		{
-			GameObject gameObject = (GameObject)Object.Instantiate(prefab);
-			gameObject.transform.position = new Vector3(0f, 10000f, -10000f);
-			gameObject.active = false;
-			mPreloadedModels.Add(prefabPath, gameObject);
-		}
-	}
+    public void Preload(string prefabPath, GameObject prefab)
+    {
+        // GÜVENLİK KİLİDİ
+        if (prefab == null)
+        {
+            Debug.LogError("Eyvah, prefab bulunamadı! Yüklenemeyen dosya: " + prefabPath);
+            return;
+        }
+
+        if (!mPreloadedModels.ContainsKey(prefabPath))
+        {
+            GameObject gameObject = (GameObject)Object.Instantiate(prefab);
+            gameObject.transform.position = new Vector3(0f, 10000f, -10000f);
+            gameObject.active = false;
+            mPreloadedModels.Add(prefabPath, gameObject);
+        }
+    }
 }

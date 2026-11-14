@@ -20,16 +20,23 @@ public class FreebiesManager : Singleton<FreebiesManager>
 	{
 		get
 		{
-			Profile profile = Singleton<Profile>.instance;
-			DateTime now = DateTime.Now;
-			if (profile.lastYearPlayed == 0 || profile.lastMonthPlayed == 0 || profile.lastDayPlayed == 0)
+			try
 			{
-				profile.lastYearPlayed = now.Year;
-				profile.lastMonthPlayed = now.Month;
-				profile.lastDayPlayed = now.Day;
+				Profile profile = Singleton<Profile>.instance;
+				DateTime now = DateTime.Now;
+				if (profile.lastYearPlayed < 2000 || profile.lastMonthPlayed < 1 || profile.lastMonthPlayed > 12 || profile.lastDayPlayed < 1 || profile.lastDayPlayed > 31)
+				{
+					profile.lastYearPlayed = now.Year;
+					profile.lastMonthPlayed = now.Month;
+					profile.lastDayPlayed = now.Day;
+				}
+				DateTime value = new DateTime(profile.lastYearPlayed, profile.lastMonthPlayed, profile.lastDayPlayed);
+				return now.Subtract(value).Days >= mWelcomeBack.minDays;
 			}
-			DateTime value = new DateTime(profile.lastYearPlayed, profile.lastMonthPlayed, profile.lastDayPlayed);
-			return now.Subtract(value).Days >= mWelcomeBack.minDays;
+			catch
+			{
+				return false;
+			}
 		}
 	}
 

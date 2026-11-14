@@ -1,0 +1,30 @@
+scene = InGame_underworld
+
+[rewards]
+	coins, 2700
+	gems, 110
+
+[Commands]
+	Jurogumo
+	Jurogumo
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	0.5,0.5
+	Chochinobake_alt
+	Chochinobake_alt
+	Tengu_air
+	Tengu_air
+	1.0,1.0
+	(
+	Jurogumo
+	Evil_Ninja
+	Chochinobake_alt
+	Tengu_air
+	)
+	1.0,1.0
+	Wayundo_Metal
+	Oni
+	Nobusuma
+	Nobusuma

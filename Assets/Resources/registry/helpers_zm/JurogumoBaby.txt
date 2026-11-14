@@ -22,96 +22,91 @@ levelMatchOtherHelper = Jurogumo
 / *** NOTE: they spawn using the same level as their "mother"
 
 [001]
-	health = 350
+	health = 180
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 35
 	knockbackPower = 0
 	knockbackResistance = 25
 
 [002]
-	health = 350
+	health = 240
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 48
 	knockbackPower = 0
 	knockbackResistance = 25
 
 [003]
-	health = 350
+	health = 320
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 64
 	knockbackPower = 0
-	knockbackResistance = 25
+	knockbackResistance = 28
+
 [004]
-	health = 350
+	health = 420
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 84
 	knockbackPower = 0
-	knockbackResistance = 25
+	knockbackResistance = 28
+
 [005]
-	health = 350
+	health = 550
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 108
 	knockbackPower = 0
-	knockbackResistance = 25
+	knockbackResistance = 30
 
 [006]
-	health = 350
+	health = 720
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 135
 	knockbackPower = 0
-	knockbackResistance = 25
+	knockbackResistance = 30
+
 [007]
-	health = 350
+	health = 930
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 165
 	knockbackPower = 0
-	knockbackResistance = 25
+	knockbackResistance = 32
+
 [008]
-	health = 350
+	health = 1180
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 200
 	knockbackPower = 0
-	knockbackResistance = 25
+	knockbackResistance = 32
 
 [009]
-	health = 350
+	health = 1470
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 240
 	knockbackPower = 0
-	knockbackResistance = 25
+	knockbackResistance = 35
 
 [010]
-	health = 350
+	health = 1800
 	speedMin = 250
 	speedMax = 250
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 285
 	knockbackPower = 0
-	knockbackResistance = 25
-
-
-
-
-
-
-
-
-
+	knockbackResistance = 35

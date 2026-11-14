@@ -1,0 +1,119 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Farmer on Stilts
+desc = Extra tall farmer with a sharp fork.
+prefab = Characters/PFFarmerOnStilts
+HUDIcon = Sprites/Icons/ally_farmeronstilts
+weaponMeleePrefab = Props/PFFarmerFork
+waveToUnlock = 12
+resourcesCost = 15
+cooldownTimer = 2.0
+attackFrequency = 1.0
+usesBladeWeapon = true
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 300,0
+	health = 150
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 25
+	knockbackPower = 15
+	knockbackResistance = 25
+
+[002]
+	cost = 850,0
+	health = 220
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 35
+	knockbackPower = 15
+	knockbackResistance = 25
+
+[003]
+	cost = 1800,0
+	health = 350
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 50
+	knockbackPower = 15
+	knockbackResistance = 25
+
+[004]
+	cost = 3200,0
+	health = 500
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 75
+	knockbackPower = 20
+	knockbackResistance = 25
+
+[005]
+	cost = 5500,0
+	health = 750
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 110
+	knockbackPower = 20
+	knockbackResistance = 30
+
+[006]
+	cost = 8500,0
+	health = 1100
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 160
+	knockbackPower = 20
+	knockbackResistance = 30
+
+[007]
+	cost = 0,15
+	health = 1600
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 230
+	knockbackPower = 25
+	knockbackResistance = 35
+
+[008]
+	cost = 0,25
+	health = 2400
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 350
+	knockbackPower = 25
+	knockbackResistance = 40
+
+[009]
+	cost = 0,40
+	health = 3500
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 500
+	knockbackPower = 30
+	knockbackResistance = 50
+
+[010]
+	cost = 0,60
+	health = 5000
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 130
+	meleeDamage = 800
+	knockbackPower = 30
+	knockbackResistance = 60

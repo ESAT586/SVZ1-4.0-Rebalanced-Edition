@@ -175,7 +175,7 @@ public class PachinkoItemDisplayDialog : IDialog
 			priority = dialogPriority,
 			onItemPurchased = onItemPurchased
 		});
-		WeakGlobalInstance<DialogHandler>.instance.PushCreator(() => new PurchaseCurrencyDialog(trigger)
+		WeakGlobalInstance<DialogHandler>.instance.PushCreator(() => new StoreNotEnoughDialog(mItemDesc)
 		{
 			priority = dialogPriority
 		});

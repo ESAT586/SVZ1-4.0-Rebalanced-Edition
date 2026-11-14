@@ -50,7 +50,6 @@ public class SoundThemePlayer : MonoBehaviour
 			}
 			if (soundEvent.clips == null || soundEvent.clips.Length == 0)
 			{
-				Debug.LogWarning("SoundEvent " + theName + " from " + base.name + " has no audio clips assigned!");
 				return null;
 			}
 			if (soundEvent.playLimit < 0 && soundEvent.playingClips != null && soundEvent.playingClips.Count >= -soundEvent.playLimit)

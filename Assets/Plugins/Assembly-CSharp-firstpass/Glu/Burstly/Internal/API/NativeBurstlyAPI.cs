@@ -150,64 +150,25 @@ namespace Glu.Burstly.Internal.API
 			Glu_Burstly_SetServerURL(url);
 		}
 
-		[DllImport("burstlyplugin")]
-		private static extern IntPtr Glu_Burstly_CreateManager(string publisherId, string zoneId);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_DestroyManager(IntPtr peer);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_RefreshAd(IntPtr peer);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_PrecacheAd(IntPtr peer);
-
-		[DllImport("burstlyplugin")]
-		private static extern bool Glu_Burstly_IsPrecached(IntPtr peer);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_SetVisible(IntPtr peer, bool visible);
-
-		[DllImport("burstlyplugin")]
-		private static extern bool Glu_Burstly_IsVisible(IntPtr peer);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_SetPaused(IntPtr peer, bool visible);
-
-		[DllImport("burstlyplugin")]
-		private static extern bool Glu_Burstly_IsPaused(IntPtr peer);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_SetBannerAlignment(IntPtr peer, int anchor);
-
-		[DllImport("burstlyplugin")]
-		private static extern int Glu_Burstly_GetBannerAlignment(IntPtr peer);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_SetBannerOffset(IntPtr peer, int x, int y);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_GetBannerOffset(IntPtr peer, out int x, out int y);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_SetDefaultSessionLife(IntPtr peer, int timeoutMs);
-
-		[DllImport("burstlyplugin")]
-		private static extern int Glu_Burstly_GetDefaultSessionLife(IntPtr peer);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_SetPublisherTargetingData(IntPtr peer, int size, [In][MarshalAs(UnmanagedType.LPArray)] byte[] utf8Data);
-
-		[DllImport("burstlyplugin")]
-		private static extern bool Glu_Burstly_IsFullScreen(IntPtr peer);
-
-		[DllImport("burstlyplugin")]
-		private static extern int Glu_Burstly_PeekMessage(IntPtr peer, int size, [Out][MarshalAs(UnmanagedType.LPArray)] byte[] utf8Message);
-
-		[DllImport("burstlyplugin")]
-		private static extern void Glu_Burstly_SetServerURL(string url);
-
-		[DllImport("burstlyplugin")]
-		private static extern int Glu_Burstly_GetSDKVersion(int size, [Out][MarshalAs(UnmanagedType.LPArray)] byte[] utf8Ver);
+		private static IntPtr Glu_Burstly_CreateManager(string publisherId, string zoneId) { return IntPtr.Zero; }
+		private static void Glu_Burstly_DestroyManager(IntPtr peer) { }
+		private static void Glu_Burstly_RefreshAd(IntPtr peer) { }
+		private static void Glu_Burstly_PrecacheAd(IntPtr peer) { }
+		private static bool Glu_Burstly_IsPrecached(IntPtr peer) { return false; }
+		private static void Glu_Burstly_SetVisible(IntPtr peer, bool visible) { }
+		private static bool Glu_Burstly_IsVisible(IntPtr peer) { return false; }
+		private static void Glu_Burstly_SetPaused(IntPtr peer, bool visible) { }
+		private static bool Glu_Burstly_IsPaused(IntPtr peer) { return false; }
+		private static void Glu_Burstly_SetBannerAlignment(IntPtr peer, int anchor) { }
+		private static int Glu_Burstly_GetBannerAlignment(IntPtr peer) { return 0; }
+		private static void Glu_Burstly_SetBannerOffset(IntPtr peer, int x, int y) { }
+		private static void Glu_Burstly_GetBannerOffset(IntPtr peer, out int x, out int y) { x = 0; y = 0; }
+		private static void Glu_Burstly_SetDefaultSessionLife(IntPtr peer, int timeoutMs) { }
+		private static int Glu_Burstly_GetDefaultSessionLife(IntPtr peer) { return 0; }
+		private static void Glu_Burstly_SetPublisherTargetingData(IntPtr peer, int size, byte[] utf8Data) { }
+		private static bool Glu_Burstly_IsFullScreen(IntPtr peer) { return false; }
+		private static int Glu_Burstly_PeekMessage(IntPtr peer, int size, byte[] utf8Message) { return 0; }
+		private static void Glu_Burstly_SetServerURL(string url) { }
+		private static int Glu_Burstly_GetSDKVersion(int size, byte[] utf8Ver) { return 0; }
 	}
 }

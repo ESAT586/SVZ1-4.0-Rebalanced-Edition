@@ -14,6 +14,7 @@ cooldownTimer = 1.0
 attackFrequency = 2.0
 usesBladeWeapon = true
 hideInStore = True
+levelMatchOtherHelper = Farmer
 
 /--------------------------------------------------
 / Levels
@@ -118,8 +119,6 @@ hideInStore = True
 	meleeDamage = 330
 	knockbackPower = 5
 	knockbackResistance = 10
-
-
 
 
 

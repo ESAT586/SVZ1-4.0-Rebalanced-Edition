@@ -422,5 +422,334 @@
 	previewPriority = 1
 
 
+[Nobunaga_Hero]
+	displayName = @helper_Nobunaga
+	desc = @helper_Nobunaga_desc
+	prefab = Characters/PFNobunagaBig
+	usesBladeWeapon = true
+	lane = back
+	boss = true
+	attackFrequency = 1.0
+	health = 55555
+	speedMin = 120
+	speedMax = 120
+	meleeRange = 125
+	meleeDamage = 1000
+	knockbackPower = 90
+	knockbackResistance = 100
+	award = 500
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
 
 
+[Takeda_Hero]
+	displayName = @helper_takeda
+	desc = @helper_takeda_desc
+	prefab = Characters/PFTakedaBig
+	usesBladeWeapon = true
+	weaponMeleePrefab = Props/PFTakedasword
+	lane = back
+	boss = true
+	attackFrequency = 1.7
+	health = 35650
+	speedMin = 180
+	speedMax = 200
+	meleeRange = 125
+	meleeDamage = 4545
+	knockbackPower = 50
+	knockbackResistance = 100
+	award = 500
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+/ Charm elite enemies for late zombie mode
+[PanzerElite]
+	displayName = @helper_heavy_samurai
+	prefab = Characters/PFHSamuraiBig
+	weaponMeleePrefab = Props/PFHeavysamuraisword
+	usesBladeWeapon = true
+	lane = back
+	attackFrequency = 1.7
+	health = 42000
+	speedMin = 120
+	speedMax = 120
+	meleeRange = 200
+	meleeDamage = 650
+	knockbackPower = 90
+	knockbackResistance = 100
+	award = 500
+	resourceDropMin = 0
+	resourceDropMax = 8
+	previewPriority = 1
+
+
+[SpearElite]
+	displayName = @helper_samurai_spearman
+	prefab = Characters/PFSamuraiSpearBig
+	weaponMeleePrefab = Props/PFSpear
+	usesBladeWeapon = true
+	lane = back
+	attackFrequency = 2.5
+	health = 36000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 275
+	meleeDamage = 700
+	knockbackPower = 90
+	knockbackResistance = 100
+	award = 500
+	resourceDropMin = 0
+	resourceDropMax = 8
+	previewPriority = 1
+
+
+[Panzer_Boss]
+	displayName = @helper_heavy_samurai
+	prefab = Characters/PFHSamuraiBig
+	weaponMeleePrefab = Props/PFHeavysamuraisword
+	usesBladeWeapon = true
+	lane = back
+	boss = true
+	attackFrequency = 1.7
+	health = 120000
+	speedMin = 120
+	speedMax = 120
+	meleeRange = 200
+	meleeDamage = 1200
+	knockbackPower = 90
+	knockbackResistance = 100
+	award = 750
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+[Spear_Boss]
+	displayName = @helper_samurai_spearman
+	prefab = Characters/PFSamuraiSpearBig
+	weaponMeleePrefab = Props/PFSpear
+	usesBladeWeapon = true
+	lane = back
+	boss = true
+	attackFrequency = 2.5
+	health = 95000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 275
+	meleeDamage = 1450
+	knockbackPower = 90
+	knockbackResistance = 100
+	award = 750
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+[Nobunaga_Hero_L2]
+	displayName = @helper_Nobunaga
+	desc = @helper_Nobunaga_desc
+	prefab = Characters/PFNobunagaBig
+	usesBladeWeapon = true
+	lane = back
+	boss = true
+	attackFrequency = 1.0
+	health = 90000
+	speedMin = 120
+	speedMax = 120
+	meleeRange = 125
+	meleeDamage = 1500
+	knockbackPower = 90
+	knockbackResistance = 100
+	award = 750
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+[Takeda_Hero_L2]
+	displayName = @helper_takeda
+	desc = @helper_takeda_desc
+	prefab = Characters/PFTakedaBig
+	usesBladeWeapon = true
+	weaponMeleePrefab = Props/PFTakedasword
+	lane = back
+	boss = true
+	attackFrequency = 1.7
+	health = 85000
+	speedMin = 180
+	speedMax = 200
+	meleeRange = 125
+	meleeDamage = 6000
+	knockbackPower = 50
+	knockbackResistance = 100
+	award = 750
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+[Samurai_Hero_L2]
+	displayName = @heroe_samurai_name
+	prefab = Characters/PFHSamuraiSilver
+	weaponMeleePrefab = Props/PFHeavysamuraisword
+	lane = center
+	boss = true
+	health = 110000
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 100
+	meleeDamage = 1500
+	attackFrequency = 3
+	knockbackPower = 0
+	knockbackResistance = 100
+	award = 750
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+[Olympic_Hero]
+	displayName = @heroe_samurai_name
+	prefab = Characters/PFHeroOlympics
+	weaponMeleePrefab = Props/PFOlympicTorch
+	usesBladeWeapon = true
+	lane = center
+	boss = true
+	attackFrequency = 1.4
+	health = 150000
+	speedMin = 120
+	speedMax = 120
+	meleeRange = 200
+	meleeDamage = 1750
+	knockbackPower = 90
+	knockbackResistance = 100
+	award = 1000
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+/ Late zombie mode anti-air elites and tank boss
+[ArcherElite]
+	displayName = @helper_samurai_archer
+	prefab = Characters/PFSamuraiarcherElite
+	weaponRangedPrefab = Props/PFsamuraibow
+	projectile = Arrow
+	health = 525
+	speedMin = 100
+	speedMax = 100
+	bowRange = 550
+	bowDamage = 90
+	attackFrequency = 2.0
+	knockbackPower = 0
+	knockbackResistance = 40
+	award = 400
+	resourceDropMin = 0
+	resourceDropMax = 5
+	previewPriority = 1
+
+
+[RiflemanElite]
+	displayName = @helper_rifleman
+	prefab = Characters/PFSamuraiRiflemanElite
+	weaponRangedPrefab = Props/PFRifle
+	projectile = Bullet
+	health = 1275
+	speedMin = 100
+	speedMax = 100
+	bowRange = 600
+	bowDamage = 150
+	attackFrequency = 1.6
+	knockbackPower = 0
+	knockbackResistance = 45
+	award = 450
+	resourceDropMin = 0
+	resourceDropMax = 5
+	previewPriority = 1
+
+
+[Archer_Boss]
+	displayName = @helper_samurai_archer
+	prefab = Characters/PFSamuraiarcherBig
+	weaponRangedPrefab = Props/PFsamuraibow
+	projectile = BigExplodingArrow
+	lane = back
+	boss = true
+	health = 85000
+	speedMin = 100
+	speedMax = 100
+	bowRange = 650
+	bowDamage = 1350
+	attackFrequency = 1.8
+	knockbackPower = 0
+	knockbackResistance = 100
+	award = 750
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+[Rifleman_Boss]
+	displayName = @helper_rifleman
+	prefab = Characters/PFSamuraiRiflemanBig
+	weaponRangedPrefab = Props/PFRifle
+	projectile = Bullet
+	lane = back
+	boss = true
+	health = 90000
+	speedMin = 100
+	speedMax = 100
+	bowRange = 750
+	bowDamage = 1800
+	attackFrequency = 1.4
+	knockbackPower = 0
+	knockbackResistance = 100
+	award = 750
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+[IceArcher_Boss]
+	displayName = @helper_ice_archer
+	prefab = Characters/PFSamuraiarchericeBig
+	weaponRangedPrefab = Props/PFsamuraibow
+	projectile = IceArrow
+	lane = back
+	boss = true
+	health = 95000
+	speedMin = 100
+	speedMax = 100
+	bowRange = 650
+	bowDamage = 1150
+	attackFrequency = 2.2
+	knockbackPower = 0
+	knockbackResistance = 100
+	award = 750
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+[ShieldIce_TankBoss]
+	displayName = @enemy_ShieldSamurai_Ice
+	prefab = Characters/PFSamuraiShieldIceBig
+	weaponMeleePrefab = Props/PFSamuraiShieldIce
+	lane = center
+	boss = true
+	health = 180000
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 125
+	meleeDamage = 1500
+	attackFrequency = 3.5
+	meleeFreeze = 3
+	knockbackPower = 90
+	knockbackResistance = 100
+	award = 1000
+	resourceDropMin = 0
+	resourceDropMax = 10
+	previewPriority = 1

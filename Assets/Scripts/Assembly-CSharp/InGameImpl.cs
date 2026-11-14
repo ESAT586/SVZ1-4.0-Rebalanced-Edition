@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Globalization;
 using UnityEngine;
 
 public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
@@ -20,7 +21,9 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private const float kCameraMoveUpSpeed = 25f;
 
-	private const int kWaveToShowEndGameNarrative = 70;
+	private const int kClassicEndGameWave = 100;
+
+	private const int kZombiesEndGameWave = 100;
 
 	public Transform heroSpawnPointLeft;
 
@@ -62,6 +65,8 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private Base mBase;
 
+	private Base mEnemyBase;
+
 	private Bell mBell;
 
 	private CharactersManager mCharactersManager;
@@ -99,6 +104,7 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 	private bool mPauseGameForBlockingDialog = true;
 
 	private bool mHaveShowReviveDialog;
+	private int mRevivesCount;
 
 	private float mAllAlliesInvincibleTimer;
 
@@ -114,12 +120,20 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private bool mStartedSlowMoFinisher;
 
-	private PlayModesManager.GameDirection mGameDirection = Singleton<PlayModesManager>.instance.gameDirection;
+	private PlayModesManager.GameDirection mGameDirection;
 
 	public Transform heroSpawnPoint
 	{
 		get
 		{
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				if (SVZMultiplayerManager.Instance.P1Side == SVZMultiplayerManager.BattlefieldSide.RightGate && heroSpawnPointRight != null)
+				{
+					return heroSpawnPointRight;
+				}
+				return heroSpawnPointLeft;
+			}
 			if (mGameDirection == PlayModesManager.GameDirection.RightToLeft)
 			{
 				return heroSpawnPointRight;
@@ -132,6 +146,14 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 	{
 		get
 		{
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				if (SVZMultiplayerManager.Instance.P1Side == SVZMultiplayerManager.BattlefieldSide.RightGate && enemiesTargetRight != null)
+				{
+					return enemiesTargetRight;
+				}
+				return enemiesTargetLeft;
+			}
 			if (mGameDirection == PlayModesManager.GameDirection.RightToLeft)
 			{
 				return enemiesTargetRight;
@@ -144,6 +166,14 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 	{
 		get
 		{
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				if (SVZMultiplayerManager.Instance.P1Side == SVZMultiplayerManager.BattlefieldSide.RightGate && enemiesSpawnAreaLeft != null)
+				{
+					return enemiesSpawnAreaLeft;
+				}
+				return enemiesSpawnAreaRight;
+			}
 			if (mGameDirection == PlayModesManager.GameDirection.RightToLeft)
 			{
 				return enemiesSpawnAreaLeft;
@@ -156,6 +186,14 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 	{
 		get
 		{
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				if (SVZMultiplayerManager.Instance.P1Side == SVZMultiplayerManager.BattlefieldSide.RightGate && helpersSpawnAreaRight != null)
+				{
+					return helpersSpawnAreaRight;
+				}
+				return helpersSpawnAreaLeft;
+			}
 			if (mGameDirection == PlayModesManager.GameDirection.RightToLeft)
 			{
 				return helpersSpawnAreaRight;
@@ -220,6 +258,14 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 		}
 	}
 
+	public Base enemyGate
+	{
+		get
+		{
+			return mEnemyBase;
+		}
+	}
+
 	public string activeCharm { get; private set; }
 
 	public GameHUD HUD
@@ -242,6 +288,22 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 		}
 	}
 
+	public float baseTimeScale
+	{
+		get
+		{
+			return mBaseTimeScale;
+		}
+		set
+		{
+			mBaseTimeScale = Mathf.Max(0.1f, value);
+			if (Time.timeScale > 0f)
+			{
+				Time.timeScale = mBaseTimeScale;
+			}
+		}
+	}
+
 	private bool gamePaused
 	{
 		get
@@ -250,6 +312,10 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 		}
 		set
 		{
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				return;
+			}
 			if (value != (Time.timeScale == 0f))
 			{
 				SoundThemeManager.SetAllLoopingSoundsPaused(value);
@@ -268,49 +334,192 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 	private void Start()
 	{
 		SetUniqueInstance(this);
+		mGameDirection = Singleton<PlayModesManager>.instance.gameDirection;
 		ApplicationUtilities.instance.onApplicationPause += OnApplicationPause;
 		HideUnusedGate();
+
+		PerformanceSettings.ApplySavedSettings();
+
+		float targetAspect = 1.7777778f; // 16:9
+		float currentAspect = (float)Screen.width / Screen.height;
+
+		if (gameCamera != null)
+		{
+			if (gameCamera.orthographic)
+			{
+				float baseOrtho = gameCamera.orthographicSize;
+				if (currentAspect < targetAspect) // Narrower than 16:9 (e.g. 4:3)
+				{
+					gameCamera.orthographicSize = baseOrtho * (targetAspect / currentAspect);
+				}
+			}
+		}
+
+		if (currentAspect > targetAspect)
+		{
+			float aspectMultiplier = currentAspect / targetAspect;
+			if (heroWalkLeftEdge != null && heroWalkRightEdge != null)
+			{
+				float centerZ = (heroWalkRightEdge.position.z + heroWalkLeftEdge.position.z) / 2f;
+				float halfWidth = Mathf.Abs(heroWalkRightEdge.position.z - heroWalkLeftEdge.position.z) / 2f;
+				float newHalfWidth = halfWidth * aspectMultiplier;
+
+				Vector3 rightPos = heroWalkRightEdge.position;
+				rightPos.z = centerZ + newHalfWidth;
+				heroWalkRightEdge.position = rightPos;
+
+				Vector3 leftPos = heroWalkLeftEdge.position;
+				leftPos.z = centerZ - newHalfWidth;
+				heroWalkLeftEdge.position = leftPos;
+
+				if (enemiesSpawnAreaRight != null && enemiesSpawnAreaLeft != null)
+				{
+					Vector3 esRightPos = enemiesSpawnAreaRight.transform.position;
+					esRightPos.z = centerZ + newHalfWidth;
+					enemiesSpawnAreaRight.transform.position = esRightPos;
+					Vector3 esLeftPos = enemiesSpawnAreaLeft.transform.position;
+					esLeftPos.z = centerZ - newHalfWidth;
+					enemiesSpawnAreaLeft.transform.position = esLeftPos;
+				}
+				if (helpersSpawnAreaRight != null && helpersSpawnAreaLeft != null)
+				{
+					Vector3 hsRightPos = helpersSpawnAreaRight.transform.position;
+					hsRightPos.z = centerZ + newHalfWidth;
+					helpersSpawnAreaRight.transform.position = hsRightPos;
+					Vector3 hsLeftPos = helpersSpawnAreaLeft.transform.position;
+					hsLeftPos.z = centerZ - newHalfWidth;
+					helpersSpawnAreaLeft.transform.position = hsLeftPos;
+				}
+				if (enemiesTargetRight != null && enemiesTargetLeft != null)
+				{
+					Vector3 etRightPos = enemiesTargetRight.transform.position;
+					etRightPos.z = centerZ + newHalfWidth;
+					enemiesTargetRight.transform.position = etRightPos;
+					Vector3 etLeftPos = enemiesTargetLeft.transform.position;
+					etLeftPos.z = centerZ - newHalfWidth;
+					enemiesTargetLeft.transform.position = etLeftPos;
+				}
+				if (heroSpawnPointRight != null && heroSpawnPointLeft != null)
+				{
+					Vector3 hspRight = heroSpawnPointRight.position;
+					hspRight.z = centerZ + newHalfWidth;
+					heroSpawnPointRight.position = hspRight;
+					Vector3 hspLeft = heroSpawnPointLeft.position;
+					hspLeft.z = centerZ - newHalfWidth;
+					heroSpawnPointLeft.position = hspLeft;
+				}
+			}
+		}
+
+		if (gameCamera != null)
+		{
+			gameCamera.hdr = true;
+		}
+
 		Singleton<PlayStatistics>.instance.ResetStats(Singleton<Profile>.instance.waveToBeat);
 		activeCharm = Singleton<Profile>.instance.selectedCharm;
 		WeakGlobalInstance<SUIScreen>.instance.fader.FadeFromBlack();
 		mRailManager = new RailManager();
 		mProjectileManager = new ProjectileManager();
-		mWaveManager = new WaveManager(Singleton<Profile>.instance.waveToBeat, enemiesSpawnArea, enemiesTarget.transform.position.z);
-		mWaveManager.PreloadEnemies();
+		float zTarget = (enemiesTarget != null) ? enemiesTarget.transform.position.z : 0f;
+		mWaveManager = new WaveManager(Singleton<Profile>.instance.waveToBeat, enemiesSpawnArea, zTarget);
+		if (mWaveManager != null) mWaveManager.PreloadEnemies();
 		mSmithy = new Smithy();
 		mHUD = new GameHUD();
 		mHUD.onPauseGameRequest = onPauseRequest;
 		mHUD.onAbilityTriggered = Singleton<AbilitiesDatabase>.instance.Execute;
 		mHero = new Hero(heroSpawnPoint);
-		mHero.controller.constraintLeft = heroWalkLeftEdge.position.z;
-		mHero.controller.constraintRight = heroWalkRightEdge.position.z;
+		if (mHero != null && mHero.controller != null)
+		{
+			if (heroWalkLeftEdge != null) mHero.controller.constraintLeft = heroWalkLeftEdge.position.z;
+			if (heroWalkRightEdge != null) mHero.controller.constraintRight = heroWalkRightEdge.position.z;
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				if (SVZMultiplayerManager.Instance.P1Side == SVZMultiplayerManager.BattlefieldSide.RightGate)
+				{
+					mHero.controller.facing = FacingType.Left;
+				}
+				if (SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly)
+				{
+					if (heroWalkLeftEdge != null)
+					{
+						Vector3 parkedPos = mHero.controller.position;
+						parkedPos.z = heroWalkLeftEdge.position.z - 400f;
+						parkedPos.y = -500f;
+						mHero.controller.position = parkedPos;
+					}
+					mHero.health = 999999f;
+					mHero.maxHealth = 999999f;
+					if (mHero.controlledObject != null)
+					{
+						Collider[] cols = mHero.controlledObject.GetComponentsInChildren<Collider>();
+						for (int i = 0; i < cols.Length; i++) cols[i].enabled = false;
+						Renderer[] rends = mHero.controlledObject.GetComponentsInChildren<Renderer>();
+						for (int i = 0; i < rends.Length; i++) rends[i].enabled = false;
+					}
+				}
+				else if (SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.HeroAndArmy)
+				{
+					mHero.maxHealth = 4000f;
+					mHero.health = 4000f;
+					CharacterStats hStats = mHero.stats;
+					hStats.maxHealth = 4000f;
+					hStats.health = 4000f;
+					hStats.meleeAttackDamage = 50f;
+					hStats.bowAttackDamage = 40f;
+					mHero.stats = hStats;
+					mHero.autoHealthRecovery = 85f;
+				}
+			}
+		}
 		mBase = new Base(enemiesTarget);
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			GameObject p2GateObj = (SVZMultiplayerManager.Instance.P1Side == SVZMultiplayerManager.BattlefieldSide.RightGate)
+				? enemiesTargetLeft
+				: enemiesTargetRight;
+			if (p2GateObj != null)
+			{
+				mEnemyBase = new Base(p2GateObj);
+				mEnemyBase.isEnemy = true;
+				mEnemyBase.RefreshHealthBarColor();
+			}
+		}
 		mBell = new Bell(bellRingerObject);
 		mShaderManager = new ProceduralShaderManager();
-		mCollectableManager = new CollectableManager(heroWalkLeftEdge.position.z + 16f, heroWalkRightEdge.position.z - 16f, heroSpawnPoint.position.x);
+
+		float leftEdge = (heroWalkLeftEdge != null) ? heroWalkLeftEdge.position.z + 16f : 0f;
+		float rightEdge = (heroWalkRightEdge != null) ? heroWalkRightEdge.position.z - 16f : 500f;
+		float centerX = (heroSpawnPoint != null) ? heroSpawnPoint.position.x : 0f;
+		mCollectableManager = new CollectableManager(leftEdge, rightEdge, centerX);
+
 		mVillageArchers = new VillageArchers();
 		mCharactersManager = new CharactersManager();
-		mCharactersManager.AddCharacter(mHero);
+		bool isArmyOnlyPvP = SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive &&
+		                     SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly;
+		if (!isArmyOnlyPvP)
+		{
+			mCharactersManager.AddCharacter(mHero);
+		}
 		mCharactersManager.AddCharacter(mBase);
+		if (mEnemyBase != null)
+		{
+			mCharactersManager.AddCharacter(mEnemyBase);
+		}
 		mSmithy.characterManagerRef = mCharactersManager;
 		mSmithy.helperSpawnArea = helpersSpawnArea;
-		if (mGameDirection == PlayModesManager.GameDirection.LeftToRight)
-		{
-			mSmithy.helpersZTarget = enemiesSpawnArea.transform.position.z;
-		}
-		else
-		{
-			mSmithy.helpersZTarget = enemiesSpawnArea.transform.position.z;
-		}
+		mSmithy.helpersZTarget = enemiesSpawnArea.transform.position.z;
 		mHUD.observedCharacter = mHero;
 		mWaveBanner = new WaveBanner();
-		mLegionManager = new LegionOnTheLooseManager();
-		mTutorial = new TutorialManager(mWaveManager.tutorial, "InGameReactives");
-		if (!Singleton<Profile>.instance.inBonusWave)
+		bool isMp = (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive);
+		mLegionManager = isMp ? null : new LegionOnTheLooseManager();
+		bool disableTut = isMp || (PlayerPrefs.GetInt("SVZ_DisableTutorials", 0) == 1);
+		mTutorial = disableTut ? null : new TutorialManager(mWaveManager.tutorial, "InGameReactives");
+		if (!isMp && !Singleton<Profile>.instance.inBonusWave)
 		{
 			mNarrativeManager = new NarrativeManager();
 		}
-		if (Singleton<PlayModesManager>.instance.selectedMode == "zombies")
+		if (!isMp && Singleton<PlayModesManager>.instance.selectedMode == "zombies")
 		{
 			mGraveHandsEffect = new GraveHandsEffect();
 		}
@@ -327,7 +536,10 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 			gameCamera.farClipPlane /= 10f;
 		}
 		UnityEngine.Debug.Log(string.Concat("Camera at: ", gameCamera.transform.position, ", near: ", gameCamera.nearClipPlane, ", far: ", gameCamera.farClipPlane));
-		mCameraYOffset = gameCamera.transform.position.y - heroSpawnPointLeft.transform.position.y;
+		if (gameCamera != null && heroSpawnPointLeft != null)
+		{
+			mCameraYOffset = gameCamera.transform.position.y - heroSpawnPointLeft.transform.position.y;
+		}
 		RenderSettings.fog = false;
 		if (Singleton<Profile>.instance.waveToBeat == 1 && Singleton<Profile>.instance.GetWaveLevel(1) == 1)
 		{
@@ -411,23 +623,23 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 		{
 			mGraveHandsEffect.Update();
 		}
-		mTimedEventManager.Update();
-		mSmithy.Update();
-		mWaveManager.Update();
-		mCharactersManager.Update();
-		mCollectableManager.Update();
-		mProjectileManager.Update();
-		mShaderManager.update();
-		mBell.Update();
-		mVillageArchers.Update();
-		mLegionManager.Update();
+		if (mTimedEventManager != null) mTimedEventManager.Update();
+		if (mSmithy != null) mSmithy.Update();
+		if (mWaveManager != null) mWaveManager.Update();
+		if (mCharactersManager != null) mCharactersManager.Update();
+		if (mCollectableManager != null) mCollectableManager.Update();
+		if (mProjectileManager != null) mProjectileManager.Update();
+		if (mShaderManager != null) mShaderManager.update();
+		if (mBell != null) mBell.Update();
+		if (mVillageArchers != null) mVillageArchers.Update();
+		if (mLegionManager != null) mLegionManager.Update();
 		CheckWinLoseConditions();
-		mMiniHealthBarRegistrar.UpdateCulling();
+		if (mMiniHealthBarRegistrar != null) mMiniHealthBarRegistrar.UpdateCulling();
 		if (mAllAlliesInvincibleTimer > 0f)
 		{
 			mAllAlliesInvincibleTimer = Mathf.Max(0f, mAllAlliesInvincibleTimer - Time.deltaTime);
 		}
-		mHUD.Update();
+		if (mHUD != null) mHUD.Update();
 		UpdateFPSCounter();
 		if (Input.GetKeyUp(KeyCode.Escape))
 		{
@@ -508,6 +720,10 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private void onPauseRequest()
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			return;
+		}
 		if (!mGameOver)
 		{
 			PauseMenu pauseMenu = new PauseMenu();
@@ -564,26 +780,170 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private void UpdateTutorial()
 	{
-		mTutorial.Update();
-		if (mTutorial.isDone)
+		if (mTutorial != null)
 		{
-			mTutorial.Destroy();
-			mTutorial = null;
+			if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.T) || (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive))
+			{
+				mTutorial.Destroy();
+				mTutorial = null;
+				return;
+			}
+			mTutorial.Update();
+			if (mTutorial.isDone)
+			{
+				mTutorial.Destroy();
+				mTutorial = null;
+			}
 		}
+	}
+
+	private float mRTSCameraZ = 0f;
+	private bool mRTSCameraInitialized = false;
+	private bool mAutoFollowFrontline = true;
+
+	public bool autoFollowFrontline
+	{
+		get { return mAutoFollowFrontline; }
+		set { mAutoFollowFrontline = value; }
+	}
+
+	public void SnapRTSCamera(int zone)
+	{
+		float leftBound = (heroWalkLeftEdge != null) ? heroWalkLeftEdge.position.z : -500f;
+		float rightBound = (heroWalkRightEdge != null) ? heroWalkRightEdge.position.z : 500f;
+		float minZ = Mathf.Min(leftBound, rightBound);
+		float maxZ = Mathf.Max(leftBound, rightBound);
+		mRTSCameraInitialized = true;
+		mAutoFollowFrontline = false;
+		if (zone <= 0) mRTSCameraZ = minZ + 250f;
+		else if (zone == 1) mRTSCameraZ = (minZ + maxZ) * 0.5f;
+		else mRTSCameraZ = maxZ - 250f;
+	}
+
+	public void SetRTSCameraRatio(float ratio01)
+	{
+		float leftBound = (heroWalkLeftEdge != null) ? heroWalkLeftEdge.position.z : -500f;
+		float rightBound = (heroWalkRightEdge != null) ? heroWalkRightEdge.position.z : 500f;
+		float minZ = Mathf.Min(leftBound, rightBound);
+		float maxZ = Mathf.Max(leftBound, rightBound);
+		mRTSCameraInitialized = true;
+		mAutoFollowFrontline = false;
+		mRTSCameraZ = Mathf.Lerp(minZ + 180f, maxZ - 180f, Mathf.Clamp01(ratio01));
 	}
 
 	private void UpdateCamera()
 	{
-		gameCamera.transform.position = new Vector3(gameCamera.transform.position.x, mHero.position.y + mCameraYOffset, mHero.position.z);
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive && SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly)
+		{
+			if (gameCamera != null)
+			{
+				float leftBound = (heroWalkLeftEdge != null) ? heroWalkLeftEdge.position.z : -500f;
+				float rightBound = (heroWalkRightEdge != null) ? heroWalkRightEdge.position.z : 500f;
+				float minZ = Mathf.Min(leftBound, rightBound);
+				float maxZ = Mathf.Max(leftBound, rightBound);
+
+				if (!mRTSCameraInitialized)
+				{
+					mRTSCameraInitialized = true;
+					mRTSCameraZ = (SVZMultiplayerManager.Instance.P1Side == SVZMultiplayerManager.BattlefieldSide.RightGate)
+						? (maxZ - 350f)
+						: (minZ + 350f);
+				}
+
+				if (Input.GetKeyDown(KeyCode.C))
+				{
+					mAutoFollowFrontline = !mAutoFollowFrontline;
+				}
+
+				float camSpeed = 950f * Time.deltaTime;
+				if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+				{
+					mAutoFollowFrontline = false;
+					mRTSCameraZ -= camSpeed;
+				}
+				if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+				{
+					mAutoFollowFrontline = false;
+					mRTSCameraZ += camSpeed;
+				}
+
+				if (mAutoFollowFrontline && mCharactersManager != null && mCharactersManager.allAlive != null)
+				{
+					bool p1MarchRight = (SVZMultiplayerManager.Instance.P1Side != SVZMultiplayerManager.BattlefieldSide.RightGate);
+					float p1VanguardZ = p1MarchRight ? minZ : maxZ;
+					float p2VanguardZ = p1MarchRight ? maxZ : minZ;
+					bool hasP1 = false;
+					bool hasP2 = false;
+					System.Collections.Generic.List<Character> chars = mCharactersManager.allAlive;
+					for (int i = 0; i < chars.Count; i++)
+					{
+						Character c = chars[i];
+						if (c == null || c.health <= 0f || c.isBase || c.isPlayer) continue;
+						if (!c.isEnemy)
+						{
+							hasP1 = true;
+							p1VanguardZ = p1MarchRight ? Mathf.Max(p1VanguardZ, c.position.z) : Mathf.Min(p1VanguardZ, c.position.z);
+						}
+						else
+						{
+							hasP2 = true;
+							p2VanguardZ = p1MarchRight ? Mathf.Min(p2VanguardZ, c.position.z) : Mathf.Max(p2VanguardZ, c.position.z);
+						}
+					}
+					float targetZ = mRTSCameraZ;
+					if (hasP1 && hasP2) targetZ = (p1VanguardZ + p2VanguardZ) * 0.5f;
+					else if (hasP1) targetZ = p1VanguardZ;
+					else if (hasP2) targetZ = p2VanguardZ;
+					mRTSCameraZ = Mathf.Lerp(mRTSCameraZ, targetZ, Time.deltaTime * 3.8f);
+				}
+
+				mRTSCameraZ = Mathf.Clamp(mRTSCameraZ, minZ, maxZ);
+				float groundY = (WeakGlobalInstance<RailManager>.instance != null)
+					? WeakGlobalInstance<RailManager>.instance.GetY(mRTSCameraZ)
+					: ((heroSpawnPointLeft != null) ? heroSpawnPointLeft.position.y : 0f);
+				float camY = groundY + mCameraYOffset;
+				gameCamera.transform.position = new Vector3(gameCamera.transform.position.x, camY, mRTSCameraZ);
+			}
+			return;
+		}
+
+		if (gameCamera != null)
+		{
+			bool isOnlineClient = (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive && !SVZMultiplayerManager.Instance.IsSamePC && SVZNetworkManager.Instance != null && !SVZNetworkManager.Instance.IsHost);
+			if (isOnlineClient && SVZMultiplayerManager.Instance.CurrentOpponentHero != null)
+			{
+				float heroZ = SVZMultiplayerManager.Instance.CurrentOpponentHero.position.z;
+				float heroY = SVZMultiplayerManager.Instance.CurrentOpponentHero.position.y;
+				gameCamera.transform.position = new Vector3(gameCamera.transform.position.x, heroY + mCameraYOffset, heroZ);
+			}
+			else if (mHero != null)
+			{
+				gameCamera.transform.position = new Vector3(gameCamera.transform.position.x, mHero.position.y + mCameraYOffset, mHero.position.z);
+			}
+		}
 	}
 
 	private void CheckWinLoseConditions()
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			return;
+		}
+		if (mHero == null || mBase == null || mWaveManager == null || mCharactersManager == null)
+		{
+			return;
+		}
 		bool flag = false;
 		if (mHero.isOver)
 		{
-			WeakGlobalInstance<CollectableManager>.instance.OpenPresents(true);
-			if (!mHaveShowReviveDialog)
+			if (WeakGlobalInstance<CollectableManager>.instance != null) WeakGlobalInstance<CollectableManager>.instance.OpenPresents(true);
+			int reviveLimit = 1;
+			if (Singleton<Config>.instance.root.to("Game")["revivesPerWave"] != null)
+			{
+				int.TryParse(Singleton<Config>.instance.root.to("Game")["revivesPerWave"], out reviveLimit);
+			}
+
+			if (!mHaveShowReviveDialog && mRevivesCount < reviveLimit)
 			{
 				mHaveShowReviveDialog = true;
 				ShowReviveDialog();
@@ -614,7 +974,7 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 			CreateLoseDialog();
 			Singleton<Profile>.instance.Save();
 		}
-		else if ((mWaveManager.isDone && mCharactersManager.enemiesCount == 0) || mHUD.cheatClicked())
+		else if ((mWaveManager.isDone && mCharactersManager.enemiesCount == 0) || (mHUD != null && mHUD.cheatClicked()))
 		{
 			CreateWinDialog();
 			mGameOver = true;
@@ -634,11 +994,12 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 			mStartedSlowMoFinisher = true;
 		}
 		string attribName = "postWinTime";
+		string endGameLayout;
 		WinLoseDisplay initialDialog;
-		if (!Singleton<Profile>.instance.inBonusWave && Singleton<Profile>.instance.waveToBeat == 70 && Singleton<Profile>.instance.GetWaveLevel(70) == 1 && Singleton<PlayModesManager>.instance.selectedMode == "classic")
+		if (TryGetEndGameLayout(out endGameLayout))
 		{
 			attribName = "endGameTime";
-			initialDialog = new WinLoseDisplay("Layouts/EndGameMessage");
+			initialDialog = new WinLoseDisplay(endGameLayout);
 		}
 		else
 		{
@@ -665,6 +1026,27 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 			mVillageArchers.Update();
 			mHUD.Update();
 		};
+	}
+
+	private bool TryGetEndGameLayout(out string layoutPath)
+	{
+		layoutPath = string.Empty;
+		if (Singleton<Profile>.instance.inBonusWave)
+		{
+			return false;
+		}
+		string selectedMode = Singleton<PlayModesManager>.instance.selectedMode;
+		if (selectedMode == "classic" && Singleton<Profile>.instance.waveToBeat == kClassicEndGameWave && Singleton<Profile>.instance.GetWaveLevel(kClassicEndGameWave) == 1)
+		{
+			layoutPath = "Layouts/EndGameMessage";
+			return true;
+		}
+		if (selectedMode == "zombies" && Singleton<Profile>.instance.waveToBeat == kZombiesEndGameWave)
+		{
+			layoutPath = "Layouts/EndGameMessage_ZM";
+			return true;
+		}
+		return false;
 	}
 
 	private void CreateLoseDialog()
@@ -702,17 +1084,17 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 		}
 		else
 		{
-			Singleton<Analytics>.instance.LogEvent("WaveWins", Singleton<Profile>.instance.waveToBeat.ToString());
-			Singleton<Profile>.instance.SetWaveLevel(Singleton<Profile>.instance.waveToBeat, Singleton<Profile>.instance.GetWaveLevel(Singleton<Profile>.instance.waveToBeat) + 1);
-			Singleton<Profile>.instance.waveToBeat++;
-			if (Singleton<Profile>.instance.GetWaveLevel(Singleton<Profile>.instance.waveToBeat) == 0)
+			int waveToBeat = Singleton<Profile>.instance.waveToBeat;
+			int waveLevel = Singleton<Profile>.instance.GetWaveLevel(waveToBeat);
+			Singleton<Analytics>.instance.LogEvent("WaveWins", waveToBeat.ToString());
+			Singleton<Profile>.instance.SetWaveLevel(waveToBeat, waveLevel + 1);
+			int nextWave = Mathf.Min(waveToBeat + 1, Singleton<Profile>.instance.maxBaseWave);
+			Singleton<Profile>.instance.waveToBeat = nextWave;
+			if (nextWave != waveToBeat && Singleton<Profile>.instance.GetWaveLevel(nextWave) == 0)
 			{
-				Singleton<Profile>.instance.SetWaveLevel(Singleton<Profile>.instance.waveToBeat, 1);
+				Singleton<Profile>.instance.SetWaveLevel(nextWave, 1);
 			}
-			if (Singleton<PlayModesManager>.instance.selectedMode == "classic")
-			{
-				Singleton<Profile>.instance.wavesSinceLastBonusWave++;
-			}
+			Singleton<Profile>.instance.RegisterNormalWaveWinForBonusWave(waveToBeat, waveLevel);
 		}
 		Singleton<PlayStatistics>.instance.stats.lastWaveWon = true;
 		Singleton<Profile>.instance.Save();
@@ -751,21 +1133,32 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private void ApplyInitialCharmEffects()
 	{
+		if (string.IsNullOrEmpty(activeCharm)) return;
 		string attribute = Singleton<CharmsDatabase>.instance.GetAttribute(activeCharm, "helper");
-		if (attribute != string.Empty)
+		if (!string.IsNullOrEmpty(attribute))
 		{
-			Helper helper = WeakGlobalInstance<Smithy>.instance.ForceSpawn(attribute);
-			if (helper != null)
+			Smithy s = WeakGlobalInstance<Smithy>.instance ?? mSmithy;
+			if (s != null)
 			{
-				helper.maxHealth *= mWaveManager.multipliers.enemiesHealth;
-				helper.health = helper.maxHealth;
-				helper.meleeDamage *= mWaveManager.multipliers.enemiesDamages;
+				Helper helper = s.ForceSpawn(attribute);
+				if (helper == null)
+				{
+					Vector3 spawnPos = (helpersSpawnArea != null) ? helpersSpawnArea.transform.position : ((heroSpawnPoint != null) ? heroSpawnPoint.position : Vector3.zero);
+					helper = s.ForceSpawnAt(attribute, spawnPos, false);
+				}
+				if (helper != null && mWaveManager != null && mWaveManager.multipliers != null)
+				{
+					helper.maxHealth *= mWaveManager.multipliers.enemiesHealth;
+					helper.health = helper.maxHealth;
+					helper.meleeDamage *= mWaveManager.multipliers.enemiesDamages;
+				}
 			}
 		}
 	}
 
 	private void ShowReviveDialog()
 	{
+		mRevivesCount++;
 		ReviveDialog reviveDialog = new ReviveDialog();
 		reviveDialog.priority = 500.5f;
 		SetDialogHandler(new DialogHandler(500f, reviveDialog));
@@ -782,6 +1175,25 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private void HideUnusedGate()
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			// In PvP mode, keep BOTH gates active!
+			// Ensure Left Gate is the Samurai Gate (PFGate) and Right Gate is the Zombie Gate (PFGateHell).
+			if (enemiesTargetLeft != null && enemiesTargetLeft.name.Contains("Hell"))
+			{
+				GameObject samuraiGatePrefab = Resources.Load("Props/PFGate") as GameObject;
+				if (samuraiGatePrefab != null)
+				{
+					Vector3 pos = enemiesTargetLeft.transform.position;
+					Vector3 scale = enemiesTargetLeft.transform.localScale;
+					UnityEngine.Object.DestroyImmediate(enemiesTargetLeft);
+					enemiesTargetLeft = UnityEngine.Object.Instantiate(samuraiGatePrefab) as GameObject;
+					enemiesTargetLeft.transform.position = pos;
+					enemiesTargetLeft.transform.localScale = scale;
+				}
+			}
+			return;
+		}
 		switch (mGameDirection)
 		{
 		case PlayModesManager.GameDirection.LeftToRight:
@@ -828,15 +1240,12 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private void CreateFPSCounter()
 	{
-		if (Debug.isDebugBuild)
-		{
-			mFPSCounter = new FPSCounter("default32", new Vector2(8f, 400f), 5000f);
-		}
+		mFPSCounter = new FPSCounter("default18", Vector2.zero, 5000f);
 	}
 
 	private void UpdateFPSCounter()
 	{
-		if (Debug.isDebugBuild)
+		if (mFPSCounter != null)
 		{
 			mFPSCounter.Update();
 		}

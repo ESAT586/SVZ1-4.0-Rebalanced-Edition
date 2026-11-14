@@ -23,19 +23,19 @@ desc_zombies = @ab_brains
 [002]
 	storeCost = 0,30
 	resourcesPerSeconds = 2.0
-	maxResource = 75
+	maxResource = 65
 	levelUpThreshold = 50
 
 [003]
 	storeCost = 0,50
 	resourcesPerSeconds = 2.5
-	maxResource = 115
+	maxResource = 100
 	levelUpThreshold = 100
 
 [004]
 	storeCost = 0,60
 	hideInStore = True
-	resourcesPerSeconds = 4
-	maxResource = 165
+	resourcesPerSeconds = 3
+	maxResource = 135
 	levelUpThreshold = 140
 

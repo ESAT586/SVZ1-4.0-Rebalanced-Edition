@@ -44,11 +44,30 @@ public class BoosterPackUnwrapDialog : IDialog
 		mLayout = new SUILayout("Layouts/BoosterPackUnwrapLayout");
 		m_packId = Singleton<BoosterPackCodex>.instance.GetPackID(packIndex);
 		mGeneratedCards = Singleton<BoosterPackCodex>.instance.GeneratePackContent(packIndex);
+
+		SDFTreeNode packData = Singleton<BoosterPackCodex>.instance.GetPackData(packIndex);
+		string guaranteedHelper = (packData != null && packData.hasAttribute("warningCheck")) ? packData["warningCheck"] : string.Empty;
+		int helperLevelBefore = -1;
+		if (!string.IsNullOrEmpty(guaranteedHelper) && Singleton<HelpersDatabase>.instance.Contains(guaranteedHelper))
+		{
+			helperLevelBefore = Singleton<Profile>.instance.GetHelperLevel(guaranteedHelper);
+		}
+
 		BoosterPackCodex.CardDesc[] array = mGeneratedCards;
 		foreach (BoosterPackCodex.CardDesc card in array)
 		{
 			CashInCard(card);
 		}
+
+		if (helperLevelBefore >= 0)
+		{
+			int helperLevelAfter = Singleton<Profile>.instance.GetHelperLevel(guaranteedHelper);
+			if (helperLevelAfter <= helperLevelBefore)
+			{
+				Singleton<Profile>.instance.SetHelperLevel(guaranteedHelper, Mathf.Max(1, helperLevelBefore + 1), true);
+			}
+		}
+
 		Rect rect = kCardListArea;
 		if (mGeneratedCards.Length <= 4)
 		{

@@ -51,7 +51,7 @@ public class InfiniteUpgrades
 	{
 		try
 		{
-			return (T)Convert.ChangeType(valStr, typeof(T));
+			return (T)Convert.ChangeType(valStr, typeof(T), System.Globalization.CultureInfo.InvariantCulture);
 		}
 		catch
 		{

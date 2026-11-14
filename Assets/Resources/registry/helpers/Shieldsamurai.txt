@@ -6,7 +6,7 @@
 displayName = Shield Samurai
 desc = Front lane Tank Samurai
 prefab = Characters/PFSamuraiShield
-HUDIcon = Sprites/Icons/Shieldsamurai
+HUDIcon = Sprites/Icons/ally_shieldsamurai
 weaponMeleePrefab = Props/PFSamuraishield
 waveToUnlock = 10
 resourcesCost = 40

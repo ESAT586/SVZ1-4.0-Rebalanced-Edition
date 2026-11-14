@@ -25,12 +25,18 @@ public class HUDBloodPulse
 
 	public void Update()
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			mFader.fadeLevel = 0f;
+			mFader.Update();
+			return;
+		}
 		AcquireHero();
 		if (mHeroRef.health == 0f)
 		{
 			mFader.fadeLevel = Mathf.Max(0f, mFader.fadeLevel - Time.deltaTime * 1f);
 		}
-		else if (mGateRef.health > 0f && mHeroRef.isInLeniencyMode)
+		else if (mGateRef.health > 0f && (mHeroRef.isInLeniencyMode || mHeroRef.health < mHeroRef.maxHealth * 0.25f))
 		{
 			if (mFader.fadeLevel == 0f)
 			{

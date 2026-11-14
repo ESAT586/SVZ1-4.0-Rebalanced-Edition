@@ -20,8 +20,8 @@ availableAtWave = 21
 /--------------------------------------------------
 
 [001]
-	specialUnlockText = @store_find_rifleman
 	cost = 1500,0
+	specialUnlockText = @store_find_rifleman
 	health = 50
 	speedMin = 100
 	speedMax = 100

@@ -1,0 +1,52 @@
+
+transitionSpeed = 1.0
+onTransitionInPlaySound = 0.3,	Sounds/Sting_Game_Win_01
+
+[title]
+	type = sprite
+	file = Sprites/Localized/victory_zombie
+	priority = 1001
+	position = C, 135
+	[transition]
+		[position]
+			anim = BackOut
+			offset = 0, -150
+		[alpha]
+			alpha = 0.0
+
+[message]
+	type = label
+	font = default32
+	text = @zombie_endgame_message
+	priority = 1002
+	position = C, 285
+	maxWidth = 900
+	anchor = UpperCenter
+	alignment = center
+	shadowOffset = 3,3
+	shadowColor = black
+	[transition]
+		[position]
+			anim = BackOut
+			offset = 0, -120
+		[alpha]
+			alpha = 0.0
+
+[continue]
+	type = label
+	font = default18
+	text = @zombie_endgame_continue
+	priority = 1002
+	position = C, 680
+	maxWidth = 700
+	anchor = MiddleCenter
+	alignment = center
+	shadowOffset = 2,2
+	shadowColor = black
+	[transition]
+		[alpha]
+			alpha = 0.0
+
+[trigger]
+	type = touchArea
+	rect = 0,0,1024,768

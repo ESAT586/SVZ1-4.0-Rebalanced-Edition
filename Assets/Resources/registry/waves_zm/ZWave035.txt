@@ -1,0 +1,79 @@
+/ Purple hell first elite siege
+
+scene = InGame_hell_purple
+villageArchers = 8
+bell = 5
+
+[Commands]
+	2,2
+	SamuraiShield_Ice
+	Frostie
+	Frostie
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	SamuraiShield_Green
+	Takeda
+	Nobunaga
+	NinjaGirl
+	NinjaGirl
+	SpearHorseman
+	Cart
+	SamuraiHeavy
+	Frostie
+	SamuraiRifleman
+	Takeda
+	1,1
+	SamuraiShield_Ice
+	SamuraiRifleman
+	Frostie
+	Frostie
+	Priest
+	Swordsmith
+	SamuraiShield_Green
+	Takeda
+	Nobunaga
+	NinjaGirl
+	SpearHorseman
+	NinjaGirl
+	Cart
+	Samurai
+	Frostie
+	SamuraiRifleman
+	Takeda
+	1,1
+	Cart
+	SamuraiShield_Ice
+	Frostie
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	SamuraiShield_Green
+	Takeda
+	Nobunaga
+	NinjaGirl
+	NinjaGirl
+	SpearHorseman
+	SamuraiHeavy
+	Frostie
+	Frostie
+	SamuraiRifleman
+	Takeda
+	1,1
+	SamuraiShield_Ice
+	Frostie
+	Frostie
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	SamuraiShield_Green
+	Takeda
+	Nobunaga
+	Nobunaga
+	NinjaGirl
+	SpearHorseman
+	Cart
+	SamuraiHeavy
+	Frostie
+	SamuraiRifleman
+	Takeda

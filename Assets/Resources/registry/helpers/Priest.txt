@@ -6,10 +6,10 @@
 displayName = Priest
 desc = @helper_priest_desc
 prefab = Characters/PFPriest
-HUDIcon = Sprites/Icons/Healer
+HUDIcon = Sprites/Icons/ally_priest
 lane = front
 waveToUnlock = 15
-resourcesCost = 30
+resourcesCost = 35
 cooldownTimer = 1.0
 attackFrequency = 3.5
 unique = false

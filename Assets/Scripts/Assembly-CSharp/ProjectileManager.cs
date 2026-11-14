@@ -54,8 +54,8 @@ public class ProjectileManager : WeakGlobalInstance<ProjectileManager>
 
 	public void SpawnProjectile(Projectile.EProjectileType type, float damage, Character shooter, Character target, Vector3 spawnPos)
 	{
-		if (type != 0 && type != Projectile.EProjectileType.SpawnFriend)
-		{
+        if (type != 0 && type != Projectile.EProjectileType.SpawnFriend && type != Projectile.EProjectileType.SpawnEnemy)
+        {
 			mProjectiles.Add(new Arrow(type, shooter, target, damage, spawnPos));
 		}
 	}
@@ -122,7 +122,8 @@ public class ProjectileManager : WeakGlobalInstance<ProjectileManager>
 		case Projectile.EProjectileType.HeroBigExplodingArrow:
 		case Projectile.EProjectileType.BoneArrow:
 		case Projectile.EProjectileType.BoneArrowUpgraded:
-			return true;
+        case Projectile.EProjectileType.SpawnEnemy:
+                return true;
 		default:
 			return false;
 		}

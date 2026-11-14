@@ -1,0 +1,78 @@
+scene = InGame_hell_brown
+bonusHint = Kahraman savas disi; Shogun ve menzilli zombiler final oncesi ana gucun.
+
+[rewards]
+	coins, 20000
+	gems, 8
+	z+jurogumo, 1
+
+selectedCharm = z+jurogumo
+initialleadershiplevel = 6
+baselevel = 4
+belllevel = 5
+archerlevel = 5
+
+[abilitylevels]
+	LethargyZM = 9
+	DragonAttack = 4
+
+[selectedabilities]
+	000 = LethargyZM
+	001 = DragonAttack
+
+[helperlevels]
+	TenguAir = 9
+	ZombieRifleman = 9
+	EvilIceArcher = 9
+	Necromancer = 8
+	Shogun = 6
+
+[selectedhelpers]
+	000 = TenguAir
+	001 = ZombieRifleman
+	002 = EvilIceArcher
+	003 = Necromancer
+	004 = Shogun
+
+[Commands]
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite
+	Takeda
+	Nobunaga
+	Cart
+	1,1
+	SamuraiShield_Ice
+	Frostie
+	Priest
+	Swordsmith
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite
+	1,1
+	Takeda
+	Nobunaga
+	Cart
+	NinjaGirl
+	SpearHorseman
+	ArcherElite
+	RiflemanElite
+	1,1
+	PanzerElite
+	SpearElite
+	SamuraiShield_Ice
+	Frostie
+	Priest
+	Swordsmith
+	Takeda
+	Nobunaga
+	1,1
+	Cart
+	NinjaGirl
+	SpearHorseman
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite

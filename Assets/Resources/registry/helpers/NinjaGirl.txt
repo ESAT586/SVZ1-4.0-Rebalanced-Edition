@@ -5,12 +5,12 @@ desc = @helper_ninja_girl_desc
 prefab = Characters/PFFemalewarrior
 HUDIcon = Sprites/Icons/ally_assassin
 weaponMeleePrefab = Props/PFFarmerssword
-waveToUnlock = 999
+waveToUnlock = 55
 resourcesCost = 5.0
 cooldownTimer = 1.5
 attackFrequency = 1.5
 usesBladeWeapon = true
-availableAtWave = 15
+availableAtWave = 55
 
 /hideInStore = True
 

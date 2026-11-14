@@ -34,6 +34,14 @@ public class Profile : Singleton<Profile>
 
 	private const int kWaveToUnlockZombieMode = 10;
 
+	private static readonly string[] kZombieBonusFallbackHelpers = new string[5] { "Zombie", "ZombieAxe", "ZombieArcher", "SmallOni", "ZombieDrummer" };
+
+	private static readonly int[] kZombieBonusFallbackHelperLevels = new int[5] { 3, 3, 2, 2, 1 };
+
+	private static readonly string[] kZombieBonusFallbackAbilities = new string[2] { "NightOfTheDead", "GraveHands" };
+
+	private static readonly int[] kZombieBonusFallbackAbilityLevels = new int[2] { 3, 2 };
+
 	private SavedData mSavedData;
 
 	private SavedData mCloudSavedData;
@@ -352,11 +360,11 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return mSavedData.GetValueInt("wavesSinceLastBonusWave");
+			return mSavedData.GetValueInt(GetBonusWaveCounterKey());
 		}
 		set
 		{
-			mSavedData.SetValueInt("wavesSinceLastBonusWave", value);
+			mSavedData.SetValueInt(GetBonusWaveCounterKey(), value);
 		}
 	}
 
@@ -364,7 +372,36 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return Singleton<PlayModesManager>.instance.selectedMode == "classic" && wavesSinceLastBonusWave >= int.Parse(Singleton<Config>.instance.root.to("Game")["wavesPerBonusWave"]);
+			if (!selectedModeSupportsBonusWaves)
+			{
+				return false;
+			}
+			int num = GetBonusWaveMaxBaseWave();
+			if (num > 0 && waveToBeat - 1 > num)
+			{
+				return false;
+			}
+			if (num > 0)
+			{
+				int num2 = waveToBeat - 1;
+				int wavesPerBonusWave = GetWavesPerBonusWave();
+				if (num2 <= 0 || num2 % wavesPerBonusWave != 0)
+				{
+					return false;
+				}
+				int num3 = num2 / wavesPerBonusWave;
+				int num4 = GetBonusWaveCount();
+				if ((num4 > 0 && num3 > num4) || bonusWaveToBeat != num3)
+				{
+					return false;
+				}
+			}
+			int num5 = GetBonusWaveCount();
+			if (num5 > 0 && bonusWaveToBeat > num5)
+			{
+				return false;
+			}
+			return wavesSinceLastBonusWave >= GetWavesPerBonusWave();
 		}
 	}
 
@@ -372,13 +409,70 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return Mathf.Max(1, mSavedData.GetValueInt("bonusWaveToBeat"));
+			return Mathf.Max(1, mSavedData.GetValueInt(GetBonusWaveToBeatKey()));
 		}
 		set
 		{
 			int val = ValidateBonusWaveIndex(value);
-			mSavedData.SetValueInt("bonusWaveToBeat", val);
+			mSavedData.SetValueInt(GetBonusWaveToBeatKey(), val);
 		}
+	}
+
+	public bool selectedModeSupportsBonusWaves
+	{
+		get
+		{
+			return GetSelectedModeBonusWavesPath() != string.Empty;
+		}
+	}
+
+	public string selectedModeBonusWavesPath
+	{
+		get
+		{
+			return GetSelectedModeBonusWavesPath();
+		}
+	}
+
+	public void RegisterNormalWaveWinForBonusWave(int completedWave, int completedWaveLevel)
+	{
+		if (!selectedModeSupportsBonusWaves)
+		{
+			return;
+		}
+		if (!PrepareBonusWaveForCompletedWave(completedWave))
+		{
+			wavesSinceLastBonusWave++;
+		}
+	}
+
+	public bool PrepareBonusWaveForCompletedWave(int completedWave)
+	{
+		if (!selectedModeSupportsBonusWaves)
+		{
+			return false;
+		}
+		int bonusWaveMaxBaseWave = GetBonusWaveMaxBaseWave();
+		if (bonusWaveMaxBaseWave <= 0)
+		{
+			return false;
+		}
+		int wavesPerBonusWave = GetWavesPerBonusWave();
+		if (completedWave <= 0 || completedWave > bonusWaveMaxBaseWave || completedWave % wavesPerBonusWave != 0)
+		{
+			wavesSinceLastBonusWave = 0;
+			return false;
+		}
+		int num = completedWave / wavesPerBonusWave;
+		int bonusWaveCount = GetBonusWaveCount();
+		if (bonusWaveCount > 0 && num > bonusWaveCount)
+		{
+			wavesSinceLastBonusWave = 0;
+			return false;
+		}
+		bonusWaveToBeat = num;
+		wavesSinceLastBonusWave = wavesPerBonusWave;
+		return true;
 	}
 
 	public int waveToBeat
@@ -415,6 +509,14 @@ public class Profile : Singleton<Profile>
 		get
 		{
 			return (!inBonusWave || mForcingBaseSaveData) ? mSavedData : mBonusWaveData;
+		}
+	}
+
+	private string activeDataSubSection
+	{
+		get
+		{
+			return (inBonusWave && !mForcingBaseSaveData) ? null : playModeSubSection;
 		}
 	}
 
@@ -467,7 +569,7 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return Mathf.Max(1, activeSavedData.GetValueInt("initialLeadershipLevel", playModeSubSection));
+			return Mathf.Max(1, activeSavedData.GetValueInt("initialLeadershipLevel", activeDataSubSection));
 		}
 		set
 		{
@@ -537,7 +639,7 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return activeSavedData.GetValueInt("archerLevel", playModeSubSection);
+			return activeSavedData.GetValueInt("archerLevel", activeDataSubSection);
 		}
 		set
 		{
@@ -549,7 +651,7 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return Mathf.Max(1, activeSavedData.GetValueInt("baseLevel", playModeSubSection));
+			return Mathf.Max(1, activeSavedData.GetValueInt("baseLevel", activeDataSubSection));
 		}
 		set
 		{
@@ -561,7 +663,7 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return activeSavedData.GetValueInt("bellLevel", playModeSubSection);
+			return activeSavedData.GetValueInt("bellLevel", activeDataSubSection);
 		}
 		set
 		{
@@ -573,7 +675,7 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return activeSavedData.GetValueInt("undeathLevel", playModeSubSection);
+			return activeSavedData.GetValueInt("undeathLevel", activeDataSubSection);
 		}
 		set
 		{
@@ -585,7 +687,7 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return activeSavedData.GetValueInt("legionOnTheLoose", playModeSubSection);
+			return activeSavedData.GetValueInt("legionOnTheLoose", activeDataSubSection);
 		}
 		set
 		{
@@ -597,7 +699,7 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return activeSavedData.GetValueInt("deathFromAbove", playModeSubSection);
+			return activeSavedData.GetValueInt("deathFromAbove", activeDataSubSection);
 		}
 		set
 		{
@@ -609,7 +711,7 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return activeSavedData.GetValueBool("fromTheShadows", playModeSubSection);
+			return activeSavedData.GetValueBool("fromTheShadows", activeDataSubSection);
 		}
 		set
 		{
@@ -777,7 +879,7 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return activeSavedData.GetValue("selectedCharm", playModeSubSection);
+			return activeSavedData.GetValue("selectedCharm", activeDataSubSection);
 		}
 		set
 		{
@@ -982,11 +1084,75 @@ public class Profile : Singleton<Profile>
 		}
 	}
 
+	private static string sCachedSaveDirectory;
+
+	public static string saveDirectory
+	{
+		get
+		{
+			if (!string.IsNullOrEmpty(sCachedSaveDirectory))
+			{
+				return sCachedSaveDirectory;
+			}
+			if (Application.isMobilePlatform || Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.LinuxPlayer)
+			{
+				try
+				{
+					string mobileDir = Path.Combine(Application.persistentDataPath, "SaveData");
+					if (!Directory.Exists(mobileDir))
+					{
+						Directory.CreateDirectory(mobileDir);
+					}
+					sCachedSaveDirectory = mobileDir;
+					return sCachedSaveDirectory;
+				}
+				catch
+				{
+					sCachedSaveDirectory = Application.persistentDataPath;
+					return sCachedSaveDirectory;
+				}
+			}
+			try
+			{
+				string projectRoot = Directory.GetParent(Application.dataPath).FullName;
+				string dir = Path.Combine(projectRoot, "SaveData");
+				if (!Directory.Exists(dir))
+				{
+					Directory.CreateDirectory(dir);
+				}
+				sCachedSaveDirectory = dir;
+				return sCachedSaveDirectory;
+			}
+			catch
+			{
+				string fallbackDir = Path.Combine(Application.persistentDataPath, "SaveData");
+				try
+				{
+					if (!Directory.Exists(fallbackDir))
+					{
+						Directory.CreateDirectory(fallbackDir);
+					}
+					sCachedSaveDirectory = fallbackDir;
+				}
+				catch
+				{
+					sCachedSaveDirectory = Application.persistentDataPath;
+				}
+				return sCachedSaveDirectory;
+			}
+		}
+	}
+
 	public string saveFilePath
 	{
 		get
 		{
-			return Path.Combine(Application.persistentDataPath, "save.data");
+			string text = "save.data";
+			if (m_CurrentSlot > 0)
+			{
+				text = "save_slot" + m_CurrentSlot + ".data";
+			}
+			return Path.Combine(saveDirectory, text);
 		}
 	}
 
@@ -1006,17 +1172,137 @@ public class Profile : Singleton<Profile>
 	{
 		get
 		{
-			return Path.Combine(Application.persistentDataPath, "prevsave.data");
+			int num = Mathf.Max(0, PlayerPrefs.GetInt("CurrentSaveSlot", 0));
+			string text = "prevsave.data";
+			if (num > 0)
+			{
+				text = "prevsave_slot" + num + ".data";
+			}
+			return Path.Combine(saveDirectory, text);
+		}
+	}
+
+	private int m_CurrentSlot;
+
+	public int currentSlot
+	{
+		get { return m_CurrentSlot; }
+		set { SwitchSlot(value); }
+	}
+
+	public void SwitchSlot(int slotIndex)
+	{
+		slotIndex = Mathf.Clamp(slotIndex, 0, 2);
+		if (m_CurrentSlot == slotIndex)
+		{
+			return;
+		}
+		SaveNow();
+		m_CurrentSlot = slotIndex;
+		PlayerPrefs.SetInt("CurrentSaveSlot", m_CurrentSlot);
+		mSavedData.saveFilePath = saveFilePath;
+		Load();
+		ClearBonusWaveData();
+	}
+
+	public string ExportSaveData()
+	{
+		try
+		{
+			SaveNow();
+			return System.Convert.ToBase64String(mSavedData.GetAsByteArray());
+		}
+		catch (System.Exception ex)
+		{
+			Debug.LogWarning("[Profile] ExportSaveData failed: " + ex.Message);
+			return string.Empty;
+		}
+	}
+
+	public void ImportSaveData(string data)
+	{
+		if (string.IsNullOrEmpty(data))
+		{
+			return;
+		}
+		string cleaned = data.Trim();
+		if (string.IsNullOrEmpty(cleaned))
+		{
+			return;
+		}
+		try
+		{
+			SDFTree.CreateManualBackup(saveFilePath);
+			byte[] data2;
+			try
+			{
+				data2 = System.Convert.FromBase64String(cleaned);
+			}
+			catch (System.FormatException)
+			{
+				// Allow direct plain-text SDF clipboard import on mobile/PC as fallback
+				if (cleaned.IndexOf('=') >= 0)
+				{
+					data2 = System.Text.Encoding.ASCII.GetBytes(cleaned);
+				}
+				else
+				{
+					throw;
+				}
+			}
+			if (!mSavedData.TrySetWithByteArray(data2))
+			{
+				Debug.LogWarning("[Profile] ImportSaveData failed: invalid save data");
+				return;
+			}
+			PostLoadSyncing();
+			SaveNow();
+		}
+		catch (System.Exception ex)
+		{
+			Debug.LogWarning("[Profile] ImportSaveData failed: " + ex.Message);
 		}
 	}
 
 	public Profile()
 	{
+		EnsureSaveSeeded();
 		m_needSave = false;
 		m_inSaving = false;
+		m_CurrentSlot = Mathf.Max(0, PlayerPrefs.GetInt("CurrentSaveSlot", 0));
 		mSavedData = new SavedData(saveFilePath);
 		Load();
 		ClearBonusWaveData();
+	}
+
+	private static void EnsureSaveSeeded()
+	{
+		try
+		{
+			string targetFile = Path.Combine(saveDirectory, "save.data");
+			if (!File.Exists(targetFile))
+			{
+				string legacyFile = Path.Combine(Application.persistentDataPath, "save.data");
+				if (File.Exists(legacyFile))
+				{
+					File.Copy(legacyFile, targetFile, false);
+					for (int i = 1; i <= 2; i++)
+					{
+						string legacySlot = Path.Combine(Application.persistentDataPath, "save_slot" + i + ".data");
+						string targetSlot = Path.Combine(saveDirectory, "save_slot" + i + ".data");
+						if (File.Exists(legacySlot) && !File.Exists(targetSlot))
+						{
+							File.Copy(legacySlot, targetSlot, false);
+						}
+					}
+					Debug.Log("[Profile] Seeded local SaveData from legacy save.data");
+				}
+			}
+		}
+		catch (System.Exception ex)
+		{
+			Debug.LogWarning("[Profile] EnsureSaveSeeded: " + ex.Message);
+		}
 	}
 
 	public void Save()
@@ -1050,6 +1336,69 @@ public class Profile : Singleton<Profile>
 		}
 		mBonusWaveData = new SavedData(null);
 		mBonusWaveData.SetSDFTreeNode(data);
+		ValidateZombieBonusWaveLoadout();
+	}
+
+	private void ValidateZombieBonusWaveLoadout()
+	{
+		if (Singleton<PlayModesManager>.instance.selectedMode != "zombies" || mBonusWaveData == null)
+		{
+			return;
+		}
+		bool flag = false;
+		List<string> subNodeValueList = mBonusWaveData.GetSubNodeValueList("selectedHelpers");
+		if (subNodeValueList.Count != maxSelectedHelpers)
+		{
+			flag = true;
+		}
+		foreach (string item in subNodeValueList)
+		{
+			if (!Singleton<HelpersDatabase>.instance.Contains(item) || mBonusWaveData.GetDictionaryValue<int>("helperLevels", item) <= 0)
+			{
+				flag = true;
+				break;
+			}
+		}
+		List<string> subNodeValueList2 = mBonusWaveData.GetSubNodeValueList("selectedAbilities");
+		if (subNodeValueList2.Count != maxSelectedAbilities)
+		{
+			flag = true;
+		}
+		foreach (string item2 in subNodeValueList2)
+		{
+			if (!Singleton<AbilitiesDatabase>.instance.Contains(item2) || mBonusWaveData.GetDictionaryValue<int>("abilityLevels", item2) <= 0)
+			{
+				flag = true;
+				break;
+			}
+		}
+		if (flag)
+		{
+			Debug.LogError("Profile: zombie bonus wave loadout is invalid; using safe zombie bonus fallback.");
+			ApplyZombieBonusFallbackLoadout();
+		}
+	}
+
+	private void ApplyZombieBonusFallbackLoadout()
+	{
+		List<string> list = new List<string>();
+		for (int i = 0; i < kZombieBonusFallbackHelpers.Length; i++)
+		{
+			list.Add(kZombieBonusFallbackHelpers[i]);
+			mBonusWaveData.SetDictionaryValue("helperLevels", kZombieBonusFallbackHelpers[i], kZombieBonusFallbackHelperLevels[i]);
+		}
+		mBonusWaveData.SetSubNodeValueList("selectedHelpers", list);
+		List<string> list2 = new List<string>();
+		for (int j = 0; j < kZombieBonusFallbackAbilities.Length; j++)
+		{
+			list2.Add(kZombieBonusFallbackAbilities[j]);
+			mBonusWaveData.SetDictionaryValue("abilityLevels", kZombieBonusFallbackAbilities[j], kZombieBonusFallbackAbilityLevels[j]);
+		}
+		mBonusWaveData.SetSubNodeValueList("selectedAbilities", list2);
+		mBonusWaveData.SetValueInt("initialLeadershipLevel", 2);
+		mBonusWaveData.SetValueInt("baseLevel", 1);
+		mBonusWaveData.SetValueInt("bellLevel", 1);
+		mBonusWaveData.SetValueInt("archerLevel", 1);
 	}
 
 	public void ClearBonusWaveData()
@@ -1064,6 +1413,7 @@ public class Profile : Singleton<Profile>
 
 	public void ResetData()
 	{
+		SDFTree.CreateEmergencyBackup(saveFilePath);
 		int num = latestOnlineBundleVersion;
 		List<string> achievementsDisplayed = GetAchievementsDisplayed();
 		int num2 = tapFeatureAdsCnt;
@@ -1075,6 +1425,28 @@ public class Profile : Singleton<Profile>
 		SetNumCharms("luck", 1);
 		PostLoadSyncing();
 		mSavedData.Save();
+	}
+
+	public bool CreateManualSaveBackup()
+	{
+		SaveNow();
+		return SDFTree.CreateManualBackup(saveFilePath);
+	}
+
+	public bool RestoreLatestSaveBackup()
+	{
+		if (!SDFTree.RestoreLatestBackup(saveFilePath))
+		{
+			return false;
+		}
+		Load();
+		ClearBonusWaveData();
+		return true;
+	}
+
+	public bool VerifySaveHealth(out string error)
+	{
+		return SDFTree.VerifyEncryptedSave(saveFilePath, out error);
 	}
 
 	public bool IsEventRewardsGiven(string eventRewardID)
@@ -1089,13 +1461,19 @@ public class Profile : Singleton<Profile>
 
 	public int GetHelperLevel(string helperID)
 	{
-		return Mathf.Clamp(activeSavedData.GetDictionaryValue<int>("helperLevels", helperID, playModeSubSection), 0, Singleton<HelpersDatabase>.instance.GetMaxLevel(helperID));
+		int val = activeSavedData.GetDictionaryValue<int>("helperLevels", helperID, activeDataSubSection);
+		if (val == 0 && SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			string altSection = (activeDataSubSection == "zombies") ? "classic" : "zombies";
+			val = activeSavedData.GetDictionaryValue<int>("helperLevels", helperID, altSection);
+		}
+		return Mathf.Clamp(val, 0, Singleton<HelpersDatabase>.instance.GetMaxLevel(helperID));
 	}
 
 	public void SetHelperLevel(string helperID, int val, bool autoFillSelectedHelpers)
 	{
 		val = Mathf.Clamp(val, 0, Singleton<HelpersDatabase>.instance.GetMaxLevel(helperID));
-		if (autoFillSelectedHelpers && GetHelperLevel(helperID) == 0 && val > 0)
+		if (autoFillSelectedHelpers && GetHelperLevel(helperID) == 0 && val > 0 && !SVZMultiplayerManager.IsHiddenOrSubHelper(helperID))
 		{
 			List<string> selectedHelpers = GetSelectedHelpers();
 			if (selectedHelpers.Count < maxSelectedHelpers)
@@ -1104,37 +1482,48 @@ public class Profile : Singleton<Profile>
 				SetSelectedHelpers(selectedHelpers);
 			}
 		}
-		activeSavedData.SetDictionaryValue("helperLevels", helperID, val, playModeSubSection);
+		activeSavedData.SetDictionaryValue("helperLevels", helperID, val, activeDataSubSection);
 	}
 
 	public List<string> GetSelectedHelpers()
 	{
-		return activeSavedData.GetSubNodeValueList("selectedHelpers", playModeSubSection);
+		List<string> list = activeSavedData.GetSubNodeValueList("selectedHelpers", activeDataSubSection);
+		if (list != null)
+		{
+			for (int i = list.Count - 1; i >= 0; i--)
+			{
+				if (SVZMultiplayerManager.IsHiddenOrSubHelper(list[i]))
+				{
+					list.RemoveAt(i);
+				}
+			}
+		}
+		return list;
 	}
 
 	public void SetSelectedHelpers(List<string> helpers)
 	{
-		activeSavedData.SetSubNodeValueList("selectedHelpers", helpers, playModeSubSection);
+		activeSavedData.SetSubNodeValueList("selectedHelpers", helpers, activeDataSubSection);
 	}
 
 	public int GetAbilityLevel(string abilityID)
 	{
-		return activeSavedData.GetDictionaryValue<int>("abilityLevels", abilityID, playModeSubSection);
+		return Mathf.Max(0, activeSavedData.GetDictionaryValue<int>("abilityLevels", abilityID, activeDataSubSection));
 	}
 
 	public void SetAbilityLevel(string abilityID, int val)
 	{
-		activeSavedData.SetDictionaryValue("abilityLevels", abilityID, val, playModeSubSection);
+		activeSavedData.SetDictionaryValue("abilityLevels", abilityID, Mathf.Max(0, val), activeDataSubSection);
 	}
 
 	public List<string> GetSelectedAbilities()
 	{
-		return activeSavedData.GetSubNodeValueList("selectedAbilities", playModeSubSection);
+		return activeSavedData.GetSubNodeValueList("selectedAbilities", activeDataSubSection);
 	}
 
 	public void SetSelectedAbilities(List<string> abilities)
 	{
-		activeSavedData.SetSubNodeValueList("selectedAbilities", abilities, playModeSubSection);
+		activeSavedData.SetSubNodeValueList("selectedAbilities", abilities, activeDataSubSection);
 	}
 
 	public int GetNumCharms(string charmID)
@@ -1256,6 +1645,7 @@ public class Profile : Singleton<Profile>
 			UpgradeWaveRecycling();
 			UpgradeToExtraWaves();
 		}
+		SanitizeSavedProfile();
 		waveToBeat = ValidateWaveIndex(waveToBeat);
 		if (GetWaveLevel(1) == 0)
 		{
@@ -1263,11 +1653,119 @@ public class Profile : Singleton<Profile>
 		}
 	}
 
+	private void SanitizeSavedProfile()
+	{
+		try
+		{
+			if (mSavedData == null || mSavedData.saveData == null)
+			{
+				return;
+			}
+			bool modified = false;
+			if (ResourcesManager.initialized)
+			{
+				modified |= SanitizeModeSubsection("classic");
+				modified |= SanitizeModeSubsection("zombies");
+			}
+			if (modified)
+			{
+				SDFTree.CreateEmergencyBackup(saveFilePath);
+				Save();
+				Debug.LogWarning("[Profile] Sanitized out-of-range save entries automatically without resetting progress.");
+			}
+		}
+		catch (System.Exception ex)
+		{
+			Debug.LogWarning("[Profile] SanitizeSavedProfile skipped: " + ex.Message);
+		}
+	}
+
+	private bool SanitizeModeSubsection(string modeSection)
+	{
+		bool changed = false;
+		SDFTreeNode modeNode = mSavedData.saveData.to(modeSection);
+		if (modeNode == null)
+		{
+			return false;
+		}
+		SDFTreeNode helpersNode = modeNode.to("helperLevels");
+		if (helpersNode != null)
+		{
+			List<string> helperKeys = new List<string>();
+			foreach (KeyValuePair<string, string> kv in helpersNode.attributes)
+			{
+				helperKeys.Add(kv.Key);
+			}
+			foreach (string key in helperKeys)
+			{
+				int val;
+				if (!int.TryParse(helpersNode[key], out val))
+				{
+					helpersNode[key] = "0";
+					changed = true;
+					continue;
+				}
+				int maxLvl = Singleton<HelpersDatabase>.instance.GetMaxLevel(key);
+				int clamped = Mathf.Clamp(val, 0, Mathf.Max(1, maxLvl));
+				if (clamped != val)
+				{
+					helpersNode[key] = clamped.ToString();
+					changed = true;
+				}
+			}
+		}
+		List<string> selectedHelpers = mSavedData.GetSubNodeValueList("selectedHelpers", modeSection);
+		if (selectedHelpers != null && selectedHelpers.Count > 0)
+		{
+			List<string> validHelpers = new List<string>();
+			foreach (string id in selectedHelpers)
+			{
+				if (!string.IsNullOrEmpty(id) && Singleton<HelpersDatabase>.instance.Contains(id) && !SVZMultiplayerManager.IsHiddenOrSubHelper(id))
+				{
+					int lvl = mSavedData.GetDictionaryValue<int>("helperLevels", id, modeSection);
+					if (lvl > 0 && !validHelpers.Contains(id) && validHelpers.Count < maxSelectedHelpers)
+					{
+						validHelpers.Add(id);
+					}
+				}
+			}
+			if (validHelpers.Count != selectedHelpers.Count)
+			{
+				mSavedData.SetSubNodeValueList("selectedHelpers", validHelpers, modeSection);
+				changed = true;
+			}
+		}
+		SDFTreeNode abilitiesNode = modeNode.to("abilityLevels");
+		if (abilitiesNode != null)
+		{
+			List<string> abilityKeys = new List<string>();
+			foreach (KeyValuePair<string, string> kv in abilitiesNode.attributes)
+			{
+				abilityKeys.Add(kv.Key);
+			}
+			foreach (string key in abilityKeys)
+			{
+				int val;
+				if (!int.TryParse(abilitiesNode[key], out val) || val < 0)
+				{
+					abilitiesNode[key] = "0";
+					changed = true;
+				}
+			}
+		}
+		return changed;
+	}
+
 	private int ValidateWaveIndex(int index)
 	{
 		if (index < 1)
 		{
 			return 1;
+		}
+		int maxWave = Mathf.Max(1, maxBaseWave);
+		if (index > maxWave)
+		{
+			index = maxWave;
 		}
 		string path = "Registry/" + Singleton<PlayModesManager>.instance.selectedModeData["wavesPath"] + string.Format("{0:000}", index);
 		if (SingletonMonoBehaviour<ResourcesManager>.instance.Open(path) == null)
@@ -1283,12 +1781,97 @@ public class Profile : Singleton<Profile>
 		{
 			return 1;
 		}
-		string path = "Registry/BonusWaves/BonusWave" + string.Format("{0:000}", index);
+		int bonusWaveCount = GetBonusWaveCount();
+		if (bonusWaveCount > 0 && index > bonusWaveCount)
+		{
+			return index;
+		}
+		string selectedModeBonusWavesPath = GetSelectedModeBonusWavesPath();
+		if (selectedModeBonusWavesPath == string.Empty)
+		{
+			selectedModeBonusWavesPath = "BonusWaves/BonusWave";
+		}
+		string path = "Registry/" + selectedModeBonusWavesPath + string.Format("{0:000}", index);
 		if (SingletonMonoBehaviour<ResourcesManager>.instance.Open(path) == null)
 		{
 			index = 1;
 		}
 		return index;
+	}
+
+	private string GetBonusWaveCounterKey()
+	{
+		string selectedMode = Singleton<PlayModesManager>.instance.selectedMode;
+		if (selectedMode == "classic")
+		{
+			return "wavesSinceLastBonusWave";
+		}
+		return "wavesSinceLastBonusWave_" + selectedMode;
+	}
+
+	private string GetBonusWaveToBeatKey()
+	{
+		string selectedMode = Singleton<PlayModesManager>.instance.selectedMode;
+		if (selectedMode == "classic")
+		{
+			return "bonusWaveToBeat";
+		}
+		return "bonusWaveToBeat_" + selectedMode;
+	}
+
+	private string GetSelectedModeBonusWavesPath()
+	{
+		SDFTreeNode selectedModeData = Singleton<PlayModesManager>.instance.selectedModeData;
+		string text = (selectedModeData != null) ? selectedModeData["bonusWavesPath"] : string.Empty;
+		if (text == null)
+		{
+			text = string.Empty;
+		}
+		if (text == string.Empty && Singleton<PlayModesManager>.instance.selectedMode == "classic")
+		{
+			return "BonusWaves/BonusWave";
+		}
+		return text;
+	}
+
+	private int GetWavesPerBonusWave()
+	{
+		int result;
+		SDFTreeNode selectedModeData = Singleton<PlayModesManager>.instance.selectedModeData;
+		string text = (selectedModeData != null) ? selectedModeData["wavesPerBonusWave"] : string.Empty;
+		if (text != null && int.TryParse(text, out result) && result > 0)
+		{
+			return result;
+		}
+		if (int.TryParse(Singleton<Config>.instance.root.to("Game")["wavesPerBonusWave"], out result) && result > 0)
+		{
+			return result;
+		}
+		return 5;
+	}
+
+	private int GetBonusWaveCount()
+	{
+		int result;
+		SDFTreeNode selectedModeData = Singleton<PlayModesManager>.instance.selectedModeData;
+		string text = (selectedModeData != null) ? selectedModeData["bonusWaveCount"] : string.Empty;
+		if (text != null && int.TryParse(text, out result))
+		{
+			return result;
+		}
+		return 0;
+	}
+
+	private int GetBonusWaveMaxBaseWave()
+	{
+		int result;
+		SDFTreeNode selectedModeData = Singleton<PlayModesManager>.instance.selectedModeData;
+		string text = (selectedModeData != null) ? selectedModeData["bonusWaveMaxBaseWave"] : string.Empty;
+		if (text != null && int.TryParse(text, out result))
+		{
+			return result;
+		}
+		return 0;
 	}
 
 	private void UpgradeWaveRecycling()

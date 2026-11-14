@@ -273,7 +273,11 @@ public class DebriefingImpl : SceneBehaviour
 		WeakGlobalInstance<SUIScreen>.instance.fader.onFadingDone = delegate
 		{
 			Singleton<Profile>.instance.ClearBonusWaveData();
-			if (Singleton<Profile>.instance.readyToStartBonusWave)
+			if (PrepareBonusWaveFromLastWave())
+			{
+				WaveManager.LoadNextWaveLevel();
+			}
+			else if (Singleton<Profile>.instance.readyToStartBonusWave)
 			{
 				WaveManager.LoadNextWaveLevel();
 			}
@@ -292,6 +296,28 @@ public class DebriefingImpl : SceneBehaviour
 		};
 		WeakGlobalInstance<SUIScreen>.instance.fader.FadeToBlack();
 		WeakGlobalInstance<SUIScreen>.instance.inputs.processInputs = false;
+	}
+
+	private bool PrepareBonusWaveFromLastWave()
+	{
+		if (mWasInBonusWave || !Singleton<PlayStatistics>.instance.stats.lastWaveWon)
+		{
+			return false;
+		}
+		string lastPlayMode = Singleton<PlayStatistics>.instance.stats.lastPlayMode;
+		if (lastPlayMode == null || lastPlayMode == string.Empty)
+		{
+			lastPlayMode = Singleton<PlayModesManager>.instance.selectedMode;
+		}
+		if (Singleton<PlayModesManager>.instance.selectedMode != lastPlayMode)
+		{
+			Singleton<PlayModesManager>.instance.selectedMode = lastPlayMode;
+		}
+		if (!Singleton<Profile>.instance.PrepareBonusWaveForCompletedWave(Singleton<PlayStatistics>.instance.stats.lastWavePlayed))
+		{
+			return false;
+		}
+		return Singleton<Profile>.instance.readyToStartBonusWave;
 	}
 
 	private void OnClickRateDialog(bool rated)

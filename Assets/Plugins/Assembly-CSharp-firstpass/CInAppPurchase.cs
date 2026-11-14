@@ -112,35 +112,49 @@ public static class CInAppPurchase
 		}
 	}
 
-	[DllImport("libIAP", CharSet = CharSet.Ansi)]
-	private static extern void IAP_Init(string gameObject, string key);
+	private static void IAP_Init(string gameObject, string key)
+	{
+	}
 
-	[DllImport("libIAP")]
-	private static extern void IAP_SyncTransactions();
+	private static void IAP_SyncTransactions()
+	{
+	}
 
-	[DllImport("libIAP", CharSet = CharSet.Ansi)]
-	private static extern void IAP_RequestProductData(string[] products, int timeout);
+	private static void IAP_RequestProductData(string[] products, int timeout)
+	{
+	}
 
-	[DllImport("libIAP", CharSet = CharSet.Ansi)]
-	private static extern void IAP_BuyProduct(string product);
+	private static void IAP_BuyProduct(string product)
+	{
+	}
 
-	[DllImport("libIAP")]
-	private static extern bool IAP_IsTransactionActive();
+	private static bool IAP_IsTransactionActive()
+	{
+		return false;
+	}
 
-	[DllImport("libIAP")]
-	private static extern bool IAP_IsAvailable();
+	private static bool IAP_IsAvailable()
+	{
+		return false;
+	}
 
-	[DllImport("libIAP")]
-	private static extern bool IAP_AllowsConcurrentOperations();
+	private static bool IAP_AllowsConcurrentOperations()
+	{
+		return false;
+	}
 
-	[DllImport("libIAP")]
-	private static extern void IAP_HandleUpdate(int elapsedTime);
+	private static void IAP_HandleUpdate(int elapsedTime)
+	{
+	}
 
-	[DllImport("libIAP")]
-	private static extern void IAP_initSingleProduct(string productId);
+	private static void IAP_initSingleProduct(string productId)
+	{
+	}
 
-	[DllImport("libIAP")]
-	private static extern bool IAP_IsSubscriptionAvailable();
+	private static bool IAP_IsSubscriptionAvailable()
+	{
+		return false;
+	}
 
 	public static void initSingleProduct(string productId)
 	{

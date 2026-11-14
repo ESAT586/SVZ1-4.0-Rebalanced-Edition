@@ -7,7 +7,14 @@ public class StoreAvailability_Abilities
 		string[] allIDs = Singleton<AbilitiesDatabase>.instance.allIDs;
 		foreach (string abilityID in allIDs)
 		{
-			Singleton<AbilitiesDatabase>.instance.BuildStoreData(abilityID, items);
+			try
+			{
+				Singleton<AbilitiesDatabase>.instance.BuildStoreData(abilityID, items);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogWarning("[StoreAvailability_Abilities] Skipped malformed ability entry '" + abilityID + "': " + ex.Message);
+			}
 		}
 	}
 
@@ -15,9 +22,15 @@ public class StoreAvailability_Abilities
 	{
 		bool flag = false;
 		SDFTreeNode sDFTreeNode = SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/Abilities/" + abilityID);
+		if (sDFTreeNode == null)
+		{
+			return;
+		}
 		if (Singleton<EventsManager>.instance.IsEventActive(sDFTreeNode["eventID"]))
 		{
-			if (Singleton<Profile>.instance.highestUnlockedWave < int.Parse(sDFTreeNode["waveToUnlock"]))
+			int waveToUnlock = 1;
+			int.TryParse(sDFTreeNode["waveToUnlock"], out waveToUnlock);
+			if (Singleton<Profile>.instance.highestUnlockedWave < waveToUnlock)
 			{
 				flag = true;
 			}
@@ -26,30 +39,52 @@ public class StoreAvailability_Abilities
 				EnsureProperInitialLevel(abilityID);
 			}
 			int num = Singleton<Profile>.instance.GetAbilityLevel(abilityID) + 1;
+			SDFTreeNode sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num)) ?? sDFTreeNode.to(num);
+			bool hasInfiniteCost = sDFTreeNode.hasAttribute("infiniteUpgradeCost");
+			bool isMaxLevel = (sDFTreeNode2 == null && !hasInfiniteCost);
+			if (isMaxLevel)
+			{
+				num = UnityEngine.Mathf.Max(1, num - 1);
+				sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num)) ?? sDFTreeNode.to(num);
+				if (sDFTreeNode2 == null)
+				{
+					return;
+				}
+			}
 			bool isLastUpgrade = sDFTreeNode.childCount == num;
 			StoreData.Item item = new StoreData.Item(delegate
 			{
-				LevelUpAbility(abilityID, isLastUpgrade);
+				if (!isMaxLevel)
+				{
+					LevelUpAbility(abilityID, isLastUpgrade);
+				}
 			});
+			if (isMaxLevel)
+			{
+				item.isMaxLevel = true;
+			}
 			if (num > 1)
 			{
-				item.details.SetColumns(num - 1, num);
-				item.details.AddStat("strength_stats", InfiniteUpgrades.Extrapolate<int>(sDFTreeNode, "infiniteUpgradeDamage", "damage", num - 1).ToString(), InfiniteUpgrades.Extrapolate<int>(sDFTreeNode, "infiniteUpgradeDamage", "damage", num).ToString());
+				item.details.SetColumns(num - (isMaxLevel ? 0 : 1), num);
+				item.details.AddStat("strength_stats", InfiniteUpgrades.Extrapolate<int>(sDFTreeNode, "infiniteUpgradeDamage", "damage", num - (isMaxLevel ? 0 : 1)).ToString(), InfiniteUpgrades.Extrapolate<int>(sDFTreeNode, "infiniteUpgradeDamage", "damage", num).ToString());
 			}
-			if (num > sDFTreeNode.childCount)
+			if (isMaxLevel)
 			{
-				item.cost = new Cost(sDFTreeNode["infiniteUpgradeCost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
+				item.cost = new Cost("0", 0);
+			}
+			else if (sDFTreeNode2 != null)
+			{
+				item.cost = new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
 			}
 			else
 			{
-				SDFTreeNode sDFTreeNode2 = sDFTreeNode.to(num);
-				item.cost = new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
+				item.cost = new Cost(sDFTreeNode["infiniteUpgradeCost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
 			}
 			item.id = abilityID;
 			item.icon = sDFTreeNode["icon"];
 			item.isEvent = sDFTreeNode["eventID"] != string.Empty;
 			item.locked = flag;
-			item.unlockAtWave = int.Parse(sDFTreeNode["waveToUnlock"]);
+			item.unlockAtWave = waveToUnlock;
 			if (flag)
 			{
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
@@ -79,18 +114,26 @@ public class StoreAvailability_Abilities
 		}
 		int num = Singleton<Profile>.instance.GetAbilityLevel(abilityID) + 1;
 		SDFTreeNode sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+		bool isMaxLevel = false;
+		if (sDFTreeNode2 == null)
+		{
+			num--;
+			sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+			isMaxLevel = true;
+		}
 		if (sDFTreeNode2 != null)
 		{
 			bool isLastUpgrade = sDFTreeNode.childCount == num;
 			StoreData.Item item = new StoreData.Item(delegate
 			{
-				LevelUpAbility(abilityID, isLastUpgrade);
+				if (!isMaxLevel) LevelUpAbility(abilityID, isLastUpgrade);
 			});
-			SDFTreeNode sDFTreeNode3 = sDFTreeNode.to(string.Format("{0:000}", num - 1));
+			if (isMaxLevel) item.isMaxLevel = true;
+			SDFTreeNode sDFTreeNode3 = (!isMaxLevel) ? sDFTreeNode.to(string.Format("{0:000}", num - 1)) : sDFTreeNode2;
 			if (sDFTreeNode3 != null)
 			{
 				item.details.AddStat("summon_ally", GetPercentString(sDFTreeNode3["summonAllyChance"]), GetPercentString(sDFTreeNode2["summonAllyChance"]));
-				item.details.SetColumns(num - 1, num);
+				item.details.SetColumns(num - (isMaxLevel ? 0 : 1), num);
 			}
 			item.id = abilityID;
 			item.icon = sDFTreeNode["icon"];
@@ -101,7 +144,7 @@ public class StoreAvailability_Abilities
 			{
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 			}
-			item.cost = new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
+			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
 			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);
@@ -127,18 +170,26 @@ public class StoreAvailability_Abilities
 		}
 		int num = Singleton<Profile>.instance.GetAbilityLevel(abilityID) + 1;
 		SDFTreeNode sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+		bool isMaxLevel = false;
+		if (sDFTreeNode2 == null)
+		{
+			num--;
+			sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+			isMaxLevel = true;
+		}
 		if (sDFTreeNode2 != null)
 		{
 			bool isLastUpgrade = sDFTreeNode.childCount == num;
 			StoreData.Item item = new StoreData.Item(delegate
 			{
-				LevelUpAbility(abilityID, isLastUpgrade);
+				if (!isMaxLevel) LevelUpAbility(abilityID, isLastUpgrade);
 			});
-			SDFTreeNode sDFTreeNode3 = sDFTreeNode.to(string.Format("{0:000}", num - 1));
+			if (isMaxLevel) item.isMaxLevel = true;
+			SDFTreeNode sDFTreeNode3 = (!isMaxLevel) ? sDFTreeNode.to(string.Format("{0:000}", num - 1)) : sDFTreeNode2;
 			if (sDFTreeNode3 != null)
 			{
 				item.details.AddStat("duration", GetSecondsString(sDFTreeNode3["duration"]), GetSecondsString(sDFTreeNode2["duration"]));
-				item.details.SetColumns(num - 1, num);
+				item.details.SetColumns(num - (isMaxLevel ? 0 : 1), num);
 			}
 			item.id = abilityID;
 			item.icon = sDFTreeNode["icon"];
@@ -149,7 +200,7 @@ public class StoreAvailability_Abilities
 			{
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 			}
-			item.cost = new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
+			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
 			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);
@@ -175,19 +226,27 @@ public class StoreAvailability_Abilities
 		}
 		int num = Singleton<Profile>.instance.GetAbilityLevel(abilityID) + 1;
 		SDFTreeNode sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+		bool isMaxLevel = false;
+		if (sDFTreeNode2 == null)
+		{
+			num--;
+			sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+			isMaxLevel = true;
+		}
 		if (sDFTreeNode2 != null)
 		{
 			bool isLastUpgrade = sDFTreeNode.childCount == num;
 			StoreData.Item item = new StoreData.Item(delegate
 			{
-				LevelUpAbility(abilityID, isLastUpgrade);
+				if (!isMaxLevel) LevelUpAbility(abilityID, isLastUpgrade);
 			});
-			SDFTreeNode sDFTreeNode3 = sDFTreeNode.to(string.Format("{0:000}", num - 1));
+			if (isMaxLevel) item.isMaxLevel = true;
+			SDFTreeNode sDFTreeNode3 = (!isMaxLevel) ? sDFTreeNode.to(string.Format("{0:000}", num - 1)) : sDFTreeNode2;
 			if (sDFTreeNode3 != null)
 			{
 				item.details.AddStat("strength_stats", CombineLightningDamage(sDFTreeNode3), CombineLightningDamage(sDFTreeNode2));
 				item.details.AddStat("duration", GetSecondsString(sDFTreeNode3["DOTDuration"]), GetSecondsString(sDFTreeNode2["DOTDuration"]));
-				item.details.SetColumns(num - 1, num);
+				item.details.SetColumns(num - (isMaxLevel ? 0 : 1), num);
 			}
 			item.id = abilityID;
 			item.icon = sDFTreeNode["icon"];
@@ -198,7 +257,7 @@ public class StoreAvailability_Abilities
 			{
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 			}
-			item.cost = new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
+			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
 			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);
@@ -224,18 +283,26 @@ public class StoreAvailability_Abilities
 		}
 		int num = Singleton<Profile>.instance.GetAbilityLevel(abilityID) + 1;
 		SDFTreeNode sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+		bool isMaxLevel = false;
+		if (sDFTreeNode2 == null)
+		{
+			num--;
+			sDFTreeNode2 = sDFTreeNode.to(string.Format("{0:000}", num));
+			isMaxLevel = true;
+		}
 		if (sDFTreeNode2 != null)
 		{
 			bool isLastUpgrade = sDFTreeNode.childCount == num;
 			StoreData.Item item = new StoreData.Item(delegate
 			{
-				LevelUpAbility(abilityID, isLastUpgrade);
+				if (!isMaxLevel) LevelUpAbility(abilityID, isLastUpgrade);
 			});
-			SDFTreeNode sDFTreeNode3 = sDFTreeNode.to(string.Format("{0:000}", num - 1));
+			if (isMaxLevel) item.isMaxLevel = true;
+			SDFTreeNode sDFTreeNode3 = (!isMaxLevel) ? sDFTreeNode.to(string.Format("{0:000}", num - 1)) : sDFTreeNode2;
 			if (sDFTreeNode3 != null)
 			{
 				item.details.AddStat("duration", GetSecondsString(sDFTreeNode3["duration"]), GetSecondsString(sDFTreeNode2["duration"]));
-				item.details.SetColumns(num - 1, num);
+				item.details.SetColumns(num - (isMaxLevel ? 0 : 1), num);
 			}
 			item.id = abilityID;
 			item.icon = sDFTreeNode["icon"];
@@ -246,7 +313,7 @@ public class StoreAvailability_Abilities
 			{
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 			}
-			item.cost = new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
+			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
 			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);

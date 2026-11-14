@@ -46,22 +46,25 @@ public class BoosterPackCodex : Singleton<BoosterPackCodex>
 
 	private Dictionary<string, RarityGroup> mRarityGroups = new Dictionary<string, RarityGroup>();
 
+	private string mLoadedMode = string.Empty;
+
 	public int numPacks
 	{
-		get
-		{
-			RefreshPackIDs();
-			return mAllPackIDs.Count;
+			get
+			{
+				EnsureDataLoaded();
+				RefreshPackIDs();
+				return mAllPackIDs.Count;
+			}
 		}
-	}
 
 	public BoosterPackCodex()
 	{
-		LoadData();
 	}
 
 	public int PackIDToIndex(string packID)
 	{
+		EnsureDataLoaded();
 		int num = 0;
 		foreach (string mAllPackID in mAllPackIDs)
 		{
@@ -76,18 +79,21 @@ public class BoosterPackCodex : Singleton<BoosterPackCodex>
 
 	public SDFTreeNode GetPackData(int index)
 	{
+		EnsureDataLoaded();
 		RefreshPackIDs();
 		return GetPackData(mAllPackIDs[index]);
 	}
 
 	public SDFTreeNode GetPackData(string packID)
 	{
+		EnsureDataLoaded();
 		RefreshPackIDs();
 		return mPacks.to(packID);
 	}
 
 	public string GetPackID(int index)
 	{
+		EnsureDataLoaded();
 		RefreshPackIDs();
 		return mAllPackIDs[index];
 	}
@@ -106,11 +112,13 @@ public class BoosterPackCodex : Singleton<BoosterPackCodex>
 
 	public string GetGroupBG(string groupID)
 	{
+		EnsureDataLoaded();
 		return mRarityGroups[groupID].baseBG;
 	}
 
 	public int GetGroupRank(string groupID)
 	{
+		EnsureDataLoaded();
 		int num = 0;
 		foreach (KeyValuePair<string, RarityGroup> mRarityGroup in mRarityGroups)
 		{
@@ -125,16 +133,19 @@ public class BoosterPackCodex : Singleton<BoosterPackCodex>
 
 	public RarityGroup GetRarityGroup(string groupID)
 	{
+		EnsureDataLoaded();
 		return mRarityGroups[groupID];
 	}
 
 	public SDFTreeNode GetCardData(string cardID)
 	{
+		EnsureDataLoaded();
 		return mCards.to(cardID);
 	}
 
 	public CardDesc[] GeneratePackContent(int packIndex)
 	{
+		EnsureDataLoaded();
 		SDFTreeNode sDFTreeNode = GetPackData(packIndex).to("recipe");
 		if (sDFTreeNode != null)
 		{
@@ -143,16 +154,48 @@ public class BoosterPackCodex : Singleton<BoosterPackCodex>
 		return null;
 	}
 
+	private void EnsureDataLoaded()
+	{
+		string currentMode = GetCurrentMode();
+		if (mCards == null || mPacks == null || mLoadedMode != currentMode)
+		{
+			LoadData();
+		}
+	}
+
+	private string GetCurrentMode()
+	{
+		if (Singleton<PlayModesManager>.instance != null)
+		{
+			return Singleton<PlayModesManager>.instance.selectedMode;
+		}
+		return "classic";
+	}
+
+	private string GetModeRegistryPath(string registryName)
+	{
+		if (GetCurrentMode() == "zombies")
+		{
+			return "Registry/" + registryName + "_ZM";
+		}
+		return "Registry/" + registryName;
+	}
+
 	private void LoadData()
 	{
-		mCards = SDFTree.LoadFromResources("Registry/BoosterCards");
-		mPacks = SDFTree.LoadFromResources("Registry/BoosterPacks");
+		mLoadedMode = GetCurrentMode();
+		mCards = SDFTree.LoadFromResources(GetModeRegistryPath("BoosterCards"));
+		mPacks = SDFTree.LoadFromResources(GetModeRegistryPath("BoosterPacks"));
+		if (mLoadedMode == "zombies")
+		{
+			ApplyZombiePackRenderOverrides();
+		}
 		mAllPackIDs.Clear();
 		foreach (KeyValuePair<string, string> attribute in mPacks.to("all").attributes)
 		{
 			mAllPackIDs.Add(attribute.Value);
 		}
-		SDFTreeNode sDFTreeNode = SDFTree.LoadFromResources("Registry/BoosterCardGroups");
+		SDFTreeNode sDFTreeNode = SDFTree.LoadFromResources(GetModeRegistryPath("BoosterCardGroups"));
 		mRarityGroups.Clear();
 		foreach (KeyValuePair<string, SDFTreeNode> child in sDFTreeNode.childs)
 		{
@@ -186,6 +229,36 @@ public class BoosterPackCodex : Singleton<BoosterPackCodex>
 			}
 			mRarityGroups.Add(child.Key, rarityGroup);
 		}
+	}
+
+	private void ApplyZombiePackRenderOverrides()
+	{
+		ApplyPackRenderOverride("booster_zm_1", "Sprites/BoosterPacks/booster_pack_zm_starter");
+		ApplyPackRenderOverride("booster_zm_flying", "Sprites/BoosterPacks/booster_pack_zm_flying");
+		ApplyPackRenderOverride("booster_zm_ranged", "Sprites/BoosterPacks/booster_pack_zm_ranged");
+		ApplyPackRenderOverride("booster_zm_wanyudometal", "Sprites/BoosterPacks/booster_pack_zm_wanyudometal");
+		ApplyPackRenderOverride("booster_zm_onicharm", "Sprites/BoosterPacks/booster_pack_zm_onicharm");
+		ApplyPackRenderOverride("booster_zm_wanyudofire_charm", "Sprites/BoosterPacks/booster_pack_zm_wanyudofire_charm");
+		ApplyPackRenderOverride("booster_zm_wanyudometal_charm", "Sprites/BoosterPacks/booster_pack_zm_wanyudometal_charm");
+		ApplyPackRenderOverride("booster_zm_jurogumo_charm", "Sprites/BoosterPacks/booster_pack_zm_jurogumo_charm");
+		ApplyPackRenderOverride("booster_zm_evilnobunaga", "Sprites/BoosterPacks/booster_pack_zm_evilnobunaga");
+		ApplyPackRenderOverride("booster_zm_eviltakeda", "Sprites/BoosterPacks/booster_pack_zm_eviltakeda");
+		ApplyPackRenderOverride("booster_zm_necromancer", "Sprites/BoosterPacks/booster_pack_zm_necromancer");
+		ApplyPackRenderOverride("booster_zm_warlord", "Sprites/BoosterPacks/booster_pack_zm_warlord");
+	}
+
+	private void ApplyPackRenderOverride(string packID, string layerPath)
+	{
+		if (mPacks == null || Resources.Load(layerPath) == null)
+		{
+			return;
+		}
+		SDFTreeNode pack = mPacks.to(packID);
+		if (pack == null || !pack.hasChild("render"))
+		{
+			return;
+		}
+		pack.to("render")["layer2"] = layerPath;
 	}
 
 	private CardDesc[] GeneratePackContent(SDFTreeNode recipe)
@@ -259,14 +332,7 @@ public class BoosterPackCodex : Singleton<BoosterPackCodex>
 
 	private void RefreshPackIDs()
 	{
-		if (Singleton<Profile>.instance.freeBoosterPacks > 0)
-		{
-			if (mAllPackIDs[0] != "booster_free")
-			{
-				mAllPackIDs.Insert(0, "booster_free");
-			}
-		}
-		else if (mAllPackIDs[0] == "booster_free")
+		while (mAllPackIDs.Count > 0 && mAllPackIDs[0] == "booster_free")
 		{
 			mAllPackIDs.RemoveAt(0);
 		}

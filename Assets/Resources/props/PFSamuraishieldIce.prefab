@@ -63,7 +63,7 @@ MeshRenderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 1eca9822e45a7114cab00210c0780940, type: 2}
+  - {fileID: 2100000, guid: 92c0975dc5ad64b4693f7d15a9526aa6, type: 2}
   m_SubsetIndices: []
   m_StaticBatchInfo:
     firstSubMesh: 0

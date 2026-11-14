@@ -44,15 +44,11 @@ public class PrestitialScreenImpl : SceneBehaviour
 			StartCoroutine(LoadScene("StoryMoviePre"));
 		};
 		mBenefits = (SUIButton)mLayout["benefitsbutton"];
-		mBenefits.onButtonPressed = delegate
+		if (mBenefits != null)
 		{
-			base.GetComponent<AudioSource>().PlayOneShot(ClickSFX);
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("OnBenefit");
-			}
-			Application.OpenURL("http://m.glu.com/android/vip-club?navbar=N");
-		};
+			mBenefits.visible = false;
+			mBenefits.onButtonPressed = null;
+		}
 		yield return new WaitForSeconds(0.001f);
 	}
 

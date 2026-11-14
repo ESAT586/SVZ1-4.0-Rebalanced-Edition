@@ -1,0 +1,123 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Evil Takeda
+desc = Evil Takeda
+lane = front
+prefab = Characters/PFTakedaZombie
+weaponMeleePrefab = Props/PFTakedasword
+HUDIcon = Sprites/Icons/enemy_evil_takeda_shingen
+waveToUnlock = 26
+resourcesCost = 85.0
+cooldownTimer = 1.0
+attackFrequency = 2.0
+usesBladeWeapon = true
+unique = false
+availableAtWave = 4
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 0,34
+	health = 2800
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 520
+	knockbackPower = 60
+	knockbackResistance = 80
+
+[002]
+	cost = 0,34
+	health = 3450
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 600
+	knockbackPower = 60
+	knockbackResistance = 80
+
+[003]
+	cost = 0,36
+	health = 4200
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 690
+	knockbackPower = 62
+	knockbackResistance = 80
+
+[004]
+	cost = 0,40
+	health = 5050
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 785
+	knockbackPower = 65
+	knockbackResistance = 82
+
+[005]
+	cost = 0,40
+	health = 6000
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 885
+	knockbackPower = 65
+	knockbackResistance = 82
+
+[006]
+	cost = 0,42
+	health = 7050
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 990
+	knockbackPower = 68
+	knockbackResistance = 82
+
+[007]
+	cost = 0,46
+	health = 8250
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 1100
+	knockbackPower = 70
+	knockbackResistance = 85
+
+[008]
+	cost = 0,46
+	health = 9550
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 1215
+	knockbackPower = 72
+	knockbackResistance = 85
+
+[009]
+	cost = 0,48
+	health = 10950
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 1330
+	knockbackPower = 72
+	knockbackResistance = 85
+
+[010]
+	cost = 0,52
+	health = 12500
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 110
+	meleeDamage = 1450
+	knockbackPower = 75
+	knockbackResistance = 85

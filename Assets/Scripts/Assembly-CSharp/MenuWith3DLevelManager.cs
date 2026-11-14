@@ -5,6 +5,8 @@ public class MenuWith3DLevelManager : WeakGlobalInstance<MenuWith3DLevelManager>
 {
 	private const float kDialogsPriority = 500f;
 
+	private const int kZombieWaveSelectUnlockWave = 30;
+
 	private readonly Vector2 kHintPosition = new Vector2(840f, 300f);
 
 	private MenuWith3DLevel mCurrentMenu;
@@ -42,13 +44,21 @@ public class MenuWith3DLevelManager : WeakGlobalInstance<MenuWith3DLevelManager>
 		}
 	}
 
+	public EnemiesPreview enemiesPreview
+	{
+		get
+		{
+			return mEnemiesPreview;
+		}
+	}
+
 	public MenuWith3DLevelManager(BoxCollider spawnArea)
 	{
 		SetUniqueInstance(this);
 		mLayout = new SUILayout(Singleton<PlayModesManager>.instance.selectedModeData["layout_MenuWith3D"]);
 		((SUIButton)mLayout["waveButton"]).onButtonPressed = OnSelectWaveButtonPress;
 		((SUIButton)mLayout["waveButton"]).text = WaveManager.GetNextWaveNumberDisplay();
-		if (Singleton<Profile>.instance.wasBasicGameBeaten)
+		if (IsWaveSelectUnlocked())
 		{
 			((SUILabel)mLayout["waveInst"]).visible = true;
 			((SUISprite)mLayout["waveNewTag"]).visible = true;
@@ -107,7 +117,7 @@ public class MenuWith3DLevelManager : WeakGlobalInstance<MenuWith3DLevelManager>
 
 	private void OnSelectWaveButtonPress()
 	{
-		if (Singleton<Profile>.instance.wasBasicGameBeaten)
+		if (IsWaveSelectUnlocked())
 		{
 			if (mCurrentMenu != null)
 			{
@@ -117,8 +127,29 @@ public class MenuWith3DLevelManager : WeakGlobalInstance<MenuWith3DLevelManager>
 		}
 		else
 		{
-			mNoWaveSelectDialog = new YesNoDialog(string.Format(Singleton<Localizer>.instance.Get("chapter_screen_locked"), Singleton<Profile>.instance.maxBaseWave), false, false);
+			mNoWaveSelectDialog = new YesNoDialog(string.Format(Singleton<Localizer>.instance.Get("chapter_screen_locked"), waveSelectUnlockWave), false, false);
 			mNoWaveSelectDialog.priority = 500f;
+		}
+	}
+
+	private bool IsWaveSelectUnlocked()
+	{
+		if (Singleton<PlayModesManager>.instance.selectedMode == "zombies")
+		{
+			return Singleton<Profile>.instance.GetWaveLevel(kZombieWaveSelectUnlockWave) > 1;
+		}
+		return Singleton<Profile>.instance.wasBasicGameBeaten;
+	}
+
+	private int waveSelectUnlockWave
+	{
+		get
+		{
+			if (Singleton<PlayModesManager>.instance.selectedMode == "zombies")
+			{
+				return kZombieWaveSelectUnlockWave;
+			}
+			return Singleton<Profile>.instance.maxBaseWave;
 		}
 	}
 }

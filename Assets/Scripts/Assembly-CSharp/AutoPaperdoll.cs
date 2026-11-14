@@ -50,12 +50,32 @@ public class AutoPaperdoll : MonoBehaviour
 
 	public void AttachObjectToJoint(GameObject theObject, LabeledJoint theJointData, bool ignoreCurrentTransform)
 	{
+		Vector3 savedRootScale = base.transform.localScale;
+		bool wasFlippedX = savedRootScale.x < 0f;
+		if (wasFlippedX)
+		{
+			base.transform.localScale = new Vector3(0f - savedRootScale.x, savedRootScale.y, savedRootScale.z);
+		}
 		if (ignoreCurrentTransform)
 		{
 			AlignObjectWithJoint(theObject, theJointData);
 		}
 		theObject.transform.parent = theJointData.joint;
-		BroadcastMessage("OnAutoPaperdollAdded", theObject, SendMessageOptions.DontRequireReceiver);
+		if (wasFlippedX)
+		{
+			base.transform.localScale = savedRootScale;
+		}
+		TaggedAnimPlayer[] animPlayers = GetComponentsInChildren<TaggedAnimPlayer>(true);
+		if (animPlayers != null)
+		{
+			for (int i = 0; i < animPlayers.Length; i++)
+			{
+				if (animPlayers[i] != null)
+				{
+					animPlayers[i].OnAutoPaperdollAdded(theObject);
+				}
+			}
+		}
 	}
 
 	public void AlignObjectWithJoint(GameObject theObject, string theJointLabel)
@@ -73,7 +93,8 @@ public class AutoPaperdoll : MonoBehaviour
 	{
 		theObject.transform.position = theJointData.joint.position;
 		theObject.transform.rotation = theJointData.joint.rotation;
-		theObject.transform.localScale = theJointData.joint.lossyScale;
+		Vector3 lossy = theJointData.joint.lossyScale;
+		theObject.transform.localScale = new Vector3(Mathf.Abs(lossy.x), Mathf.Abs(lossy.y), Mathf.Abs(lossy.z));
 		ApplyJointOffset(theObject, theJointData.transformOffset);
 	}
 
@@ -94,6 +115,10 @@ public class AutoPaperdoll : MonoBehaviour
 		}
 		LabeledJoint value;
 		if (mJointsDict.TryGetValue(theJointLabel, out value))
+		{
+			return value;
+		}
+		if (theJointLabel == "ranged_weapon" && mJointsDict.TryGetValue("melee_weapon", out value))
 		{
 			return value;
 		}
@@ -167,10 +192,11 @@ public class AutoPaperdoll : MonoBehaviour
 
 	public Vector3 GetRelativeJointPosition(LabeledJoint theJointData)
 	{
-		Vector3 position = theJointData.transformOffset.position;
-		position.Scale(theJointData.joint.lossyScale);
-		position = theJointData.joint.rotation * position;
-		return theJointData.joint.position + position - base.transform.position;
+		if (theJointData == null || theJointData.joint == null)
+		{
+			return Vector3.zero;
+		}
+		return theJointData.joint.TransformPoint(theJointData.transformOffset.position) - base.transform.position;
 	}
 
 	public Quaternion GetJointRotation(string theJointLabel)

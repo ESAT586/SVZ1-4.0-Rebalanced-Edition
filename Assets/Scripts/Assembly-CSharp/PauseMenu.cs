@@ -59,12 +59,19 @@ public class PauseMenu : IDialog
 		mLayout = new SUILayout("Layouts/PauseMenuLayout");
 		mLayout.AnimateIn(0.7f * mLayout.defaultTransitionSpeed);
 		((SUIButton)mLayout["resumeBtn"]).onButtonPressed = onResume;
+		((SUIButton)mLayout["settingsBtn"]).onButtonPressed = onSettings;
 		ApplicationUtilities.instance.ShowAds((ApplicationUtilities.AdPosition)17);
 		mGameCenter = (SUIButton)mLayout["gameCenter"];
 		mGameCenter.onButtonPressed = delegate
 		{
 		};
 		mGameCenter.visible = false;
+	}
+
+	private void onSettings()
+	{
+		mIsDone = true;
+		WeakGlobalInstance<DialogHandler>.instance.PushCreator(() => new PCSettingsDialog());
 	}
 
 	public void Update()

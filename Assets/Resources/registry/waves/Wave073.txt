@@ -1,0 +1,33 @@
+scene = InGame_hell_brown
+
+[rewards]
+	coins, 1350
+	gems, 65
+
+[Commands]
+	Oni
+	Oni_small
+	Oni_small
+	0.5,0.5
+	Nobusuma
+	Nobusuma
+	Nobusuma
+	H_Zombie_Bow_3
+	H_Zombie_Bow_3
+	1.0,1.0
+	Komusou_2
+	Wayundo_Fire
+	Wayundo_Metal
+	H_Zombie_Warhammer
+	(
+	Oni
+	Nobusuma
+	Nobusuma
+	H_Zombie_Bow_3
+	Komusou_2
+	)
+	1.0,1.0
+	Jurogumo
+	Chochinobake_alt
+	Chochinobake_alt
+	Wayundo_Metal

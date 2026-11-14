@@ -115,22 +115,69 @@ public class CollectableManager : WeakGlobalInstance<CollectableManager>
 
 	public void Update()
 	{
+		Hero hero = (WeakGlobalSceneBehavior<InGameImpl>.instance != null) ? WeakGlobalSceneBehavior<InGameImpl>.instance.hero : null;
+		bool isArmyOnly = (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive && SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly);
+		CharactersManager charMgr = WeakGlobalInstance<CharactersManager>.instance;
+		List<Character> allAlive = (charMgr != null) ? charMgr.allAlive : null;
+
 		for (int num = mCollectables.Count - 1; num >= 0; num--)
 		{
-			if (mCollectables[num].isReadyToBeCollected && IsInRange(WeakGlobalSceneBehavior<InGameImpl>.instance.hero, mCollectables[num]))
+			Collectable drop = mCollectables[num];
+			if (drop.isReadyToBeCollected)
 			{
-				mCollectables[num].OnCollected();
+				bool shouldCollect = false;
+				if (hero != null && !isArmyOnly && hero.health > 0f && hero.controller != null && IsInRange(hero, drop))
+				{
+					shouldCollect = true;
+				}
+				if (!shouldCollect && allAlive != null)
+				{
+					float dropZ = drop.position.z;
+					for (int i = 0; i < allAlive.Count; i++)
+					{
+						Character ch = allAlive[i];
+						if (ch != null && ch.health > 0f && !ch.isBase)
+						{
+							if (Mathf.Abs(ch.position.z - dropZ) <= 55f)
+							{
+								shouldCollect = true;
+								break;
+							}
+						}
+					}
+				}
+
+				if (shouldCollect)
+				{
+					drop.OnCollected();
+					continue;
+				}
 			}
-			else if (mCollectables[num].isReadyToDie)
+
+			if (drop.isReadyToDie)
 			{
-				mCollectables[num].Destroy();
+				drop.Destroy();
 				mCollectables.RemoveAt(num);
 			}
 			else
 			{
-				mCollectables[num].Update();
+				drop.Update();
 			}
 		}
+	}
+
+	public int CollectAll()
+	{
+		int count = 0;
+		for (int num = mCollectables.Count - 1; num >= 0; num--)
+		{
+			if (mCollectables[num].isReadyToBeCollected)
+			{
+				mCollectables[num].OnCollected();
+				count++;
+			}
+		}
+		return count;
 	}
 
 	public void SpawnResources(ResourceDrops drops, Vector3 position)
@@ -217,23 +264,34 @@ public class CollectableManager : WeakGlobalInstance<CollectableManager>
 		switch (type)
 		{
 		case ECollectableType.coin:
-			if (Singleton<Profile>.instance.earnsDoubleCoins)
+			int coinVal = (Singleton<Profile>.instance.earnsDoubleCoins ? amount * 2 : amount);
+			currentWaveSpoils.coins += coinVal;
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
 			{
-				currentWaveSpoils.coins += amount * 2;
-			}
-			else
-			{
-				currentWaveSpoils.coins += amount;
+				Singleton<Profile>.instance.coins += coinVal;
+				SVZMultiplayerManager.AddChatMessage("[GANIMET]", "💰 +" + coinVal + " Altin toplandi!");
 			}
 			break;
 		case ECollectableType.leadership:
-			WeakGlobalInstance<Smithy>.instance.resources += amount;
+			if (WeakGlobalInstance<Smithy>.instance != null)
+			{
+				WeakGlobalInstance<Smithy>.instance.resources += amount;
+			}
 			break;
 		case ECollectableType.gem:
 			currentWaveSpoils.gems += amount;
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				Singleton<Profile>.instance.gems += amount;
+				SVZMultiplayerManager.AddChatMessage("[GANIMET]", "💎 +" + amount + " Elmas toplandi!");
+			}
 			break;
 		case ECollectableType.pachinkoball:
 			currentWaveSpoils.balls += amount;
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				Singleton<Profile>.instance.pachinkoBalls += amount;
+			}
 			break;
 		case ECollectableType.presentA:
 		case ECollectableType.presentB:
@@ -242,6 +300,10 @@ public class CollectableManager : WeakGlobalInstance<CollectableManager>
 			CollectedPresent collectedPresent = new CollectedPresent();
 			collectedPresent.type = type;
 			currentWaveSpoils.presents.Add(collectedPresent);
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				SVZMultiplayerManager.AddChatMessage("[GANIMET]", "🎁 Gizemli Kutu toplandi!");
+			}
 			break;
 		}
 		case ECollectableType.presentD:
@@ -283,10 +345,15 @@ public class CollectableManager : WeakGlobalInstance<CollectableManager>
 			}
 		}
 		Singleton<Profile>.instance.ForceActiveSaveData(true);
+		Singleton<Profile>.instance.Save();
 	}
 
 	private bool IsInRange(Hero hero, Collectable obj)
 	{
+		if (hero == null || hero.controller == null)
+		{
+			return false;
+		}
 		return (hero.position.z > obj.position.z && !obj.wasAtLeftOfHero) || (hero.position.z < obj.position.z && obj.wasAtLeftOfHero) || Mathf.Abs(hero.position.z - obj.position.z) <= 32f;
 	}
 

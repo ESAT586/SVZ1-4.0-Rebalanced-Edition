@@ -1,0 +1,36 @@
+scene = InGame_hell
+
+[rewards]
+	coins, 6000
+	gems, 200
+
+[Commands]
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Ninja
+	Evil_Horseman
+	Evil_Horseman
+	1.0,1.0
+	Wayundo_Metal
+	Wayundo_Metal
+	Tengu_air
+	Tengu_air
+	1.0,1.0
+	(
+	Evil_Ninja
+	Evil_Horseman
+	Wayundo_Metal
+	Tengu_air
+	)
+	1.0,1.0
+	@bossalert
+	Oni_boss
+	Evil_Onibaba
+	Evil_Takeda
+	Evil_Taiko_Drummer
+	Nobusuma_alt
+	Nobusuma_alt
+	Nobusuma_alt
+	Evil_Wayundo_Metal
+	H_Zombie_Warhammer

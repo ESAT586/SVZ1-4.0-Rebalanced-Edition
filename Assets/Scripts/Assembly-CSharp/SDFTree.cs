@@ -7,20 +7,49 @@ public class SDFTree
 {
 	private static int kNumSpacesForTabs = 4;
 
+	private const int kBackupCount = 3;
+
 	private SDFTree()
 	{
 	}
 
 	public static void Save(SDFTreeNode root, string filename)
 	{
-		if (File.Exists(filename))
+		if (root == null || string.IsNullOrEmpty(filename))
 		{
-			if (Debug.isDebugBuild)
-			{
-				Debug.Log("*** Creating backup ***");
-			}
-			File.Copy(filename, Profile.prevSaveFilePath, true);
+			return;
 		}
+		string directoryName = Path.GetDirectoryName(filename);
+		if (!string.IsNullOrEmpty(directoryName) && !Directory.Exists(directoryName))
+		{
+			Directory.CreateDirectory(directoryName);
+		}
+		string text = filename + ".tmp";
+		WritePlainText(root, text);
+		FileEncryptAndDecrypt.EncryptFile(text);
+		string text2 = string.Empty;
+		string text3 = string.Empty;
+		if (!FileEncryptAndDecrypt.TryDecryptFile(text, out text2, out text3) || string.IsNullOrEmpty(text2))
+		{
+			DeleteIfExists(text);
+			throw new IOException("Save verification failed: " + text3);
+		}
+		RotateBackups(filename);
+		File.Copy(text, filename, true);
+		string backupPath = GetBackupPath(filename, 1);
+		if (File.Exists(backupPath))
+		{
+			File.Copy(backupPath, Profile.prevSaveFilePath, true);
+		}
+		DeleteIfExists(text);
+		if (Debug.isDebugBuild)
+		{
+			File.WriteAllText(Profile.saveDirectory + "/saveAfter.data", text2);
+		}
+	}
+
+	private static void WritePlainText(SDFTreeNode root, string filename)
+	{
 		TextWriter textWriter = new StreamWriter(filename);
 		try
 		{
@@ -31,28 +60,37 @@ public class SDFTree
 			textWriter.Close();
 			if (Debug.isDebugBuild)
 			{
-				File.Copy(filename, Application.persistentDataPath + "/saveBefore.data", true);
-			}
-			FileEncryptAndDecrypt.EncryptFile(filename);
-			if (Debug.isDebugBuild)
-			{
-				string contents = FileEncryptAndDecrypt.DecryptFile(filename, false);
-				File.WriteAllText(Application.persistentDataPath + "/saveAfter.data", contents);
+				File.Copy(filename, Profile.saveDirectory + "/saveBefore.data", true);
 			}
 		}
 	}
 
 	public static SDFTreeNode LoadFromResources(string filename)
 	{
+		string overridePath = System.IO.Path.Combine(Application.dataPath, "Overrides/" + filename + ".txt");
+		if (System.IO.File.Exists(overridePath))
+		{
+			try
+			{
+				string text = System.IO.File.ReadAllText(overridePath);
+				SDFTreeNode sDFTreeNode = LoadFromSingleString(text);
+				sDFTreeNode.ExpandLinks();
+				return sDFTreeNode;
+			}
+			catch (Exception ex)
+			{
+				Debug.LogWarning("Failed loading override " + overridePath + ": " + ex.Message);
+			}
+		}
 		TextAsset textAsset = (TextAsset)Resources.Load(filename, typeof(TextAsset));
 		if (textAsset == null)
 		{
 			Debug.Log("ERROR: Unable to load the SDF file: '" + filename + "'");
 			return null;
 		}
-		SDFTreeNode sDFTreeNode = LoadFromSingleString(textAsset.text);
-		sDFTreeNode.ExpandLinks();
-		return sDFTreeNode;
+		SDFTreeNode sDFTreeNode2 = LoadFromSingleString(textAsset.text);
+		sDFTreeNode2.ExpandLinks();
+		return sDFTreeNode2;
 	}
 
 	public static SDFTreeNode LoadFromBundle(AssetBundle bundle, string filename)
@@ -70,23 +108,61 @@ public class SDFTree
 
 	public static SDFTreeNode LoadFromFile(string filename)
 	{
-		SDFTreeNode result = null;
-		if (!File.Exists(filename))
+		if (string.IsNullOrEmpty(filename) || !File.Exists(filename))
 		{
-			return result;
+			return null;
 		}
+		SDFTreeNode sDFTreeNode = null;
+		if (TryLoadEncryptedTree(filename, out sDFTreeNode))
+		{
+			return sDFTreeNode;
+		}
+		string[] recoveryCandidates = GetRecoveryCandidates(filename);
+		for (int i = 0; i < recoveryCandidates.Length; i++)
+		{
+			string text = recoveryCandidates[i];
+			if (!File.Exists(text))
+			{
+				continue;
+			}
+			if (TryLoadEncryptedTree(text, out sDFTreeNode))
+			{
+				Debug.LogWarning("[SDFTree] Restored save from backup: " + text);
+				File.Copy(text, filename, true);
+				return sDFTreeNode;
+			}
+		}
+		return null;
+	}
+
+	private static bool TryLoadEncryptedTree(string filename, out SDFTreeNode tree)
+	{
+		tree = null;
 		try
 		{
-			string str = FileEncryptAndDecrypt.DecryptFile(filename, false);
+			string str = string.Empty;
+			string text = string.Empty;
+			if (!FileEncryptAndDecrypt.TryDecryptFile(filename, out str, out text))
+			{
+				if (Debug.isDebugBuild)
+				{
+					Debug.LogWarning("[SDFTree] Save decrypt failed: " + filename + " | " + text);
+				}
+				return false;
+			}
+			if (string.IsNullOrEmpty(str))
+			{
+				return false;
+			}
 			bool flag = RemoveNullCharacters(ref str);
 			if (Debug.isDebugBuild)
 			{
 				Debug.Log("Save data is: " + flag);
-				TextWriter textWriter = new StreamWriter(Application.persistentDataPath + "/save_load.data");
+				TextWriter textWriter = new StreamWriter(Profile.saveDirectory + "/save_load.data");
 				textWriter.WriteLine(str);
 				textWriter.Close();
 			}
-			result = LoadFromSingleString(str);
+			tree = LoadFromSingleString(str);
 		}
 		catch (Exception ex)
 		{
@@ -94,10 +170,140 @@ public class SDFTree
 			{
 				Debug.Log(ex.Message);
 			}
-			return null;
+			tree = null;
+			return false;
 		}
-		result.ExpandLinks();
-		return result;
+		if (tree == null || (tree.attributeCount == 0 && tree.childCount == 0))
+		{
+			tree = null;
+			return false;
+		}
+		tree.ExpandLinks();
+		return true;
+	}
+
+	public static string GetBackupPath(string filename, int index)
+	{
+		return filename + ".backup" + index;
+	}
+
+	public static string[] GetBackupPaths(string filename)
+	{
+		string[] array = new string[kBackupCount];
+		for (int i = 0; i < kBackupCount; i++)
+		{
+			array[i] = GetBackupPath(filename, i + 1);
+		}
+		return array;
+	}
+
+	public static string GetManualBackupPath(string filename)
+	{
+		return filename + ".manual";
+	}
+
+	public static string GetEmergencyBackupPath(string filename)
+	{
+		return filename + ".emergency";
+	}
+
+	public static bool CreateManualBackup(string filename)
+	{
+		return CopyIfValid(filename, GetManualBackupPath(filename));
+	}
+
+	public static bool CreateEmergencyBackup(string filename)
+	{
+		return CopyIfValid(filename, GetEmergencyBackupPath(filename));
+	}
+
+	public static bool RestoreLatestBackup(string filename)
+	{
+		string[] recoveryCandidates = GetRecoveryCandidates(filename);
+		for (int i = 0; i < recoveryCandidates.Length; i++)
+		{
+			if (CopyIfValid(recoveryCandidates[i], filename))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static bool VerifyEncryptedSave(string filename, out string error)
+	{
+		string text = string.Empty;
+		if (!FileEncryptAndDecrypt.TryDecryptFile(filename, out text, out error))
+		{
+			return false;
+		}
+		try
+		{
+			SDFTreeNode sDFTreeNode = LoadFromSingleString(text);
+			if (sDFTreeNode == null || (sDFTreeNode.attributeCount == 0 && sDFTreeNode.childCount == 0))
+			{
+				error = "Parsed save is empty";
+				return false;
+			}
+			return true;
+		}
+		catch (Exception ex)
+		{
+			error = ex.Message;
+			return false;
+		}
+	}
+
+	private static string[] GetRecoveryCandidates(string filename)
+	{
+		string[] array = new string[kBackupCount + 2];
+		for (int i = 0; i < kBackupCount; i++)
+		{
+			array[i] = GetBackupPath(filename, i + 1);
+		}
+		array[kBackupCount] = GetManualBackupPath(filename);
+		array[kBackupCount + 1] = Profile.prevSaveFilePath;
+		return array;
+	}
+
+	private static void RotateBackups(string filename)
+	{
+		for (int i = kBackupCount; i >= 2; i--)
+		{
+			string backupPath = GetBackupPath(filename, i - 1);
+			string backupPath2 = GetBackupPath(filename, i);
+			if (File.Exists(backupPath))
+			{
+				File.Copy(backupPath, backupPath2, true);
+			}
+		}
+		if (File.Exists(filename))
+		{
+			File.Copy(filename, GetBackupPath(filename, 1), true);
+		}
+	}
+
+	private static bool CopyIfValid(string source, string destination)
+	{
+		if (string.IsNullOrEmpty(source) || !File.Exists(source))
+		{
+			return false;
+		}
+		string error = string.Empty;
+		if (!VerifyEncryptedSave(source, out error))
+		{
+			return false;
+		}
+		File.Copy(source, destination, true);
+		return true;
+	}
+
+	private static void DeleteIfExists(string filename)
+	{
+		if (!string.IsNullOrEmpty(filename) && File.Exists(filename))
+		{
+			File.Delete(filename);
+		}
 	}
 
 	private static void SaveRecursively(TextWriter tw, SDFTreeNode node, int level)
@@ -308,7 +514,7 @@ public class SDFTree
 
 	private static bool IsKeyValidate(string key, string value, string blockName)
 	{
-		string[,] array = new string[49, 2]
+		string[,] array = new string[51, 2]
 		{
 			{ "neverShowRateMeAlertAgain", "b" },
 			{ "timeStamp", "f" },
@@ -326,7 +532,9 @@ public class SDFTree
 			{ "pachinkoBallsLaunched", "i" },
 			{ "storeVisitsCount", "i" },
 			{ "wavesSinceLastBonusWave", "i" },
+			{ "wavesSinceLastBonusWave_zombies", "i" },
 			{ "bonusWaveToBeat", "i" },
+			{ "bonusWaveToBeat_zombies", "i" },
 			{ "waveToBeat", "i" },
 			{ "profileName", "s" },
 			{ "heroLevel", "i" },

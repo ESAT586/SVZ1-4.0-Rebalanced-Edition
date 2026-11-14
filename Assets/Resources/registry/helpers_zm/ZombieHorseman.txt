@@ -21,100 +21,100 @@ usesBladeWeapon = true
 
 [001]
 	cost = 1000,0
-	health = 355
+	health = 400
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 85
+	meleeDamage = 95
 	knockbackPower = 40
 	knockbackResistance = 45
 
 [002]
 	cost = 3000,0
-	health = 425
+	health = 490
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 110
+	meleeDamage = 125
 	knockbackPower = 40
 	knockbackResistance = 45
 
 [003]
 	cost = 6500,0
-	health = 545
+	health = 620
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 145
+	meleeDamage = 165
 	knockbackPower = 40
 	knockbackResistance = 45
 
 [004]
 	cost = 11000,0
-	health = 660
+	health = 760
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 185
+	meleeDamage = 210
 	knockbackPower = 40
 	knockbackResistance = 45
 
 [005]
 	cost = 19500,0
-	health = 850
+	health = 960
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 240
+	meleeDamage = 275
 	knockbackPower = 40
 	knockbackResistance = 45
 
 [006]
 	cost = 0,16
-	health = 1025
+	health = 1180
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 315
+	meleeDamage = 360
 	knockbackPower = 40
 	knockbackResistance = 45
 
 [007]
 	cost = 0,22
-	health = 1230
+	health = 1420
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 440
+	meleeDamage = 495
 	knockbackPower = 40
 	knockbackResistance = 45
 
 [008]
 	cost = 0,28
-	health = 1475
+	health = 1690
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 615
+	meleeDamage = 690
 	knockbackPower = 40
 	knockbackResistance = 45
 
 [009]
 	cost = 0,32
-	health = 1620
+	health = 1880
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 850
+	meleeDamage = 950
 	knockbackPower = 40
 	knockbackResistance = 45
 
 [010]
 	cost = 0,36
-	health = 1800
+	health = 2100
 	speedMin = 190
 	speedMax = 190
 	meleeRange = 200
-	meleeDamage = 1285
+	meleeDamage = 1400
 	knockbackPower = 40
 	knockbackResistance = 45

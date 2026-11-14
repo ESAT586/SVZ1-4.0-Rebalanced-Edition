@@ -1,5 +1,5 @@
 
-/ NOTE: Stats based on "Nobunaga" ally
+/ NOTE: Zombie Shogun - 100-cost Apex Undead Warlord (True Final Boss Presence)
 
 /--------------------------------------------------
 / General
@@ -8,12 +8,12 @@
 displayName = @helper_shogun_name
 desc = @helper_shogun_desc
 prefab = Characters/PFUndeadshogun
-weaponMeleePrefab = Props/samuraibasesword
+weaponMeleePrefab = Props/PFUndeadShogunSword
 lane = front
 HUDIcon = Sprites/Icons/enemy_shogun
 waveToUnlock = 30
-resourcesCost = 60.0
-cooldownTimer = 1.0
+resourcesCost = 100.0
+cooldownTimer = 25.0
 attackFrequency = 3.0
 usesBladeWeapon = true
 unique = true
@@ -24,101 +24,101 @@ unique = true
 /--------------------------------------------------
 
 [001]
-	cost = 0,20
-	health = 2450
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 29
-	knockbackPower = 40
-	knockbackResistance = 80
+	cost = 20000,0
+	health = 4800
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 280
+	knockbackPower = 60
+	knockbackResistance = 100
 
 [002]
-	cost = 0,20
-	health = 3200
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 35
-	knockbackPower = 40
-	knockbackResistance = 80
+	cost = 35000,0
+	health = 6500
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 380
+	knockbackPower = 60
+	knockbackResistance = 100
 
 [003]
-	cost = 0,20
-	health = 4200
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 40
-	knockbackPower = 40
-	knockbackResistance = 80
+	cost = 60000,0
+	health = 8800
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 500
+	knockbackPower = 60
+	knockbackResistance = 100
 
 [004]
-	cost = 0,24
-	health = 5350
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 50
-	knockbackPower = 40
-	knockbackResistance = 80
+	cost = 95000,0
+	health = 11800
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 660
+	knockbackPower = 60
+	knockbackResistance = 100
 
 [005]
-	cost = 0,24
-	health = 7000
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 60
-	knockbackPower = 40
-	knockbackResistance = 80
+	cost = 140000,0
+	health = 15500
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 860
+	knockbackPower = 60
+	knockbackResistance = 100
 
 [006]
-	cost = 0,24
-	health = 9150
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 65
-	knockbackPower = 40
-	knockbackResistance = 80
+	cost = 0,15
+	health = 20500
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 1120
+	knockbackPower = 60
+	knockbackResistance = 100
 
 [007]
-	cost = 0,30
-	health = 11150
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 75
-	knockbackPower = 40
-	knockbackResistance = 80
+	cost = 0,20
+	health = 27000
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 1450
+	knockbackPower = 60
+	knockbackResistance = 100
 
 [008]
-	cost = 0,30
-	health = 14450
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 80
-	knockbackPower = 40
-	knockbackResistance = 80
+	cost = 0,25
+	health = 35000
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 1850
+	knockbackPower = 60
+	knockbackResistance = 100
 
 [009]
 	cost = 0,30
-	health = 17300
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 87
-	knockbackPower = 40
-	knockbackResistance = 80
+	health = 46000
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 2350
+	knockbackPower = 60
+	knockbackResistance = 100
 
 [010]
 	cost = 0,40
-	health = 20800
-	speedMin = 100
-	speedMax = 100
-	meleeRange = 100
-	meleeDamage = 93
-	knockbackPower = 40
-	knockbackResistance = 80
+	health = 60000
+	speedMin = 65
+	speedMax = 65
+	meleeRange = 280
+	meleeDamage = 3000
+	knockbackPower = 60
+	knockbackResistance = 100

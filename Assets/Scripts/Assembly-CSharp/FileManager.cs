@@ -20,23 +20,7 @@ public static class FileManager
 
 	static FileManager()
 	{
-		if (Application.platform == RuntimePlatform.IPhonePlayer)
-		{
-			string[] array = SystemInfo.operatingSystem.Substring(SystemInfo.operatingSystem.LastIndexOf(' ') + 1).Split('.');
-			int result = 4;
-			if (array != null && array.Length > 0)
-			{
-				int.TryParse(array[0], out result);
-			}
-			useNativeFileIO = result >= 5;
-			Debug.Log("iOS Version = " + result);
-		}
-		if (useNativeFileIO)
-		{
-			findFilePathInCloudActions = new Dictionary<string, FileData>();
-			saveFileActions = new Dictionary<string, FileData>();
-			loadFileActions = new Dictionary<string, FileData>();
-		}
+		useNativeFileIO = false;
 		CheckCloudStorageAvailability();
 	}
 
@@ -96,20 +80,29 @@ public static class FileManager
 	{
 		FileData fileData = new FileData(path, onComplete);
 		fileData.Data = data;
-		if (useNativeFileIO)
+		try
 		{
-			return;
-		}
-		using (FileStream output = new FileStream(path, FileMode.Create, FileAccess.Write))
-		{
-			using (BinaryWriter binaryWriter = new BinaryWriter(output))
+			string dir = Path.GetDirectoryName(path);
+			if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
 			{
-				binaryWriter.Write(data);
+				Directory.CreateDirectory(dir);
 			}
+			using (FileStream output = new FileStream(path, FileMode.Create, FileAccess.Write))
+			{
+				using (BinaryWriter binaryWriter = new BinaryWriter(output))
+				{
+					binaryWriter.Write(data);
+				}
+			}
+			fileData.Exists = true;
+		}
+		catch (Exception ex)
+		{
+			Debug.LogWarning("[FileManager] SaveFile failed: " + ex.Message);
+			fileData.Exists = false;
 		}
 		if (onComplete != null)
 		{
-			fileData.Exists = true;
 			onComplete(fileData);
 		}
 	}
@@ -117,20 +110,27 @@ public static class FileManager
 	public static void LoadFile(string path, Action<FileData> onComplete)
 	{
 		FileData fileData = new FileData(path, onComplete);
-		if (useNativeFileIO)
+		try
 		{
-			return;
-		}
-		using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read))
-		{
-			using (BinaryReader binaryReader = new BinaryReader(fileStream))
+			if (File.Exists(path))
 			{
-				fileData.Data = binaryReader.ReadBytes((int)fileStream.Length);
+				using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read))
+				{
+					using (BinaryReader binaryReader = new BinaryReader(fileStream))
+					{
+						fileData.Data = binaryReader.ReadBytes((int)fileStream.Length);
+					}
+				}
+				fileData.Exists = true;
 			}
+		}
+		catch (Exception ex)
+		{
+			Debug.LogWarning("[FileManager] LoadFile failed: " + ex.Message);
+			fileData.Exists = false;
 		}
 		if (onComplete != null)
 		{
-			fileData.Exists = true;
 			onComplete(fileData);
 		}
 	}

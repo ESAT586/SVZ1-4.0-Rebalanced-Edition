@@ -16,57 +16,46 @@ public class HeroControls
 
 	private bool mWasMoving;
 
-	private KeyCode mCurrentKey = KeyCode.A, mHeldKey = KeyCode.None;
+	private KeyCode mCurrentKey = KeyCode.A;
 
 	private void UpdatePCControls()
 	{
-		//flips the else statements depending on the key you last pressed
-		//this is so if you're holding d and you press a, you'll go backwards. and vice versa. instead of d just taking priority over a.
-		//I did this in brawlers as well. it makes the controls feel a lot less clunky.
-		if (mCurrentKey == KeyCode.A)
+		bool leftPressed  = PCInputManager.GetKey(PCInputManager.Action.MoveLeft)  || Input.GetKey(KeyCode.LeftArrow);
+		bool rightPressed = PCInputManager.GetKey(PCInputManager.Action.MoveRight) || Input.GetKey(KeyCode.RightArrow);
+
+		if (mCurrentKey == KeyCode.A || mCurrentKey == KeyCode.LeftArrow)
 		{
-			if (Input.GetKey(KeyCode.D))
+			if (rightPressed)
 			{
 				onMoveRight();
-
-				if (!Input.GetKey(mCurrentKey))
+				if (!leftPressed)
 				{
+					// We'll just stick to a generic key state since remapping is dynamic
 					mCurrentKey = KeyCode.D;
 				}
 			}
-			else if (Input.GetKey(KeyCode.A))
+			else if (leftPressed)
 			{
 				onMoveLeft();
-				
-				if (!Input.GetKey(mCurrentKey))
-				{
-					mCurrentKey = KeyCode.A;
-				}
 			}
 			else
 			{
 				onDontMove();
 			}
 		}
-		else if (mCurrentKey == KeyCode.D)
+		else
 		{
-			if (Input.GetKey(KeyCode.A))
+			if (leftPressed)
 			{
 				onMoveLeft();
-				
-				if (!Input.GetKey(mCurrentKey))
+				if (!rightPressed)
 				{
 					mCurrentKey = KeyCode.A;
 				}
 			}
-			else if (Input.GetKey(KeyCode.D))
+			else if (rightPressed)
 			{
 				onMoveRight();
-
-				if (!Input.GetKey(mCurrentKey))
-				{
-					mCurrentKey = KeyCode.D;
-				}
 			}
 			else
 			{
@@ -127,11 +116,46 @@ public class HeroControls
 		}
 	}
 
+	private bool IsPCInputActive()
+	{
+		bool leftPressed  = PCInputManager.GetKey(PCInputManager.Action.MoveLeft)  || Input.GetKey(KeyCode.LeftArrow);
+		bool rightPressed = PCInputManager.GetKey(PCInputManager.Action.MoveRight) || Input.GetKey(KeyCode.RightArrow);
+		return leftPressed || rightPressed;
+	}
+
 	public void Update()
 	{
+		if (SVZMultiplayerUI.IsLobbyOpen)
+		{
+			if (onDontMove != null) onDontMove();
+			return;
+		}
+		// If playing online multiplayer as Client (Player 2), local PC keys must NOT move Host's hero (mHero)!
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive && !SVZMultiplayerManager.Instance.IsSamePC && SVZNetworkManager.Instance != null && !SVZNetworkManager.Instance.IsHost)
+		{
+			if (onDontMove != null) onDontMove();
+			return;
+		}
+
+		// If player is actively pressing movement keys or Gamepad stick/buttons, prioritize PC controls!
+		// This enables simultaneous Keyboard (A/D) + USB Mouse clicking on HUD items on Android TV / Chromebook / PC!
+		if (IsPCInputActive())
+		{
+			UpdatePCControls();
+			return;
+		}
+
 		if (Application.isMobilePlatform)
 		{
-			UpdateMobileControls();
+			if (WeakGlobalInstance<SUIScreen>.instance != null && WeakGlobalInstance<SUIScreen>.instance.inputs != null && WeakGlobalInstance<SUIScreen>.instance.inputs.isTouching)
+			{
+				UpdateMobileControls();
+			}
+			else
+			{
+				// Hybrid support: enables Gamepad, Android TV Remote, Chromebook keyboard, and Emulators!
+				UpdatePCControls();
+			}
 		}
 		else
 		{

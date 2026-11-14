@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class Character : Weakable
@@ -128,6 +129,7 @@ public class Character : Weakable
 				if (gameObject != null)
 				{
 					mPaperDollMeleeWeapon[i] = controller.InstantiateObjectOnJoint(gameObject, kMeleeJointIDs[i]);
+					controller.meleeWeaponInstances.Add(mPaperDollMeleeWeapon[i]);
 				}
 			}
 		}
@@ -1024,6 +1026,10 @@ public class Character : Weakable
 		{
 			return;
 		}
+		if (isBase && attackType == EAttackType.Trample)
+		{
+			return;
+		}
 		lastAttackTypeHitWith = attackType;
 		float num = ((!isPlayer) ? 0.12f : 0f);
 		bool flag = true;
@@ -1125,6 +1131,10 @@ public class Character : Weakable
 
 	public void RecievedHealing(float healAmount)
 	{
+		if (isBase && healAmount > 0f)
+		{
+			return;
+		}
 		if (!(health <= 0f) && (!isPlayer || !(health <= 0.1f) || WeakGlobalSceneBehavior<InGameImpl>.instance.gate.health != 0f))
 		{
 			health += healAmount;
@@ -1361,7 +1371,28 @@ public class Character : Weakable
 		{
 			Vector3 spawnPos = position;
 			spawnPos.z += UnityEngine.Random.Range(-50f, 100f);
-			spawnPos.x = WeakGlobalInstance<CharactersManager>.instance.GetBestSpawnXPos(spawnPos, WeakGlobalInstance<Smithy>.instance.helperSpawnArea.size.x, CharactersManager.ELanePreference.any, isEnemy, false, false);
+			float areaWidth = (WeakGlobalInstance<Smithy>.instance != null && WeakGlobalInstance<Smithy>.instance.helperSpawnArea != null)
+				? WeakGlobalInstance<Smithy>.instance.helperSpawnArea.size.x
+				: 100f;
+			spawnPos.x = WeakGlobalInstance<CharactersManager>.instance.GetBestSpawnXPos(spawnPos, areaWidth, CharactersManager.ELanePreference.any, isEnemy, false, false);
+			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+			{
+				if (WeakGlobalInstance<Smithy>.instance != null && Singleton<HelpersDatabase>.instance != null && Singleton<HelpersDatabase>.instance.Contains(friendID))
+				{
+					Helper h = WeakGlobalInstance<Smithy>.instance.ForceSpawnAt(friendID, spawnPos, isEnemy);
+					if (h != null)
+					{
+						h.TryKnockback(100);
+						continue;
+					}
+				}
+				if (WeakGlobalInstance<WaveManager>.instance != null)
+				{
+					Enemy e = WeakGlobalInstance<WaveManager>.instance.ConstructEnemyAt(friendID, spawnPos, !isEnemy);
+					if (e != null) e.TryKnockback(100);
+				}
+				continue;
+			}
 			if (isEnemy)
 			{
 				Enemy enemy = WeakGlobalInstance<WaveManager>.instance.ConstructEnemy(friendID, WeakGlobalInstance<WaveManager>.instance.enemiesSpawnArea.size.x / 2f, spawnPos, true);
@@ -1425,6 +1456,16 @@ public class Character : Weakable
 		{
 			mHealthBar = new MiniHealthBar((!isEnemy) ? new Color(0f, 1f, 0f) : new Color(1f, 0f, 0f), isBase);
 		}
+	}
+
+	public void RefreshHealthBarColor()
+	{
+		if (mHealthBar != null)
+		{
+			mHealthBar.Destroy();
+			mHealthBar = null;
+		}
+		ActivateHealthBar();
 	}
 
 	protected void AttackByExploding()
@@ -1537,7 +1578,7 @@ public class Character : Weakable
 		float num = health / maxHealth;
 		foreach (Character item in charactersInRange)
 		{
-			if (item.health >= item.maxHealth)
+			if (item.isBase || item.health >= item.maxHealth)
 			{
 				list.Add(item);
 				continue;
@@ -1571,12 +1612,13 @@ public class Character : Weakable
 			charactersInRange.Remove(item4);
 		}
 		list.Clear();
-		float num4 = ((!isEnemy) ? float.MinValue : float.MaxValue);
+		bool marchRight = SVZMultiplayerManager.ShouldUnitMarchRight(isEnemy, true);
+		float num4 = (marchRight ? float.MinValue : float.MaxValue);
 		num = 1f;
 		foreach (Character item5 in charactersInRange)
 		{
 			float num5 = item5.health / item5.maxHealth;
-			if (!item5.isPlayer && !item5.isGateRusher && ((isEnemy && item5.position.z < num4) || (!isEnemy && item5.position.z > num4)) && num5 <= num + 0.4f)
+			if (!item5.isPlayer && !item5.isGateRusher && ((!marchRight && item5.position.z < num4) || (marchRight && item5.position.z > num4)) && num5 <= num + 0.4f)
 			{
 				num4 = item5.position.z;
 				if (num5 < num)
@@ -1611,7 +1653,7 @@ public class Character : Weakable
 		}
 		if (character == null)
 		{
-			character = ((isEnemy || !(Mathf.Abs(position.z - WeakGlobalSceneBehavior<InGameImpl>.instance.hero.position.z) <= bowAttackRange)) ? this : WeakGlobalSceneBehavior<InGameImpl>.instance.hero);
+			character = ((isEnemy || !(Mathf.Abs(position.z - WeakGlobalSceneBehavior<InGameImpl>.instance.hero.position.z) <= bowAttackRange)) ? (Character)this : (Character)WeakGlobalSceneBehavior<InGameImpl>.instance.hero);
 		}
 		controller.SetArrowVisible(false);
 		WeakGlobalInstance<ProjectileManager>.instance.SpawnProjectile(bowProjectile, bowDamage, this, character, controller.autoPaperdoll.GetJointPosition("projectile_spawn"));

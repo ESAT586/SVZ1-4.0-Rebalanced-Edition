@@ -178,7 +178,7 @@ public class SpoilsDisplay
 			return entry;
 		case "booster_free":
 			entry.icon = "@" + id;
-			entry.text = Singleton<Localizer>.instance.Get("boosterpack_title_free");
+			entry.text = Singleton<Localizer>.instance.Get((Singleton<PlayModesManager>.instance.selectedMode != "zombies") ? "boosterpack_title_free" : "boosterpack_title_free_zm");
 			return entry;
 		default:
 			if (Singleton<PotionsDatabase>.instance.Contains(id))

@@ -1,0 +1,89 @@
+scene = InGame_hell
+bonusHint = Kahraman savas disi; tum gucunu kullan, bu final bonus meydan okumasi.
+
+[rewards]
+	coins, 30000
+	gems, 10
+	z+oni, 1
+	z+wanyudofire, 1
+	z+wanyudometal, 1
+	z+jurogumo, 1
+
+selectedCharm = z+oni
+initialleadershiplevel = 6
+baselevel = 4
+belllevel = 5
+archerlevel = 5
+
+[abilitylevels]
+	LethargyZM = 10
+	DragonAttack = 4
+
+[selectedabilities]
+	000 = LethargyZM
+	001 = DragonAttack
+
+[helperlevels]
+	TenguAir = 10
+	ZombieRifleman = 10
+	EvilIceArcher = 10
+	EvilNobunaga = 8
+	EvilTakeda = 8
+	Shogun = 8
+
+[selectedhelpers]
+	000 = TenguAir
+	001 = ZombieRifleman
+	002 = EvilIceArcher
+	003 = EvilNobunaga
+	004 = Shogun
+
+[Commands]
+	4,4
+	@bossalert
+	ShieldIce_TankBoss
+	Archer_Boss
+	Rifleman_Boss
+	1,1
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite
+	Takeda
+	Nobunaga
+	Cart
+	1,1
+	SamuraiShield_Ice
+	Frostie
+	Priest
+	Swordsmith
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite
+	1,1
+	Takeda
+	Nobunaga
+	Cart
+	NinjaGirl
+	SpearHorseman
+	ArcherElite
+	RiflemanElite
+	1,1
+	PanzerElite
+	SpearElite
+	SamuraiShield_Ice
+	Frostie
+	Priest
+	Swordsmith
+	Takeda
+	Nobunaga
+	1,1
+	Cart
+	NinjaGirl
+	SpearHorseman
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite
+	IceArcher_Boss

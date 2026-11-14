@@ -6,6 +6,8 @@ public class HUDLegionBar
 
 	private int mPreviouslyKilledEnemies = -1;
 
+	private int mPreviouslyTotalEnemies = -1;
+
 	public HUDLegionBar(SUILayout layout)
 	{
 		mPercentRef = (SUILabel)layout["legionPercent"];
@@ -26,10 +28,22 @@ public class HUDLegionBar
 
 	private void UpdateProgress()
 	{
-		if (mPreviouslyKilledEnemies != WeakGlobalInstance<WaveManager>.instance.enemiesKilledSoFar)
+		if (mPercentRef == null || WeakGlobalInstance<WaveManager>.instance == null)
 		{
-			mPreviouslyKilledEnemies = WeakGlobalInstance<WaveManager>.instance.enemiesKilledSoFar;
-			int num = mPreviouslyKilledEnemies * 100 / WeakGlobalInstance<WaveManager>.instance.totalEnemies;
+			return;
+		}
+		int enemiesKilledSoFar = WeakGlobalInstance<WaveManager>.instance.enemiesKilledSoFar;
+		int totalEnemies = WeakGlobalInstance<WaveManager>.instance.totalEnemies;
+		if (mPreviouslyKilledEnemies != enemiesKilledSoFar || mPreviouslyTotalEnemies != totalEnemies)
+		{
+			mPreviouslyKilledEnemies = enemiesKilledSoFar;
+			mPreviouslyTotalEnemies = totalEnemies;
+			if (totalEnemies <= 0)
+			{
+				mPercentRef.text = "0%";
+				return;
+			}
+			int num = Mathf.Clamp(enemiesKilledSoFar * 100 / totalEnemies, 0, 100);
 			mPercentRef.text = num + "%";
 		}
 	}

@@ -20,6 +20,10 @@ public class GameHUD
 
 	private Rect mPauseButtonRect;
 
+	private SUIButton mDevWinButton;
+
+	private SUILabel mDevWinLabel;
+
 	private int mLastDisplayedCoins = -1;
 
 	private int mLastDisplayedGems = -1;
@@ -105,15 +109,20 @@ public class GameHUD
 		mLegionBar = new HUDLegionBar(mLayout);
 		mSmithyBar = new HUDSmithy(mLayout);
 		mBloodPulse = new HUDBloodPulse();
-		SUIButton sUIButton = (SUIButton)mLayout["cheats"];
-		sUIButton.scale = new Vector2(2f, 2f);
-		if (/*Debug.isDebugBuild*/false)
+		mDevWinButton = (SUIButton)mLayout["cheats"];
+		mDevWinLabel = (SUILabel)mLayout["cheatsLabel"];
+		mDevWinButton.scale = new Vector2(2f, 2f);
+		if (CanUseDevWin())
 		{
-			sUIButton.onButtonPressed = WinTheWave;
+			mDevWinButton.onButtonPressed = WinTheWave;
 		}
 		else
 		{
-			sUIButton.visible = false;
+			mDevWinButton.visible = false;
+			if (mDevWinLabel != null)
+			{
+				mDevWinLabel.visible = false;
+			}
 		}
 		m_cheatClicked = false;
 		InitCharm();
@@ -128,9 +137,38 @@ public class GameHUD
 		mHelpersBar.Update();
 		mAbilities.Update();
 		mConsumables.Update();
-		mLegionBar.Update();
 		mSmithyBar.Update();
+
+		bool isPvP = SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive;
+		if (isPvP)
+		{
+			bool isHeroMode = SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.HeroAndArmy;
+			if (mLayout.Exists("pauseBtn")) ((SUIButton)mLayout["pauseBtn"]).visible = false;
+			if (mLayout.Exists("lifebarBg")) ((SUISprite)mLayout["lifebarBg"]).visible = isHeroMode;
+			if (mLayout.Exists("lifebar")) ((SUISprite)mLayout["lifebar"]).visible = isHeroMode;
+			if (mLayout.Exists("lifebarFrame")) ((SUISprite)mLayout["lifebarFrame"]).visible = isHeroMode;
+			if (mLayout.Exists("legionBg")) ((SUISprite)mLayout["legionBg"]).visible = false;
+			if (mLayout.Exists("legionPercent")) ((SUILabel)mLayout["legionPercent"]).visible = false;
+			if (mLayout.Exists("coinsIcon")) ((SUISprite)mLayout["coinsIcon"]).visible = true;
+			if (mLayout.Exists("gemsIcon")) ((SUISprite)mLayout["gemsIcon"]).visible = true;
+			if (mLayout.Exists("currencyIcons")) ((SUISprite)mLayout["currencyIcons"]).visible = true;
+			if (mLayout.Exists("currencyCounter")) ((SUILabel)mLayout["currencyCounter"]).visible = true;
+			if (mLayout.Exists("charm")) ((SUISprite)mLayout["charm"]).visible = false;
+			if (mDevWinButton != null) mDevWinButton.visible = false;
+			if (mDevWinLabel != null) mDevWinLabel.visible = false;
+			if (isHeroMode && !mLayout.isAnimating && mHealthBar != null)
+			{
+				mHealthBar.Update();
+			}
+			return;
+		}
+
+		mLegionBar.Update();
 		mBloodPulse.Update();
+		if (CanUseDevWin() && (Input.GetKeyDown(KeyCode.F10) || Input.GetKeyDown(KeyCode.BackQuote)))
+		{
+			WinTheWave();
+		}
 		if (!mLayout.isAnimating)
 		{
 			mHealthBar.Update();
@@ -149,7 +187,8 @@ public class GameHUD
 
 	public bool IsTouchingHUD(Vector2 pos)
 	{
-		if (mSmithyBar.IsTouchZone(pos) || mHealthBar.IsTouchZone(pos) || mHelpersBar.IsTouchZone(pos) || mAbilities.IsTouchZone(pos) || mConsumables.IsTouchZone(pos) || mLegionBar.IsTouchZone(pos) || mPauseButtonRect.Contains(pos))
+		bool isPvP = SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive;
+		if (mSmithyBar.IsTouchZone(pos) || mHealthBar.IsTouchZone(pos) || mHelpersBar.IsTouchZone(pos) || mAbilities.IsTouchZone(pos) || mConsumables.IsTouchZone(pos) || mLegionBar.IsTouchZone(pos) || (!isPvP && mPauseButtonRect.Contains(pos)))
 		{
 			return true;
 		}
@@ -179,12 +218,18 @@ public class GameHUD
 		}
 	}
 
-	private void WinTheWave()
+	public void WinTheWave()
 	{
-		if (Debug.isDebugBuild)
+		m_cheatClicked = true;
+	}
+
+	public bool CanUseDevWin()
+	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
 		{
-			m_cheatClicked = true;
+			return false;
 		}
+		return true;
 	}
 
 	public bool cheatClicked()

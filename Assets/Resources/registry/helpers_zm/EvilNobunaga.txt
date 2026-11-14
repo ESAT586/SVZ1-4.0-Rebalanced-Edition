@@ -1,0 +1,122 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Evil Nobunaga
+desc = Evil Nobunaga
+prefab = Characters/PFNobunagaZombie
+lane = front
+HUDIcon = Sprites/Icons/enemy_evil_nabonaga
+waveToUnlock = 25
+resourcesCost = 75.0
+cooldownTimer = 1.0
+attackFrequency = 2.8
+usesBladeWeapon = true
+unique = false
+
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 0,20
+	health = 3200
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 110
+	meleeDamage = 65
+	knockbackPower = 45
+	knockbackResistance = 80
+
+[002]
+	cost = 0,20
+	health = 4350
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 110
+	meleeDamage = 85
+	knockbackPower = 45
+	knockbackResistance = 80
+
+[003]
+	cost = 0,22
+	health = 5800
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 110
+	meleeDamage = 110
+	knockbackPower = 45
+	knockbackResistance = 80
+
+[004]
+	cost = 0,24
+	health = 7600
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 110
+	meleeDamage = 138
+	knockbackPower = 48
+	knockbackResistance = 82
+
+[005]
+	cost = 0,26
+	health = 9900
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 110
+	meleeDamage = 170
+	knockbackPower = 48
+	knockbackResistance = 82
+
+[006]
+	cost = 0,28
+	health = 12800
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 110
+	meleeDamage = 205
+	knockbackPower = 50
+	knockbackResistance = 82
+
+[007]
+	cost = 0,30
+	health = 16200
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 110
+	meleeDamage = 240
+	knockbackPower = 50
+	knockbackResistance = 85
+
+[008]
+	cost = 0,34
+	health = 20100
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 110
+	meleeDamage = 280
+	knockbackPower = 52
+	knockbackResistance = 85
+
+[009]
+	cost = 0,36
+	health = 24500
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 110
+	meleeDamage = 320
+	knockbackPower = 52
+	knockbackResistance = 85
+
+[010]
+	cost = 0,40
+	health = 29500
+	speedMin = 100
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 360
+	knockbackPower = 55
+	knockbackResistance = 88

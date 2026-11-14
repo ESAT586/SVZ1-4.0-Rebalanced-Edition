@@ -1,0 +1,29 @@
+scene = InGame_hell
+
+[rewards]
+	coins, 2800
+	gems, 110
+
+[Commands]
+	Evil_Taiko_Drummer
+	Evil_Panzer
+	Evil_Panzer
+	H_Zombie_Warhammer
+	H_Zombie_Warhammer
+	0.5,0.5
+	Tengu_air
+	Tengu_air
+	Tengu_air
+	Chochinobake_alt
+	1.0,1.0
+	(
+	Evil_Panzer
+	H_Zombie_Warhammer
+	Evil_Taiko_Drummer
+	Tengu_air
+	)
+	1.0,1.0
+	Wayundo_Metal
+	Nobusuma_alt
+	Nobusuma_alt
+	Komusou_2

@@ -22,7 +22,7 @@ Shader "Mobile/OpaqueEthereal"
             {
                 float4 texcoord0 : TEXCOORD0;
                 float3 normal : NORMAL;
-                float3 vertex : POSITION;
+                float4 vertex : POSITION;
             };
             struct v2f
             {

@@ -1,0 +1,65 @@
+scene = InGame_hell_brown
+bonusHint = Kahraman savas disi; Ghost Ronin ve Oni ile orta hattin kontrolunu al.
+
+[rewards]
+	coins, 5500
+	gems, 3
+	z+wanyudometal, 1
+
+selectedCharm = z+wanyudometal
+initialleadershiplevel = 3
+baselevel = 2
+belllevel = 3
+archerlevel = 3
+
+[abilitylevels]
+	GraveHands = 5
+	RaiseDead = 4
+
+[selectedabilities]
+	000 = GraveHands
+	001 = RaiseDead
+
+[helperlevels]
+	Tengu = 5
+	Wanyudo = 5
+	GhostRonin = 4
+	ZombieHorseman = 4
+	Oni = 4
+
+[selectedhelpers]
+	000 = Tengu
+	001 = Wanyudo
+	002 = GhostRonin
+	003 = ZombieHorseman
+	004 = Oni
+
+[Commands]
+	SamuraiShield_Ice
+	Frostie
+	SamuraiRifleman
+	Priest
+	1,1
+	Swordsmith
+	SamuraiShield_Ice
+	SamuraiArcher
+	SamuraiRifleman
+	1,1
+	Takeda
+	SamuraiShield_Ice
+	Frostie
+	Priest
+	2,2
+	Swordsmith
+	SamuraiRifleman
+	Takeda
+	Nobunaga
+	1,1
+	SamuraiShield_Ice
+	Frostie
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	1,1
+	Takeda
+	Nobunaga

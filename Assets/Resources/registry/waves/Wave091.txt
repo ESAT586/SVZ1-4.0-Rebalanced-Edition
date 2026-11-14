@@ -1,0 +1,30 @@
+scene = InGame_underworld
+
+[rewards]
+	coins, 2500
+	gems, 100
+
+[Commands]
+	L_Zombie_Melee
+	L_Zombie_Melee
+	L_Zombie_Melee
+	L_Zombie_Sword
+	L_Zombie_Sword
+	L_Zombie_Sword
+	0.5,0.5
+	H_Zombie_Warhammer
+	H_Zombie_Warhammer
+	Oni
+	Oni
+	1.0,1.0
+	(
+	L_Zombie_Sword
+	H_Zombie_Warhammer
+	Oni
+	Wayundo_Metal
+	)
+	1.0,1.0
+	Nobusuma
+	Nobusuma
+	Chochinobake_alt
+	Tengu_air

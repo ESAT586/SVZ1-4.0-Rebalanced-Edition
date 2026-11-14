@@ -65,15 +65,33 @@ public class StoreItemDisplayDialog : IDialog
 		RenderItem();
 		mLayout.AnimateIn(0.3f);
 		SUIButton sUIButton = (SUIButton)mLayout["purchaseBtn"];
-		sUIButton.onButtonPressed = OnPurchase;
 		((SUIButton)mLayout["back"]).onButtonPressed = Close;
-		if (itemDesc.locked)
+
+		if (sUIButton != null)
 		{
-			sUIButton.visible = false;
-		}
-		else
-		{
-			SetupPurchaseButton(sUIButton, mItemDesc.cost);
+			sUIButton.onButtonPressed = OnPurchase;
+			if (itemDesc.locked)
+			{
+				sUIButton.visible = false;
+			}
+			else if (itemDesc.isMaxLevel)
+			{
+				sUIButton.visible = false;
+				CostDisplay maxDisplay = new CostDisplay("default32");
+				maxDisplay.SetCost(new Cost(0, 0, 0f), "MAX");
+				maxDisplay.position = sUIButton.position - new Vector2(maxDisplay.width / 2f, maxDisplay.height / 2f);
+				maxDisplay.priority = sUIButton.priority + 0.1f;
+				maxDisplay.alpha = 0f;
+				
+				SUILayout.ObjectData objectData = new SUILayout.ObjectData();
+				objectData.obj = maxDisplay;
+				objectData.animAlpha = new SUILayoutAnim.AnimFloat(1f, 0f, new SUILayout.NormalRange(0f, 1f), Ease.Linear);
+				mLayout.Add("max_text", objectData);
+			}
+			else
+			{
+				SetupPurchaseButton(sUIButton, mItemDesc.cost);
+			}
 		}
 	}
 
@@ -160,12 +178,7 @@ public class StoreItemDisplayDialog : IDialog
 	{
 		if (!mItemDesc.cost.canAfford)
 		{
-            WeakGlobalInstance<DialogHandler>.instance.PushCreator(() => new StoreNotEnoughDialog(mItemDesc)
-            {
-                priority = 9999
-            });
-			//ShowPurchaseCurrency(mItemDesc.cost);
-			Close();
+			ShowPurchaseCurrency(mItemDesc.cost);
 			return;
 		}
 		mItemDesc.cost.Spend(mItemDesc.id);
@@ -179,13 +192,18 @@ public class StoreItemDisplayDialog : IDialog
 
 	private void ShowPurchaseCurrency(Cost trigger)
 	{
+		if (WeakGlobalInstance<DialogHandler>.instance == null)
+		{
+			Close();
+			return;
+		}
 		float dialogPriority = priority;
 		WeakGlobalInstance<DialogHandler>.instance.PushCreator(() => new StoreItemDisplayDialog(mItemDesc)
 		{
 			priority = dialogPriority,
 			onItemPurchased = onItemPurchased
 		});
-		WeakGlobalInstance<DialogHandler>.instance.PushCreator(() => new PurchaseCurrencyDialog(trigger)
+		WeakGlobalInstance<DialogHandler>.instance.PushCreator(() => new StoreNotEnoughDialog(mItemDesc)
 		{
 			priority = dialogPriority
 		});

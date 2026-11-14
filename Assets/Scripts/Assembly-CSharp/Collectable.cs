@@ -98,8 +98,8 @@ public class Collectable
 		mType = type;
 		mValue = template.amount;
 		mTimeLeftAlive = template.lifetime;
-		mShouldStartFadeOut = false;
-		wasAtLeftOfHero = targetPos.z < WeakGlobalSceneBehavior<InGameImpl>.instance.hero.position.z;
+		Hero currentHero = (WeakGlobalSceneBehavior<InGameImpl>.instance != null) ? WeakGlobalSceneBehavior<InGameImpl>.instance.hero : null;
+		wasAtLeftOfHero = (currentHero != null && currentHero.controller != null) ? (targetPos.z < currentHero.position.z) : false;
 		isReadyToDie = false;
 	}
 
@@ -204,7 +204,10 @@ public class Collectable
 		{
 			return;
 		}
-		if (mShouldStartFadeOut || (WeakGlobalSceneBehavior<InGameImpl>.instance.hero != null && WeakGlobalSceneBehavior<InGameImpl>.instance.hero.health > 0f && WeakGlobalSceneBehavior<InGameImpl>.instance.hero.controller.currentAnimation != "revive"))
+		bool isArmyOnly = (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive && SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly);
+		Hero currentHero = (WeakGlobalSceneBehavior<InGameImpl>.instance != null) ? WeakGlobalSceneBehavior<InGameImpl>.instance.hero : null;
+
+		if (mShouldStartFadeOut || isArmyOnly || (currentHero != null && currentHero.health > 0f && currentHero.controller != null && currentHero.controller.currentAnimation != "revive"))
 		{
 			mTimeLeftAlive -= Time.deltaTime;
 			if (mTimeLeftAlive <= 1f)
@@ -233,7 +236,13 @@ public class Collectable
 			}
 			return;
 		}
-		float z = WeakGlobalSceneBehavior<InGameImpl>.instance.hero.position.z;
+		Hero currentHero = (WeakGlobalSceneBehavior<InGameImpl>.instance != null) ? WeakGlobalSceneBehavior<InGameImpl>.instance.hero : null;
+		bool isArmyOnly = (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive && SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly);
+		if (currentHero == null || isArmyOnly)
+		{
+			return;
+		}
+		float z = currentHero.position.z;
 		Vector3 vector2 = position;
 		float num2 = Mathf.Abs(z - vector2.z);
 		if (!(num2 > magnetMaxDist))

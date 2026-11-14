@@ -1,0 +1,182 @@
+
+/-------------------------------------- ZOMBIE CURRENCY CARDS -------------
+
+[coins]
+	title = @boosterpack_card_coins_title
+	desc = @boosterpack_card_coins_desc
+	[payload]
+		coins = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/BoosterPacks/card_coins
+
+[gems]
+	title = @boosterpack_card_gems_title
+	desc = @boosterpack_card_gems_desc
+	[payload]
+		gems = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/BoosterPacks/card_gems
+
+[balls]
+	title = @boosterpack_card_balls_title
+	desc = @boosterpack_card_balls_desc
+	[payload]
+		balls = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/BoosterPacks/card_pachinko
+
+
+/-------------------------------------- ZOMBIE CONSUMABLE CARDS -----------
+
+[revivePotionZ]
+	title = @boosterpack_card_revive_zm_title
+	desc = @boosterpack_card_revive_zm_desc
+	[payload]
+		revivePotionZ = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/potion_zombie_revive
+
+[healthSmallZ]
+	title = @boosterpack_card_health_zm_title
+	desc = @boosterpack_card_health_zm_desc
+	[payload]
+		healthSmallZ = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/potion_enemy_health
+
+[leadershipSmallZ]
+	title = @boosterpack_card_leadership_zm_title
+	desc = @boosterpack_card_leadership_zm_desc
+	[payload]
+		leadershipSmallZ = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/potion_enemy_leadership
+
+
+/-------------------------------------- ZOMBIE CHARM CARDS ---------------
+
+[z+oni]
+	title = @boosterpack_card_oni_charm_title
+	desc = @boosterpack_card_oni_charm_desc
+	[payload]
+		z+oni = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/charm_oni
+
+[z+wanyudofire]
+	title = @boosterpack_card_wanyudofire_charm_title
+	desc = @boosterpack_card_wanyudofire_charm_desc
+	[payload]
+		z+wanyudofire = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/enemy_wanyudofire
+
+[z+wanyudometal]
+	title = @boosterpack_card_wanyudometal_charm_title
+	desc = @boosterpack_card_wanyudometal_charm_desc
+	[payload]
+		z+wanyudometal = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/enemy_wanyudometal
+
+[z+jurogumo]
+	title = @boosterpack_card_jurogumo_charm_title
+	desc = @boosterpack_card_jurogumo_charm_desc
+	[payload]
+		z+jurogumo = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/boosterpacks/booster_card_jurogumo
+
+
+/-------------------------------------- ZOMBIE HELPER CARDS ---------------
+
+[TenguAir]
+	title = @boosterpack_card_tenguair_title
+	desc = @boosterpack_card_tenguair_desc
+	[payload]
+		TenguAir = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/enemy_tenguair
+
+[ZombieRifleman]
+	title = @boosterpack_card_zombierifleman_title
+	desc = @boosterpack_card_zombierifleman_desc
+	[payload]
+		ZombieRifleman = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/enemy_zombierifleman
+
+[EvilIceArcher]
+	title = @boosterpack_card_evilicearcher_title
+	desc = @boosterpack_card_evilicearcher_desc
+	[payload]
+		EvilIceArcher = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/IceArcherZomibe
+
+[Necromancer]
+	title = @boosterpack_card_necromancer_title
+	desc = @boosterpack_card_necromancer_desc
+	[payload]
+		Necromancer = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/enemy_necromancer
+
+[Jurogumo]
+	title = @boosterpack_card_jurogumo_title
+	desc = @boosterpack_card_jurogumo_desc
+	[payload]
+		Jurogumo = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/boosterpacks/booster_card_jurogumo
+
+[WanyudoMetal]
+	title = @boosterpack_card_wanyudometal_title
+	desc = @boosterpack_card_wanyudometal_desc
+	[payload]
+		WanyudoMetal = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/enemy_wanyudometal
+
+[EvilNobunaga]
+	title = @boosterpack_card_evilnobunaga_title
+	desc = @boosterpack_card_evilnobunaga_desc
+	[payload]
+		EvilNobunaga = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/boosterpacks/booster_pack_evil_nobunaga
+
+[EvilTakeda]
+	title = @boosterpack_card_eviltakeda_title
+	desc = @boosterpack_card_eviltakeda_desc
+	[payload]
+		EvilTakeda = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/Icons/enemy_evil_takeda_shingen
+
+[Shogun]
+	title = @boosterpack_card_shogun_title
+	desc = @boosterpack_card_shogun_desc
+	[payload]
+		Shogun = {0}
+	[render]
+		label = {0}
+		layer1 = Sprites/BoosterPacks/booster_card_shogun

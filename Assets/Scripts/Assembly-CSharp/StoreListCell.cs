@@ -69,14 +69,14 @@ public class StoreListCell : SUIScrollList.Cell
 	{
 		set
 		{
-			mDescription.visible = value;
-			mIcon.visible = value;
-			mCost.visible = value;
-			mNoveltyWidget.visible = value && mIsNovelty;
-			mOnSalePulse.visible = value && mHasOnSalePulse;
-			mRecommendedGlow.visible = value && mIsRecommended;
-			mRecommendedSprite.visible = value && mIsRecommended;
-			m_gwCost.visible = value && m_isGWItem;
+			if (mDescription != null) mDescription.visible = value;
+			if (mIcon != null) mIcon.visible = value;
+			if (mCost != null) mCost.visible = value;
+			if (mNoveltyWidget != null) mNoveltyWidget.visible = value && mIsNovelty;
+			if (mOnSalePulse != null) mOnSalePulse.visible = value && mHasOnSalePulse;
+			if (mRecommendedGlow != null) mRecommendedGlow.visible = value && mIsRecommended;
+			if (mRecommendedSprite != null) mRecommendedSprite.visible = value && mIsRecommended;
+			if (m_gwCost != null) m_gwCost.visible = value && m_isGWItem;
 		}
 	}
 
@@ -147,19 +147,19 @@ public class StoreListCell : SUIScrollList.Cell
 
 	public override void Update()
 	{
-		if (mNoveltyWidget.visible)
+		if (mNoveltyWidget != null && mNoveltyWidget.visible)
 		{
 			mNoveltyWidget.Update();
 		}
-		if (mOnSalePulse.visible)
+		if (mOnSalePulse != null && mOnSalePulse.visible)
 		{
 			mOnSalePulse.Update();
 		}
-		if (mRecommendedGlow.visible)
+		if (mRecommendedGlow != null && mRecommendedGlow.visible)
 		{
 			mRecommendedGlow.Update();
 		}
-		if (mRecommendedSprite.visible)
+		if (mRecommendedSprite != null && mRecommendedSprite.visible)
 		{
 			mRecommendedSprite.Update();
 		}
@@ -186,7 +186,14 @@ public class StoreListCell : SUIScrollList.Cell
 		}
 		else
 		{
-			mCost.SetCost(itemData.cost);
+			if (itemData.isMaxLevel)
+			{
+				mCost.SetCost(new Cost(0, 0, 0f), "MAX");
+			}
+			else
+			{
+				mCost.SetCost(itemData.cost);
+			}
 			mDescription.text = itemData.title;
 			mIcon.texture = itemData.icon;
 			if (itemData.id == "vip")
@@ -242,7 +249,7 @@ public class StoreListCell : SUIScrollList.Cell
 		SDFTreeNode sDFTreeNode = waveData.to("RecommendUpgrades");
 		if (sDFTreeNode != null && sDFTreeNode.hasAttribute(itemData.id))
 		{
-			int num = int.Parse(sDFTreeNode[itemData.id]);
+			int num = int.Parse(sDFTreeNode[itemData.id], System.Globalization.CultureInfo.InvariantCulture);
 			switch (itemData.id)
 			{
 			case "HeroSamurai":
@@ -304,7 +311,7 @@ public class StoreListCell : SUIScrollList.Cell
 		SDFTreeNode sDFTreeNode2 = waveData.to("RecommendedAllies");
 		if (sDFTreeNode2 != null && sDFTreeNode2.hasAttribute(itemData.id))
 		{
-			int num2 = int.Parse(sDFTreeNode2[itemData.id]);
+			int num2 = int.Parse(sDFTreeNode2[itemData.id], System.Globalization.CultureInfo.InvariantCulture);
 			switch (itemData.id)
 			{
 			case "Farmer":

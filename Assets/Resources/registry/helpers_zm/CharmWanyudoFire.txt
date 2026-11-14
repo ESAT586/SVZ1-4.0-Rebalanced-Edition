@@ -1,0 +1,31 @@
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_charm_wanyudofire_name
+desc = @helper_charm_wanyudofire_desc
+prefab = Characters/PFWayundoFireCharm
+HUDIcon = Sprites/Icons/enemy_wanyudofire
+weaponMeleePrefab = 
+hideInStore = True
+waveToUnlock = 999
+resourcesCost = 0.0
+cooldownTimer = 3.0
+attackFrequency = 1.0
+usesBladeWeapon = true
+auraFX = FX/WarriorRed
+auraJoint = body_effect
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	health = 52000
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 125
+	meleeDamage = 1450
+	knockbackPower = 75
+	knockbackResistance = 100

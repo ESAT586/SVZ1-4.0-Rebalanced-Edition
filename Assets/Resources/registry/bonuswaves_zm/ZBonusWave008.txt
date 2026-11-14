@@ -1,0 +1,73 @@
+scene = InGame_hell_purple
+bonusHint = Kahraman savas disi; buyuleri zamaninda kullan, elite okculari once dusur.
+
+[rewards]
+	coins, 15000
+	gems, 7
+	z+wanyudometal, 1
+
+selectedCharm = z+wanyudometal
+initialleadershiplevel = 5
+baselevel = 3
+belllevel = 5
+archerlevel = 5
+
+[abilitylevels]
+	GraveHands = 8
+	RaiseDead = 6
+
+[selectedabilities]
+	000 = GraveHands
+	001 = RaiseDead
+
+[helperlevels]
+	TenguAir = 8
+	ZombieRifleman = 8
+	EvilIceArcher = 8
+	EvilNobunaga = 6
+	EvilTakeda = 6
+
+[selectedhelpers]
+	000 = TenguAir
+	001 = ZombieRifleman
+	002 = EvilIceArcher
+	003 = EvilNobunaga
+	004 = EvilTakeda
+
+[Commands]
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite
+	SamuraiShield_Ice
+	Frostie
+	1,1
+	Priest
+	Swordsmith
+	Takeda
+	Nobunaga
+	Cart
+	NinjaGirl
+	SpearHorseman
+	1,1
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite
+	Takeda
+	Nobunaga
+	Cart
+	1,1
+	SamuraiShield_Ice
+	Frostie
+	Priest
+	Swordsmith
+	ArcherElite
+	RiflemanElite
+	PanzerElite
+	SpearElite
+	1,1
+	Takeda
+	Nobunaga
+	Cart
+	NinjaGirl

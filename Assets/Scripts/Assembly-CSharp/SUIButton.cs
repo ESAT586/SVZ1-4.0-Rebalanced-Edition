@@ -13,6 +13,8 @@ public class SUIButton : SUIWidget
 
 	private const float kLabelPriorityOffset = 0.01f;
 
+	private const float kAndroidMinTouchSize = 64f;
+
 	public OnSUIGenericCallback onButtonPressed;
 
 	private bool mInteractionStarted;
@@ -42,6 +44,21 @@ public class SUIButton : SUIWidget
 	private string mReleasedSound = "buttonReleased";
 
 	private float mAlpha = 1f;
+
+	private float mHitAreaExpansion;
+
+	public float hitAreaExpansion
+	{
+		get
+		{
+			return mHitAreaExpansion;
+		}
+		set
+		{
+			mHitAreaExpansion = value;
+			UpdateLayout();
+		}
+	}
 
 	public string text
 	{
@@ -478,6 +495,23 @@ public class SUIButton : SUIWidget
 		{
 			mTouchArea = new Rect(mTouchArea.xMin - mOffsetWhenPressed.x, mTouchArea.yMin - mOffsetWhenPressed.y, mTouchArea.width, mTouchArea.height);
 		}
+		if (mHitAreaExpansion != 0f)
+		{
+			mTouchArea = new Rect(mTouchArea.x - mHitAreaExpansion, mTouchArea.y - mHitAreaExpansion, mTouchArea.width + mHitAreaExpansion * 2f, mTouchArea.height + mHitAreaExpansion * 2f);
+		}
+		ApplyAndroidMinimumTouchArea();
+	}
+
+	private void ApplyAndroidMinimumTouchArea()
+	{
+		if (Application.platform != RuntimePlatform.Android || mTouchArea.width >= kAndroidMinTouchSize && mTouchArea.height >= kAndroidMinTouchSize)
+		{
+			return;
+		}
+		Vector2 center = mTouchArea.center;
+		float width = Mathf.Max(mTouchArea.width, kAndroidMinTouchSize);
+		float height = Mathf.Max(mTouchArea.height, kAndroidMinTouchSize);
+		mTouchArea = new Rect(center.x - width / 2f, center.y - height / 2f, width, height);
 	}
 
 	private void ShowPressed(bool pressed)

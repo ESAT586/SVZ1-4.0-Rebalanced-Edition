@@ -1,0 +1,30 @@
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = CharmOni
+desc = CharmOni Biggest&Strongest Oni
+prefab = Characters/PFOniCharm
+HUDIcon = Sprites/icons/enemy_oni
+weaponMeleePrefab = Props/PFClub
+hideInStore = True
+waveToUnlock = 999
+resourcesCost = 0.0
+cooldownTimer = 3.0
+attackFrequency = 2.5
+auraFX = FX/WarriorRed
+auraJoint = impact_target
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	health = 34567
+	speedMin = 55
+	speedMax = 55
+	meleeRange = 175
+	meleeDamage = 963
+	knockbackPower = 85
+	knockbackResistance = 100

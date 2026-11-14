@@ -1,0 +1,71 @@
+/ Green hell elite preparation
+
+scene = InGame_hell_green
+villageArchers = 7
+bell = 4
+
+[Commands]
+	2,2
+	SamuraiShield_Ice
+	Frostie
+	Frostie
+	SamuraiRifleman
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	SamuraiShield_Green
+	Takeda
+	Nobunaga
+	NinjaGirl
+	SpearHorseman
+	Samurai
+	Frostie
+	Cart
+	1,1
+	SamuraiShield_Green
+	Frostie
+	SamuraiRifleman
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	SamuraiShield_Ice
+	Takeda
+	Takeda
+	NinjaGirl
+	NinjaGirl
+	SpearHorseman
+	Cart
+	Nobunaga
+	Samurai
+	1,1
+	Cart
+	SamuraiShield_Ice
+	Frostie
+	Frostie
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	Takeda
+	Nobunaga
+	Nobunaga
+	SamuraiShield_Green
+	Frostie
+	SamuraiRifleman
+	NinjaGirl
+	SpearHorseman
+	1,1
+	SamuraiShield_Ice
+	Frostie
+	Frostie
+	SamuraiRifleman
+	Priest
+	Swordsmith
+	Takeda
+	Nobunaga
+	SamuraiShield_Green
+	Frostie
+	NinjaGirl
+	NinjaGirl
+	SpearHorseman
+	SamuraiHeavy
+	Takeda

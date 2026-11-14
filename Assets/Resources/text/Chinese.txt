@@ -758,6 +758,11 @@ gemsNum = {0} 钻石
 ballsNum = {0} 弹珠
 
 
+chapter_title_zombiehell4 = Chaos Rising
+chapter_title_zombiehell5 = Final Chaos
+chapter_title_zombiehell6 = Doom Gate
+chapter_title_zombiehell7 = Final Doom
+
 /------------------------------------------------------------------
 / Sub Files
 /------------------------------------------------------------------
@@ -771,5 +776,3 @@ legal_file = DefaultLegal
 
 add_wave = 第{0}波
 add_bonus_wave = 奖励波
-
-

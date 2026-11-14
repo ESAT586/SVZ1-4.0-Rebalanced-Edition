@@ -37,6 +37,8 @@ public class AbilitiesDatabase : Singleton<AbilitiesDatabase>
 
 	private List<AbilityData> mData;
 
+	private List<AbilityData> mAllModesData;
+
 	private string[] mAllIDs;
 
 	public string[] allIDs
@@ -74,6 +76,22 @@ public class AbilitiesDatabase : Singleton<AbilitiesDatabase>
 			mData.Add(new AbilityData("RaiseDead", OnExecute_DivineIntervention, StoreAvailability_Abilities.GetAbilityUpgrade_DivineIntervention));
 			mData.Add(new AbilityData("DragonAttack", OnExecute_GiantWave, StoreAvailability_Abilities.GetAbilityUpgrade_DamageOnly));
 		}
+
+		mAllModesData = new List<AbilityData>();
+		mAllModesData.Add(new AbilityData("KatanaSlash", OnExecute_KatanaSlash, StoreAvailability_Abilities.GetAbilityUpgrade_DamageOnly));
+		mAllModesData.Add(new AbilityData("SummonLightning", OnExecute_SummonLightning, StoreAvailability_Abilities.GetAbilityUpgrade_SummonLightning));
+		mAllModesData.Add(new AbilityData("GroundShock", OnExecute_GroundShock, StoreAvailability_Abilities.GetAbilityUpgrade_DamageOnly));
+		mAllModesData.Add(new AbilityData("Lethargy", OnExecute_Lethargy, StoreAvailability_Abilities.GetAbilityUpgrade_Lethargy));
+		mAllModesData.Add(new AbilityData("DivineIntervention", OnExecute_DivineIntervention, StoreAvailability_Abilities.GetAbilityUpgrade_DivineIntervention));
+		mAllModesData.Add(new AbilityData("SummonTornadoes", OnExecute_SummonTornadoes, StoreAvailability_Abilities.GetAbilityUpgrade_DamageOnly));
+		mAllModesData.Add(new AbilityData("GiantWave", OnExecute_GiantWave, StoreAvailability_Abilities.GetAbilityUpgrade_DamageOnly));
+		mAllModesData.Add(new AbilityData("LifeSteal", OnExecute_KatanaSlash, StoreAvailability_Abilities.GetAbilityUpgrade_DamageOnly));
+		mAllModesData.Add(new AbilityData("NightOfTheDead", OnExecute_NightOfTheDead, StoreAvailability_Abilities.GetAbilityUpgrade_NightOfTheDead));
+		mAllModesData.Add(new AbilityData("GraveHands", OnExecute_GraveHands, StoreAvailability_Abilities.GetAbilityUpgrade_SummonLightning));
+		mAllModesData.Add(new AbilityData("LethargyZM", OnExecute_Lethargy, StoreAvailability_Abilities.GetAbilityUpgrade_Lethargy));
+		mAllModesData.Add(new AbilityData("RaiseDead", OnExecute_DivineIntervention, StoreAvailability_Abilities.GetAbilityUpgrade_DivineIntervention));
+		mAllModesData.Add(new AbilityData("DragonAttack", OnExecute_GiantWave, StoreAvailability_Abilities.GetAbilityUpgrade_DamageOnly));
+
 		CacheSimpleIDList();
 	}
 
@@ -132,6 +150,16 @@ public class AbilitiesDatabase : Singleton<AbilitiesDatabase>
 				return true;
 			}
 		}
+		if (mAllModesData != null)
+		{
+			foreach (AbilityData item in mAllModesData)
+			{
+				if (string.Compare(item.id, id, true) == 0)
+				{
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
@@ -144,7 +172,7 @@ public class AbilitiesDatabase : Singleton<AbilitiesDatabase>
 			return string.Empty;
 		}
 		abilityData.EnsureDataCached();
-		int level = Mathf.Clamp(Singleton<Profile>.instance.GetAbilityLevel(abilityID), 1, abilityData.registryData.childCount);
+		int level = Mathf.Clamp(Singleton<Profile>.instance.GetAbilityLevel(abilityID), 1, Mathf.Max(1, abilityData.registryData.childCount));
 		return GetAttribute(abilityID, attributeName, level);
 	}
 
@@ -157,7 +185,7 @@ public class AbilitiesDatabase : Singleton<AbilitiesDatabase>
 			return string.Empty;
 		}
 		abilityData.EnsureDataCached();
-		int level = Mathf.Clamp(Singleton<Profile>.instance.GetAbilityLevel(abilityID) + 1, 1, abilityData.registryData.childCount);
+		int level = Mathf.Clamp(Singleton<Profile>.instance.GetAbilityLevel(abilityID) + 1, 1, Mathf.Max(1, abilityData.registryData.childCount));
 		return GetAttribute(abilityID, attributeName, level);
 	}
 
@@ -169,7 +197,7 @@ public class AbilitiesDatabase : Singleton<AbilitiesDatabase>
 			return default(T);
 		}
 		abilityData.EnsureDataCached();
-		int abilityLevel = Singleton<Profile>.instance.GetAbilityLevel(abilityID);
+		int abilityLevel = Mathf.Max(1, Singleton<Profile>.instance.GetAbilityLevel(abilityID));
 		if (infiniteUpgradableAttributeName == string.Empty || !abilityData.registryData.hasAttribute(infiniteUpgradableAttributeName))
 		{
 			return InfiniteUpgrades.SnapToHighest<T>(abilityData.registryData, attributeName, abilityLevel);
@@ -179,6 +207,18 @@ public class AbilitiesDatabase : Singleton<AbilitiesDatabase>
 
 	public void Execute(string abilityID)
 	{
+		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
+		{
+			if (SVZMultiplayerManager.Instance.IsOnlineClient)
+			{
+				SVZMultiplayerManager.Instance.TriggerPlayer2SpellById(abilityID);
+			}
+			else
+			{
+				SVZMultiplayerManager.Instance.TriggerPlayer1SpellById(abilityID);
+			}
+			return;
+		}
 		AbilityData abilityData = Seek(abilityID);
 		if (abilityData != null)
 		{
@@ -232,6 +272,16 @@ public class AbilitiesDatabase : Singleton<AbilitiesDatabase>
 				return mDatum;
 			}
 		}
+		if (mAllModesData != null)
+		{
+			foreach (AbilityData item in mAllModesData)
+			{
+				if (item.id == abilityID)
+				{
+					return item;
+				}
+			}
+		}
 		return null;
 	}
 
@@ -248,10 +298,18 @@ public class AbilitiesDatabase : Singleton<AbilitiesDatabase>
 		{
 			return Singleton<Localizer>.instance.Parse(abilityData.registryData[attributeName]);
 		}
+		if (attributeName == "coolDown" && abilityData.registryData.hasAttribute("cooldown"))
+		{
+			return Singleton<Localizer>.instance.Parse(abilityData.registryData["cooldown"]);
+		}
 		SDFTreeNode sDFTreeNode = abilityData.registryData.to(level);
 		if (sDFTreeNode != null && sDFTreeNode.hasAttribute(attributeName))
 		{
 			return Singleton<Localizer>.instance.Parse(sDFTreeNode[attributeName]);
+		}
+		if (sDFTreeNode != null && attributeName == "coolDown" && sDFTreeNode.hasAttribute("cooldown"))
+		{
+			return Singleton<Localizer>.instance.Parse(sDFTreeNode["cooldown"]);
 		}
 		Debug.Log("WARNING: Could not find ability attribute: " + attributeName);
 		return string.Empty;

@@ -1,0 +1,755 @@
+﻿[settingsBg]
+	type = sprite
+	file = Sprites/Menus/pop_up_screen
+	priority = 999
+	position = C, C
+	keepAspectRatio = no
+	scale = 2.8, 4.2
+
+[settingsBackBtn]
+	type = button
+	normalFrame = Sprites/Menus/close_button
+	keepAspectRatio = true
+	position = 100, 40
+	priority = 1001
+	offsetWhenPressed = 4, 4
+
+[settingsTitle]
+	type = label
+	font = default32
+	shadowOffset = 2,2
+	shadowColor = black
+	position = C, 60
+	priority = 1001
+	anchor = MiddleCenter
+	alignment = center
+	text = PC SETTINGS
+
+[tabGraphicsBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.03, 0.03
+	font = default18
+	position = 100, 130
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = GRAPHICS
+
+[tabDisplayBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.03, 0.03
+	font = default18
+	position = 310, 130
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = DISPLAY
+
+[tabAudioBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.03, 0.03
+	font = default18
+	position = 510, 130
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = AUDIO
+
+[tabControlsBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.03, 0.03
+	font = default18
+	position = 710, 130
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = CONTROLS
+
+[tabProfileBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.03, 0.03
+	font = default18
+	position = 920, 130
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = PROFILE
+
+/ ─────────────────────────────────────
+/ GRAPHICS TAB
+/ ─────────────────────────────────────
+[qualityLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 300, 230
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = PRESET:
+
+[qualityBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default32
+	position = 520, 230
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = High
+
+[shadowLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 300, 320
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = SHADOW QUALITY:
+
+[shadowBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default32
+	position = 520, 320
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = High
+
+[aaLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 300, 410
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = ANTI-ALIASING:
+
+[aaBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default32
+	position = 520, 410
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = SMAA
+
+[fpsLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 300, 500
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = FPS LIMIT:
+
+[fpsBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 520, 500
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = 60
+
+[vsyncLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 300, 590
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = VSYNC:
+
+[vsyncBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default32
+	position = 520, 590
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = OFF
+
+/ ─────────────────────────────────────
+/ DISPLAY TAB
+/ ─────────────────────────────────────
+[showFPSLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 740, 320
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = SHOW FPS:
+
+[showFPSBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default32
+	position = 900, 320
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = OFF
+
+[fpsPosLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 740, 430
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = FPS POSITION:
+
+[fpsPosBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 900, 430
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = TOP RIGHT
+
+[resLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 300, 280
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = RESOLUTION:
+
+[resPrevBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button_small
+	keepAspectRatio = true
+	scale = 0.2, 0.2
+	font = default18
+	position = 420, 280
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = <
+
+[resValueLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 580, 280
+	priority = 1001
+	anchor = MiddleCenter
+	alignment = center
+	text = 1920x1080
+
+[resNextBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button_small
+	keepAspectRatio = true
+	scale = 0.2, 0.2
+	font = default18
+	position = 740, 280
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = >
+
+[screenLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 360, 420
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = FULLSCREEN:
+
+[screenBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default32
+	position = 600, 420
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = ON
+
+[sharpLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 360, 560
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = SHARP/NATIVE:
+
+[sharpBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 600, 560
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = RESTORE
+
+/ ─────────────────────────────────────
+/ AUDIO TAB
+/ ─────────────────────────────────────
+[volLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 300, 280
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = VOLUME:
+
+[volDownBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button_small
+	keepAspectRatio = true
+	scale = 0.2, 0.2
+	font = default32
+	position = 420, 280
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = -
+
+[volValueLbl]
+	type = label
+	font = default32
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 580, 280
+	priority = 1001
+	anchor = MiddleCenter
+	alignment = center
+	text = %100
+
+[volUpBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button_small
+	keepAspectRatio = true
+	scale = 0.2, 0.2
+	font = default32
+	position = 740, 280
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = +
+
+[sndTestLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 360, 420
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = TEST AUDIO:
+
+[sndTestBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 600, 420
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = PLAY HORN
+
+/ ─────────────────────────────────────
+/ CONTROLS TAB (Interactive Keybinding)
+/ ─────────────────────────────────────
+[kbLeftLbl]
+	type = label
+	font = default18
+	position = 220, 240
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = MOVE LEFT:
+
+[kbLeftBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 360, 240
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = A
+
+[kbRightLbl]
+	type = label
+	font = default18
+	position = 220, 330
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = MOVE RIGHT:
+
+[kbRightBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 360, 330
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = D
+
+[kbPotionLbl]
+	type = label
+	font = default18
+	position = 660, 240
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = USE POTION:
+
+[kbPotionBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 800, 240
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = F
+
+[kbAbilityLbl]
+	type = label
+	font = default18
+	position = 660, 310
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = ABILITY 1:
+
+[kbAbilityBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 800, 310
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = Q
+
+[kbAbility2Lbl]
+	type = label
+	font = default18
+	position = 660, 375
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = ABILITY 2:
+
+[kbAbility2Btn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 800, 375
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = E
+
+/ Helpers row 1
+[kbH1Lbl]
+	type = label
+	font = default18
+	position = 120, 440
+	priority = 1001
+	anchor = MiddleRight
+	text = ALLY 1:
+[kbH1Btn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	font = default18
+	keepAspectRatio = true
+	scale = 0.18, 0.18
+	position = 200, 440
+	priority = 1001
+	text = 1
+
+[kbH2Lbl]
+	type = label
+	font = default18
+	position = 400, 440
+	priority = 1001
+	anchor = MiddleRight
+	text = ALLY 2:
+[kbH2Btn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	font = default18
+	keepAspectRatio = true
+	scale = 0.18, 0.18
+	position = 480, 440
+	priority = 1001
+	text = 2
+
+[kbH3Lbl]
+	type = label
+	font = default18
+	position = 680, 440
+	priority = 1001
+	anchor = MiddleRight
+	text = ALLY 3:
+[kbH3Btn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	font = default18
+	keepAspectRatio = true
+	scale = 0.18, 0.18
+	position = 760, 440
+	priority = 1001
+	text = 3
+
+/ Helpers row 2
+[kbH4Lbl]
+	type = label
+	font = default18
+	position = 260, 520
+	priority = 1001
+	anchor = MiddleRight
+	text = ALLY 4:
+[kbH4Btn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	font = default18
+	keepAspectRatio = true
+	scale = 0.18, 0.18
+	position = 340, 520
+	priority = 1001
+	text = 4
+
+[kbH5Lbl]
+	type = label
+	font = default18
+	position = 540, 520
+	priority = 1001
+	anchor = MiddleRight
+	text = ALLY 5:
+[kbH5Btn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	font = default18
+	keepAspectRatio = true
+	scale = 0.18, 0.18
+	position = 620, 520
+	priority = 1001
+	text = 5
+
+[kbResetBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.28, 0.28
+	font = default18
+	position = C, 600
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = RESET DEFAULTS
+
+[kbInfoLbl]
+	type = label
+	font = default18
+	position = C, 640
+	priority = 1001
+	anchor = MiddleCenter
+	alignment = center
+	text = CLICK A BUTTON THEN PRESS ANY KEY TO REBIND
+
+/ ─────────────────────────────────────
+/ PROFILE TAB
+/ ─────────────────────────────────────
+[slotLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 280, 260
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = ACTIVE SLOT:
+
+[slotPrevBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button_small
+	keepAspectRatio = true
+	scale = 0.2, 0.2
+	font = default32
+	position = 400, 260
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = <
+
+[slotValueLbl]
+	type = label
+	font = default32
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 580, 260
+	priority = 1001
+	anchor = MiddleCenter
+	alignment = center
+	text = SLOT 1
+
+[slotNextBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button_small
+	keepAspectRatio = true
+	scale = 0.2, 0.2
+	font = default32
+	position = 760, 260
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = >
+
+[exportBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 340, 380
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = EXPORT SAVE
+
+[importBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 680, 380
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = IMPORT SAVE
+
+/ ─────────────────────────────────────
+/ LANGUAGE SETTINGS
+/ ─────────────────────────────────────
+[langLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 360, 500
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = LANGUAGE:
+
+[langBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default32
+	position = 600, 500
+	textOffset = 0, 5
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = English
+
+[devToolsLbl]
+	type = label
+	font = default18
+	shadowOffset = 2,2
+	shadowColor = black
+	position = 360, 610
+	priority = 1001
+	anchor = MiddleRight
+	alignment = right
+	text = DEVELOPER:
+
+[devToolsBtn]
+	type = button
+	normalFrame = Sprites/Menus/stats_button
+	keepAspectRatio = true
+	scale = 0.25, 0.25
+	font = default18
+	position = 600, 610
+	textOffset = 0, 0
+	offsetWhenPressed = 4, 4
+	priority = 1001
+	text = DEV TOOLS

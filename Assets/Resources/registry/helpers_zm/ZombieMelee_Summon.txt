@@ -8,7 +8,6 @@ desc = @helper_zombie_desc
 prefab = Characters/PFHSamuraiZombie
 HUDIcon = Sprites/Icons/enemy_zombie_melee
 weaponMeleePrefab = Props/PFHeavysamuraisword
-waveToUnlock = 4
 resourcesCost = 5.0
 cooldownTimer = 2.0
 attackFrequency = 2.0

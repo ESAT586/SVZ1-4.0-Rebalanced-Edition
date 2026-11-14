@@ -32,6 +32,7 @@ public class PachinkoBall : MonoBehaviour
 			if (mAtRestTime >= 2f)
 			{
 				Singleton<Profile>.instance.pachinkoBalls++;
+				Singleton<Profile>.instance.Save();
 				Object.Destroy(base.gameObject);
 			}
 		}

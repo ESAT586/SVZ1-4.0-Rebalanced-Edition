@@ -1,6 +1,4 @@
 
-/ NOTE: *PLACEHOLDER STATS*
-
 /--------------------------------------------------
 / General
 /--------------------------------------------------
@@ -23,99 +21,90 @@ attackFrequency = 3.0
 
 [001]
 	cost = 0,18
-	health = 200
+	health = 240
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 23
+	bowRange = 400
+	bowDamage = 30
 	projectile = HealBolt
 
 [002]
 	cost = 0,18
-	health = 235
+	health = 290
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 25
+	bowRange = 400
+	bowDamage = 40
 	projectile = HealBolt
-	
 
 [003]
 	cost = 0,18
-	health = 280
+	health = 350
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 30
+	bowRange = 400
+	bowDamage = 52
 	projectile = HealBolt
-	
 
 [004]
 	cost = 0,20
-	health = 320
+	health = 430
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 35
+	bowRange = 400
+	bowDamage = 68
 	projectile = HealBolt
-	
 
 [005]
 	cost = 0,20
-	health = 420
+	health = 530
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 42
+	bowRange = 400
+	bowDamage = 88
 	projectile = HealBolt
-	
 
 [006]
 	cost = 0,20
-	health = 475
+	health = 640
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 50
+	bowRange = 400
+	bowDamage = 112
 	projectile = HealBolt
-	
 
 [007]
 	cost = 0,24
-	health = 550
+	health = 760
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 75
+	bowRange = 400
+	bowDamage = 140
 	projectile = HealBolt
-	
 
 [008]
 	cost = 0,24
-	health = 650
+	health = 890
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 85
+	bowRange = 400
+	bowDamage = 170
 	projectile = HealBolt
-	
 
 [009]
 	cost = 0,24
-	health = 720
+	health = 1040
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 125
+	bowRange = 400
+	bowDamage = 205
 	projectile = HealBolt
-	
 
 [010]
 	cost = 0,30
-	health = 795
+	health = 1200
 	speedMin = 100
 	speedMax = 100
-	bowRange = 375
-	bowDamage = 170
+	bowRange = 400
+	bowDamage = 240
 	projectile = HealBolt
-	

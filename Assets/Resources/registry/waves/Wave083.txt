@@ -1,0 +1,29 @@
+scene = InGame_winterday
+
+[rewards]
+	coins, 1900
+	gems, 85
+
+[Commands]
+	Evil_Ice
+	Evil_Ice
+	Evil_Ice
+	Evil_Ice
+	0.5,0.5
+	H_Zombie_Warhammer
+	H_Zombie_Warhammer
+	H_Zombie_Warhammer
+	Jurogumo
+	Jurogumo
+	1.0,1.0
+	(
+	Evil_Ice
+	H_Zombie_Warhammer
+	Jurogumo
+	Chochinobake_alt
+	)
+	1.0,1.0
+	Wayundo_Metal
+	Nobusuma
+	Nobusuma
+	Komusou_2

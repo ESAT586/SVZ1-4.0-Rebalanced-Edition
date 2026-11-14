@@ -11,28 +11,59 @@ public class ChangeMaterial : MonoBehaviour
 			return;
 		}
 		ParticleRenderer component = GetComponent<ParticleRenderer>();
-		if ((bool)component)
+		if (!(bool)component)
 		{
-			MultiLanguages.ESystemLanguage eSystemLanguage = MultiLanguages.ESystemLanguage.ESL_English;
-			switch (MultiLanguages.GetCurrentLanguageToEnum())
-			{
-			case MultiLanguages.ESystemLanguage.ESL_Chinese:
-				component.material = materials[1];
-				break;
-			case MultiLanguages.ESystemLanguage.ESL_Japanese:
-				component.material = materials[3];
-				break;
-			case MultiLanguages.ESystemLanguage.ESL_Korean:
-				component.material = materials[2];
-				break;
-			default:
-				component.material = materials[0];
-				break;
-			}
+			return;
 		}
+
+		Material localizedMaterial = GetLocalizedMaterial();
+		if (localizedMaterial == null)
+		{
+			return;
+		}
+
+		component.material = localizedMaterial;
 	}
 
 	private void Update()
 	{
 	}
+
+	private Material GetLocalizedMaterial()
+	{
+		if (materials == null || materials.Length == 0)
+		{
+			return null;
+		}
+
+		int num = 0;
+		switch (MultiLanguages.GetCurrentLanguageToEnum())
+		{
+		case MultiLanguages.ESystemLanguage.ESL_Chinese:
+			num = 1;
+			break;
+		case MultiLanguages.ESystemLanguage.ESL_Korean:
+			num = 2;
+			break;
+		case MultiLanguages.ESystemLanguage.ESL_Japanese:
+			num = 3;
+			break;
+		}
+
+		if (num >= 0 && num < materials.Length && materials[num] != null)
+		{
+			return materials[num];
+		}
+
+		for (int i = 0; i < materials.Length; i++)
+		{
+			if (materials[i] != null)
+			{
+				return materials[i];
+			}
+		}
+
+		return null;
+	}
 }
+

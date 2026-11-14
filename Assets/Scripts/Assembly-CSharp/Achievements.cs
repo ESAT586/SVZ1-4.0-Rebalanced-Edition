@@ -50,7 +50,7 @@ public class Achievements : SingletonMonoBehaviour<Achievements>
 		}
 		set
 		{
-			if (mPopup != null)
+			if (popupIsAlive)
 			{
 				mPopup.position = value;
 				mText.position = value + kTextOffset;
@@ -64,6 +64,10 @@ public class Achievements : SingletonMonoBehaviour<Achievements>
 
 	public void Update()
 	{
+		if (mPopup != null && !popupIsAlive)
+		{
+			ClearPopupReferences();
+		}
 		if (mPopup != null)
 		{
 			UpdatePopup();
@@ -76,9 +80,7 @@ public class Achievements : SingletonMonoBehaviour<Achievements>
 
 	public void Award(string gameCenterAchievementID)
 	{
-		if (!AddToQueue(gameCenterAchievementID))
-		{
-		}
+		AddToQueue(gameCenterAchievementID);
 	}
 
 	private bool AddToQueue(string gameCenterAchievementID)
@@ -88,8 +90,25 @@ public class Achievements : SingletonMonoBehaviour<Achievements>
 		{
 			return false;
 		}
+		
 		achievementsDisplayed.Add(gameCenterAchievementID);
 		Singleton<Profile>.instance.SetAchievementsDisplayed(achievementsDisplayed);
+		
+		// Add to visual queue
+		mQueue.Add(gameCenterAchievementID);
+		
+		// Process Rewards
+		AchievementData data = Singleton<AchievementsDatabase>.instance.GetData(gameCenterAchievementID);
+		if (data != null)
+		{
+			if (data.RewardGems > 0)
+			{
+				Singleton<Profile>.instance.gems += data.RewardGems;
+			}
+			// Reward XP could be added to player level if that exists
+            Singleton<Profile>.instance.Save();
+		}
+		
 		return true;
 	}
 
@@ -100,17 +119,43 @@ public class Achievements : SingletonMonoBehaviour<Achievements>
 		mWaitTimer = 0f;
 	}
 
+	private SUISprite mIcon;
+
+	private bool popupIsAlive
+	{
+		get
+		{
+			return mPopup != null && mPopup.gameObject != null && mText != null && mText.gameObject != null && mIcon != null && mIcon.gameObject != null;
+		}
+	}
+
 	private void SpawnPopup()
 	{
 		mPopup = new SUISprite("Sprites/Menus/gamecenter_popup");
 		mPopup.priority = 50000f;
+		
 		mText = new SUILabel("default18");
 		mText.priority = 50000.1f;
-		mText.maxWidth = 390;
+		mText.maxWidth = 300;
 		mText.maxLines = 1;
-		mText.anchor = TextAnchor.MiddleCenter;
-		mText.alignment = TextAlignment.Center;
-		position = new Vector2(512f, mYPos);
+		mText.anchor = TextAnchor.MiddleLeft;
+		mText.alignment = TextAlignment.Left;
+		
+		mIcon = new SUISprite("Sprites/Menus/achievement_kill"); // Default
+		mIcon.priority = 50000.1f;
+		mIcon.scale = new Vector2(0.35f, 0.35f);
+		
+		UpdatePositions();
+	}
+
+	private void UpdatePositions()
+	{
+		if (popupIsAlive)
+		{
+			mPopup.position = new Vector2(512f, mYPos);
+			mIcon.position = mPopup.position + new Vector2(-180f, 0f);
+			mText.position = mPopup.position + new Vector2(-140f, 0f);
+		}
 	}
 
 	private void UpdatePopup()
@@ -118,35 +163,53 @@ public class Achievements : SingletonMonoBehaviour<Achievements>
 		if (mSlideDir == 0f)
 		{
 			mWaitTimer += deltaTime;
-			if (mWaitTimer >= 2f)
+			if (mWaitTimer >= 3f)
 			{
 				mSlideDir = -1f;
 			}
 			return;
 		}
-		Vector2 vector = mPopup.position;
-		vector.y += 193.33333f * deltaTime * mSlideDir;
-		if (vector.y <= -26f)
+		
+		mYPos += 193.33333f * deltaTime * mSlideDir;
+		if (mYPos <= -26f)
 		{
-			vector.y = -26f;
+			mYPos = -26f;
 			CheckForNextPopup();
 		}
-		else if (vector.y >= 32f)
+		else if (mYPos >= 32f)
 		{
-			vector.y = 32f;
+			mYPos = 32f;
 			mWaitTimer = 0f;
 			mSlideDir = 0f;
 		}
-		position = vector;
+		UpdatePositions();
 	}
 
 	private void PopAndDrawNextText()
 	{
 		string id = mQueue[0];
 		mQueue.RemoveAt(0);
-		string empty = string.Empty;
-		empty = ((!Singleton<Localizer>.instance.Has(id)) ? Singleton<Localizer>.instance.Get("achievement_notext") : Singleton<Localizer>.instance.Get(id));
-		mText.text = empty;
+		
+		AchievementData data = Singleton<AchievementsDatabase>.instance.GetData(id);
+		if (data != null)
+		{
+			mText.text = data.Name.ToUpper();
+			if (!string.IsNullOrEmpty(data.IconPath))
+			{
+				mIcon.texture = data.IconPath;
+			}
+		}
+		else
+		{
+			string empty = string.Empty;
+			empty = ((!Singleton<Localizer>.instance.Has(id)) ? Singleton<Localizer>.instance.Get("achievement_notext") : Singleton<Localizer>.instance.Get(id));
+			mText.text = empty;
+		}
+		
+		if (Singleton<SUISoundManager>.instance != null)
+		{
+            Singleton<SUISoundManager>.instance.Play("AchievementUnlock");
+		}
 	}
 
 	private void CheckForNextPopup()
@@ -166,6 +229,14 @@ public class Achievements : SingletonMonoBehaviour<Achievements>
 			mPopup = null;
 			mText.Destroy();
 			mText = null;
+			if (mIcon != null) { mIcon.Destroy(); mIcon = null; }
 		}
+	}
+
+	private void ClearPopupReferences()
+	{
+		mPopup = null;
+		mText = null;
+		mIcon = null;
 	}
 }
