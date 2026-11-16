@@ -16,10 +16,8 @@ jobs:
           xcodebuild -showsdks
 
       - name: Download Exported Unity Xcode Project
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release download 5.0 -p "SVZ1-iOS-Xcode.zip" -R "${{ github.repository }}"
+          curl -L --retry 3 -o SVZ1-iOS-Xcode.zip "https://github.com/ESAT586/SVZ1-4.0-Rebalanced-Edition/releases/download/5.0/SVZ1-iOS-Xcode.zip"
           mkdir -p ios_proj
           unzip -q SVZ1-iOS-Xcode.zip -d ios_proj
           ls -la ios_proj
@@ -58,9 +56,9 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
-            OTHER_CFLAGS="\$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-objc-messaging-id -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-strict-prototypes" \
-            OTHER_CPLUSPLUSFLAGS="\$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-enum-constexpr-conversion -Wno-int-conversion" \
-            OTHER_LDFLAGS="\$(inherited) -Wl,-ld_classic" \
+            OTHER_CFLAGS='$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-objc-messaging-id -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-strict-prototypes' \
+            OTHER_CPLUSPLUSFLAGS='$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-enum-constexpr-conversion -Wno-int-conversion' \
+            OTHER_LDFLAGS='$(inherited) -Wl,-ld_classic' \
             build | tee xcodebuild.log
 
       - name: Package Payload Into .ipa
@@ -76,6 +74,7 @@ jobs:
           ls -lh SamuraiVsZombies-v5.0-iPhone11.ipa
 
       - name: Upload .ipa to Release 5.0
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

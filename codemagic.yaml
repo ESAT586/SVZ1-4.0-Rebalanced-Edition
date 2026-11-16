@@ -1,0 +1,65 @@
+workflows:
+  ios-ipa-build:
+    name: Build iOS IPA (iPhone 11)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    scripts:
+      - name: Download Exported Unity Xcode Project
+        script: |
+          curl -L --retry 3 -o SVZ1-iOS-Xcode.zip "https://github.com/ESAT586/SVZ1-4.0-Rebalanced-Edition/releases/download/5.0/SVZ1-iOS-Xcode.zip"
+          mkdir -p ios_proj
+          unzip -q SVZ1-iOS-Xcode.zip -d ios_proj
+          ls -la ios_proj
+
+      - name: Patch Unity 2017.4 Xcode Project for Modern Xcode
+        script: |
+          python3 - <<'PY'
+          import pathlib, re
+
+          pbx = pathlib.Path("ios_proj/Unity-iPhone.xcodeproj/project.pbxproj")
+          txt = pbx.read_text(encoding="utf-8", errors="replace")
+          txt = re.sub(r"ENABLE_BITCODE\s*=\s*YES\s*;", "ENABLE_BITCODE = NO;", txt)
+          txt = re.sub(r"IPHONEOS_DEPLOYMENT_TARGET\s*=\s*[0-9.]+\s*;", "IPHONEOS_DEPLOYMENT_TARGET = 12.0;", txt)
+          txt = re.sub(r"ONLY_ACTIVE_ARCH\s*=\s*YES\s*;", "ONLY_ACTIVE_ARCH = NO;", txt)
+          txt = txt.replace("libstdc++.6.0.9.tbd", "libc++.tbd").replace("libstdc++.tbd", "libc++.tbd")
+          txt = txt.replace("libstdc++.6.0.9.dylib", "libc++.dylib").replace("libstdc++.dylib", "libc++.dylib")
+          txt = txt.replace("-lstdc++", "-lc++")
+          pbx.write_text(txt, encoding="utf-8")
+          print("Patched project.pbxproj cleanly.")
+          PY
+
+      - name: Build Unsigned Release ARM64 .app
+        script: |
+          set -o pipefail
+          xcodebuild \
+            -project ios_proj/Unity-iPhone.xcodeproj \
+            -scheme Unity-iPhone \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build_derived \
+            ARCHS="arm64" \
+            ONLY_ACTIVE_ARCH=NO \
+            ENABLE_BITCODE=NO \
+            IPHONEOS_DEPLOYMENT_TARGET=12.0 \
+            GCC_TREAT_WARNINGS_AS_ERRORS=NO \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            OTHER_CFLAGS='$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-objc-messaging-id -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-strict-prototypes' \
+            OTHER_CPLUSPLUSFLAGS='$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-enum-constexpr-conversion -Wno-int-conversion' \
+            OTHER_LDFLAGS='$(inherited) -Wl,-ld_classic' \
+            build | tee xcodebuild.log
+
+      - name: Package Payload Into .ipa
+        script: |
+          APP_PATH=$(find build_derived/Build/Products/Release-iphoneos -maxdepth 1 -name "*.app" | head -n 1)
+          echo "Found app: $APP_PATH"
+          test -n "$APP_PATH"
+          rm -rf Payload SamuraiVsZombies-v5.0-iPhone11.ipa
+          mkdir -p Payload
+          cp -R "$APP_PATH" Payload/
+          rm -rf Payload/*.app/_CodeSignature
+          zip -r -y -q SamuraiVsZombies-v5.0-iPhone11.ipa Payload
+          ls -lh SamuraiVsZombies-v5.0-iPhone11.ipa
+    artifacts:
+      - SamuraiVsZombies-v5.0-iPhone11.ipa
