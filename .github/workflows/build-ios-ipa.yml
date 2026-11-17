@@ -56,8 +56,8 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
-            OTHER_CFLAGS='$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-objc-messaging-id -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-strict-prototypes' \
-            OTHER_CPLUSPLUSFLAGS='$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-enum-constexpr-conversion -Wno-int-conversion' \
+            OTHER_CFLAGS='$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-objc-messaging-id -Wno-incompatible-pointer-types -Wno-incompatible-function-pointer-types -Wno-int-conversion -Wno-strict-prototypes -Wno-unguarded-availability-new' \
+            OTHER_CPLUSPLUSFLAGS='$(inherited) -Wno-error -Wno-deprecated-declarations -Wno-nullability-completeness -Wno-enum-constexpr-conversion -Wno-int-conversion -Wno-incompatible-function-pointer-types -Wno-unguarded-availability-new' \
             OTHER_LDFLAGS='$(inherited) -Wl,-ld_classic' \
             build | tee xcodebuild.log
 
