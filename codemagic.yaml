@@ -11,6 +11,8 @@ workflows:
           curl -L --retry 3 -o SVZ1-iOS-Xcode.zip "https://github.com/ESAT586/SVZ1-4.0-Rebalanced-Edition/releases/download/5.0/SVZ1-iOS-Xcode.zip"
           mkdir -p ios_proj
           unzip -q SVZ1-iOS-Xcode.zip -d ios_proj
+          find ios_proj -name "*.sh" -exec chmod +x {} +
+          chmod +x ios_proj/MapFileParser 2>/dev/null || true
           ls -la ios_proj
 
       - name: Patch Unity 2017.4 Xcode Project for Modern Xcode
