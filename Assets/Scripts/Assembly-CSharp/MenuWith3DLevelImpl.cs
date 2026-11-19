@@ -42,7 +42,10 @@ public class MenuWith3DLevelImpl : SceneBehaviour
 
     private void OnDestroy()
 	{
-		ApplicationUtilities.instance.HideAds();
+		if (ApplicationUtilities.HasInstance)
+		{
+			ApplicationUtilities.instance.HideAds();
+		}
 	}
 
     private void Update()

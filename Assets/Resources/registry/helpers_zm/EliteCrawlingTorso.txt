@@ -1,0 +1,119 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_elitecrawlingtorso_name
+desc = @helper_elitecrawlingtorso_desc
+prefab = Characters/PFCrawlingTorsoRed
+HUDIcon = Sprites/Icons/enemy_elite_crawling_torso
+weaponMeleePrefab = Props/PFKatana
+usesBladeWeapon = true
+waveToUnlock = 1
+resourcesCost = 8.0
+cooldownTimer = 2.0
+attackFrequency = 1.0
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 800,0
+	health = 28
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 32
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[002]
+	cost = 2000,0
+	health = 46
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 58
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[003]
+	cost = 4500,0
+	health = 74
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 92
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[004]
+	cost = 9000,0
+	health = 115
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 136
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[005]
+	cost = 18000,0
+	health = 165
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 190
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[006]
+	cost = 36000,0
+	health = 230
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 255
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[007]
+	cost = 64000,0
+	health = 310
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 330
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[008]
+	cost = 0,10
+	health = 400
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 410
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[009]
+	cost = 0,15
+	health = 505
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 495
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[010]
+	cost = 0,20
+	health = 620
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 580
+	knockbackPower = 10
+	knockbackResistance = 25

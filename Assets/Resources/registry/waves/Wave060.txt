@@ -68,3 +68,9 @@ scene = InGame_hell_purple
 	Evil_Chochinobake
 	Evil_Chochinobake
 	Evil_Chochinobake
+	/ SVZ2WaveAdditions
+	Harionago
+	1,1
+	Nio_Guardian
+	2,2
+	Shuten_Doji

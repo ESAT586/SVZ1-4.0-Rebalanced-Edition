@@ -34,3 +34,7 @@ scene = InGame_hell_purple
 	Nobusuma_alt
 	Nobusuma_alt
 	H_Zombie_Warhammer
+	/ SVZ2WaveAdditions
+	Nio_Guardian
+	2,2
+	Shuten_Doji_Blue

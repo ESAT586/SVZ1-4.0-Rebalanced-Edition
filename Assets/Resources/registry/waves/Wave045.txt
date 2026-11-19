@@ -165,4 +165,7 @@ scene = InGame_evil
 	Chochinobake_alt
 	Horseman
 	Chochinobake_alt
-	
+	/ SVZ2WaveAdditions
+	Amanojaku
+	1,1
+	Harionago

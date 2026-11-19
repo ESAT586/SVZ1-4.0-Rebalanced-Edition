@@ -34,15 +34,10 @@ public class MultiLanguages : MonoBehaviour
 	{
 	}
 
-#if UNITY_IOS && !UNITY_EDITOR
-	[DllImport("__Internal")]
-	private static extern string _GetCurrentLanguageID();
-#else
 	private static string _GetCurrentLanguageID()
 	{
 		return Application.systemLanguage.ToString();
 	}
-#endif
 
 	public static ESystemLanguage GetCurrentLanguageToEnum()
 	{

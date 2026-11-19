@@ -2,8 +2,8 @@
 / General
 /--------------------------------------------------
 
-displayName = CharmOni
-desc = CharmOni Biggest&Strongest Oni
+displayName = @helper_charmoni
+desc = @charm_friendoni_desc
 prefab = Characters/PFOniCharm
 HUDIcon = Sprites/icons/enemy_oni
 weaponMeleePrefab = Props/PFClub

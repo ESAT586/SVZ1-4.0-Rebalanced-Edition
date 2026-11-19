@@ -1009,3 +1009,10 @@ bonusHint = World End final; tum buyuk bosslar elit orduyla beraber gelir, bu so
 	1,1
 	RiflemanElite
 	PanzerElite
+	/ SVZ2WaveAdditions
+	1,1
+	Horse_Archer
+	1,1
+	Blind_Swordsman
+	1,1
+	Panzer_Enemy

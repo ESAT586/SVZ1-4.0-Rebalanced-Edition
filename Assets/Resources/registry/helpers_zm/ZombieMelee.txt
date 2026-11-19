@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = zombie sword
-desc = Zombie Sword
+displayName = @helper_zombiesword
+desc = @helper_zombiesword_desc
 prefab = Characters/PFLZombieSword
 HUDIcon = Sprites/Icons/enemy_zombie_sword
 weaponMeleePrefab = Props/samuraibasesword

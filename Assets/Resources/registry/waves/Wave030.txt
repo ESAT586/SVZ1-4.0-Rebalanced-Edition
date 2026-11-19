@@ -129,6 +129,8 @@ scene = InGame_winternight
 	1,1
 	Onibaba
 	Onibaba
-		
-	
-	
+	/ SVZ2WaveAdditions
+	2,2
+	Harionago
+	1,1
+	Nio_Guardian

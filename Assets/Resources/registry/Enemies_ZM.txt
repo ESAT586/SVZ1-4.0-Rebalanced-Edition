@@ -1,7 +1,7 @@
 
 / Based on "L_Zombie_Melee"
 [Farmer]
-	displayName = Farmer
+	displayName = @helper_farmer_name
 	prefab = Characters/PFFarmer
 	weaponMeleePrefab = Props/PFFarmerssword
 	health = 65
@@ -20,7 +20,7 @@
 
 / Based on "L_Zombie_Ax"
 [FarmerAx]
-	displayName = Farmer
+	displayName = @helper_farmer_name
 	prefab = Characters/PFFarmer
 	weaponMeleePrefab = Props/PFaxe
 	health = 105
@@ -39,7 +39,7 @@
 
 / Based on "L_Zombie_Sword"
 [FarmerSword]
-	displayName = Farmer
+	displayName = @helper_farmer_name
 	prefab = Characters/PFFarmer
 	weaponMeleePrefab = Props/samuraibasesword
 	health = 175
@@ -154,7 +154,7 @@
 
 / Based on "Oni_Boss"
 [FarmerBig]
-	displayName = Farmer
+	displayName = @helper_farmer_name
 	prefab = Characters/PFFarmerBig
 	weaponMeleePrefab = Props/PFFarmerssword
 	lane = center
@@ -429,12 +429,12 @@
 	usesBladeWeapon = true
 	lane = back
 	boss = true
-	attackFrequency = 1.0
-	health = 55555
+	attackFrequency = 2.0
+	health = 45000
 	speedMin = 120
 	speedMax = 120
 	meleeRange = 125
-	meleeDamage = 1000
+	meleeDamage = 850
 	knockbackPower = 90
 	knockbackResistance = 100
 	award = 500
@@ -451,12 +451,12 @@
 	weaponMeleePrefab = Props/PFTakedasword
 	lane = back
 	boss = true
-	attackFrequency = 1.7
+	attackFrequency = 2.0
 	health = 35650
 	speedMin = 180
 	speedMax = 200
 	meleeRange = 125
-	meleeDamage = 4545
+	meleeDamage = 950
 	knockbackPower = 50
 	knockbackResistance = 100
 	award = 500
@@ -513,12 +513,12 @@
 	usesBladeWeapon = true
 	lane = back
 	boss = true
-	attackFrequency = 1.7
-	health = 120000
+	attackFrequency = 2.0
+	health = 70000
 	speedMin = 120
 	speedMax = 120
 	meleeRange = 200
-	meleeDamage = 1200
+	meleeDamage = 850
 	knockbackPower = 90
 	knockbackResistance = 100
 	award = 750
@@ -535,11 +535,11 @@
 	lane = back
 	boss = true
 	attackFrequency = 2.5
-	health = 95000
+	health = 60000
 	speedMin = 100
 	speedMax = 100
 	meleeRange = 275
-	meleeDamage = 1450
+	meleeDamage = 950
 	knockbackPower = 90
 	knockbackResistance = 100
 	award = 750
@@ -555,12 +555,12 @@
 	usesBladeWeapon = true
 	lane = back
 	boss = true
-	attackFrequency = 1.0
-	health = 90000
+	attackFrequency = 2.0
+	health = 65000
 	speedMin = 120
 	speedMax = 120
 	meleeRange = 125
-	meleeDamage = 1500
+	meleeDamage = 1200
 	knockbackPower = 90
 	knockbackResistance = 100
 	award = 750
@@ -577,12 +577,12 @@
 	weaponMeleePrefab = Props/PFTakedasword
 	lane = back
 	boss = true
-	attackFrequency = 1.7
-	health = 85000
+	attackFrequency = 2.0
+	health = 58000
 	speedMin = 180
 	speedMax = 200
 	meleeRange = 125
-	meleeDamage = 6000
+	meleeDamage = 1350
 	knockbackPower = 50
 	knockbackResistance = 100
 	award = 750
@@ -597,12 +597,12 @@
 	weaponMeleePrefab = Props/PFHeavysamuraisword
 	lane = center
 	boss = true
-	health = 110000
+	health = 75000
 	speedMin = 85
 	speedMax = 85
 	meleeRange = 100
-	meleeDamage = 1500
-	attackFrequency = 3
+	meleeDamage = 1200
+	attackFrequency = 2.8
 	knockbackPower = 0
 	knockbackResistance = 100
 	award = 750
@@ -618,12 +618,12 @@
 	usesBladeWeapon = true
 	lane = center
 	boss = true
-	attackFrequency = 1.4
-	health = 150000
+	attackFrequency = 1.8
+	health = 85000
 	speedMin = 120
 	speedMax = 120
 	meleeRange = 200
-	meleeDamage = 1750
+	meleeDamage = 1250
 	knockbackPower = 90
 	knockbackResistance = 100
 	award = 1000
@@ -678,12 +678,12 @@
 	projectile = BigExplodingArrow
 	lane = back
 	boss = true
-	health = 85000
+	health = 48000
 	speedMin = 100
 	speedMax = 100
-	bowRange = 650
-	bowDamage = 1350
-	attackFrequency = 1.8
+	bowRange = 500
+	bowDamage = 650
+	attackFrequency = 2.2
 	knockbackPower = 0
 	knockbackResistance = 100
 	award = 750
@@ -699,12 +699,12 @@
 	projectile = Bullet
 	lane = back
 	boss = true
-	health = 90000
+	health = 52000
 	speedMin = 100
 	speedMax = 100
-	bowRange = 750
-	bowDamage = 1800
-	attackFrequency = 1.4
+	bowRange = 550
+	bowDamage = 850
+	attackFrequency = 2.0
 	knockbackPower = 0
 	knockbackResistance = 100
 	award = 750
@@ -720,12 +720,12 @@
 	projectile = IceArrow
 	lane = back
 	boss = true
-	health = 95000
+	health = 50000
 	speedMin = 100
 	speedMax = 100
-	bowRange = 650
-	bowDamage = 1150
-	attackFrequency = 2.2
+	bowRange = 500
+	bowDamage = 550
+	attackFrequency = 2.4
 	knockbackPower = 0
 	knockbackResistance = 100
 	award = 750
@@ -740,12 +740,12 @@
 	weaponMeleePrefab = Props/PFSamuraiShieldIce
 	lane = center
 	boss = true
-	health = 180000
+	health = 95000
 	speedMin = 85
 	speedMax = 85
 	meleeRange = 125
-	meleeDamage = 1500
-	attackFrequency = 3.5
+	meleeDamage = 1100
+	attackFrequency = 3.0
 	meleeFreeze = 3
 	knockbackPower = 90
 	knockbackResistance = 100
@@ -753,3 +753,275 @@
 	resourceDropMin = 0
 	resourceDropMax = 10
 	previewPriority = 1
+
+
+[Shuten_Doji]
+	displayName = Shuten Doji
+	prefab = Characters/PFShutendoji
+	HUDIcon = Sprites/Icons/story_shutendoji
+	weaponMeleePrefab = Props/weapons/shutendojiclub
+	boss = true
+	health = 55000
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 220
+	meleeDamage = 950
+	attackFrequency = 3.2
+	knockbackPower = 110
+	knockbackResistance = 100
+	award = 1200
+	resourceDropMin = 10
+	resourceDropMax = 15
+	previewPriority = 1
+
+
+[Amanojaku]
+	displayName = Amanojaku
+	prefab = Characters/PFAmanojaku
+	HUDIcon = Sprites/Icons/enemy_amanojaku
+	health = 5400
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 290
+	bowRange = 360
+	bowDamage = 220
+	projectile = Arrow
+	attackFrequency = 2.4
+	knockbackPower = 40
+	knockbackResistance = 60
+	award = 220
+	resourceDropMin = 3
+	resourceDropMax = 6
+	previewPriority = 1
+
+
+[Akaname]
+	displayName = Akaname
+	prefab = Characters/PFAkaname
+	health = 1100
+	speedMin = 120
+	speedMax = 120
+	meleeRange = 110
+	meleeDamage = 110
+	attackFrequency = 1.9
+	knockbackPower = 15
+	knockbackResistance = 20
+	award = 60
+	resourceDropMin = 1
+	resourceDropMax = 3
+	previewPriority = 0
+
+
+[Harionago]
+	displayName = Harionago
+	prefab = Characters/PFHarionago
+	health = 4600
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 180
+	meleeDamage = 340
+	attackFrequency = 2.3
+	knockbackPower = 35
+	knockbackResistance = 60
+	award = 200
+	resourceDropMin = 3
+	resourceDropMax = 5
+	previewPriority = 1
+
+
+[Onmoraki]
+	displayName = Onmoraki
+	prefab = Characters/PFOnmoraki
+	flying = true
+	health = 2200
+	speedMin = 140
+	speedMax = 140
+	bowRange = 325
+	bowDamage = 180
+	projectile = FireArrow
+	attackFrequency = 1.6
+	knockbackPower = 20
+	knockbackResistance = 15
+	award = 120
+	resourceDropMin = 2
+	resourceDropMax = 4
+	previewPriority = 1
+
+
+[Panzer_Enemy]
+	displayName = Panzer Samurai
+	prefab = Characters/PFRockyTMan
+	HUDIcon = Sprites/Icons/ally_panzer
+	weaponMeleePrefab = Props/PFHeavysamuraisword
+	usesBladeWeapon = true
+	health = 9500
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 145
+	meleeDamage = 410
+	attackFrequency = 2.1
+	knockbackPower = 55
+	knockbackResistance = 90
+	award = 380
+	resourceDropMin = 4
+	resourceDropMax = 8
+	previewPriority = 1
+
+
+[Zombie_Split]
+	displayName = Crawling Body
+	prefab = Characters/PFCrawlingBody
+	HUDIcon = Sprites/Icons/enemy_crawling_torso
+	weaponMeleePrefab = Props/weapons/mace
+	spawnOnDeath = Zombie_Legs
+	spawnOnDeathCount = 1
+	health = 1400
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 120
+	meleeDamage = 180
+	attackFrequency = 1.0
+	knockbackPower = 40
+	knockbackResistance = 50
+	award = 85
+	resourceDropMin = 1
+	resourceDropMax = 3
+	previewPriority = 1
+
+
+[Zombie_Legs]
+	displayName = Crawling Legs
+	prefab = Characters/PFCrawlingLegs
+	HUDIcon = Sprites/Icons/enemy_crawling_torso
+	gateRusher = true
+	health = 1800
+	speedMin = 200
+	speedMax = 200
+	meleeRange = 120
+	meleeDamage = 150
+	attackFrequency = 1.5
+	knockbackPower = 20
+	knockbackResistance = 45
+	award = 95
+	resourceDropMin = 1
+	resourceDropMax = 3
+	previewPriority = 0
+
+
+[Shuten_Doji_Blue]
+	displayName = Blue Shuten Doji
+	prefab = Characters/PFShutendojiBlue
+	HUDIcon = Sprites/Icons/story_shutendoji
+	weaponMeleePrefab = Props/weapons/shutendojiclub
+	boss = true
+	health = 65000
+	speedMin = 95
+	speedMax = 95
+	meleeRange = 220
+	meleeDamage = 1100
+	attackFrequency = 2.8
+	knockbackPower = 120
+	knockbackResistance = 100
+	award = 2000
+	resourceDropMin = 10
+	resourceDropMax = 15
+	previewPriority = 1
+
+
+[Onmoraki_Alt]
+	displayName = Blood Onmoraki
+	prefab = Characters/PFOnmorakiAlt
+	flying = true
+	health = 3200
+	speedMin = 150
+	speedMax = 150
+	bowRange = 350
+	bowDamage = 240
+	projectile = BlueFireArrow
+	attackFrequency = 1.5
+	knockbackPower = 25
+	knockbackResistance = 30
+	award = 180
+	resourceDropMin = 2
+	resourceDropMax = 5
+	previewPriority = 1
+
+
+[Blind_Swordsman]
+	displayName = Zato
+	prefab = Characters/PFBlindswordsman
+	HUDIcon = Sprites/Icons/ally_zato
+	weaponMeleePrefab = Props/weapons/blindsword
+	usesBladeWeapon = true
+	health = 4500
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 160
+	meleeDamage = 320
+	attackFrequency = 1.3
+	knockbackPower = 45
+	knockbackResistance = 80
+	award = 260
+	resourceDropMin = 2
+	resourceDropMax = 5
+	previewPriority = 1
+
+
+[Rocket_Farmer]
+	displayName = Rocket Farmer
+	prefab = Characters/PFRocketFarmer
+	HUDIcon = Sprites/Icons/ally_rocketfarmer
+	weaponRangedPrefab = Props/weapons/rocketlauncher
+	projectile = Bullet
+	health = 1800
+	speedMin = 110
+	speedMax = 110
+	bowRange = 460
+	bowDamage = 260
+	attackFrequency = 2.6
+	knockbackPower = 25
+	knockbackResistance = 50
+	award = 140
+	resourceDropMin = 1
+	resourceDropMax = 4
+	previewPriority = 1
+
+
+[Horse_Archer]
+	displayName = Horse Archer
+	prefab = Characters/PFHorseArcher
+	HUDIcon = Sprites/Icons/ally_horsearcher
+	weaponRangedPrefab = Props/PFsamuraibow
+	projectile = Arrow
+	health = 2800
+	speedMin = 200
+	speedMax = 200
+	bowRange = 460
+	bowDamage = 220
+	attackFrequency = 1.6
+	knockbackPower = 25
+	knockbackResistance = 60
+	award = 210
+	resourceDropMin = 2
+	resourceDropMax = 4
+	previewPriority = 1
+
+
+[Warrior_Horse]
+	displayName = Warrior Horse
+	prefab = Characters/PFWarriorHorse
+	HUDIcon = Sprites/Icons/ally_horse
+	health = 3200
+	speedMin = 200
+	speedMax = 200
+	meleeRange = 160
+	meleeDamage = 240
+	attackFrequency = 1.4
+	knockbackPower = 40
+	knockbackResistance = 65
+	award = 190
+	resourceDropMin = 2
+	resourceDropMax = 4
+	previewPriority = 1
+

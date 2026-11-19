@@ -46,7 +46,7 @@ public class DevCheatOverlay : MonoBehaviour
 	private static DevCheatOverlay sInstance;
 
 	private string mPasswordInput = string.Empty;
-	private string mStatus = "DEV TOOLS & CHEATS (KILITSIZ - GEMINI REBALANCED)";
+	private string mStatus = "";
 	private bool mUnlocked = true;
 	private int mSelectedTab;
 	private Vector2 mScroll;
@@ -178,6 +178,9 @@ public class DevCheatOverlay : MonoBehaviour
 		int oldLabelSize = GUI.skin.label.fontSize;
 		int oldBoxSize = GUI.skin.box.fontSize;
 		int oldTextFieldSize = GUI.skin.textField.fontSize;
+		Font oldBtnFont = GUI.skin.button.font;
+		Font oldLblFont = GUI.skin.label.font;
+		Font oldBoxFont = GUI.skin.box.font;
 		float oldScrollWidth = GUI.skin.verticalScrollbar.fixedWidth;
 		float oldThumbWidth = GUI.skin.verticalScrollbarThumb.fixedWidth;
 
@@ -188,6 +191,13 @@ public class DevCheatOverlay : MonoBehaviour
 			GUI.DrawTexture(new Rect(0f, 0f, virtualWidth, virtualHeight), Texture2D.whiteTexture);
 			GUI.color = Color.white;
 
+			Font dynFont = LocalizationManager.GetDynamicOSFont(18);
+			if (dynFont != null)
+			{
+				GUI.skin.button.font = dynFont;
+				GUI.skin.label.font = dynFont;
+				GUI.skin.box.font = dynFont;
+			}
 			GUI.skin.button.fontSize = 18;
 			GUI.skin.label.fontSize = 17;
 			GUI.skin.box.fontSize = 18;
@@ -208,6 +218,9 @@ public class DevCheatOverlay : MonoBehaviour
 		}
 		finally
 		{
+			GUI.skin.button.font = oldBtnFont;
+			GUI.skin.label.font = oldLblFont;
+			GUI.skin.box.font = oldBoxFont;
 			GUI.skin.button.fontSize = oldButtonSize;
 			GUI.skin.label.fontSize = oldLabelSize;
 			GUI.skin.box.fontSize = oldBoxSize;
@@ -266,25 +279,34 @@ public class DevCheatOverlay : MonoBehaviour
 	{
 		mUnlocked = true;
 		bool prevEnabled = GUI.enabled;
-		if (mTouchDragActive && Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
+		if ((mTouchDragActive && Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended) || LocalizationManager.IsPickerOpen)
 		{
-			// Prevent accidental button tap on release immediately after a finger drag scroll
+			// Prevent accidental button tap on release immediately after a finger drag scroll or while language picker is open
 			GUI.enabled = false;
 		}
 		try
 		{
 			GUILayout.BeginVertical();
 			GUILayout.Space(10f);
-			GUILayout.Label(mStatus);
+			string headerStatus = string.IsNullOrEmpty(mStatus)
+				? LocalizationManager.L("mod_devtools_title", "DEV TOOLS & CHEATS (UNLOCKED - GEMINI REBALANCED)", "DEV TOOLS & CHEATS (KILITSIZ - GEMINI REBALANCED)")
+				: mStatus;
+			GUILayout.Label(headerStatus);
 			GUILayout.Space(8f);
 
 			DrawDebugPanel();
 
 			GUILayout.FlexibleSpace();
-			if (GUILayout.Button("CLOSE", GUILayout.Height(52f)))
+			GUILayout.BeginHorizontal();
+			if (GUILayout.Button(LocalizationManager.L("mod_lang_switch", "LANGUAGE (30 LANGUAGES): ", "DIL SEC (30 DIL): ") + LocalizationManager.instance.GetCurrentLanguage().ToUpper(), GUILayout.Height(52f), GUILayout.Width(380f)))
+			{
+				LocalizationManager.OpenLanguagePicker();
+			}
+			if (GUILayout.Button(LocalizationManager.L("mod_close", "CLOSE", "KAPAT"), GUILayout.Height(52f)))
 			{
 				Close();
 			}
+			GUILayout.EndHorizontal();
 			GUILayout.EndVertical();
 		}
 		finally
@@ -302,11 +324,11 @@ public class DevCheatOverlay : MonoBehaviour
 		GUILayout.Space(8f);
 		GUILayout.BeginHorizontal();
 		GUI.color = new Color(0.4f, 1f, 0.4f);
-		if (GUILayout.Button("SIFREYI ATLA & KILIDI AC", GUILayout.Height(54f)))
+		if (GUILayout.Button(LocalizationManager.T("SKIP PASSWORD & UNLOCK", "SIFREYI ATLA & KILIDI AC"), GUILayout.Height(54f)))
 		{
 			mUnlocked = true;
 			mSelectedTab = 0;
-			mStatus = "Kilit basariyla acildi!";
+			mStatus = LocalizationManager.T("Unlocked successfully!", "Kilit basariyla acildi!");
 		}
 		GUI.color = Color.white;
 		if (GUILayout.Button("UNLOCK", GUILayout.Height(54f)))
@@ -383,38 +405,48 @@ public class DevCheatOverlay : MonoBehaviour
 		InGameImpl inGame = WeakGlobalSceneBehavior<InGameImpl>.instance;
 		bool inCombat = inGame != null && inGame.hero != null;
 
-		GUILayout.Box(inCombat ? "AKTIF SAVASTASINIZ: Savas ici hileleri canli olarak acip kapatabilirsiniz." : "MENUDESINIZ: Ilerleme, kaynak ve kilitli tum icerikleri tek tikla acabilirsiniz.");
+		GUILayout.Box(inCombat
+			? LocalizationManager.T("IN COMBAT: Toggle live battle cheats anytime.", "AKTIF SAVASTASINIZ: Savas ici hileleri canli olarak acip kapatabilirsiniz.")
+			: LocalizationManager.T("IN MENU: Unlock waves, resources, and all content in one tap.", "MENUDESINIZ: Ilerleme, kaynak ve kilitli tum icerikleri tek tikla acabilirsiniz."));
 		GUILayout.Space(8f);
 
-		GUILayout.Label("SAVAS ICI CANLI HILELER (REAL-TIME CHEATS)");
+		GUILayout.Label(LocalizationManager.T("REAL-TIME COMBAT CHEATS", "SAVAS ICI CANLI HILELER (REAL-TIME CHEATS)"));
 		GUILayout.BeginHorizontal();
 		GUI.color = sGodMode ? new Color(0.4f, 1f, 0.4f) : Color.white;
-		if (GUILayout.Button(sGodMode ? "GOD MODE: [ACIK]" : "GOD MODE: [KAPALI]", GUILayout.Height(54f)))
+		if (GUILayout.Button(sGodMode ? LocalizationManager.L("mod_god_mode_on", "GOD MODE: [ON]", "GOD MODE: [ACIK]") : LocalizationManager.L("mod_god_mode_off", "GOD MODE: [OFF]", "GOD MODE: [KAPALI]"), GUILayout.Height(54f)))
 		{
 			sGodMode = !sGodMode;
-			mStatus = sGodMode ? "God Mode aktif: Kahraman, müttefikler ve kale olumsuz yapildi!" : "God Mode kapatildi.";
+			mStatus = sGodMode
+				? LocalizationManager.T("God Mode ON: Hero, allies, and gate are invincible!", "God Mode aktif: Kahraman, muttefikler ve kale olumsuz yapildi!")
+				: LocalizationManager.T("God Mode OFF.", "God Mode kapatildi.");
 		}
 		GUI.color = sInfiniteLeadership ? new Color(0.4f, 1f, 0.4f) : Color.white;
-		if (GUILayout.Button(sInfiniteLeadership ? "LIDERLIK: [SINIRSIZ]" : "LIDERLIK: [NORMAL]", GUILayout.Height(54f)))
+		if (GUILayout.Button(sInfiniteLeadership ? LocalizationManager.L("mod_leadership_inf", "LEADERSHIP: [INFINITE]", "LIDERLIK: [SINIRSIZ]") : LocalizationManager.L("mod_leadership_norm", "LEADERSHIP: [NORMAL]", "LIDERLIK: [NORMAL]"), GUILayout.Height(54f)))
 		{
 			sInfiniteLeadership = !sInfiniteLeadership;
-			mStatus = sInfiniteLeadership ? "Sinirsiz Liderlik aktif: Demirci her zaman max liderlik saglar!" : "Sinirsiz liderlik kapatildi.";
+			mStatus = sInfiniteLeadership
+				? LocalizationManager.T("Infinite Leadership ON: Smithy always provides max leadership!", "Sinirsiz Liderlik aktif: Demirci her zaman max liderlik saglar!")
+				: LocalizationManager.T("Infinite Leadership OFF.", "Sinirsiz liderlik kapatildi.");
 		}
 		GUI.color = Color.white;
 		GUILayout.EndHorizontal();
 
 		GUILayout.BeginHorizontal();
 		GUI.color = sNoCooldown ? new Color(0.4f, 1f, 0.4f) : Color.white;
-		if (GUILayout.Button(sNoCooldown ? "BEKLEME SURESI: [SIFIR]" : "BEKLEME SURESI: [NORMAL]", GUILayout.Height(54f)))
+		if (GUILayout.Button(sNoCooldown ? LocalizationManager.L("mod_cooldown_zero", "COOLDOWN: [ZERO]", "BEKLEME SURESI: [SIFIR]") : LocalizationManager.L("mod_cooldown_norm", "COOLDOWN: [NORMAL]", "BEKLEME SURESI: [NORMAL]"), GUILayout.Height(54f)))
 		{
 			sNoCooldown = !sNoCooldown;
-			mStatus = sNoCooldown ? "Sifir bekleme suresi: Yetenekler ve birlikler aninda hazir!" : "Normal bekleme suresi.";
+			mStatus = sNoCooldown
+				? LocalizationManager.T("Zero Cooldown ON: Abilities and allies are ready instantly!", "Sifir bekleme suresi: Yetenekler ve birlikler aninda hazir!")
+				: LocalizationManager.T("Normal cooldown restored.", "Normal bekleme suresi.");
 		}
 		GUI.color = sOneHitKill ? new Color(0.4f, 1f, 0.4f) : Color.white;
-		if (GUILayout.Button(sOneHitKill ? "TEK VURUSTA OLDUR: [ACIK]" : "TEK VURUSTA OLDUR: [KAPALI]", GUILayout.Height(54f)))
+		if (GUILayout.Button(sOneHitKill ? LocalizationManager.L("mod_onehit_on", "ONE HIT KILL: [ON]", "TEK VURUSTA OLDUR: [ACIK]") : LocalizationManager.L("mod_onehit_off", "ONE HIT KILL: [OFF]", "TEK VURUSTA OLDUR: [KAPALI]"), GUILayout.Height(54f)))
 		{
 			sOneHitKill = !sOneHitKill;
-			mStatus = sOneHitKill ? "Tek vurusta oldur aktif: Tum dusmanlarin cani 1'e indirildi!" : "Tek vurusta oldur kapatildi.";
+			mStatus = sOneHitKill
+				? LocalizationManager.T("One Hit Kill ON: All enemy HP reduced to 1!", "Tek vurusta oldur aktif: Tum dusmanlarin cani 1'e indirildi!")
+				: LocalizationManager.T("One Hit Kill OFF.", "Tek vurusta oldur kapatildi.");
 		}
 		GUI.color = Color.white;
 		GUILayout.EndHorizontal();
@@ -422,53 +454,53 @@ public class DevCheatOverlay : MonoBehaviour
 		GUILayout.Space(8f);
 		GUILayout.BeginHorizontal();
 		GUI.color = new Color(1f, 0.4f, 0.4f);
-		if (GUILayout.Button("TUM DUSMANLARI YOK ET", GUILayout.Height(52f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_kill_all", "KILL ALL ENEMIES", "TUM DUSMANLARI YOK ET"), GUILayout.Height(52f)))
 		{
 			int killed = KillAllActiveEnemies();
-			mStatus = killed + " adet dusman sahadan temizlendi!";
+			mStatus = killed + LocalizationManager.T(" enemies cleared from battlefield!", " adet dusman sahadan temizlendi!");
 		}
 		GUI.color = new Color(1f, 0.85f, 0.3f);
-		if (GUILayout.Button("DALGAYI ANINDA KAZAN (WIN)", GUILayout.Height(52f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_win_wave", "INSTANT WIN WAVE", "DALGAYI ANINDA KAZAN (WIN)"), GUILayout.Height(52f)))
 		{
 			InstantWinWave();
-			mStatus = "Dalga zaferi tetiklendi!";
+			mStatus = LocalizationManager.T("Wave victory triggered!", "Dalga zaferi tetiklendi!");
 		}
 		GUI.color = new Color(0.4f, 0.9f, 1f);
-		if (GUILayout.Button("GANIMETLERI TOPLA", GUILayout.Height(52f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_collect_loot", "COLLECT ALL LOOT", "GANIMETLERI TOPLA"), GUILayout.Height(52f)))
 		{
 			CollectableManager cMgr = WeakGlobalInstance<CollectableManager>.instance;
 			int c = (cMgr != null) ? cMgr.CollectAll() : 0;
-			mStatus = c + " adet ganimet toplandi!";
+			mStatus = c + LocalizationManager.T(" loot items collected!", " adet ganimet toplandi!");
 		}
 		GUI.color = Color.white;
 		GUILayout.EndHorizontal();
 
 		GUILayout.Space(12f);
-		GUILayout.Label("ZORLUK MODU SECIMI (DIFFICULTY MODES) - KISAYOL: [F2]");
+		GUILayout.Label(LocalizationManager.T("DIFFICULTY MODES - HOTKEY: [F2]", "ZORLUK MODU SECIMI (DIFFICULTY MODES) - KISAYOL: [F2]"));
 		GUILayout.BeginHorizontal();
 		GUI.color = (PCQoLManager.CurrentDifficulty == GameDifficulty.Kolay) ? new Color(0.3f, 1f, 0.4f) : new Color(0.25f, 0.25f, 0.3f);
-		if (GUILayout.Button("KOLAY (0.75x)", GUILayout.Height(46f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_diff_easy", "EASY (0.75x)", "KOLAY (0.75x)"), GUILayout.Height(46f)))
 		{
 			PCQoLManager.CurrentDifficulty = GameDifficulty.Kolay;
-			mStatus = "Zorluk KOLAY olarak ayarlandi! (Dusman cani ve hasari %25 azaldi)";
+			mStatus = LocalizationManager.T("Difficulty set to EASY! (Enemy HP & damage -25%)", "Zorluk KOLAY olarak ayarlandi! (Dusman cani ve hasari %25 azaldi)");
 		}
 		GUI.color = (PCQoLManager.CurrentDifficulty == GameDifficulty.Normal) ? new Color(1f, 0.9f, 0.3f) : new Color(0.25f, 0.25f, 0.3f);
-		if (GUILayout.Button("NORMAL (1.0x)", GUILayout.Height(46f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_diff_normal", "NORMAL (1.0x)", "NORMAL (1.0x)"), GUILayout.Height(46f)))
 		{
 			PCQoLManager.CurrentDifficulty = GameDifficulty.Normal;
-			mStatus = "Zorluk NORMAL olarak ayarlandi.";
+			mStatus = LocalizationManager.T("Difficulty set to NORMAL.", "Zorluk NORMAL olarak ayarlandi.");
 		}
 		GUI.color = (PCQoLManager.CurrentDifficulty == GameDifficulty.Zor) ? new Color(1f, 0.6f, 0.2f) : new Color(0.25f, 0.25f, 0.3f);
-		if (GUILayout.Button("ZOR (1.35x)", GUILayout.Height(46f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_diff_hard", "HARD (1.35x)", "ZOR (1.35x)"), GUILayout.Height(46f)))
 		{
 			PCQoLManager.CurrentDifficulty = GameDifficulty.Zor;
-			mStatus = "Zorluk ZOR olarak ayarlandi! (Dusmanlar %35 daha guclu, ganimet %50 fazla)";
+			mStatus = LocalizationManager.T("Difficulty set to HARD! (Enemies +35% stronger, +50% loot)", "Zorluk ZOR olarak ayarlandi! (Dusmanlar %35 daha guclu, ganimet %50 fazla)");
 		}
 		GUI.color = (PCQoLManager.CurrentDifficulty == GameDifficulty.Kabus) ? new Color(1f, 0.25f, 0.25f) : new Color(0.25f, 0.25f, 0.3f);
-		if (GUILayout.Button("KABUS / HELL (1.8x)", GUILayout.Height(46f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_diff_hell", "HELL / NIGHTMARE (1.8x)", "KABUS / HELL (1.8x)"), GUILayout.Height(46f)))
 		{
 			PCQoLManager.CurrentDifficulty = GameDifficulty.Kabus;
-			mStatus = "Zorluk KABUS (HELL) olarak ayarlandi! (Ekstra Edition meydan okumasi, 2x Ganimet!)";
+			mStatus = LocalizationManager.T("Difficulty set to HELL! (Extreme challenge, 2x Loot!)", "Zorluk KABUS (HELL) olarak ayarlandi! (Ekstra Edition meydan okumasi, 2x Ganimet!)");
 		}
 		GUI.color = Color.white;
 		GUILayout.EndHorizontal();
@@ -476,12 +508,12 @@ public class DevCheatOverlay : MonoBehaviour
 		GUILayout.Space(8f);
 		GUILayout.BeginHorizontal();
 		GUI.color = new Color(0.3f, 0.8f, 1f);
-		if (GUILayout.Button("📖 DUSMAN & MUTTEFIK REHBERI (ALMANAC) [B]", GUILayout.Height(48f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_almanac_btn", "ENEMY & ALLY ALMANAC [B]", "DUSMAN & MUTTEFIK REHBERI (ALMANAC) [B]"), GUILayout.Height(48f)))
 		{
 			SVZAlmanac.Toggle();
 		}
 		GUI.color = new Color(1f, 0.5f, 0.2f);
-		if (GUILayout.Button("⚔️ 1v1 PvP COK OYUNCULU MOD [M]", GUILayout.Height(48f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_mp_btn", "1v1 PvP MULTIPLAYER MODE [M]", "1v1 PvP COK OYUNCULU MOD [M]"), GUILayout.Height(48f)))
 		{
 			SVZMultiplayerUI.ToggleLobby();
 		}
@@ -489,22 +521,22 @@ public class DevCheatOverlay : MonoBehaviour
 		GUILayout.EndHorizontal();
 
 		GUILayout.Space(12f);
-		GUILayout.Box("⛩️ SINTO RAHIBI (PRIEST) SAPKA CANLI ROTASYON AYARI (LIVE TUNER)\n" +
-			"Guncel Aci: " + CharacterModelController.sPriestHatEulerOffset +
-			"\n(Sapkayi kafasinda tam yatay/duz yapacak acilari canli olarak ayarlayabilirsiniz)");
+		GUILayout.Box(LocalizationManager.T(
+			"SHINTO PRIEST HAT LIVE ROTATION TUNER\nCurrent Angle: " + CharacterModelController.sPriestHatEulerOffset + "\n(Adjust angles live so the hat sits level on his head)",
+			"SINTO RAHIBI (PRIEST) SAPKA CANLI ROTASYON AYARI (LIVE TUNER)\nGuncel Aci: " + CharacterModelController.sPriestHatEulerOffset + "\n(Sapkayi kafasinda tam yatay/duz yapacak acilari canli olarak ayarlayabilirsiniz)"));
 
 		GUILayout.BeginHorizontal();
 		GUI.color = new Color(0.3f, 1f, 0.5f);
-		if (GUILayout.Button("VARSAYILAN DUZ (0, 0, 0)", GUILayout.Height(36f)))
+		if (GUILayout.Button(LocalizationManager.T("DEFAULT FLAT (0, 0, 0)", "VARSAYILAN DUZ (0, 0, 0)"), GUILayout.Height(36f)))
 		{
 			CharacterModelController.SavePriestHatConfig(Vector3.zero);
-			mStatus = "Priest sapkasi duz ayarlandi: (0, 0, 0)";
+			mStatus = LocalizationManager.T("Priest hat reset to flat: (0, 0, 0)", "Priest sapkasi duz ayarlandi: (0, 0, 0)");
 		}
 		GUI.color = new Color(0.9f, 0.9f, 0.4f);
-		if (GUILayout.Button("SIFIRLA (0, 0, 0)", GUILayout.Height(36f)))
+		if (GUILayout.Button(LocalizationManager.T("RESET (0, 0, 0)", "SIFIRLA (0, 0, 0)"), GUILayout.Height(36f)))
 		{
 			CharacterModelController.SavePriestHatConfig(Vector3.zero);
-			mStatus = "Priest sapkasi sifirlandi: (0, 0, 0)";
+			mStatus = LocalizationManager.T("Priest hat reset: (0, 0, 0)", "Priest sapkasi sifirlandi: (0, 0, 0)");
 		}
 		GUI.color = new Color(0.5f, 0.8f, 1f);
 		if (GUILayout.Button("X 90°", GUILayout.Height(36f)))
@@ -552,10 +584,10 @@ public class DevCheatOverlay : MonoBehaviour
 		GUILayout.EndHorizontal();
 
 		GUILayout.Space(14f);
-		GUILayout.Label("TEK TIKLA MEGA HILELER (ONE-CLICK MEGA UNLOCKS)");
+		GUILayout.Label(LocalizationManager.T("ONE-CLICK MEGA UNLOCKS", "TEK TIKLA MEGA HILELER (ONE-CLICK MEGA UNLOCKS)"));
 
 		GUI.color = new Color(0.3f, 1f, 0.6f);
-		if (GUILayout.Button("TUM OYUNU VE HER SEYI AC (WAVE 1-100 & MAGAZA)", GUILayout.Height(58f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_unlock_all", "UNLOCK EVERYTHING (WAVES 1-100 & FULL STORE)", "TUM OYUNU VE HER SEYI AC (WAVE 1-100 & MAGAZA)"), GUILayout.Height(58f)))
 		{
 			UnlockModeProgressAndRestore("classic", kClassicTargetWave);
 			UnlockModeProgressAndRestore("zombies", kZombiesTargetWave);
@@ -563,28 +595,28 @@ public class DevCheatOverlay : MonoBehaviour
 			UnlockStoreForMode("zombies");
 			UnlockSpecialHelpersForMode("classic");
 			UnlockSpecialHelpersForMode("zombies");
-			SaveProfile("Tum oyun basariyla acildi: Classic & Zombies Wave 1-100 ve tum magaza!");
-			mStatus = "TUM OYUN ACILDI! Classic 1-100, Zombies 1-100, ozel kahramanlar ve magaza hazir!";
+			SaveProfile(LocalizationManager.T("All content unlocked: Classic & Zombies Waves 1-100 and full store!", "Tum oyun basariyla acildi: Classic & Zombies Wave 1-100 ve tum magaza!"));
+			mStatus = LocalizationManager.T("EVERYTHING UNLOCKED! Classic 1-100, Zombies 1-100, special heroes, and store ready!", "TUM OYUN ACILDI! Classic 1-100, Zombies 1-100, ozel kahramanlar ve magaza hazir!");
 		}
 
 		GUI.color = new Color(0.4f, 0.8f, 1f);
-		if (GUILayout.Button("TUM BIRLIK, YETENEK VE GELISTIRMELERI MAX SEVIYE YAP", GUILayout.Height(58f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_max_all", "MAX ALL ALLIES, ABILITIES & UPGRADES", "TUM BIRLIK, YETENEK VE GELISTIRMELERI MAX SEVIYE YAP"), GUILayout.Height(58f)))
 		{
 			MaxCoreUpgradesForMode("classic");
 			MaxCoreUpgradesForMode("zombies");
 			SetCurrentModeStoreItemsToLevel(true);
-			SaveProfile("Tum gelistirmeler max seviyeye cikarildi!");
-			mStatus = "TUM GELISTIRMELER MAX! Silahlar, kale, can ve tum birlikler zirvede!";
+			SaveProfile(LocalizationManager.T("All upgrades maxed out!", "Tum gelistirmeler max seviyeye cikarildi!"));
+			mStatus = LocalizationManager.T("ALL UPGRADES MAXED! Weapons, gate, health, and all units at max level!", "TUM GELISTIRMELER MAX! Silahlar, kale, can ve tum birlikler zirvede!");
 		}
 
 		GUI.color = new Color(1f, 0.85f, 0.2f);
-		if (GUILayout.Button("ZENGIN OL (+10,000,000 Altin, +500,000 Elmas, +9,999 Pachinko)", GUILayout.Height(58f)))
+		if (GUILayout.Button(LocalizationManager.L("mod_get_rich", "GET RICH (+10,000,000 Coins, +500,000 Gems, +9,999 Pachinko)", "ZENGIN OL (+10,000,000 Altin, +500,000 Elmas, +9,999 Pachinko)"), GUILayout.Height(58f)))
 		{
 			Singleton<Profile>.instance.coins = Mathf.Min(kMaxResource, Singleton<Profile>.instance.coins + 10000000);
 			Singleton<Profile>.instance.gems = Mathf.Min(kMaxResource, Singleton<Profile>.instance.gems + 500000);
 			Singleton<Profile>.instance.pachinkoBalls = Mathf.Min(kMaxResource, Singleton<Profile>.instance.pachinkoBalls + 9999);
-			SaveProfile("10M Altin, 500K Elmas ve 9999 Pachinko eklendi!");
-			mStatus = "ZENGIN OLUNDU! +10,000,000 Altin, +500,000 Elmas, +9,999 Pachinko verildi!";
+			SaveProfile(LocalizationManager.T("Added 10M Coins, 500K Gems, and 9999 Pachinko balls!", "10M Altin, 500K Elmas ve 9999 Pachinko eklendi!"));
+			mStatus = LocalizationManager.T("RICH MODE! +10,000,000 Coins, +500,000 Gems, +9,999 Pachinko granted!", "ZENGIN OLUNDU! +10,000,000 Altin, +500,000 Elmas, +9,999 Pachinko verildi!");
 		}
 		GUI.color = Color.white;
 	}

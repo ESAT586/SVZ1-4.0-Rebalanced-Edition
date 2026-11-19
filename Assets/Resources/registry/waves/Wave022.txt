@@ -108,12 +108,9 @@ scene = InGame_winternight
 	H_Zombie_Bow
 	1,1
 	Taiko_Drummer
-	
-	
-	
-	
-
-
-	
-	
-	
+	/ SVZ2WaveAdditions
+	Amanojaku
+	1,1
+	Onmoraki
+	1,1
+	Akaname

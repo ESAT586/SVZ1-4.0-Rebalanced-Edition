@@ -40,7 +40,7 @@ public class OpponentHero : Enemy
     private GameObject mLifeStealFX;
     private bool mFacingLeft = true;
     private bool mIsZombieHero = true;
-    private string mDisplayName = "Zombi Kahramanı";
+    private string mDisplayName = "Zombie Hero";
 
     public string DisplayName { get { return mDisplayName; } }
     public bool IsDead { get { return health <= 0f; } }
@@ -54,7 +54,9 @@ public class OpponentHero : Enemy
 
         bool isZombie = modelPath.IndexOf("Zombie", StringComparison.OrdinalIgnoreCase) >= 0;
         mIsZombieHero = isZombie;
-        mDisplayName = isZombie ? "Zombi Kahramanı (Zombie Hero)" : "Samuray Şampiyonu (Samurai Hero)";
+        mDisplayName = isZombie
+            ? LocalizationManager.T("Zombie Hero", "Zombi Kahramani")
+            : LocalizationManager.T("Samurai Champion", "Samuray Sampiyonu");
 
         if (base.controller != null)
         {
@@ -80,7 +82,7 @@ public class OpponentHero : Enemy
         else
         {
             GameObject s1 = Resources.Load("Props/PFKatanaUpgrade3") as GameObject;
-            if (s1 == null) s1 = Resources.Load("Props/PFHeroSword01") as GameObject;
+            if (s1 == null) s1 = Resources.Load("Props/PFKatana") as GameObject;
             if (s1 != null) swords.Add(s1);
         }
         base.meleeWeaponPrefabAsList = swords;
@@ -738,7 +740,9 @@ public class OpponentHero : Enemy
                 mTrampleEvadeCooldown = 7.0f;
                 ActivateShadowShield(2.8f);
                 TriggerDodgeBackpedal(0.95f);
-                SVZMultiplayerManager.AddChatMessage("[ZOMBİ KAHRAMANI]", "💀 'Süvari hücumu mu?! Gölge Kalkanı ile savuşturuyorum!'");
+                SVZMultiplayerManager.AddChatMessage(
+                    LocalizationManager.T("[ZOMBIE HERO]", "[ZOMBI KAHRAMANI]"),
+                    LocalizationManager.T("Cavalry charge?! Dodging with Shadow Shield!", "Suvari hucumu mu?! Golge Kalkani ile savusturuyorum!"));
                 return;
             }
         }

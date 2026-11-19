@@ -2014,7 +2014,7 @@ AnimationClip:
     path: farmerupgrade:farmer_Skeleton_grp/farmerupgrade:farmer_spine_low_jnt/farmerupgrade:farmer_hip_jnt/farmerupgrade:skirt_right
   m_FloatCurves: []
   m_SampleRate: 30
-  m_WrapMode: 0
+  m_WrapMode: 2
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}

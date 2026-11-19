@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Debug = UnityEngine.Debug;
@@ -314,24 +315,137 @@ public class SavedData
 
 	public T ConvertFromString<T>(string val)
 	{
-		TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
-		if (converter != null)
+		System.Type targetType = typeof(T);
+		if (targetType == typeof(string))
 		{
-			return (T)converter.ConvertFromString(val);
+			return (T)(object)(val ?? string.Empty);
 		}
-		Debug.Log("WARNING: Could not create a TypeDescriptor converter.");
+		string trimmed = (val == null) ? string.Empty : val.Trim();
+		if (targetType == typeof(int))
+		{
+			int intVal;
+			if (trimmed.Length > 0 && int.TryParse(trimmed, NumberStyles.Integer, CultureInfo.InvariantCulture, out intVal))
+			{
+				return (T)(object)intVal;
+			}
+			return default(T);
+		}
+		if (targetType == typeof(bool))
+		{
+			bool boolVal;
+			if (trimmed.Length > 0 && bool.TryParse(trimmed, out boolVal))
+			{
+				return (T)(object)boolVal;
+			}
+			if (trimmed == "1")
+			{
+				return (T)(object)true;
+			}
+			return default(T);
+		}
+		if (targetType == typeof(float))
+		{
+			float floatVal;
+			if (trimmed.Length > 0 && float.TryParse(trimmed, NumberStyles.Float, CultureInfo.InvariantCulture, out floatVal))
+			{
+				return (T)(object)floatVal;
+			}
+			return default(T);
+		}
+		if (targetType == typeof(double))
+		{
+			double doubleVal;
+			if (trimmed.Length > 0 && double.TryParse(trimmed, NumberStyles.Float, CultureInfo.InvariantCulture, out doubleVal))
+			{
+				return (T)(object)doubleVal;
+			}
+			return default(T);
+		}
+		if (targetType == typeof(long))
+		{
+			long longVal;
+			if (trimmed.Length > 0 && long.TryParse(trimmed, NumberStyles.Integer, CultureInfo.InvariantCulture, out longVal))
+			{
+				return (T)(object)longVal;
+			}
+			return default(T);
+		}
+		if (targetType.IsEnum)
+		{
+			if (trimmed.Length > 0)
+			{
+				try
+				{
+					return (T)System.Enum.Parse(targetType, trimmed, true);
+				}
+				catch (System.Exception)
+				{
+				}
+			}
+			return default(T);
+		}
+		try
+		{
+			TypeConverter converter = TypeDescriptor.GetConverter(targetType);
+			if (converter != null)
+			{
+				return (T)converter.ConvertFromString(val);
+			}
+		}
+		catch (System.Exception ex)
+		{
+			Debug.LogWarning("[SavedData] TypeDescriptor ConvertFromString fallback failed for " + targetType.FullName + ": " + ex.Message);
+		}
 		return default(T);
 	}
 
 	public string ConvertToString<T>(T val)
 	{
-		TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
-		if (converter != null)
+		if (val == null)
 		{
-			return converter.ConvertToString(val);
+			return string.Empty;
 		}
-		Debug.Log("WARNING: Could not create a TypeDescriptor converter.");
-		return string.Empty;
+		System.Type targetType = typeof(T);
+		if (targetType == typeof(string))
+		{
+			return (string)(object)val;
+		}
+		if (targetType == typeof(bool))
+		{
+			return ((bool)(object)val).ToString();
+		}
+		if (targetType == typeof(int))
+		{
+			return ((int)(object)val).ToString(CultureInfo.InvariantCulture);
+		}
+		if (targetType == typeof(float))
+		{
+			return ((float)(object)val).ToString(CultureInfo.InvariantCulture);
+		}
+		if (targetType == typeof(double))
+		{
+			return ((double)(object)val).ToString(CultureInfo.InvariantCulture);
+		}
+		if (targetType == typeof(long))
+		{
+			return ((long)(object)val).ToString(CultureInfo.InvariantCulture);
+		}
+		if (targetType.IsEnum)
+		{
+			return val.ToString();
+		}
+		try
+		{
+			TypeConverter converter = TypeDescriptor.GetConverter(targetType);
+			if (converter != null)
+			{
+				return converter.ConvertToString(val);
+			}
+		}
+		catch (System.Exception)
+		{
+		}
+		return val.ToString();
 	}
 
 	public byte[] GetAsByteArray()

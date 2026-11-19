@@ -87,3 +87,5 @@ desktop.ini.meta
 /compare_result_utf8.txt
 /unity2017_files.txt
 /unity6000_files.txt
+/Exports/
+/NativePlugins/AndroidCompat/build/

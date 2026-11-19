@@ -1,0 +1,7 @@
+<linker>
+    <assembly fullname="System">
+        <namespace fullname="System.ComponentModel" preserve="all" />
+    </assembly>
+    <assembly fullname="Assembly-CSharp" preserve="all" />
+    <assembly fullname="Assembly-CSharp-firstpass" preserve="all" />
+</linker>

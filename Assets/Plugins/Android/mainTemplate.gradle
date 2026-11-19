@@ -22,6 +22,40 @@ allprojects {
    }
 }
 
+def svzCompileSdk = 33
+def svzBuildTools = '28.0.3'
+def svzSdkDir = null
+def svzLocalProps = rootProject.file('local.properties')
+if (svzLocalProps.exists()) {
+    def props = new Properties()
+    svzLocalProps.withInputStream { props.load(it) }
+    svzSdkDir = props.getProperty('sdk.dir')
+}
+if (!svzSdkDir) {
+    svzSdkDir = System.getenv('ANDROID_HOME') ?: System.getenv('ANDROID_SDK_ROOT')
+}
+if (!svzSdkDir && System.getenv('LOCALAPPDATA')) {
+    svzSdkDir = new File(System.getenv('LOCALAPPDATA'), 'Android/Sdk').absolutePath
+}
+if (svzSdkDir) {
+    def sdkRoot = new File(svzSdkDir)
+    def platform36 = new File(sdkRoot, 'platforms/android-36')
+    def btCandidates = ['36.1.0', '36.0.0', '37.0.0']
+    if (platform36.exists()) {
+        for (bt in btCandidates) {
+            def aaptExe = new File(sdkRoot, "build-tools/${bt}/aapt2.exe")
+            def aaptBin = new File(sdkRoot, "build-tools/${bt}/aapt2")
+            def aaptFile = aaptExe.exists() ? aaptExe : (aaptBin.exists() ? aaptBin : null)
+            if (aaptFile != null) {
+                ext['android.aapt2FromMavenOverride'] = aaptFile.absolutePath
+                svzCompileSdk = 36
+                svzBuildTools = bt
+                break
+            }
+        }
+    }
+}
+
 apply plugin: 'com.android.application'
 
 dependencies {
@@ -29,8 +63,8 @@ dependencies {
 **DEPS**}
 
 android {
-	compileSdkVersion 33
-	buildToolsVersion '28.0.3'
+	compileSdkVersion svzCompileSdk
+	buildToolsVersion svzBuildTools
 
 	defaultConfig {
 		minSdkVersion **MINSDKVERSION**
@@ -52,6 +86,10 @@ android {
 	}
 
 **SIGN**
+	signingConfigs.all {
+		v1SigningEnabled true
+		v2SigningEnabled true
+	}
 	buildTypes {
   		debug {
  			minifyEnabled **MINIFY_DEBUG**

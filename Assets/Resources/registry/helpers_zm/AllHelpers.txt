@@ -38,3 +38,19 @@ JurogumoBaby
 ZombieMelee_Summon
 
 Nobusuma
+IronButcher
+Akaname
+ZombieSplit
+ZombieLegs
+Amanojaku
+Harionago
+Onmoraki
+NioGuardian
+ShutenDoji
+BigChochinobake
+ShutenDojiKin
+OnmorakiAlt
+EliteCrawlingTorso
+RedCrawlingBody
+RedCrawlingLegs
+EliteNobusuma

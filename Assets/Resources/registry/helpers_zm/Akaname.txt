@@ -1,0 +1,97 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Akaname
+desc = Fast toxic demon flanker.
+prefab = Characters/PFAkaname
+HUDIcon = Sprites/Icons/enemy_akaname
+waveToUnlock = 1
+resourcesCost = 12.0
+cooldownTimer = 2.0
+attackFrequency = 1.6
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 600,0
+	health = 380
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 110
+	meleeDamage = 36
+	knockbackPower = 15
+	knockbackResistance = 20
+
+[002]
+	cost = 1400,0
+	health = 502
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 110
+	meleeDamage = 46
+	knockbackPower = 17
+	knockbackResistance = 23
+
+[003]
+	cost = 2800,0
+	health = 662
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 110
+	meleeDamage = 59
+	knockbackPower = 19
+	knockbackResistance = 26
+
+[004]
+	cost = 5500,0
+	health = 874
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 110
+	meleeDamage = 75
+	knockbackPower = 21
+	knockbackResistance = 29
+
+[005]
+	cost = 9500,0
+	health = 1154
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 110
+	meleeDamage = 97
+	knockbackPower = 23
+	knockbackResistance = 32
+
+[006]
+	cost = 0,10
+	health = 1523
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 110
+	meleeDamage = 124
+	knockbackPower = 25
+	knockbackResistance = 35
+
+[007]
+	cost = 0,16
+	health = 2010
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 110
+	meleeDamage = 158
+	knockbackPower = 27
+	knockbackResistance = 38
+
+[008]
+	cost = 0,22
+	health = 2653
+	speedMin = 130
+	speedMax = 130
+	meleeRange = 110
+	meleeDamage = 203
+	knockbackPower = 29
+	knockbackResistance = 41

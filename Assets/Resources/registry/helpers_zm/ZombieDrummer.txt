@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = Zombie Drummer
-desc = Zombie Drummer 
+displayName = @helper_zombiedrummer
+desc = @helper_zombiedrummer_desc
 prefab = Characters/PFLzombietaiko
 HUDIcon = Sprites/Icons/enemy_zombie_drummer
 waveToUnlock = 5

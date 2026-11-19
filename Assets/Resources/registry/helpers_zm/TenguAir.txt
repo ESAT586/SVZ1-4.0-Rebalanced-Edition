@@ -3,14 +3,14 @@
 / General
 /--------------------------------------------------
 
-displayName = Tengu Air
-desc = Tengu flies, attacks and distracts enemies
+displayName = @helper_tenguair
+desc = @helper_tengu_desc
 prefab = Characters/PFTengushingenair
 HUDIcon = Sprites/Icons/enemy_tenguair
 waveToUnlock = 23
 resourcesCost = 55
 cooldownTimer = 10.0
-attackFrequency = 1.0
+attackFrequency = 1.5
 flying = true
 autoHealthRecovery = 0
 
@@ -21,100 +21,100 @@ autoHealthRecovery = 0
 
 [001]
 	cost = 2500,0
-	health = 1800
+	health = 1200
 	speedMin = 130
 	speedMax = 130
 	meleeRange = 175
-	meleeDamage = 75
+	meleeDamage = 60
 	knockbackPower = 35
 	knockbackResistance = 70
 
 [002]
 	cost = 4000,0
-	health = 2200
+	health = 1500
 	speedMin = 130
 	speedMax = 130
 	meleeRange = 175
-	meleeDamage = 92
+	meleeDamage = 75
 	knockbackPower = 35
 	knockbackResistance = 75
 
 [003]
 	cost = 6500,0
-	health = 2650
+	health = 1800
 	speedMin = 130
 	speedMax = 130
 	meleeRange = 175
-	meleeDamage = 112
+	meleeDamage = 90
 	knockbackPower = 38
 	knockbackResistance = 78
 
 [004]
 	cost = 10000,0
-	health = 3150
+	health = 2150
 	speedMin = 135
 	speedMax = 135
 	meleeRange = 175
-	meleeDamage = 134
+	meleeDamage = 106
 	knockbackPower = 38
 	knockbackResistance = 82
 
 [005]
 	cost = 15000,0
-	health = 3700
+	health = 2500
 	speedMin = 135
 	speedMax = 135
 	meleeRange = 175
-	meleeDamage = 158
+	meleeDamage = 124
 	knockbackPower = 40
 	knockbackResistance = 85
 
 [006]
 	cost = 0,14
-	health = 4250
+	health = 2850
 	speedMin = 135
 	speedMax = 135
 	meleeRange = 175
-	meleeDamage = 184
+	meleeDamage = 142
 	knockbackPower = 40
 	knockbackResistance = 88
 
 [007]
 	cost = 0,20
-	health = 4800
+	health = 3250
 	speedMin = 135
 	speedMax = 135
 	meleeRange = 175
-	meleeDamage = 210
+	meleeDamage = 162
 	knockbackPower = 42
 	knockbackResistance = 90
 
 [008]
 	cost = 0,26
-	health = 5400
+	health = 3650
 	speedMin = 140
 	speedMax = 140
 	meleeRange = 175
-	meleeDamage = 235
+	meleeDamage = 182
 	knockbackPower = 42
 	knockbackResistance = 94
 
 [009]
 	cost = 0,32
-	health = 6000
+	health = 4050
 	speedMin = 140
 	speedMax = 140
 	meleeRange = 175
-	meleeDamage = 260
+	meleeDamage = 202
 	knockbackPower = 45
 	knockbackResistance = 97
 
 [010]
 	cost = 0,40
-	health = 6600
+	health = 4500
 	speedMin = 140
 	speedMax = 140
 	meleeRange = 175
-	meleeDamage = 285
+	meleeDamage = 225
 	knockbackPower = 45
 	knockbackResistance = 100

@@ -622,6 +622,10 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 
 	private void UpdateDelayTimer()
 	{
+		if (SVZCharacterLabController.IsLabWavePaused)
+		{
+			return;
+		}
 		if (isDone)
 		{
 			return;
@@ -776,7 +780,7 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
         bool result = false;
         bool.TryParse(data["flying"], out result);
         float result2 = 0f;
-        float.TryParse(data["bowRange"], out result2);
+        float.TryParse(data["bowRange"], NumberStyles.Float, CultureInfo.InvariantCulture, out result2);
         CharactersManager.ELanePreference preference = CharactersManager.ELanePreference.any;
         if (data.hasAttribute("lane"))
         {
@@ -846,7 +850,7 @@ public class WaveManager : WeakGlobalInstance<WaveManager>
 		e.bowDamage *= mLevelMultipliers.enemiesDamages;
 		if (WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm == "peace" || WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm.Contains("+peace"))
 		{
-			float num3 = float.Parse(Singleton<CharmsDatabase>.instance.GetAttribute(WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm, "damageMultiplier"));
+			float num3 = float.Parse(Singleton<CharmsDatabase>.instance.GetAttribute(WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm, "damageMultiplier"), CultureInfo.InvariantCulture);
 			e.meleeDamage *= num3;
 			e.bowDamage *= num3;
 		}

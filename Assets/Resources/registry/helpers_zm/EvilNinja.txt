@@ -1,14 +1,14 @@
 /--------------------------------------------------
 
-displayName = Evil Ninja
-desc = Evil Ninja
+displayName = @helper_evilninja
+desc = @helper_evilninja_desc
 prefab = Characters/PFFemalewarriorZombie
 HUDIcon = Sprites/Icons/enemy_assasin
 weaponMeleePrefab = Props/PFFarmerssword
 waveToUnlock = 24
 resourcesCost = 10.0
 cooldownTimer = 1.5
-attackFrequency = 1.4
+attackFrequency = 1.5
 usesBladeWeapon = true
 availableAtWave = 24
 
@@ -19,130 +19,130 @@ availableAtWave = 24
 
 [001]
 	cost = 500,0
-	health = 65
-	speedMin = 205
-	speedMax = 205
+	health = 50
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 20
+	meleeDamage = 18
 	knockbackPower = 8
 	knockbackResistance = 10
-	bowRange = 360
+	bowRange = 350
 	bowDamage = 4
 	projectile = Shuriken
 
 [002]
 	cost = 2000,0
-	health = 95
-	speedMin = 205
-	speedMax = 205
+	health = 72
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 30
+	meleeDamage = 26
 	knockbackPower = 8
 	knockbackResistance = 10
-	bowRange = 360
+	bowRange = 350
 	bowDamage = 6
 	projectile = Shuriken
 
 [003]
 	cost = 3550,0
-	health = 140
-	speedMin = 205
-	speedMax = 205
+	health = 105
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 45
+	meleeDamage = 38
 	knockbackPower = 8
 	knockbackResistance = 10
-	bowRange = 360
+	bowRange = 350
 	bowDamage = 8
 	projectile = Shuriken
 
 [004]
 	cost = 6000,0
-	health = 205
-	speedMin = 205
-	speedMax = 205
+	health = 150
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 65
+	meleeDamage = 55
 	knockbackPower = 10
 	knockbackResistance = 12
-	bowRange = 360
+	bowRange = 350
 	bowDamage = 11
 	projectile = Shuriken
 
 [005]
 	cost = 9550,0
-	health = 295
-	speedMin = 205
-	speedMax = 205
+	health = 210
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 95
+	meleeDamage = 78
 	knockbackPower = 10
 	knockbackResistance = 12
-	bowRange = 360
+	bowRange = 350
 	bowDamage = 14
 	projectile = Shuriken
 
 [006]
 	cost = 0,12
-	health = 420
-	speedMin = 205
-	speedMax = 205
+	health = 295
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 135
+	meleeDamage = 110
 	knockbackPower = 10
 	knockbackResistance = 15
-	bowRange = 360
+	bowRange = 350
 	bowDamage = 18
 	projectile = Shuriken
 
 [007]
 	cost = 0,18
-	health = 590
-	speedMin = 205
-	speedMax = 205
+	health = 410
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 185
+	meleeDamage = 150
 	knockbackPower = 12
 	knockbackResistance = 15
-	bowRange = 360
-	bowDamage = 22
+	bowRange = 350
+	bowDamage = 24
 	projectile = Shuriken
 
 [008]
 	cost = 0,22
-	health = 800
-	speedMin = 205
-	speedMax = 205
+	health = 560
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 245
+	meleeDamage = 198
 	knockbackPower = 12
 	knockbackResistance = 18
-	bowRange = 360
-	bowDamage = 26
+	bowRange = 350
+	bowDamage = 31
 	projectile = Shuriken
 
 [009]
 	cost = 0,26
-	health = 1050
-	speedMin = 205
-	speedMax = 205
+	health = 740
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 315
+	meleeDamage = 258
 	knockbackPower = 14
 	knockbackResistance = 18
-	bowRange = 360
-	bowDamage = 30
+	bowRange = 350
+	bowDamage = 40
 	projectile = Shuriken
 
 [010]
 	cost = 0,30
-	health = 1350
-	speedMin = 205
-	speedMax = 205
+	health = 950
+	speedMin = 200
+	speedMax = 200
 	meleeRange = 100
-	meleeDamage = 390
+	meleeDamage = 330
 	knockbackPower = 15
 	knockbackResistance = 20
-	bowRange = 360
-	bowDamage = 35
+	bowRange = 350
+	bowDamage = 50
 	projectile = Shuriken

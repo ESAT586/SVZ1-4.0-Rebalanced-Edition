@@ -94,6 +94,27 @@ public class AutoPaperdoll : MonoBehaviour
 		theObject.transform.position = theJointData.joint.position;
 		theObject.transform.rotation = theJointData.joint.rotation;
 		Vector3 lossy = theJointData.joint.lossyScale;
+		if (Mathf.Abs(lossy.y) >= 20f)
+		{
+			bool isMeterScaleMesh = false;
+			MeshFilter mf = theObject.GetComponentInChildren<MeshFilter>();
+			if (mf != null && mf.sharedMesh != null && mf.sharedMesh.bounds.size.magnitude < 10f)
+			{
+				isMeterScaleMesh = true;
+			}
+			else
+			{
+				SkinnedMeshRenderer smr = theObject.GetComponentInChildren<SkinnedMeshRenderer>();
+				if (smr != null && smr.sharedMesh != null && smr.sharedMesh.bounds.size.magnitude < 10f)
+				{
+					isMeterScaleMesh = true;
+				}
+			}
+			if (!isMeterScaleMesh)
+			{
+				lossy = base.transform.lossyScale;
+			}
+		}
 		theObject.transform.localScale = new Vector3(Mathf.Abs(lossy.x), Mathf.Abs(lossy.y), Mathf.Abs(lossy.z));
 		ApplyJointOffset(theObject, theJointData.transformOffset);
 	}

@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = Zombie Rifleman
-desc = Zombie Rifleman Strong Shot
+displayName = @helper_zombierifleman
+desc = @helper_zombierifleman_desc
 prefab = Characters/PFSamuraiRiflemanZombie
 HUDIcon = Sprites/Icons/enemy_zombierifleman
 weaponRangedPrefab = Props/PFRifle

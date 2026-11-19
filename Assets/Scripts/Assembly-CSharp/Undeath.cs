@@ -28,7 +28,7 @@ public class Undeath
 			{
 				return 0f;
 			}
-			return float.Parse(sDFTreeNode2["regenerateHealth"]);
+			return float.Parse(sDFTreeNode2["regenerateHealth"], System.Globalization.CultureInfo.InvariantCulture);
 		}
 	}
 }

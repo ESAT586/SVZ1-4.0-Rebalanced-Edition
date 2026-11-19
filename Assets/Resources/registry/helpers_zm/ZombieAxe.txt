@@ -2,8 +2,8 @@
 / General
 /--------------------------------------------------
 
-displayName = Zombie Axe
-desc = Zombie Axe
+displayName = @helper_zombieaxe
+desc = @helper_zombieaxe_desc
 prefab = Characters/PFLzombieAxe
 HUDIcon = Sprites/Icons/enemy_zombieaxe
 weaponMeleePrefab = Props/PFAxe

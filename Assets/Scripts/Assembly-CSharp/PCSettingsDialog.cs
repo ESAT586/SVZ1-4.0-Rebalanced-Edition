@@ -41,6 +41,9 @@ public class PCSettingsDialog : IDialog
     private float _lastProcessedTime = 0f;
     private string mExportBtnFeedback = string.Empty;
     private string mImportBtnFeedback = string.Empty;
+    private string mInitialLanguage = string.Empty;
+    private bool mReloadMainMenuOnDestroy = false;
+    private bool mDestroyed = false;
 
     public bool isDone { get { return mDone && !mLayout.isAnimating; } }
     public bool isBlocking { get { return true; } }
@@ -111,7 +114,32 @@ public class PCSettingsDialog : IDialog
 
         SetTab(0);
         ApplyAllSettings();
+        mInitialLanguage = LocalizationManager.instance.GetCurrentLanguage();
+        LocalizationManager.instance.OnLanguageChanged += OnLanguageChangedHandler;
         mLayout.AnimateIn();
+    }
+
+    private bool IsLayoutAlive()
+    {
+        if (mDestroyed || mLayout == null) return false;
+        if (!mLayout.Exists("settingsBg")) return false;
+        SUIWidget bg = mLayout["settingsBg"] as SUIWidget;
+        return bg != null && bg.gameObject != null;
+    }
+
+    private void OnLanguageChangedHandler(string newLang)
+    {
+        if (!IsLayoutAlive())
+        {
+            if (LocalizationManager.IsAlive())
+            {
+                LocalizationManager.instance.OnLanguageChanged -= OnLanguageChangedHandler;
+            }
+            mLayout = null;
+            mDestroyed = true;
+            return;
+        }
+        RefreshLabels();
     }
 
     // ════════════════════════════════════════════════════════════════════════
@@ -160,7 +188,7 @@ public class PCSettingsDialog : IDialog
         switch (widgetId)
         {
             case "langBtn":
-                LocalizationManager.instance.CycleLanguage();
+                LocalizationManager.OpenLanguagePicker();
                 break;
 
             case "qualityBtn":
@@ -264,7 +292,7 @@ public class PCSettingsDialog : IDialog
 
     public void Update()
     {
-        if (DevCheatOverlay.IsOpen)
+        if (!IsLayoutAlive() || DevCheatOverlay.IsOpen || LocalizationManager.IsPickerOpen)
         {
             return;
         }
@@ -296,6 +324,7 @@ public class PCSettingsDialog : IDialog
 
     private void RefreshLabels()
     {
+        if (!IsLayoutAlive()) return;
         bool tG = mSelectedTab == 0, tD = mSelectedTab == 1,
              tA = mSelectedTab == 2, tC = mSelectedTab == 3, tP = mSelectedTab == 4;
 
@@ -436,7 +465,11 @@ public class PCSettingsDialog : IDialog
 
     private void SetWidgetVisible(string id, bool visible)
     {
-        if (mLayout.Exists(id)) ((SUIWidget)mLayout[id]).visible = visible;
+        if (mLayout != null && mLayout.Exists(id))
+        {
+            SUIWidget w = mLayout[id] as SUIWidget;
+            if (w != null && w.gameObject != null) w.visible = visible;
+        }
     }
 
     private void ApplyResolution()
@@ -604,7 +637,40 @@ public class PCSettingsDialog : IDialog
         return bestIndex;
     }
 
-    public void Destroy() { mLayout.Destroy(); mLayout = null; }
+    public void Destroy()
+    {
+        mDestroyed = true;
+        if (LocalizationManager.IsAlive())
+        {
+            LocalizationManager.instance.OnLanguageChanged -= OnLanguageChangedHandler;
+        }
+        LocalizationManager.CloseLanguagePicker();
+        if (mLayout != null)
+        {
+            mLayout.Destroy();
+            mLayout = null;
+        }
+        if (mReloadMainMenuOnDestroy && WeakGlobalSceneBehavior<MainMenuImpl>.instance != null)
+        {
+            Singleton<MenusFlow>.instance.LoadScene("MainMenu");
+        }
+    }
 
-    private void Close() { SavePrefs(); mDone = true; mLayout.AnimateOut(); }
+    private void Close()
+    {
+        if (LocalizationManager.IsAlive())
+        {
+            LocalizationManager.instance.OnLanguageChanged -= OnLanguageChangedHandler;
+        }
+        LocalizationManager.CloseLanguagePicker();
+        SavePrefs();
+        mDone = true;
+        mLayout.AnimateOut();
+        if (LocalizationManager.IsAlive()
+            && LocalizationManager.instance.GetCurrentLanguage() != mInitialLanguage
+            && WeakGlobalSceneBehavior<MainMenuImpl>.instance != null)
+        {
+            mReloadMainMenuOnDestroy = true;
+        }
+    }
 }

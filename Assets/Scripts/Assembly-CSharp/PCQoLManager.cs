@@ -119,10 +119,10 @@ public class PCQoLManager : MonoBehaviour
     {
         switch (diff)
         {
-            case GameDifficulty.Kolay: return "<color=#55FF55>KOLAY</color>";
+            case GameDifficulty.Kolay: return LocalizationManager.T("<color=#55FF55>EASY</color>", "<color=#55FF55>KOLAY</color>");
             case GameDifficulty.Normal: return "<color=#FFEE55>NORMAL</color>";
-            case GameDifficulty.Zor: return "<color=#FF9933>ZOR</color>";
-            case GameDifficulty.Kabus: return "<color=#FF3333>KABUS (HELL)</color>";
+            case GameDifficulty.Zor: return LocalizationManager.T("<color=#FF9933>HARD</color>", "<color=#FF9933>ZOR</color>");
+            case GameDifficulty.Kabus: return LocalizationManager.T("<color=#FF3333>HELL</color>", "<color=#FF3333>KABUS (HELL)</color>");
             default: return "NORMAL";
         }
     }
@@ -279,7 +279,7 @@ public class PCQoLManager : MonoBehaviour
                     int collected = cMgr.CollectAll();
                     if (collected > 0 && Input.GetKeyDown(KeyCode.C))
                     {
-                        ShowToast(collected + " GANIMET TOPLANDI! [C]", 1.2f);
+                        ShowToast(collected + LocalizationManager.T(" LOOT COLLECTED! [C]", " GANIMET TOPLANDI! [C]"), 1.2f);
                     }
                 }
             }
@@ -310,7 +310,9 @@ public class PCQoLManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F3))
         {
             mShowAnalytics = !mShowAnalytics;
-            ShowToast(mShowAnalytics ? "SAVAS BILGISI: ACIK [F3]" : "SAVAS BILGISI: KAPALI [F3]");
+            ShowToast(mShowAnalytics
+                ? LocalizationManager.T("BATTLE INFO: ON [F3]", "SAVAS BILGISI: ACIK [F3]")
+                : LocalizationManager.T("BATTLE INFO: OFF [F3]", "SAVAS BILGISI: KAPALI [F3]"));
         }
 
         // 9. Quick Controls Help Overlay [H] Toggle
@@ -375,7 +377,7 @@ public class PCQoLManager : MonoBehaviour
             inGame.allAlliesInvincibleTimer = Mathf.Max(inGame.allAlliesInvincibleTimer, 0.35f);
         }
 
-        ShowToast("TAKTIKSEL ATILMA! [SHIFT]", 1.2f);
+        ShowToast(LocalizationManager.T("TACTICAL DASH! [SHIFT]", "TAKTIKSEL ATILMA! [SHIFT]"), 1.2f);
     }
 
     private void CycleBattleSpeed(InGameImpl inGame)
@@ -384,19 +386,21 @@ public class PCQoLManager : MonoBehaviour
         mSpeedIndex = (mSpeedIndex + 1) % sSpeedSteps.Length;
         mCurrentTargetSpeed = sSpeedSteps[mSpeedIndex];
         inGame.baseTimeScale = mCurrentTargetSpeed;
-        ShowToast("OYUN HIZI: " + mCurrentTargetSpeed.ToString("0.0") + "x");
+        ShowToast(LocalizationManager.T("GAME SPEED: ", "OYUN HIZI: ") + mCurrentTargetSpeed.ToString("0.0") + "x");
     }
 
     private void ToggleAutoSmithy()
     {
         mAutoSmithy = !mAutoSmithy;
-        ShowToast(mAutoSmithy ? "OTO-DEMIRCI: AKTIF" : "OTO-DEMIRCI: KAPALI");
+        ShowToast(mAutoSmithy
+            ? LocalizationManager.T("AUTO-SMITHY: ON", "OTO-DEMIRCI: AKTIF")
+            : LocalizationManager.T("AUTO-SMITHY: OFF", "OTO-DEMIRCI: KAPALI"));
     }
 
     private void CycleDifficultyWithToast()
     {
         CycleDifficulty();
-        ShowToast("ZORLUK MODU: " + GetDifficultyDisplayName(CurrentDifficulty));
+        ShowToast(LocalizationManager.T("DIFFICULTY: ", "ZORLUK MODU: ") + GetDifficultyDisplayName(CurrentDifficulty));
     }
 
     private void OpenSaveFolder()
@@ -409,11 +413,11 @@ public class PCQoLManager : MonoBehaviour
                 if (Directory.Exists(path))
                 {
                     System.Diagnostics.Process.Start("explorer.exe", path);
-                    ShowToast("SAVE KLASORU ACILDI [F4]");
+                    ShowToast(LocalizationManager.T("SAVE FOLDER OPENED [F4]", "SAVE KLASORU ACILDI [F4]"));
                 }
                 else
                 {
-                    ShowToast("Save klasoru bulunamadi!");
+                    ShowToast(LocalizationManager.T("Save folder not found!", "Save klasoru bulunamadi!"));
                 }
             }
             else
@@ -422,7 +426,7 @@ public class PCQoLManager : MonoBehaviour
                 {
                     GUIUtility.systemCopyBuffer = path;
                 }
-                ShowToast("Save yolu panoya kopyalandi (Ayarlar > Export Save)", 3.0f);
+                ShowToast(LocalizationManager.T("Save path copied to clipboard (Settings > Export Save)", "Save yolu panoya kopyalandi (Ayarlar > Export Save)"), 3.0f);
             }
         }
         catch (System.Exception ex)
@@ -455,10 +459,18 @@ public class PCQoLManager : MonoBehaviour
         Matrix4x4 prevMatrix = GUI.matrix;
         int oldLabelSize = GUI.skin.label.fontSize;
         int oldBtnSize = GUI.skin.button.fontSize;
+        Font oldLblFont = GUI.skin.label.font;
+        Font oldBtnFont = GUI.skin.button.font;
 
         try
         {
             GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(scale, scale, 1f));
+            Font dyn = LocalizationManager.GetDynamicOSFont(15);
+            if (dyn != null)
+            {
+                GUI.skin.label.font = dyn;
+                GUI.skin.button.font = dyn;
+            }
 
             // Draw Defeat Restart Prompt if player lost
             if (inGame != null && inGame.enemiesWon && !inGame.playerWon)
@@ -466,119 +478,37 @@ public class PCQoLManager : MonoBehaviour
                 DrawDefeatRestartUI(safeRect, isTouchDevice);
             }
 
-            // Draw Speed, Auto-Smithy, Dash, Difficulty & Touch Quick Controls in cutout-safe top-right during battle
-            if (isInBattle)
+            // Analytics Panel [F3]
+            if (isInBattle && mShowAnalytics)
             {
-                GUI.skin.label.fontSize = 14;
-                GUI.skin.button.fontSize = 13;
+                CharactersManager charMgr = WeakGlobalInstance<CharactersManager>.instance;
+                int allies = charMgr != null ? charMgr.helpersCount : 0;
+                int enemies = charMgr != null ? charMgr.enemiesCount : 0;
+                int coins = Singleton<Profile>.instance.coins;
+                int gems = Singleton<Profile>.instance.gems;
 
-                float panelWidth = isTouchDevice ? 255f : 270f;
-                float rowHeight = isTouchDevice ? 28f : 22f;
-                float pad = 6f;
-                int rowCount = isTouchDevice ? 5 : 4;
-                float panelHeight = pad * 2f + rowCount * (rowHeight + 2f);
-                Rect statusRect = new Rect(safeRect.xMax - panelWidth - 10f, safeRect.y + 8f, panelWidth, panelHeight);
+                float aWidth = 270f;
+                float aHeight = 112f;
+                Rect aRect = new Rect(safeRect.xMax - aWidth - 10f, safeRect.y + 8f, aWidth, aHeight);
 
-                GUI.color = new Color(0.04f, 0.04f, 0.06f, 0.86f);
-                GUI.DrawTexture(statusRect, Texture2D.whiteTexture);
+                GUI.color = new Color(0.05f, 0.05f, 0.08f, 0.88f);
+                GUI.DrawTexture(aRect, Texture2D.whiteTexture);
                 GUI.color = Color.white;
 
-                GUIStyle rowBtnStyle = new GUIStyle(GUI.skin.button);
-                rowBtnStyle.richText = true;
-                rowBtnStyle.alignment = TextAnchor.MiddleLeft;
-                rowBtnStyle.fontSize = isTouchDevice ? 13 : 12;
+                GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
+                labelStyle.richText = true;
+                labelStyle.alignment = TextAnchor.MiddleLeft;
+                labelStyle.fontSize = 13;
 
-                string speedKey = isTouchDevice ? "" : " <color=#AAAAAA>[TAB]</color>";
-                string smithyKey = isTouchDevice ? "" : " <color=#AAAAAA>[U]</color>";
-                string dashKey = isTouchDevice ? "" : " <color=#AAAAAA>[SHIFT]</color>";
-                string diffKey = isTouchDevice ? "" : " <color=#AAAAAA>[F2]</color>";
+                string aText = string.Format(
+                    LocalizationManager.T(
+                        "<b>[BATTLE INFO]</b>\nAllies: <color=#55FFFF>{0}</color> | Enemies: <color=#FF5555>{1}</color>\nCoins: <color=#FFEE55>{2}</color> | Gems: <color=#FF55FF>{3}</color>\n<size=11><color=#88CCFF>{4}</color></size>",
+                        "<b>[SAVAS BILGISI]</b>\nMuttefik: <color=#55FFFF>{0}</color> | Dusman: <color=#FF5555>{1}</color>\nAltin: <color=#FFEE55>{2}</color> | Elmas: <color=#FF55FF>{3}</color>\n<size=11><color=#88CCFF>{4}</color></size>"
+                    ),
+                    allies, enemies, coins, gems, SVZDeviceCompatibility.AndroidVersionLabel
+                );
 
-                string speedText = string.Format(" Hiz: <color=#FFEE55>{0:0.0}x</color>{1}", mCurrentTargetSpeed, speedKey);
-                string autoText = mAutoSmithy
-                    ? (" Oto-Demirci: <color=#55FF55>ACIK</color>" + smithyKey)
-                    : (" Oto-Demirci: <color=#999999>KAPALI</color>" + smithyKey);
-                string dashText = mDashCooldown <= 0f
-                    ? (" Atilma: <color=#55FFFF>HAZIR</color>" + dashKey)
-                    : string.Format(" Atilma: <color=#FFAA55>{0:0.0}s</color>", mDashCooldown);
-                string diffText = string.Format(" Zorluk: {0}{1}", GetDifficultyDisplayName(CurrentDifficulty), diffKey);
-
-                float ry = statusRect.y + pad;
-                float rx = statusRect.x + pad;
-                float rw = panelWidth - pad * 2f;
-
-                GUI.backgroundColor = new Color(0.18f, 0.20f, 0.26f, 0.85f);
-                if (GUI.Button(new Rect(rx, ry, rw, rowHeight), speedText, rowBtnStyle))
-                {
-                    CycleBattleSpeed(inGame);
-                }
-                ry += rowHeight + 2f;
-
-                if (GUI.Button(new Rect(rx, ry, rw, rowHeight), autoText, rowBtnStyle))
-                {
-                    ToggleAutoSmithy();
-                }
-                ry += rowHeight + 2f;
-
-                if (GUI.Button(new Rect(rx, ry, rw, rowHeight), dashText, rowBtnStyle) && mDashCooldown <= 0f)
-                {
-                    PerformHeroDash(inGame.hero);
-                }
-                ry += rowHeight + 2f;
-
-                if (GUI.Button(new Rect(rx, ry, rw, rowHeight), diffText, rowBtnStyle))
-                {
-                    CycleDifficultyWithToast();
-                }
-                ry += rowHeight + 2f;
-
-                if (isTouchDevice)
-                {
-                    float halfW = (rw - 4f) * 0.5f;
-                    GUIStyle miniBtn = new GUIStyle(rowBtnStyle);
-                    miniBtn.alignment = TextAnchor.MiddleCenter;
-                    if (GUI.Button(new Rect(rx, ry, halfW, rowHeight), "<color=#55FFAA>REHBER</color>", miniBtn))
-                    {
-                        SVZAlmanac.Toggle();
-                    }
-                    if (GUI.Button(new Rect(rx + halfW + 4f, ry, halfW, rowHeight), "<color=#88CCFF>BILGI</color>", miniBtn))
-                    {
-                        mShowAnalytics = !mShowAnalytics;
-                    }
-                }
-                GUI.backgroundColor = Color.white;
-
-                // 4. Analytics Panel [F3]
-                if (mShowAnalytics)
-                {
-                    CharactersManager charMgr = WeakGlobalInstance<CharactersManager>.instance;
-                    int allies = charMgr != null ? charMgr.helpersCount : 0;
-                    int enemies = charMgr != null ? charMgr.enemiesCount : 0;
-                    int coins = Singleton<Profile>.instance.coins;
-                    int gems = Singleton<Profile>.instance.gems;
-
-                    float aWidth = panelWidth;
-                    float aHeight = 112f;
-                    Rect aRect = new Rect(statusRect.x, statusRect.yMax + 6f, aWidth, aHeight);
-
-                    GUI.color = new Color(0.05f, 0.05f, 0.08f, 0.88f);
-                    GUI.DrawTexture(aRect, Texture2D.whiteTexture);
-                    GUI.color = Color.white;
-
-                    GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
-                    labelStyle.richText = true;
-                    labelStyle.alignment = TextAnchor.MiddleLeft;
-                    labelStyle.fontSize = 13;
-
-                    string aText = string.Format(
-                        "<b>[SAVAS BILGISI]</b>\n" +
-                        "Muttefik: <color=#55FFFF>{0}</color> | Dusman: <color=#FF5555>{1}</color>\n" +
-                        "Altin: <color=#FFEE55>{2}</color> | Elmas: <color=#FF55FF>{3}</color>\n" +
-                        "<size=11><color=#88CCFF>{4}</color></size>",
-                        allies, enemies, coins, gems, SVZDeviceCompatibility.AndroidVersionLabel
-                    );
-
-                    GUI.Label(new Rect(aRect.x + 8f, aRect.y + 4f, aWidth - 16f, aHeight - 8f), aText, labelStyle);
-                }
+                GUI.Label(new Rect(aRect.x + 8f, aRect.y + 4f, aWidth - 16f, aHeight - 8f), aText, labelStyle);
             }
 
             // Draw Help Overlay [H]
@@ -597,7 +527,22 @@ public class PCQoLManager : MonoBehaviour
                 hStyle.fontSize = 13;
                 hStyle.wordWrap = true;
 
-                string helpContent =
+                string helpContent = LocalizationManager.T(
+                    "<size=16><b><color=#FFE040>CONTROLS GUIDE</color></b></size>\n\n" +
+                    "<b>[A / D]</b> or <b>[Arrows]</b> : Move Hero\n" +
+                    "<b>[Q]</b> : Ability 1 | <b>[E]</b> : Ability 2\n" +
+                    "<b>[F]</b> : Use Health Potion (Sushi)\n" +
+                    "<b>[1 - 5]</b> : Summon Allies\n" +
+                    "<b>[TAB / T]</b> : Battle Speed (1x / 1.5x / 2x / 3x)\n" +
+                    "<b>[L-SHIFT]</b> : Tactical Dash\n" +
+                    "<b>[U]</b> : Auto-Upgrade Smithy\n" +
+                    "<b>[C]</b> : Collect All Loot\n" +
+                    "<b>[R]</b> : Quick Retry on Defeat\n" +
+                    "<b>[M]</b> : 1v1 PvP Multiplayer Lobby\n" +
+                    "<b>[B]</b> : Enemy & Ally Almanac\n" +
+                    "<b>[F2]</b> : Difficulty | <b>[F3]</b> : Battle Info\n" +
+                    "<b>[F1]</b> : Dev Tools | <b>[F4]</b> : Save Folder\n" +
+                    "<b>[H]</b> : Toggle This Guide",
                     "<size=16><b><color=#FFE040>KONTROL REHBERI</color></b></size>\n\n" +
                     "<b>[A / D]</b> veya <b>[Ok Tuslari]</b> : Kahraman Hareketi\n" +
                     "<b>[Q]</b> : 1. Ozel Yetenek (Ability 1)\n" +
@@ -613,10 +558,11 @@ public class PCQoLManager : MonoBehaviour
                     "<b>[B]</b> : Dusman & Muttefik Rehberi (Almanac)\n" +
                     "<b>[F2]</b> : Zorluk Secimi | <b>[F3]</b> : Savas Analizi\n" +
                     "<b>[F1]</b> : Gelistirici Paneli | <b>[F4]</b> : Save Klasoru\n" +
-                    "<b>[H]</b> : Bu Rehberi Kapat / Ac";
+                    "<b>[H]</b> : Bu Rehberi Kapat / Ac"
+                );
 
                 GUI.Label(new Rect(hRect.x + 16f, hRect.y + 12f, hWidth - 32f, hHeight - 52f), helpContent, hStyle);
-                if (GUI.Button(new Rect(hRect.xMax - 90f, hRect.yMax - 36f, 78f, 28f), "KAPAT"))
+                if (GUI.Button(new Rect(hRect.xMax - 90f, hRect.yMax - 36f, 78f, 28f), LocalizationManager.T("CLOSE", "KAPAT")))
                 {
                     mShowHelp = false;
                 }
@@ -647,6 +593,8 @@ public class PCQoLManager : MonoBehaviour
         }
         finally
         {
+            GUI.skin.label.font = oldLblFont;
+            GUI.skin.button.font = oldBtnFont;
             GUI.skin.label.fontSize = oldLabelSize;
             GUI.skin.button.fontSize = oldBtnSize;
             GUI.matrix = prevMatrix;
@@ -674,14 +622,16 @@ public class PCQoLManager : MonoBehaviour
 
         // Green Restart Button
         GUI.color = new Color(0.2f, 0.8f, 0.3f, 1f);
-        if (GUI.Button(new Rect(pX + 20f, btnY, btnW, btnH), isTouchDevice ? "TEKRAR DENE" : "[R] TEKRAR DENE"))
+        string retryLbl = LocalizationManager.L("mod_qol_retry", "RETRY", "TEKRAR DENE");
+        if (GUI.Button(new Rect(pX + 20f, btnY, btnW, btnH), isTouchDevice ? retryLbl : ("[R] " + retryLbl)))
         {
             RestartCurrentWave();
         }
 
         // Dark Exit Button
         GUI.color = new Color(0.8f, 0.3f, 0.3f, 1f);
-        if (GUI.Button(new Rect(pX + pWidth - btnW - 20f, btnY, btnW, btnH), isTouchDevice ? "HARITA" : "[ESC] HARITA"))
+        string mapLbl = LocalizationManager.L("mod_qol_map", "MAP", "HARITA");
+        if (GUI.Button(new Rect(pX + pWidth - btnW - 20f, btnY, btnW, btnH), isTouchDevice ? mapLbl : ("[ESC] " + mapLbl)))
         {
             Singleton<MenusFlow>.instance.LoadScene("Debriefing");
         }

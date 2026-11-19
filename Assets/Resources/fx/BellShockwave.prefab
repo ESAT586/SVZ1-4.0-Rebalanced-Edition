@@ -23,7 +23,6 @@ GameObject:
   - 114: {fileID: 114994798592733506}
   - 114: {fileID: 114247652597751495}
   - 114: {fileID: 114398252254191853}
-  - 114: {fileID: 114810064122341978}
   m_Layer: 0
   m_Name: BellShockwave
   m_TagString: Untagged
@@ -89,16 +88,6 @@ MonoBehaviour:
   deleteWhenAllChildrenDead: 1
   autoDeleteAfterTime: 0
   letParticlesFinishForTimedDelete: 0
---- !u!114 &114810064122341978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1153671872261835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name:
 --- !u!1 &1108413030418339
 GameObject:
   serializedVersion: 3

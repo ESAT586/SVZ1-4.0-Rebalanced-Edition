@@ -23,6 +23,16 @@ public class SUILabel : SUIWidget
 
 	private float mFontScale = 1f;
 
+	private Font mBitmapFont;
+
+	private Material mBitmapMaterial;
+
+	private Vector2 mBitmapPixelOffset = Vector2.zero;
+
+	private bool mUsingDynamicFont = false;
+
+	private Color mCurrentColor = Color.white;
+
 	public string font
 	{
 		get
@@ -71,11 +81,12 @@ public class SUILabel : SUIWidget
 	{
 		get
 		{
-			return mTextSprite.material.color;
+			return mCurrentColor;
 		}
 		set
 		{
-			mTextSprite.material.color = new Color(value.r, value.g, value.b, mTextSprite.material.color.a);
+			mCurrentColor = new Color(value.r, value.g, value.b, mCurrentColor.a);
+			ApplyCurrentTint();
 		}
 	}
 
@@ -171,13 +182,14 @@ public class SUILabel : SUIWidget
 	{
 		get
 		{
-			return mTextSprite.material.color.a;
+			return mCurrentColor.a;
 		}
 		set
 		{
-			if (value != mTextSprite.material.color.a)
+			if (value != mCurrentColor.a)
 			{
-				mTextSprite.material.color = new Color(mTextSprite.material.color.r, mTextSprite.material.color.g, mTextSprite.material.color.b, value);
+				mCurrentColor = new Color(mCurrentColor.r, mCurrentColor.g, mCurrentColor.b, value);
+				ApplyCurrentTint();
 				if (mShadow != null)
 				{
 					mShadow.alpha = value;
@@ -252,7 +264,7 @@ public class SUILabel : SUIWidget
 	{
 		get
 		{
-			if (MultiLanguages.isAsian)
+			if (mUsingDynamicFont || MultiLanguages.isAsian || LocalizationManager.IsNoSpaceWrapScript)
 			{
 				return Mathf.FloorToInt(WeakGlobalInstance<SUIScreen>.instance.autoScaler.toDeviceX(mMaxWidth));
 			}
@@ -348,8 +360,105 @@ public class SUILabel : SUIWidget
 		{
 			Debug.Log("ERROR: Could not load font: " + fontFile);
 		}
-		mTextSprite.font = font;
-		mTextSprite.pixelOffset = new Vector2(0f, mTextSprite.font.lineHeight * 0.825f);
+		mBitmapFont = font;
+		if (font != null)
+		{
+			mTextSprite.font = font;
+			mTextSprite.pixelOffset = new Vector2(0f, font.lineHeight * 0.825f);
+		}
+		else
+		{
+			mBitmapFont = mTextSprite.font;
+		}
+		mBitmapPixelOffset = mTextSprite.pixelOffset;
+		mBitmapMaterial = (mTextSprite.font != null) ? mTextSprite.material : null;
+		if (mBitmapMaterial != null)
+		{
+			mCurrentColor = mBitmapMaterial.color;
+		}
+	}
+
+	private int ComputeDynamicFontSize()
+	{
+		float ratio = Mathf.Max(0.5f, (float)Screen.height / 640f);
+		if (mFontFile != null && mFontFile.Contains("64"))
+		{
+			return Mathf.Clamp(Mathf.RoundToInt(40f * ratio), 28, 72);
+		}
+		if (mFontFile != null && mFontFile.Contains("32"))
+		{
+			return Mathf.Clamp(Mathf.RoundToInt(25f * ratio), 18, 56);
+		}
+		return Mathf.Clamp(Mathf.RoundToInt(16f * ratio), 12, 34);
+	}
+
+	private bool NeedsDynamicFont(string textToCheck)
+	{
+		if (string.IsNullOrEmpty(textToCheck) || mBitmapFont == null)
+		{
+			return false;
+		}
+		for (int i = 0; i < textToCheck.Length; i++)
+		{
+			char ch = textToCheck[i];
+			if (ch < ' ') continue;
+			if (!mBitmapFont.HasCharacter(ch))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void ApplyCurrentTint()
+	{
+		if (mTextSprite == null) return;
+		if (mUsingDynamicFont)
+		{
+			mTextSprite.color = mCurrentColor;
+		}
+		else if (mTextSprite.material != null)
+		{
+			mTextSprite.material.color = mCurrentColor;
+		}
+	}
+
+	private void EnsureCorrectFontForText(string targetText)
+	{
+		if (mTextSprite == null) return;
+		bool useDyn = NeedsDynamicFont(targetText);
+		if (useDyn)
+		{
+			int px = ComputeDynamicFontSize();
+			Font dyn = LocalizationManager.GetDynamicOSFont(px);
+			if (dyn != null)
+			{
+				dyn.RequestCharactersInTexture(targetText, px);
+				if (!mUsingDynamicFont || mTextSprite.font != dyn)
+				{
+					mUsingDynamicFont = true;
+					mTextSprite.font = dyn;
+					mTextSprite.material = dyn.material;
+					mTextSprite.fontSize = px;
+					mTextSprite.pixelOffset = Vector2.zero;
+					mGameObject.transform.localScale = Vector3.one;
+				}
+				ApplyCurrentTint();
+				return;
+			}
+		}
+		if (mUsingDynamicFont && mBitmapFont != null)
+		{
+			mUsingDynamicFont = false;
+			mTextSprite.font = mBitmapFont;
+			if (mBitmapMaterial != null)
+			{
+				mTextSprite.material = mBitmapMaterial;
+			}
+			mTextSprite.fontSize = 0;
+			mTextSprite.pixelOffset = mBitmapPixelOffset;
+		}
+		ApplyCurrentTint();
 	}
 
 	private void refreshDisplay(bool forceRefresh)
@@ -358,7 +467,8 @@ public class SUILabel : SUIWidget
 		{
 			return;
 		}
-		mTextSprite.text = mOriginalText;
+		EnsureCorrectFontForText(mOriginalText);
+		mTextSprite.text = LocalizationManager.ShapeRTLIfNeeded(mOriginalText);
 		mShownLines = 1;
 		if (mMaxWidth > 0 && mTextSprite.GetScreenRect().width > (float)adjustedMaxWidth)
 		{
@@ -375,11 +485,12 @@ public class SUILabel : SUIWidget
 			{
 				mShownLines = list.Count;
 			}
+			string combined = string.Empty;
 			for (int i = 0; i < mShownLines; i++)
 			{
-				text = text + list[i] + "\n";
+				combined = combined + LocalizationManager.ShapeRTLIfNeeded(list[i]) + "\n";
 			}
-			mTextSprite.text = text;
+			mTextSprite.text = combined;
 		}
 		updateScale();
 	}
@@ -388,9 +499,9 @@ public class SUILabel : SUIWidget
 	{
 		string text = string.Empty;
 		string text2 = string.Empty;
-		if (MultiLanguages.isAsian)
+		if (MultiLanguages.isAsian || LocalizationManager.IsNoSpaceWrapScript)
 		{
-			mTextSprite.text = source;
+			mTextSprite.text = LocalizationManager.ShapeRTLIfNeeded(source);
 			if (mTextSprite.GetScreenRect().width <= (float)adjustedMaxWidth)
 			{
 				return source;
@@ -411,7 +522,7 @@ public class SUILabel : SUIWidget
 			for (int j = 0; j < list.Count; j++)
 			{
 				text2 = text2 + list[j] + " ";
-				mTextSprite.text = text2;
+				mTextSprite.text = LocalizationManager.ShapeRTLIfNeeded(text2);
 				if (mTextSprite.GetScreenRect().width > (float)adjustedMaxWidth)
 				{
 					if (text.Length > 0)
@@ -438,6 +549,11 @@ public class SUILabel : SUIWidget
 
 	private void updateScale()
 	{
+		if (mUsingDynamicFont)
+		{
+			mGameObject.transform.localScale = Vector3.one;
+			return;
+		}
 		if (mFontScale != 1f)
 		{
 			mGameObject.transform.localScale = new Vector3(mFontScale * ((float)Screen.height / (float)Screen.width), mFontScale, 0f);

@@ -197,24 +197,10 @@ public class SVZDeviceCompatibility : MonoBehaviour
         if (Application.platform != RuntimePlatform.Android) return;
         try
         {
-            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-            using (AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+            // Dispatch UI-thread window flags purely in Java so C# never passes a disposed AndroidJavaObject across threads.
             using (AndroidJavaClass bridge = new AndroidJavaClass("com.svzrebalanced.compat.SVZAndroidBridge"))
             {
-                if (activity != null)
-                {
-                    activity.Call("runOnUiThread", new AndroidJavaRunnable(delegate
-                    {
-                        try
-                        {
-                            using (AndroidJavaClass innerBridge = new AndroidJavaClass("com.svzrebalanced.compat.SVZAndroidBridge"))
-                            {
-                                innerBridge.CallStatic("applyWindowCompatibility", activity);
-                            }
-                        }
-                        catch { }
-                    }));
-                }
+                bridge.CallStatic("applyCurrentActivityWindowCompatibility");
             }
         }
         catch { }
@@ -399,7 +385,7 @@ public class SVZDeviceCompatibility : MonoBehaviour
             try
             {
                 AudioConfiguration audioConfig = AudioSettings.GetConfiguration();
-                if (audioConfig.dspBufferSize < 512)
+                if (audioConfig.dspBufferSize > 0 && audioConfig.dspBufferSize < 256)
                 {
                     audioConfig.dspBufferSize = 512;
                     AudioSettings.Reset(audioConfig);

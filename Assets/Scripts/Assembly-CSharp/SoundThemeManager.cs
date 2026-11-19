@@ -11,6 +11,14 @@ public class SoundThemeManager : MonoBehaviour
 
 	public float globalVolume = 1f;
 
+	public static bool HasInstance
+	{
+		get
+		{
+			return instance != null;
+		}
+	}
+
 	public static SoundThemeManager Instance
 	{
 		get

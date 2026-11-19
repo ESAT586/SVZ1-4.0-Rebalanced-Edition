@@ -257,6 +257,9 @@ public class SVZMultiplayerUI : MonoBehaviour
 
     #region Universal Responsive GUI Scaler
 
+    private Font mPrevLblFont;
+    private Font mPrevBtnFont;
+
     private void BeginResponsiveGUI(float virtualW = 1280f, float virtualH = 720f)
     {
         float scaleX = (float)Screen.width / virtualW;
@@ -267,11 +270,21 @@ public class SVZMultiplayerUI : MonoBehaviour
         float offsetY = (Screen.height - virtualH * scale) * 0.5f;
 
         mPrevMatrix = GUI.matrix;
+        mPrevLblFont = GUI.skin.label.font;
+        mPrevBtnFont = GUI.skin.button.font;
+        Font dyn = LocalizationManager.GetDynamicOSFont(15);
+        if (dyn != null)
+        {
+            GUI.skin.label.font = dyn;
+            GUI.skin.button.font = dyn;
+        }
         GUI.matrix = Matrix4x4.TRS(new Vector3(offsetX, offsetY, 0f), Quaternion.identity, new Vector3(scale, scale, 1f));
     }
 
     private void EndResponsiveGUI()
     {
+        GUI.skin.label.font = mPrevLblFont;
+        GUI.skin.button.font = mPrevBtnFont;
         GUI.matrix = mPrevMatrix;
     }
 
@@ -472,7 +485,9 @@ public class SVZMultiplayerUI : MonoBehaviour
         GUI.color = (g2Pct > 0.3f) ? new Color(0.9f, 0.3f, 0.3f) : new Color(0.95f, 0.6f, 0.1f);
         GUI.DrawTexture(new Rect(722, 12, (barWidth - 4) * g2Pct, barHeight - 4), Texture2D.whiteTexture);
         GUI.color = Color.white;
-        string p2SideLabel = (mpMgr.P1Side == SVZMultiplayerManager.BattlefieldSide.LeftGate) ? "2. Oyuncu (Sag)" : "2. Oyuncu (Sol)";
+        string p2SideLabel = (mpMgr.P1Side == SVZMultiplayerManager.BattlefieldSide.LeftGate)
+            ? LocalizationManager.T("Player 2 (Right)", "2. Oyuncu (Sag)")
+            : LocalizationManager.T("Player 2 (Left)", "2. Oyuncu (Sol)");
         GUI.Label(new Rect(720, 10, barWidth, barHeight), string.Format("{0} (Lv.{1}): {2:0} HP", p2SideLabel, mpMgr.P2TroopLevel, mpMgr.Gate2Health), hpStyle);
 
         // Top Banner for RTS ArmyOnly Mode with Quick Camera Snap & Auto-Frontline Toggle
@@ -482,23 +497,27 @@ public class SVZMultiplayerUI : MonoBehaviour
             GUI.DrawTexture(new Rect(280, 71, 720, 22), Texture2D.whiteTexture);
             GUI.color = Color.white;
             GUIStyle rtsBannerStyle = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold, fontSize = 10, richText = true };
-            GUI.Label(new Rect(384, 71, 355, 22), "<color=#55FFFF>10 BIRLIK HEROSUZ (225 Smithy | 8/sn)</color> | <b>[A/D]</b> Kamera", rtsBannerStyle);
+            GUI.Label(new Rect(384, 71, 355, 22),
+                LocalizationManager.T("<color=#55FFFF>10-UNIT HEROLESS (225 Smithy | 8/s)</color> | <b>[A/D]</b> Camera", "<color=#55FFFF>10 BIRLIK HEROSUZ (225 Smithy | 8/sn)</color> | <b>[A/D]</b> Kamera"),
+                rtsBannerStyle);
 
             InGameImpl inGame = WeakGlobalSceneBehavior<InGameImpl>.instance;
             if (inGame != null)
             {
                 GUI.color = new Color(0.2f, 0.65f, 0.35f, 0.9f);
-                if (GUI.Button(new Rect(284, 72, 94, 20), "<< Sol Kapi")) inGame.SnapRTSCamera(0);
+                if (GUI.Button(new Rect(284, 72, 94, 20), LocalizationManager.T("<< Left Gate", "<< Sol Kapi"))) inGame.SnapRTSCamera(0);
 
                 GUI.color = inGame.autoFollowFrontline ? new Color(0.2f, 0.78f, 0.45f, 0.95f) : new Color(0.25f, 0.28f, 0.36f, 0.95f);
-                string camBtnLbl = inGame.autoFollowFrontline ? "[C] Oto-Kamera: ACIK" : "[C] Oto-Kamera: KAPALI";
+                string camBtnLbl = inGame.autoFollowFrontline
+                    ? LocalizationManager.T("[C] Auto-Cam: ON", "[C] Oto-Kamera: ACIK")
+                    : LocalizationManager.T("[C] Auto-Cam: OFF", "[C] Oto-Kamera: KAPALI");
                 if (GUI.Button(new Rect(742, 72, 152, 20), camBtnLbl))
                 {
                     inGame.autoFollowFrontline = !inGame.autoFollowFrontline;
                 }
 
                 GUI.color = new Color(0.85f, 0.3f, 0.3f, 0.9f);
-                if (GUI.Button(new Rect(900, 72, 94, 20), "Sag Kapi >>")) inGame.SnapRTSCamera(2);
+                if (GUI.Button(new Rect(900, 72, 94, 20), LocalizationManager.T("Right Gate >>", "Sag Kapi >>"))) inGame.SnapRTSCamera(2);
                 GUI.color = Color.white;
             }
         }
@@ -546,7 +565,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         else
         {
             GUI.Label(new Rect(barX, barY + 4f, barW, 16f),
-                "<color=#FF4444>⚔️ RAKİP KAHRAMAN KATLEDİLDİ!</color>", style);
+                LocalizationManager.T("<color=#FF4444>OPPONENT HERO DEFEATED!</color>", "<color=#FF4444>⚔️ RAKİP KAHRAMAN KATLEDİLDİ!</color>"), style);
         }
 
         // Show Same-PC manual hero control tips if 2P manual is enabled
@@ -557,7 +576,7 @@ public class SVZMultiplayerUI : MonoBehaviour
             GUI.DrawTexture(new Rect(barX, barY + barH + 2f, barW, 16f), Texture2D.whiteTexture);
             GUI.color = Color.white;
             GUI.Label(new Rect(barX, barY + barH + 2f, barW, 16f),
-                "<color=#AACCFF>2.P: <b>[Oklar]</b>: Hareket | <b>[Numpad 1]</b>: Kılıç | <b>[Numpad 2]</b>: Yay</color>", tipStyle);
+                LocalizationManager.T("<color=#AACCFF>P2: <b>[Arrows]</b>: Move | <b>[Numpad 1]</b>: Melee | <b>[Numpad 2]</b>: Bow</color>", "<color=#AACCFF>2.P: <b>[Oklar]</b>: Hareket | <b>[Numpad 1]</b>: Kılıç | <b>[Numpad 2]</b>: Yay</color>"), tipStyle);
         }
     }
 
@@ -606,7 +625,9 @@ public class SVZMultiplayerUI : MonoBehaviour
             GUI.DrawTexture(botBtnRect, Texture2D.whiteTexture);
             GUI.color = Color.white;
             GUIStyle botStyle = new GUIStyle(GUIStyle.none) { alignment = TextAnchor.MiddleCenter, fontSize = 9, fontStyle = FontStyle.Bold, richText = true };
-            string botText = mpMgr.P2AutoBot ? "<color=#FFFFFF>BOT: ACIK</color>" : "<color=#CCCCCC>BOT: KAPALI</color>";
+            string botText = mpMgr.P2AutoBot
+                ? LocalizationManager.T("<color=#FFFFFF>BOT: ON</color>", "<color=#FFFFFF>BOT: ACIK</color>")
+                : LocalizationManager.T("<color=#CCCCCC>BOT: OFF</color>", "<color=#CCCCCC>BOT: KAPALI</color>");
             if (GUI.Button(botBtnRect, botText, botStyle))
             {
                 mpMgr.P2AutoBot = !mpMgr.P2AutoBot;
@@ -894,8 +915,8 @@ public class SVZMultiplayerUI : MonoBehaviour
         };
 
         string winText = (mpMgr.Winner == 1)
-            ? "<color=#55FF55>1. OYUNCU ZAFER KAZANDI!</color>"
-            : "<color=#FF5555>2. OYUNCU ZAFER KAZANDI!</color>";
+            ? "<color=#55FF55>" + LocalizationManager.L("mod_mp_victory_p1", "PLAYER 1 VICTORY!", "1. OYUNCU ZAFER KAZANDI!") + "</color>"
+            : "<color=#FF5555>" + LocalizationManager.L("mod_mp_victory_p2", "PLAYER 2 VICTORY!", "2. OYUNCU ZAFER KAZANDI!") + "</color>";
 
         GUI.Label(new Rect(oX + 10, oY + 16, oW - 20, 32), winText, winTitleStyle);
 
@@ -910,43 +931,41 @@ public class SVZMultiplayerUI : MonoBehaviour
 
         GUIStyle statHeader = new GUIStyle(GUI.skin.label) { fontStyle = FontStyle.Bold, richText = true, alignment = TextAnchor.MiddleCenter, fontSize = 11 };
         GUI.Label(new Rect(statsBox.x, statsBox.y + 6, statsBox.width, 20),
-            string.Format("<color=#FFEE77>SAVAS ISTATISTIKLERI</color> | Savas Suresi: <b>{0:00}:{1:00}</b>", mins, secs), statHeader);
+            string.Format(LocalizationManager.T("<color=#FFEE77>MATCH STATISTICS</color> | Duration: <b>{0:00}:{1:00}</b>", "<color=#FFEE77>SAVAS ISTATISTIKLERI</color> | Savas Suresi: <b>{0:00}:{1:00}</b>"), mins, secs), statHeader);
 
         GUIStyle statBody = new GUIStyle(GUI.skin.label) { richText = true, fontSize = 11 };
         float halfW = statsBox.width * 0.5f;
 
         // P1 Stats (Left)
         string p1Stats = string.Format(
-            "<color=#55FF55><b>{0}</b></color>\n" +
-            "- Cagrilan Birlik: <b>{1}</b>\n" +
-            "- Kullanilan Yetenek: <b>{2}</b>\n" +
-            "- Kalan Kale Cani: <b>{3:0} HP</b>",
+            LocalizationManager.T(
+                "<color=#55FF55><b>{0}</b></color>\n- Units Summoned: <b>{1}</b>\n- Abilities Used: <b>{2}</b>\n- Gate HP Left: <b>{3:0} HP</b>",
+                "<color=#55FF55><b>{0}</b></color>\n- Cagrilan Birlik: <b>{1}</b>\n- Kullanilan Yetenek: <b>{2}</b>\n- Kalan Kale Cani: <b>{3:0} HP</b>"),
             mpMgr.Player1Name, mpMgr.P1UnitsSpawned, mpMgr.P1AbilitiesUsed, mpMgr.Gate1Health);
         GUI.Label(new Rect(statsBox.x + 12, statsBox.y + 30, halfW - 20, 80), p1Stats, statBody);
 
         // P2 Stats (Right)
         string p2Stats = string.Format(
-            "<color=#FF7777><b>{0}</b></color>\n" +
-            "- Cagrilan Birlik: <b>{1}</b>\n" +
-            "- Kullanilan Yetenek: <b>{2}</b>\n" +
-            "- Kalan Kale Cani: <b>{3:0} HP</b>",
+            LocalizationManager.T(
+                "<color=#FF7777><b>{0}</b></color>\n- Units Summoned: <b>{1}</b>\n- Abilities Used: <b>{2}</b>\n- Gate HP Left: <b>{3:0} HP</b>",
+                "<color=#FF7777><b>{0}</b></color>\n- Cagrilan Birlik: <b>{1}</b>\n- Kullanilan Yetenek: <b>{2}</b>\n- Kalan Kale Cani: <b>{3:0} HP</b>"),
             mpMgr.Player2Name, mpMgr.P2UnitsSpawned, mpMgr.P2AbilitiesUsed, mpMgr.Gate2Health);
         GUI.Label(new Rect(statsBox.x + halfW + 12, statsBox.y + 30, halfW - 20, 80), p2Stats, statBody);
 
         // MVP Banner
         GUI.Label(new Rect(statsBox.x, statsBox.y + 115, statsBox.width, 30),
-            string.Format("<color=#FFEE77><b>MACIN YILDIZ BIRLIGI (MVP):</b></color> <color=#55FFFF><b>{0}</b></color>", mpMgr.MvpUnit), statHeader);
+            string.Format(LocalizationManager.T("<color=#FFEE77><b>MATCH MVP UNIT:</b></color> <color=#55FFFF><b>{0}</b></color>", "<color=#FFEE77><b>MACIN YILDIZ BIRLIGI (MVP):</b></color> <color=#55FFFF><b>{0}</b></color>"), mpMgr.MvpUnit), statHeader);
 
         // Rematch Button
         GUI.color = new Color(0.25f, 0.85f, 0.4f);
-        if (GUI.Button(new Rect(oX + 36, oY + 230, oW - 72, 44), "HEMEN ROVANS YAP (REMATCH)"))
+        if (GUI.Button(new Rect(oX + 36, oY + 230, oW - 72, 44), LocalizationManager.L("mod_mp_rematch", "REMATCH NOW", "HEMEN ROVANS YAP (REMATCH)")))
         {
             mpMgr.Rematch();
         }
 
         // Return to Lobby / Main Menu Button
         GUI.color = new Color(0.85f, 0.3f, 0.25f);
-        if (GUI.Button(new Rect(oX + 36, oY + 284, oW - 72, 38), "LOBIYE / ANA MENUYE DON"))
+        if (GUI.Button(new Rect(oX + 36, oY + 284, oW - 72, 38), LocalizationManager.L("mod_mp_return", "RETURN TO LOBBY / MAIN MENU", "LOBIYE / ANA MENUYE DON")))
         {
             mpMgr.ResetMatchState();
             Time.timeScale = 1.0f;
@@ -977,7 +996,7 @@ public class SVZMultiplayerUI : MonoBehaviour
 
         // Window Title
         GUIStyle titleStyle = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleCenter, richText = true };
-        GUI.Label(new Rect(x, y + 8, w, 24), "<color=#FFDD44>SAMURAI VS ZOMBIES - 1v1 PvP ÖZEL OYUN LOBİSİ</color>", titleStyle);
+        GUI.Label(new Rect(x, y + 8, w, 24), "<color=#FFDD44>SAMURAI VS ZOMBIES - " + LocalizationManager.L("mod_mp_lobby", "1v1 PvP CUSTOM GAME LOBBY", "1v1 PvP ÖZEL OYUN LOBİSİ") + "</color>", titleStyle);
 
         // Close Button [X]
         if (GUI.Button(new Rect(x + w - 38, y + 8, 30, 24), "X"))
@@ -992,10 +1011,10 @@ public class SVZMultiplayerUI : MonoBehaviour
         float navW = (w - 32f) / 4f;
         string[] tabNames = new string[]
         {
-            "1. 🏰 ÖZEL OYUN LOBİSİ (LoL Stili)",
-            "2. ⚔️ ORDU & DESTE DÜZENLEYİCİ",
-            "3. ⚙️ ARENA & MUTATOR DETAYI",
-            "4. 🎖️ 10 BİRLİK MODU (HEROSUZ 1v1)"
+            LocalizationManager.T("1. CUSTOM GAME LOBBY", "1. 🏰 ÖZEL OYUN LOBİSİ (LoL Stili)"),
+            LocalizationManager.T("2. ARMY & DECK BUILDER", "2. ⚔️ ORDU & DESTE DÜZENLEYİCİ"),
+            LocalizationManager.T("3. ARENA & MUTATORS", "3. ⚙️ ARENA & MUTATOR DETAYI"),
+            LocalizationManager.T("4. 10-UNIT HEROLESS 1v1", "4. 🎖️ 10 BİRLİK MODU (HEROSUZ 1v1)")
         };
 
         for (int i = 0; i < 4; i++)
@@ -1062,7 +1081,9 @@ public class SVZMultiplayerUI : MonoBehaviour
             fontStyle = FontStyle.Bold
         };
         GUI.Label(new Rect(cx, cy + 15f, cw, 40f),
-            "<color=#FFDD44><b>🏰 SAMURAI VS ZOMBIES - ÖZEL OYUN LOBİSİ</b></color>\n<size=11><color=#CCCCCC>Kendi özel odanızı kurun veya arkadaşınızın odasına bağlanarak 1v1 mücadeleye başlayın!</color></size>", headerStyle);
+            LocalizationManager.T(
+                "<color=#FFDD44><b>SAMURAI VS ZOMBIES - CUSTOM GAME LOBBY</b></color>\n<size=11><color=#CCCCCC>Host your own room or join a friend via IP to battle 1v1!</color></size>",
+                "<color=#FFDD44><b>🏰 SAMURAI VS ZOMBIES - ÖZEL OYUN LOBİSİ</b></color>\n<size=11><color=#CCCCCC>Kendi özel odanızı kurun veya arkadaşınızın odasına bağlanarak 1v1 mücadeleye başlayın!</color></size>"), headerStyle);
 
         float cardW = (cw - 32f) / 3f;
         float cardH = 370f;
@@ -1079,18 +1100,17 @@ public class SVZMultiplayerUI : MonoBehaviour
         GUI.DrawTexture(new Rect(c1x, cardY, cardW, 3f), Texture2D.whiteTexture);
         GUI.color = Color.white;
 
-        GUI.Label(new Rect(c1x + 8f, cardY + 14f, cardW - 16f, 22f), "<color=#55FFFF><b>👑 ÖZEL ODA OLUŞTUR (HOST)</b></color>", cardHeader);
+        GUI.Label(new Rect(c1x + 8f, cardY + 14f, cardW - 16f, 22f), LocalizationManager.T("<color=#55FFFF><b>HOST PRIVATE ROOM</b></color>", "<color=#55FFFF><b>👑 ÖZEL ODA OLUŞTUR (HOST)</b></color>"), cardHeader);
         string hostDesc = string.Format(
-            "Kendi özel odanızı kurun.\nArkadaşınız IP adresinizle odanıza bağlanabilir.\n\n" +
-            "<b>Oda Portu:</b> {0}\n" +
-            "<b>Yerel IP Adresiniz:</b>\n<color=#FFEE55><b>{1}</b></color>\n\n" +
-            "<size=10><color=#AAAAAA>(Radmin VPN / Hamachi kullanıyorsanız 26.x.x.x IP'nizi arkadaşınıza verin)</color></size>",
+            LocalizationManager.T(
+                "Create a private match room.\nFriends can connect using your IP.\n\n<b>Port:</b> {0}\n<b>Your Local IP:</b>\n<color=#FFEE55><b>{1}</b></color>\n\n<size=10><color=#AAAAAA>(If using Radmin VPN / Hamachi, share your 26.x.x.x IP)</color></size>",
+                "Kendi özel odanızı kurun.\nArkadaşınız IP adresinizle odanıza bağlanabilir.\n\n<b>Oda Portu:</b> {0}\n<b>Yerel IP Adresiniz:</b>\n<color=#FFEE55><b>{1}</b></color>\n\n<size=10><color=#AAAAAA>(Radmin VPN / Hamachi kullanıyorsanız 26.x.x.x IP'nizi arkadaşınıza verin)</color></size>"),
             (net != null) ? net.Port : SVZNetworkManager.kDefaultPort,
             (net != null) ? net.GetLocalIPAddress() : "127.0.0.1");
         GUI.Label(new Rect(c1x + 12f, cardY + 45f, cardW - 24f, 180f), hostDesc, cardBody);
 
         GUI.color = new Color(0.25f, 0.85f, 0.45f);
-        if (GUI.Button(new Rect(c1x + 24f, cardY + 250f, cardW - 48f, 44f), "<b><size=13>🏰 ODAYA KUR VE AÇ</size></b>"))
+        if (GUI.Button(new Rect(c1x + 24f, cardY + 250f, cardW - 48f, 44f), LocalizationManager.T("<b><size=13>CREATE & OPEN ROOM</size></b>", "<b><size=13>🏰 ODAYA KUR VE AÇ</size></b>")))
         {
             if (net != null) net.StartHost();
             mInCustomLobbyRoom = true;
@@ -1110,13 +1130,15 @@ public class SVZMultiplayerUI : MonoBehaviour
         GUI.DrawTexture(new Rect(c2x, cardY, cardW, 3f), Texture2D.whiteTexture);
         GUI.color = Color.white;
 
-        GUI.Label(new Rect(c2x + 8f, cardY + 14f, cardW - 16f, 22f), "<color=#FF88FF><b>🔗 ODAYA KATIL (İSTEMCİ)</b></color>", cardHeader);
-        string joinDesc = "Arkadaşınızın kurduğu odaya katılın.\nKurucunun IP adresini girerek anında lobiye bağlanın.\n";
+        GUI.Label(new Rect(c2x + 8f, cardY + 14f, cardW - 16f, 22f), LocalizationManager.T("<color=#FF88FF><b>JOIN ROOM (CLIENT)</b></color>", "<color=#FF88FF><b>🔗 ODAYA KATIL (İSTEMCİ)</b></color>"), cardHeader);
+        string joinDesc = LocalizationManager.T(
+            "Join a room hosted by a friend.\nEnter the host IP address to connect immediately.\n",
+            "Arkadaşınızın kurduğu odaya katılın.\nKurucunun IP adresini girerek anında lobiye bağlanın.\n");
         GUI.Label(new Rect(c2x + 12f, cardY + 45f, cardW - 24f, 50f), joinDesc, cardBody);
 
-        GUI.Label(new Rect(c2x + 24f, cardY + 115f, 90f, 20f), "<b>Hedef IP:</b>");
+        GUI.Label(new Rect(c2x + 24f, cardY + 115f, 90f, 20f), LocalizationManager.T("<b>Target IP:</b>", "<b>Hedef IP:</b>"));
         mJoinIpInput = GUI.TextField(new Rect(c2x + 115f, cardY + 113f, cardW - 210f, 24f), mJoinIpInput);
-        if (GUI.Button(new Rect(c2x + cardW - 90f, cardY + 113f, 66f, 24f), "Yapıştır"))
+        if (GUI.Button(new Rect(c2x + cardW - 90f, cardY + 113f, 66f, 24f), LocalizationManager.T("Paste", "Yapıştır")))
         {
             if (!string.IsNullOrEmpty(GUIUtility.systemCopyBuffer))
             {
@@ -1129,7 +1151,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         int.TryParse(portStr, out mJoinPortInput);
 
         GUI.color = new Color(0.35f, 0.70f, 1.0f);
-        if (GUI.Button(new Rect(c2x + 24f, cardY + 250f, cardW - 48f, 44f), "<b><size=13>🚀 ODAYA BAĞLAN</size></b>"))
+        if (GUI.Button(new Rect(c2x + 24f, cardY + 250f, cardW - 48f, 44f), LocalizationManager.T("<b><size=13>CONNECT TO ROOM</size></b>", "<b><size=13>🚀 ODAYA BAĞLAN</size></b>")))
         {
             if (net != null) net.ConnectToHost(mJoinIpInput, mJoinPortInput);
             mInCustomLobbyRoom = true;
@@ -1149,12 +1171,14 @@ public class SVZMultiplayerUI : MonoBehaviour
         GUI.DrawTexture(new Rect(c3x, cardY, cardW, 3f), Texture2D.whiteTexture);
         GUI.color = Color.white;
 
-        GUI.Label(new Rect(c3x + 8f, cardY + 14f, cardW - 16f, 22f), "<color=#FFDD44><b>🤖 YEREL ODA (BOT & HOTSEAT)</b></color>", cardHeader);
-        string localDesc = "İnternet bağlantısı olmadan tek başınıza yapay zeka komutanına karşı pratik yapın ya da aynı PC'de arkadaşınızla çift kişilik kapışın.";
+        GUI.Label(new Rect(c3x + 8f, cardY + 14f, cardW - 16f, 22f), LocalizationManager.T("<color=#FFDD44><b>LOCAL ROOM (BOT & HOTSEAT)</b></color>", "<color=#FFDD44><b>🤖 YEREL ODA (BOT & HOTSEAT)</b></color>"), cardHeader);
+        string localDesc = LocalizationManager.T(
+            "Practice solo offline against an AI Commander or play 2-player Hotseat on the same device.",
+            "İnternet bağlantısı olmadan tek başınıza yapay zeka komutanına karşı pratik yapın ya da aynı PC'de arkadaşınızla çift kişilik kapışın.");
         GUI.Label(new Rect(c3x + 12f, cardY + 45f, cardW - 24f, 60f), localDesc, cardBody);
 
         GUI.color = new Color(0.95f, 0.65f, 0.2f);
-        if (GUI.Button(new Rect(c3x + 24f, cardY + 145f, cardW - 48f, 40f), "<b>🤖 YAPAY ZEKA BOT ODASI</b>"))
+        if (GUI.Button(new Rect(c3x + 24f, cardY + 145f, cardW - 48f, 40f), LocalizationManager.T("<b>AI BOT MATCH</b>", "<b>🤖 YAPAY ZEKA BOT ODASI</b>")))
         {
             mpMgr.P2AutoBot = true;
             mInCustomLobbyRoom = true;
@@ -1163,7 +1187,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         }
 
         GUI.color = new Color(0.35f, 0.85f, 0.45f);
-        if (GUI.Button(new Rect(c3x + 24f, cardY + 205f, cardW - 48f, 40f), "<b>👥 AYNI PC ÇİFT KİŞİLİK</b>"))
+        if (GUI.Button(new Rect(c3x + 24f, cardY + 205f, cardW - 48f, 40f), LocalizationManager.T("<b>SAME PC 2-PLAYER</b>", "<b>👥 AYNI PC ÇİFT KİŞİLİK</b>")))
         {
             mpMgr.P2AutoBot = false;
             mInCustomLobbyRoom = true;
@@ -1191,28 +1215,30 @@ public class SVZMultiplayerUI : MonoBehaviour
         GUI.DrawTexture(new Rect(cx, cy, cw, 32f), Texture2D.whiteTexture);
         GUI.color = Color.white;
 
-        string modeStr = isTenUnitMode ? "🎖️ 10 Birlik Herosuz (225 Smithy)" : "🗡️ Kahramanlı Meydan (5 Birlik)";
+        string modeStr = isTenUnitMode
+            ? LocalizationManager.T("10-Unit Heroless (225 Smithy)", "🎖️ 10 Birlik Herosuz (225 Smithy)")
+            : LocalizationManager.T("Hero Arena (5 Units)", "🗡️ Kahramanlı Meydan (5 Birlik)");
         GUIStyle topTitle = new GUIStyle(GUI.skin.label) { richText = true, fontStyle = FontStyle.Bold, fontSize = 11, alignment = TextAnchor.MiddleLeft };
-        GUI.Label(new Rect(cx + 8f, cy + 6f, 360f, 20f), string.Format("🏰 <b>ÖZEL OYUN ODASI</b> | <color=#55FFFF>{0}</color> | <color=#FFEE55>{1}</color>", mpMgr.SelectedArena, modeStr), topTitle);
+        GUI.Label(new Rect(cx + 8f, cy + 6f, 360f, 20f), string.Format(LocalizationManager.T("<b>CUSTOM GAME ROOM</b> | <color=#55FFFF>{0}</color> | <color=#FFEE55>{1}</color>", "🏰 <b>ÖZEL OYUN ODASI</b> | <color=#55FFFF>{0}</color> | <color=#FFEE55>{1}</color>"), mpMgr.SelectedArena, modeStr), topTitle);
 
         // Center Network Status Badge
-        string pingStr = (net != null && net.CurrentPingMs > 0) ? string.Format(" | <color=#55FFFF>📶 {0} ms</color>", net.CurrentPingMs) : "";
+        string pingStr = (net != null && net.CurrentPingMs > 0) ? string.Format(" | <color=#55FFFF>{0} ms</color>", net.CurrentPingMs) : "";
         string netStatus;
         if (isSamePC)
         {
-            netStatus = string.Format("<color=#55FFFF><b>👥 YEREL ÇİFT KİŞİLİK</b></color> (P1 vs {0})", mpMgr.P2AutoBot ? "🤖 Bot" : "P2 Hotseat");
+            netStatus = string.Format(LocalizationManager.T("<color=#55FFFF><b>LOCAL 2P MATCH</b></color> (P1 vs {0})", "<color=#55FFFF><b>👥 YEREL ÇİFT KİŞİLİK</b></color> (P1 vs {0})"), mpMgr.P2AutoBot ? "Bot" : "P2 Hotseat");
         }
         else if (isHost)
         {
             netStatus = net.IsConnected
-                ? string.Format("<color=#55FF55><b>🟢 2. OYUNCU (KEREM) BAĞLANDI!</b></color>{0}", pingStr)
-                : string.Format("<color=#FFAA33><b>🟡 2. OYUNCU BEKLENİYOR...</b></color> (IP: <color=#FFEE55>{0}:{1}</color>)", net.GetLocalIPAddress(), net.Port);
+                ? string.Format(LocalizationManager.T("<color=#55FF55><b>PLAYER 2 CONNECTED!</b></color>{0}", "<color=#55FF55><b>🟢 2. OYUNCU BAĞLANDI!</b></color>{0}"), pingStr)
+                : string.Format(LocalizationManager.T("<color=#FFAA33><b>WAITING FOR P2...</b></color> (IP: <color=#FFEE55>{0}:{1}</color>)", "<color=#FFAA33><b>🟡 2. OYUNCU BEKLENİYOR...</b></color> (IP: <color=#FFEE55>{0}:{1}</color>)"), net.GetLocalIPAddress(), net.Port);
         }
         else
         {
             netStatus = net.IsConnected
-                ? string.Format("<color=#55FF55><b>🟢 KURUCUYA BAĞLANDINIZ!</b></color>{0}", pingStr)
-                : string.Format("<color=#FF5555><b>🔴 BAĞLANTI BEKLENİYOR...</b></color> (Hedef: {0}:{1})", net.RemoteIP, net.Port);
+                ? string.Format(LocalizationManager.T("<color=#55FF55><b>CONNECTED TO HOST!</b></color>{0}", "<color=#55FF55><b>🟢 KURUCUYA BAĞLANDINIZ!</b></color>{0}"), pingStr)
+                : string.Format(LocalizationManager.T("<color=#FF5555><b>CONNECTING...</b></color> (Target: {0}:{1})", "<color=#FF5555><b>🔴 BAĞLANTI BEKLENİYOR...</b></color> (Hedef: {0}:{1})"), net.RemoteIP, net.Port);
         }
         GUIStyle netBadgeStyle = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, richText = true, fontStyle = FontStyle.Bold, fontSize = 11 };
         GUI.Label(new Rect(cx + 360f, cy + 6f, cw - 660f, 20f), netStatus, netBadgeStyle);
@@ -1222,7 +1248,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         if (isClient && !net.IsConnected)
         {
             GUI.color = new Color(0.3f, 0.8f, 1f);
-            if (GUI.Button(new Rect(rx, cy + 4f, 110f, 24f), "🔄 Yeniden Bağlan"))
+            if (GUI.Button(new Rect(rx, cy + 4f, 110f, 24f), LocalizationManager.T("Reconnect", "🔄 Yeniden Bağlan")))
             {
                 net.ConnectToHost(net.RemoteIP, net.Port);
                 SVZMultiplayerManager.PlaySFX("UI_Click_01", 0.8f);
@@ -1231,7 +1257,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         }
         else
         {
-            if (GUI.Button(new Rect(rx, cy + 4f, 110f, 24f), "📋 IP Kopyala"))
+            if (GUI.Button(new Rect(rx, cy + 4f, 110f, 24f), LocalizationManager.T("Copy IP", "📋 IP Kopyala")))
             {
                 string ip = (net != null) ? net.GetLocalIPAddress() : "127.0.0.1";
                 GUIUtility.systemCopyBuffer = ip;
@@ -2032,26 +2058,26 @@ public class SVZMultiplayerUI : MonoBehaviour
         if (isRemoteConnected)
         {
             p2ReadyStr = mpMgr.IsP2Ready
-                ? "<color=#55FF55><b>✅ 2. OYUNCU HAZIR (SAVAŞA GİREBİLİR)</b></color>"
-                : "<color=#FFAA33><b>⏳ 2. OYUNCU SEÇİM YAPIYOR (HAZIR DEĞİL)</b></color>";
+                ? LocalizationManager.T("<color=#55FF55><b>P2 READY (CAN START)</b></color>", "<color=#55FF55><b>✅ 2. OYUNCU HAZIR (SAVAŞA GİREBİLİR)</b></color>")
+                : LocalizationManager.T("<color=#FFAA33><b>P2 PICKING (NOT READY)</b></color>", "<color=#FFAA33><b>⏳ 2. OYUNCU SEÇİM YAPIYOR (HAZIR DEĞİL)</b></color>");
         }
         else if (isClient)
         {
             p2ReadyStr = mpMgr.IsP2Ready
-                ? "<color=#55FF55><b>✅ HAZIRSINIZ (KURUCU BAŞLATABİLİR)</b></color>"
-                : "<color=#FFAA33><b>⏳ HAZIRLANIN ('HAZIR' BUTONUNA BASIN)</b></color>";
+                ? LocalizationManager.T("<color=#55FF55><b>YOU ARE READY</b></color>", "<color=#55FF55><b>✅ HAZIRSINIZ (KURUCU BAŞLATABİLİR)</b></color>")
+                : LocalizationManager.T("<color=#FFAA33><b>PRESS READY WHEN DONE</b></color>", "<color=#FFAA33><b>⏳ HAZIRLANIN ('HAZIR' BUTONUNA BASIN)</b></color>");
         }
         else if (mpMgr.P2AutoBot)
         {
-            p2ReadyStr = "<color=#55FF55><b>✅ YAPAY ZEKA BOT HAZIR</b></color>";
+            p2ReadyStr = LocalizationManager.T("<color=#55FF55><b>AI BOT READY</b></color>", "<color=#55FF55><b>✅ YAPAY ZEKA BOT HAZIR</b></color>");
         }
         else if (isSamePC)
         {
-            p2ReadyStr = "<color=#55FF55><b>✅ P2 HOTSEAT HAZIR</b></color>";
+            p2ReadyStr = LocalizationManager.T("<color=#55FF55><b>P2 HOTSEAT READY</b></color>", "<color=#55FF55><b>✅ P2 HOTSEAT HAZIR</b></color>");
         }
         else
         {
-            p2ReadyStr = "<color=#FF6666><b>❌ 2. OYUNCU BEKLENİYOR...</b></color>";
+            p2ReadyStr = LocalizationManager.T("<color=#FF6666><b>WAITING FOR PLAYER 2...</b></color>", "<color=#FF6666><b>❌ 2. OYUNCU BEKLENİYOR...</b></color>");
         }
         GUI.Label(new Rect(p2X + 8f, p2PerkY + 20f, sideColW - 16f, 18f), p2ReadyStr, new GUIStyle(GUI.skin.label) { richText = true, fontSize = 10, alignment = TextAnchor.MiddleCenter });
 
@@ -2072,7 +2098,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         GUI.DrawTexture(new Rect(chX, botY, chatW, 2f), Texture2D.whiteTexture);
         GUI.color = Color.white;
 
-        GUI.Label(new Rect(chX + 8f, botY + 4f, chatW - 16f, 16f), "💬 <b>LOBİ SOHBETİ VE BİLDİRİMLER</b>", teamHeader);
+        GUI.Label(new Rect(chX + 8f, botY + 4f, chatW - 16f, 16f), LocalizationManager.T("<b>LOBBY CHAT & ALERTS</b>", "💬 <b>LOBİ SOHBETİ VE BİLDİRİMLER</b>"), teamHeader);
 
         // Chat Log ScrollView
         float chatBoxH = botH - 102f;
@@ -2092,7 +2118,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         float chatInputY = botY + chatBoxH + 26f;
         GUI.SetNextControlName("LobbyChatInput");
         mLobbyChatInput = GUI.TextField(new Rect(chX + 6f, chatInputY, chatW - 84f, 22f), mLobbyChatInput);
-        if (GUI.Button(new Rect(chX + chatW - 74f, chatInputY, 68f, 22f), "Gönder") ||
+        if (GUI.Button(new Rect(chX + chatW - 74f, chatInputY, 68f, 22f), LocalizationManager.T("Send", "Gönder")) ||
             (Event.current.isKey && Event.current.keyCode == KeyCode.Return && GUI.GetNameOfFocusedControl() == "LobbyChatInput"))
         {
             SendLobbyChatMessage();
@@ -2107,8 +2133,8 @@ public class SVZMultiplayerUI : MonoBehaviour
             // Client Ready Check Button
             GUI.color = mpMgr.IsP2Ready ? new Color(0.25f, 0.85f, 0.45f) : new Color(0.95f, 0.70f, 0.2f);
             string clientReadyLbl = mpMgr.IsP2Ready
-                ? "<b><size=15>✅ HAZIRSINIZ!</size></b>\n<size=10>Kurucunun oyunu başlatması bekleniyor... (İptal için tıkla)</size>"
-                : "<b><size=15>⏳ HAZIR VER (HAZIRIM)</size></b>\n<size=10>Seçimleriniz bitince hazır olmak için tıklayın</size>";
+                ? LocalizationManager.T("<b><size=15>READY!</size></b>\n<size=10>Waiting for host to start... (Click to cancel)</size>", "<b><size=15>✅ HAZIRSINIZ!</size></b>\n<size=10>Kurucunun oyunu başlatması bekleniyor... (İptal için tıkla)</size>")
+                : LocalizationManager.T("<b><size=15>MARK READY</size></b>\n<size=10>Click when finished picking your deck</size>", "<b><size=15>⏳ HAZIR VER (HAZIRIM)</size></b>\n<size=10>Seçimleriniz bitince hazır olmak için tıklayın</size>");
 
             if (GUI.Button(new Rect(chX + 6f, launchY, chatW - 12f, launchH), clientReadyLbl))
             {
@@ -2128,26 +2154,26 @@ public class SVZMultiplayerUI : MonoBehaviour
                 {
                     canLaunch = true;
                     GUI.color = new Color(0.25f, 0.85f, 0.45f);
-                    hostLaunchLbl = "<b><size=16>⚔️ OYUNU BAŞLAT (HER İKİ OYUNCU HAZIR!)</size></b>\n<size=10>Savaşı Başlat ve 1v1 Arenaya Gir!</size>";
+                    hostLaunchLbl = LocalizationManager.T("<b><size=16>START MATCH (BOTH READY!)</size></b>\n<size=10>Enter the 1v1 Arena!</size>", "<b><size=16>⚔️ OYUNU BAŞLAT (HER İKİ OYUNCU HAZIR!)</size></b>\n<size=10>Savaşı Başlat ve 1v1 Arenaya Gir!</size>");
                 }
                 else
                 {
                     canLaunch = false;
                     GUI.color = new Color(0.70f, 0.55f, 0.20f, 0.85f);
-                    hostLaunchLbl = "<b><size=14>⏳ 2. OYUNCU HAZIRLANIYOR...</size></b>\n<size=10>(Katılan oyuncu 'HAZIR' butonuna basmadan başlatılamaz)</size>";
+                    hostLaunchLbl = LocalizationManager.T("<b><size=14>P2 STILL PICKING...</size></b>\n<size=10>(Waiting for opponent to press Ready)</size>", "<b><size=14>⏳ 2. OYUNCU HAZIRLANIYOR...</size></b>\n<size=10>(Katılan oyuncu 'HAZIR' butonuna basmadan başlatılamaz)</size>");
                 }
             }
             else if (isSamePC || mpMgr.P2AutoBot)
             {
                 canLaunch = true;
                 GUI.color = new Color(0.25f, 0.85f, 0.45f);
-                hostLaunchLbl = "<b><size=16>⚔️ OYUNU BAŞLAT</size></b>\n<size=10>Savaşı Başlat ve Sahaya Gir!</size>";
+                hostLaunchLbl = LocalizationManager.T("<b><size=16>START MATCH</size></b>\n<size=10>Enter the Battlefield!</size>", "<b><size=16>⚔️ OYUNU BAŞLAT</size></b>\n<size=10>Savaşı Başlat ve Sahaya Gir!</size>");
             }
             else
             {
                 canLaunch = false;
                 GUI.color = new Color(0.65f, 0.65f, 0.65f, 0.8f);
-                hostLaunchLbl = string.Format("<b><size=13>🔴 2. OYUNCU BEKLENİYOR...</size></b>\n<size=9>(Arkadaşınız {0} ile bağlandığında aktifleşir)</size>", (net != null) ? net.GetLocalIPAddress() : "26.202.100.133");
+                hostLaunchLbl = string.Format(LocalizationManager.T("<b><size=13>WAITING FOR P2...</size></b>\n<size=9>(Connect via {0})</size>", "<b><size=13>🔴 2. OYUNCU BEKLENİYOR...</size></b>\n<size=9>(Arkadaşınız {0} ile bağlandığında aktifleşir)</size>"), (net != null) ? net.GetLocalIPAddress() : "127.0.0.1");
             }
 
             if (GUI.Button(new Rect(chX + 6f, launchY, chatW - 12f, launchH), hostLaunchLbl))
@@ -2156,13 +2182,13 @@ public class SVZMultiplayerUI : MonoBehaviour
                 {
                     if (isRemoteConnected && !mpMgr.IsP2Ready)
                     {
-                        mDeckWarningMessage = "2. Oyuncu henüz 'HAZIR' vermedi! Lütfen hazır olmasını bekleyin.";
+                        mDeckWarningMessage = LocalizationManager.T("Player 2 is not Ready yet! Please wait.", "2. Oyuncu henüz 'HAZIR' vermedi! Lütfen hazır olmasını bekleyin.");
                         mDeckWarningTimer = 3.5f;
                         SVZMultiplayerManager.PlaySFX("UI_Cannot_Afford_01", 0.9f);
                     }
                     else
                     {
-                        mDeckWarningMessage = "Odaya henüz rakip oyuncu bağlanmadı! Arkadaşınız bağlanınca başlatabilirsiniz.";
+                        mDeckWarningMessage = LocalizationManager.T("No opponent connected yet!", "Odaya henüz rakip oyuncu bağlanmadı! Arkadaşınız bağlanınca başlatabilirsiniz.");
                         mDeckWarningTimer = 3.5f;
                         SVZMultiplayerManager.PlaySFX("UI_Cannot_Afford_01", 0.9f);
                     }
@@ -2204,29 +2230,33 @@ public class SVZMultiplayerUI : MonoBehaviour
         if (isSpellMode)
         {
             int spSlotNum = isP1Spell ? Mathf.Max(0, mSelectedP1SpellSlot) + 1 : Mathf.Max(0, mSelectedP2SpellSlot) + 1;
-            string heroTag = (activeSpellHero == SVZMultiplayerManager.HeroType.Samurai) ? "🗡️ Sadece Samuray Büyüleri" : "💀 Sadece Zombi Büyüleri";
+            string heroTag = (activeSpellHero == SVZMultiplayerManager.HeroType.Samurai)
+                ? LocalizationManager.T("Samurai Spells Only", "🗡️ Sadece Samuray Büyüleri")
+                : LocalizationManager.T("Zombie Spells Only", "💀 Sadece Zombi Büyüleri");
             sideTitle = isP1Spell
-                ? string.Format("<color=#DDA0FF>🔮 1. OYUNCU - BÜYÜ SLOT {0}</color> [{1} ({2})]", spSlotNum, heroTag, heroSpellList.Count)
-                : string.Format("<color=#FFAAEE>🔮 2. OYUNCU - BÜYÜ SLOT {0}</color> [{1} ({2})]", spSlotNum, heroTag, heroSpellList.Count);
+                ? string.Format(LocalizationManager.T("<color=#DDA0FF>PLAYER 1 - SPELL SLOT {0}</color> [{1} ({2})]", "<color=#DDA0FF>🔮 1. OYUNCU - BÜYÜ SLOT {0}</color> [{1} ({2})]"), spSlotNum, heroTag, heroSpellList.Count)
+                : string.Format(LocalizationManager.T("<color=#FFAAEE>PLAYER 2 - SPELL SLOT {0}</color> [{1} ({2})]", "<color=#FFAAEE>🔮 2. OYUNCU - BÜYÜ SLOT {0}</color> [{1} ({2})]"), spSlotNum, heroTag, heroSpellList.Count);
         }
         else
         {
             bool isEditingP1 = (mSelectedP1Slot >= 0);
             string quotaHint = mpMgr.DisableEliteLimits
-                ? "<color=#FFEE55>[⚡ LİMİTSİZ ELİT/BOSS MODU]</color>"
-                : (isTenUnitMode ? "[10 Birlik Modu: Maks. 2 Efsanevi, 4 Elit]" : "[5 Birlik Modu: Maks. 1 Efsanevi, 2 Elit]");
+                ? LocalizationManager.T("<color=#FFEE55>[UNLIMITED ELITE/BOSS MODE]</color>", "<color=#FFEE55>[⚡ LİMİTSİZ ELİT/BOSS MODU]</color>")
+                : (isTenUnitMode
+                    ? LocalizationManager.T("[10-Unit Mode: Max 2 Legend, 4 Elite]", "[10 Birlik Modu: Maks. 2 Efsanevi, 4 Elit]")
+                    : LocalizationManager.T("[5-Unit Mode: Max 1 Legend, 2 Elite]", "[5 Birlik Modu: Maks. 1 Efsanevi, 2 Elit]"));
             sideTitle = isEditingP1
-                ? string.Format("<color=#55FF55>1. OYUNCU - SLOT {0} SEÇİMİ</color> - {1}", mSelectedP1Slot + 1, quotaHint)
-                : string.Format("<color=#FF7777>2. OYUNCU - SLOT {0} SEÇİMİ</color> - {1}", mSelectedP2Slot + 1, quotaHint);
+                ? string.Format(LocalizationManager.T("<color=#55FF55>PLAYER 1 - SLOT {0} PICK</color> - {1}", "<color=#55FF55>1. OYUNCU - SLOT {0} SEÇİMİ</color> - {1}"), mSelectedP1Slot + 1, quotaHint)
+                : string.Format(LocalizationManager.T("<color=#FF7777>PLAYER 2 - SLOT {0} PICK</color> - {1}", "<color=#FF7777>2. OYUNCU - SLOT {0} SEÇİMİ</color> - {1}"), mSelectedP2Slot + 1, quotaHint);
         }
 
         GUIStyle secTitle = new GUIStyle(GUI.skin.label) { richText = true, fontStyle = FontStyle.Bold, fontSize = 10 };
         GUI.Label(new Rect(cx + 8f, curY + 4f, 430f, 18f), sideTitle, secTitle);
 
-        // Filter Tabs: [Tümü (49)] [Samuray (18)] [Zombi (31)] [🔮 Büyüler]
+        // Filter Tabs: [All] [Samurai] [Zombie] [Spells]
         float fx = cx + cw - 412f;
         GUI.color = (mCatalogFilter == 0 && !isSpellMode) ? new Color(0.95f, 0.75f, 0.2f) : new Color(0.2f, 0.22f, 0.28f);
-        if (GUI.Button(new Rect(fx, curY + 3f, 92f, 20f), string.Format("Tümü ({0})", SVZMultiplayerManager.sAllUnitMetas.Count)))
+        if (GUI.Button(new Rect(fx, curY + 3f, 92f, 20f), string.Format(LocalizationManager.T("All ({0})", "Tümü ({0})"), SVZMultiplayerManager.sAllUnitMetas.Count)))
         {
             mCatalogFilter = 0;
             mSelectedP1SpellSlot = -1;
@@ -2234,7 +2264,7 @@ public class SVZMultiplayerUI : MonoBehaviour
             if (mSelectedP1Slot < 0 && mSelectedP2Slot < 0) mSelectedP1Slot = 0;
         }
         GUI.color = (mCatalogFilter == 1 && !isSpellMode) ? new Color(0.25f, 0.85f, 0.35f) : new Color(0.2f, 0.22f, 0.28f);
-        if (GUI.Button(new Rect(fx + 96f, curY + 3f, 98f, 20f), string.Format("Samuray ({0})", SVZMultiplayerManager.sUnitMetaP1.Count)))
+        if (GUI.Button(new Rect(fx + 96f, curY + 3f, 98f, 20f), string.Format(LocalizationManager.T("Samurai ({0})", "Samuray ({0})"), SVZMultiplayerManager.sUnitMetaP1.Count)))
         {
             mCatalogFilter = 1;
             mSelectedP1SpellSlot = -1;
@@ -2242,7 +2272,7 @@ public class SVZMultiplayerUI : MonoBehaviour
             if (mSelectedP1Slot < 0 && mSelectedP2Slot < 0) mSelectedP1Slot = 0;
         }
         GUI.color = (mCatalogFilter == 2 && !isSpellMode) ? new Color(0.9f, 0.3f, 0.3f) : new Color(0.2f, 0.22f, 0.28f);
-        if (GUI.Button(new Rect(fx + 198f, curY + 3f, 95f, 20f), string.Format("Zombi ({0})", SVZMultiplayerManager.sUnitMetaP2.Count)))
+        if (GUI.Button(new Rect(fx + 198f, curY + 3f, 95f, 20f), string.Format(LocalizationManager.T("Zombie ({0})", "Zombi ({0})"), SVZMultiplayerManager.sUnitMetaP2.Count)))
         {
             mCatalogFilter = 2;
             mSelectedP1SpellSlot = -1;
@@ -2252,7 +2282,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         if (!isTenUnitMode)
         {
             GUI.color = isSpellMode ? new Color(0.75f, 0.35f, 0.95f) : new Color(0.2f, 0.22f, 0.28f);
-            if (GUI.Button(new Rect(fx + 297f, curY + 3f, 110f, 20f), string.Format("🔮 Büyüler ({0})", heroSpellList.Count)))
+            if (GUI.Button(new Rect(fx + 297f, curY + 3f, 110f, 20f), string.Format(LocalizationManager.T("Spells ({0})", "🔮 Büyüler ({0})"), heroSpellList.Count)))
             {
                 mCatalogFilter = 3;
                 if (mSelectedP1SpellSlot < 0 && mSelectedP2SpellSlot < 0)
@@ -2438,7 +2468,8 @@ public class SVZMultiplayerUI : MonoBehaviour
 
         // Mode: HeroAndArmy
         GUI.color = isHeroMode ? new Color(0.2f, 0.85f, 0.4f) : new Color(0.22f, 0.25f, 0.32f);
-        if (GUI.Button(new Rect(cx + 8, curY + 22, modeBtnW, modeBtnH), "🗡️ KAHRAMANLI MOD (5 Birlik)\n(Kahraman + 5 Birlik + 2 Büyü)"))
+        if (GUI.Button(new Rect(cx + 8, curY + 22, modeBtnW, modeBtnH),
+            LocalizationManager.T("HERO MODE (5 Units)\n(Hero + 5 Units + 2 Spells)", "🗡️ KAHRAMANLI MOD (5 Birlik)\n(Kahraman + 5 Birlik + 2 Büyü)")))
         {
             mpMgr.CurrentGameMode = SVZMultiplayerManager.MultiplayerGameMode.HeroAndArmy;
             if (mSelectedP1Slot >= 5) mSelectedP1Slot = 0;
@@ -2447,7 +2478,8 @@ public class SVZMultiplayerUI : MonoBehaviour
 
         // Mode: ArmyOnly (10-Unit Heroless Mode)
         GUI.color = !isHeroMode ? new Color(0.2f, 0.85f, 0.4f) : new Color(0.22f, 0.25f, 0.32f);
-        if (GUI.Button(new Rect(cx + 12 + modeBtnW, curY + 22, modeBtnW, modeBtnH), "🎖️ 10 BİRLİK HEROSUZ MOD\n(10 Birlik | 225 Smithy | +8/sn Hız)"))
+        if (GUI.Button(new Rect(cx + 12 + modeBtnW, curY + 22, modeBtnW, modeBtnH),
+            LocalizationManager.T("10-UNIT HEROLESS\n(10 Units | 225 Smithy | +8/s)", "🎖️ 10 BİRLİK HEROSUZ MOD\n(10 Birlik | 225 Smithy | +8/sn Hız)")))
         {
             mpMgr.CurrentGameMode = SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly;
             mSelectedP1SpellSlot = -1;
@@ -2458,14 +2490,16 @@ public class SVZMultiplayerUI : MonoBehaviour
         // Side: Sol Kale
         bool isLeftGate = (mpMgr.P1Side == SVZMultiplayerManager.BattlefieldSide.LeftGate);
         GUI.color = isLeftGate ? new Color(0.3f, 0.75f, 0.95f) : new Color(0.22f, 0.25f, 0.32f);
-        if (GUI.Button(new Rect(cx + 20 + modeBtnW * 2, curY + 22, modeBtnW, modeBtnH), "SOL KALE (Klasik)\n(P1 Sol Kalede, P2 Sagda)"))
+        if (GUI.Button(new Rect(cx + 20 + modeBtnW * 2, curY + 22, modeBtnW, modeBtnH),
+            LocalizationManager.T("LEFT GATE (Classic)\n(P1 Left Gate, P2 Right)", "SOL KALE (Klasik)\n(P1 Sol Kalede, P2 Sagda)")))
         {
             mpMgr.P1Side = SVZMultiplayerManager.BattlefieldSide.LeftGate;
         }
 
         // Side: Sag Kale
         GUI.color = !isLeftGate ? new Color(0.3f, 0.75f, 0.95f) : new Color(0.22f, 0.25f, 0.32f);
-        if (GUI.Button(new Rect(cx + 24 + modeBtnW * 3, curY + 22, modeBtnW, modeBtnH), "SAG KALE (Istilaci)\n(P1 Sag Kalede, P2 Solda)"))
+        if (GUI.Button(new Rect(cx + 24 + modeBtnW * 3, curY + 22, modeBtnW, modeBtnH),
+            LocalizationManager.T("RIGHT GATE (Invader)\n(P1 Right Gate, P2 Left)", "SAG KALE (Istilaci)\n(P1 Sag Kalede, P2 Solda)")))
         {
             mpMgr.P1Side = SVZMultiplayerManager.BattlefieldSide.RightGate;
         }
@@ -2475,14 +2509,16 @@ public class SVZMultiplayerUI : MonoBehaviour
         {
             float heroRowY = curY + 62f;
             GUIStyle heroBadgeStyle = new GUIStyle(GUI.skin.label) { richText = true, fontStyle = FontStyle.Bold, fontSize = 10, alignment = TextAnchor.MiddleLeft };
-            GUI.Label(new Rect(cx + 8, heroRowY, cw - 16, 16), "<color=#55FFFF>👑 KAHRAMAN SEÇİMİ (Sabit 4000 HP | Her Kahraman Yalnızca Kendi Büyülerini Kullanır!):</color>", heroBadgeStyle);
+            GUI.Label(new Rect(cx + 8, heroRowY, cw - 16, 16),
+                LocalizationManager.T("<color=#55FFFF>HERO SELECT (4000 HP | Each Hero uses its own Faction Spells):</color>", "<color=#55FFFF>👑 KAHRAMAN SEÇİMİ (Sabit 4000 HP | Her Kahraman Yalnızca Kendi Büyülerini Kullanır!):</color>"), heroBadgeStyle);
 
             heroRowY += 18f;
 
             // P1 Hero: Samurai
             bool p1Samurai = (mpMgr.P1HeroType == SVZMultiplayerManager.HeroType.Samurai);
             GUI.color = p1Samurai ? new Color(0.25f, 0.85f, 0.45f) : new Color(0.20f, 0.22f, 0.28f);
-            if (GUI.Button(new Rect(cx + 8, heroRowY, modeBtnW, 34f), "1P: 🗡️ Samuray Kahramanı\n<size=9>Sadece Samuray Büyüleri</size>"))
+            if (GUI.Button(new Rect(cx + 8, heroRowY, modeBtnW, 34f),
+                LocalizationManager.T("1P: Samurai Hero\n<size=9>Samurai Spells Only</size>", "1P: 🗡️ Samuray Kahramanı\n<size=9>Sadece Samuray Büyüleri</size>")))
             {
                 mpMgr.P1HeroType = SVZMultiplayerManager.HeroType.Samurai;
                 mpMgr.EnsureValidSpellsForPlayer(1);
@@ -2491,7 +2527,8 @@ public class SVZMultiplayerUI : MonoBehaviour
 
             // P1 Hero: Zombie
             GUI.color = !p1Samurai ? new Color(0.85f, 0.35f, 0.75f) : new Color(0.20f, 0.22f, 0.28f);
-            if (GUI.Button(new Rect(cx + 12 + modeBtnW, heroRowY, modeBtnW, 34f), "1P: 💀 Zombi Kahramanı\n<size=9>Sadece Zombi Büyüleri</size>"))
+            if (GUI.Button(new Rect(cx + 12 + modeBtnW, heroRowY, modeBtnW, 34f),
+                LocalizationManager.T("1P: Zombie Hero\n<size=9>Zombie Spells Only</size>", "1P: 💀 Zombi Kahramanı\n<size=9>Sadece Zombi Büyüleri</size>")))
             {
                 mpMgr.P1HeroType = SVZMultiplayerManager.HeroType.Zombie;
                 mpMgr.EnsureValidSpellsForPlayer(1);
@@ -2501,7 +2538,8 @@ public class SVZMultiplayerUI : MonoBehaviour
             // P2 Hero: Zombie
             bool p2Zombie = (mpMgr.P2HeroType == SVZMultiplayerManager.HeroType.Zombie);
             GUI.color = p2Zombie ? new Color(0.85f, 0.35f, 0.75f) : new Color(0.20f, 0.22f, 0.28f);
-            if (GUI.Button(new Rect(cx + 20 + modeBtnW * 2, heroRowY, modeBtnW, 34f), "2P: 💀 Zombi Kahramanı\n<size=9>Sadece Zombi Büyüleri</size>"))
+            if (GUI.Button(new Rect(cx + 20 + modeBtnW * 2, heroRowY, modeBtnW, 34f),
+                LocalizationManager.T("2P: Zombie Hero\n<size=9>Zombie Spells Only</size>", "2P: 💀 Zombi Kahramanı\n<size=9>Sadece Zombi Büyüleri</size>")))
             {
                 mpMgr.P2HeroType = SVZMultiplayerManager.HeroType.Zombie;
                 mpMgr.EnsureValidSpellsForPlayer(2);
@@ -2510,7 +2548,8 @@ public class SVZMultiplayerUI : MonoBehaviour
 
             // P2 Hero: Samurai
             GUI.color = !p2Zombie ? new Color(0.25f, 0.85f, 0.45f) : new Color(0.20f, 0.22f, 0.28f);
-            if (GUI.Button(new Rect(cx + 24 + modeBtnW * 3, heroRowY, modeBtnW, 34f), "2P: 🗡️ Samuray Şampiyonu\n<size=9>Sadece Samuray Büyüleri</size>"))
+            if (GUI.Button(new Rect(cx + 24 + modeBtnW * 3, heroRowY, modeBtnW, 34f),
+                LocalizationManager.T("2P: Samurai Champion\n<size=9>Samurai Spells Only</size>", "2P: 🗡️ Samuray Şampiyonu\n<size=9>Sadece Samuray Büyüleri</size>")))
             {
                 mpMgr.P2HeroType = SVZMultiplayerManager.HeroType.Samurai;
                 mpMgr.EnsureValidSpellsForPlayer(2);
@@ -2527,7 +2566,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         GUI.color = Color.white;
 
         GUI.Label(new Rect(cx + 8, curY + 4, cw - 16, 18),
-            string.Format("<color=#FFEE55>2. SAVAS ARENASI SEC:</color> (Aktif: <color=#55FFFF>{0}</color>)", mpMgr.SelectedArena), secTitle);
+            string.Format(LocalizationManager.T("<color=#FFEE55>2. SELECT ARENA:</color> (Active: <color=#55FFFF>{0}</color>)", "<color=#FFEE55>2. SAVAS ARENASI SEC:</color> (Aktif: <color=#55FFFF>{0}</color>)"), mpMgr.SelectedArena), secTitle);
 
         float mapBtnW = (cw - 36f) / 5f;
         float mapBtnH = 65f;
@@ -2558,26 +2597,27 @@ public class SVZMultiplayerUI : MonoBehaviour
         GUI.DrawTexture(new Rect(cx, curY, cw, 195f), Texture2D.whiteTexture);
         GUI.color = Color.white;
 
-        GUI.Label(new Rect(cx + 8, curY + 4, cw - 16, 18), "<color=#FFEE55>3. MAC MUTATORLERI VE KOMUTAN YETENEKLERI (PERKS):</color>", secTitle);
+        GUI.Label(new Rect(cx + 8, curY + 4, cw - 16, 18),
+            LocalizationManager.T("<color=#FFEE55>3. MATCH MUTATORS & COMMANDER PERKS:</color>", "<color=#FFEE55>3. MAC MUTATORLERI VE KOMUTAN YETENEKLERI (PERKS):</color>"), secTitle);
 
         float halfW = (cw - 24f) * 0.5f;
 
         // Left Column: Mutators & AI Bot Difficulty
         float my = curY + 26f;
-        GUI.Label(new Rect(cx + 12, my, 130, 20), "<b>Kale Cani (HP):</b>");
+        GUI.Label(new Rect(cx + 12, my, 130, 20), LocalizationManager.T("<b>Gate Health (HP):</b>", "<b>Kale Cani (HP):</b>"));
         if (GUI.Button(new Rect(cx + 145, my, 55, 22), "3,000")) mpMgr.GateMaxHealthSetting = 3000f;
         if (GUI.Button(new Rect(cx + 205, my, 55, 22), "5,000")) mpMgr.GateMaxHealthSetting = 5000f;
         if (GUI.Button(new Rect(cx + 265, my, 55, 22), "10,000")) mpMgr.GateMaxHealthSetting = 10000f;
         if (GUI.Button(new Rect(cx + 325, my, 55, 22), "15,000")) mpMgr.GateMaxHealthSetting = 15000f;
 
         my += 30f;
-        GUI.Label(new Rect(cx + 12, my, 130, 20), "<b>Enerji Uretimi:</b>");
+        GUI.Label(new Rect(cx + 12, my, 130, 20), LocalizationManager.T("<b>Energy Regen:</b>", "<b>Enerji Uretimi:</b>"));
         if (GUI.Button(new Rect(cx + 145, my, 65, 22), "1.0x Norm")) mpMgr.EnergySpeed = 1.0f;
-        if (GUI.Button(new Rect(cx + 215, my, 65, 22), "1.5x Hizli")) mpMgr.EnergySpeed = 1.5f;
+        if (GUI.Button(new Rect(cx + 215, my, 65, 22), LocalizationManager.T("1.5x Fast", "1.5x Hizli"))) mpMgr.EnergySpeed = 1.5f;
         if (GUI.Button(new Rect(cx + 285, my, 65, 22), "2.5x Turbo")) mpMgr.EnergySpeed = 2.5f;
 
         my += 30f;
-        GUI.Label(new Rect(cx + 12, my, 130, 20), "<b>Bot Zorlugu:</b>");
+        GUI.Label(new Rect(cx + 12, my, 130, 20), LocalizationManager.T("<b>Bot Difficulty:</b>", "<b>Bot Zorlugu:</b>"));
         for (int b = 0; b < SVZMultiplayerManager.sBotDifficultyNames.Length; b++)
         {
             GUI.color = (mpMgr.BotDifficulty == b) ? new Color(0.95f, 0.68f, 0.18f) : new Color(0.22f, 0.24f, 0.30f);
@@ -2589,17 +2629,17 @@ public class SVZMultiplayerUI : MonoBehaviour
         GUI.color = Color.white;
 
         my += 30f;
-        GUI.Label(new Rect(cx + 12, my, 130, 20), "<b>Elit Birlik Limiti:</b>");
+        GUI.Label(new Rect(cx + 12, my, 130, 20), LocalizationManager.T("<b>Elite Unit Limit:</b>", "<b>Elit Birlik Limiti:</b>"));
         GUI.color = !mpMgr.DisableEliteLimits ? new Color(0.22f, 0.65f, 0.85f) : new Color(0.22f, 0.24f, 0.30f);
-        if (GUI.Button(new Rect(cx + 145, my, 100, 22), "🛡️ Standart")) mpMgr.DisableEliteLimits = false;
+        if (GUI.Button(new Rect(cx + 145, my, 100, 22), LocalizationManager.T("Standard", "🛡️ Standart"))) mpMgr.DisableEliteLimits = false;
         GUI.color = mpMgr.DisableEliteLimits ? new Color(0.95f, 0.75f, 0.15f) : new Color(0.22f, 0.24f, 0.30f);
-        if (GUI.Button(new Rect(cx + 250, my, 140, 22), "⚡ Sınırsız (Kaldır)")) mpMgr.DisableEliteLimits = true;
+        if (GUI.Button(new Rect(cx + 250, my, 140, 22), LocalizationManager.T("Unlimited", "⚡ Sınırsız (Kaldır)"))) mpMgr.DisableEliteLimits = true;
         GUI.color = Color.white;
 
         // Right Column: Perks
         float px = cx + halfW + 12f;
         my = curY + 26f;
-        GUI.Label(new Rect(px, my, halfW, 18), "<color=#55FF55><b>1. Oyuncu Yetenegi (Perk):</b></color>", new GUIStyle(GUI.skin.label) { richText = true });
+        GUI.Label(new Rect(px, my, halfW, 18), LocalizationManager.T("<color=#55FF55><b>Player 1 Commander Perk:</b></color>", "<color=#55FF55><b>1. Oyuncu Yetenegi (Perk):</b></color>"), new GUIStyle(GUI.skin.label) { richText = true });
         my += 22f;
         for (int p = 0; p < SVZMultiplayerManager.sP1PerkNames.Length; p++)
         {
@@ -2611,7 +2651,7 @@ public class SVZMultiplayerUI : MonoBehaviour
         }
 
         my += 36f;
-        GUI.Label(new Rect(px, my, halfW, 18), "<color=#FF7777><b>2. Oyuncu Yetenegi (Perk):</b></color>", new GUIStyle(GUI.skin.label) { richText = true });
+        GUI.Label(new Rect(px, my, halfW, 18), LocalizationManager.T("<color=#FF7777><b>Player 2 Commander Perk:</b></color>", "<color=#FF7777><b>2. Oyuncu Yetenegi (Perk):</b></color>"), new GUIStyle(GUI.skin.label) { richText = true });
         my += 22f;
         for (int p = 0; p < SVZMultiplayerManager.sP2PerkNames.Length; p++)
         {

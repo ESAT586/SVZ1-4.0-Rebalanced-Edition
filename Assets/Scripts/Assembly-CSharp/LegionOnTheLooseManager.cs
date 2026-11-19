@@ -44,15 +44,37 @@ public class LegionOnTheLooseManager : WeakGlobalInstance<LegionOnTheLooseManage
 			return;
 		}
 		int num = 0;
-		if (WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm == "horde" || WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm.Contains("+horde"))
+		InGameImpl igInst = WeakGlobalSceneBehavior<InGameImpl>.instance;
+		if (igInst != null && (igInst.activeCharm == "horde" || igInst.activeCharm.Contains("+horde")))
 		{
-			num = int.Parse(Singleton<CharmsDatabase>.instance.GetAttribute(WeakGlobalSceneBehavior<InGameImpl>.instance.activeCharm, "legionOnTheLooseBonus"));
+			num = int.Parse(Singleton<CharmsDatabase>.instance.GetAttribute(igInst.activeCharm, "legionOnTheLooseBonus"));
 		}
 		switch (Singleton<PlayModesManager>.instance.selectedMode)
 		{
 		case "zombies":
-			AddModule("LegionOnTheLoose", Singleton<Profile>.instance.legionOnTheLooseLevel + num, num > 0);
-			AddModule("DeathFromAbove", Singleton<Profile>.instance.deathFromAboveLevel, true);
+			if (Singleton<Profile>.instance.IsModuleEnabled("LegionOnTheLoose"))
+			{
+				int unlocked = Singleton<Profile>.instance.GetModuleUnlockedLevel("LegionOnTheLoose");
+				int chosen = Singleton<Profile>.instance.GetModuleSelectedLevel("LegionOnTheLoose");
+				if (unlocked > 0)
+				{
+					int spawnLevel = (chosen == unlocked) ? (chosen + num) : chosen;
+					AddModule("LegionOnTheLoose", spawnLevel, num > 0, (num > 0) ? 0f : 1.5f);
+				}
+				else if (num > 0)
+				{
+					AddModule("LegionOnTheLoose", num, true, 0f);
+				}
+			}
+			if (Singleton<Profile>.instance.IsModuleEnabled("DeathFromAbove"))
+			{
+				int dfaUnlocked = Singleton<Profile>.instance.GetModuleUnlockedLevel("DeathFromAbove");
+				int dfaChosen = Singleton<Profile>.instance.GetModuleSelectedLevel("DeathFromAbove");
+				if (dfaUnlocked > 0)
+				{
+					AddModule("DeathFromAbove", dfaChosen, true, 0f);
+				}
+			}
 			break;
 		}
 	}
@@ -91,7 +113,7 @@ public class LegionOnTheLooseManager : WeakGlobalInstance<LegionOnTheLooseManage
 		}
 	}
 
-	private void AddModule(string moduleID, int level, bool startRightAway)
+	private void AddModule(string moduleID, int level, bool startRightAway, float initialDelayOverride)
 	{
 		if (level == 0)
 		{
@@ -111,16 +133,23 @@ public class LegionOnTheLooseManager : WeakGlobalInstance<LegionOnTheLooseManage
 		}
 		if (sDFTreeNode2 != null)
 		{
-			if (mMaxHelpers == 0)
+			int modMax = int.Parse(sDFTreeNode["maxHelpers"]);
+			if (modMax > mMaxHelpers)
 			{
-				mMaxHelpers = int.Parse(sDFTreeNode["maxHelpers"]);
+				mMaxHelpers = modMax;
 			}
 			Entry entry = new Entry();
 			entry.moduleID = moduleID;
-			entry.maxTimer = float.Parse(sDFTreeNode2["delay"]);
+			entry.maxTimer = (moduleID == "LegionOnTheLoose" || moduleID == "DeathFromAbove")
+				? Singleton<Profile>.instance.GetModuleCooldownSeconds(moduleID)
+				: float.Parse(sDFTreeNode2["delay"]);
 			if (startRightAway)
 			{
 				entry.currentTimer = entry.maxTimer;
+			}
+			else if (initialDelayOverride > 0f)
+			{
+				entry.currentTimer = Mathf.Max(0f, entry.maxTimer - initialDelayOverride);
 			}
 			entry.deltaTimerMax = float.Parse(sDFTreeNode["inBetweenDelay"]);
 			entry.helperID = sDFTreeNode2["helperID"];

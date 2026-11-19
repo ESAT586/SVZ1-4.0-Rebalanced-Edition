@@ -1,0 +1,80 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Zato
+desc = Blind master swordsman.
+prefab = Characters/PFBlindswordsman
+HUDIcon = Sprites/Icons/ally_zato
+weaponMeleePrefab = Props/weapons/blindsword
+waveToUnlock = 1
+resourcesCost = 45.0
+cooldownTimer = 25.0
+attackFrequency = 1.0
+usesBladeWeapon = true
+unique = true
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 2000,0
+	health = 2000
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 170
+	meleeDamage = 74
+	knockbackPower = 20
+	knockbackResistance = 50
+
+[002]
+	cost = 4500,0
+	health = 3000
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 170
+	meleeDamage = 131
+	knockbackPower = 20
+	knockbackResistance = 50
+
+[003]
+	cost = 9350,0
+	health = 4000
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 170
+	meleeDamage = 188
+	knockbackPower = 25
+	knockbackResistance = 55
+
+[004]
+	cost = 12200,0
+	health = 5500
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 170
+	meleeDamage = 232
+	knockbackPower = 25
+	knockbackResistance = 60
+
+[005]
+	cost = 49000,0
+	health = 7000
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 170
+	meleeDamage = 276
+	knockbackPower = 30
+	knockbackResistance = 65
+
+[006]
+	cost = 0,12
+	health = 8000
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 170
+	meleeDamage = 340
+	knockbackPower = 35
+	knockbackResistance = 70

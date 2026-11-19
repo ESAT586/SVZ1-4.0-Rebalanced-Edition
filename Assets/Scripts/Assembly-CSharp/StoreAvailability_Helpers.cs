@@ -5,12 +5,26 @@ public class StoreAvailability_Helpers
 {
 	public static void Get(List<StoreData.Item> items)
 	{
+		SDFTreeNode activeModeHelpers = SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/Helpers/AllHelpers");
+		HashSet<string> activeModeSet = null;
+		if (activeModeHelpers != null && activeModeHelpers.attributeCount > 0)
+		{
+			activeModeSet = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+			for (int i = 0; activeModeHelpers.hasAttribute(i); i++)
+			{
+				activeModeSet.Add(activeModeHelpers[i]);
+			}
+		}
 		string[] allIDs = Singleton<HelpersDatabase>.instance.allIDs;
 		foreach (string text in allIDs)
 		{
 			try
 			{
 				if (SVZMultiplayerManager.IsHiddenOrSubHelper(text))
+				{
+					continue;
+				}
+				if (activeModeSet != null && !activeModeSet.Contains(text))
 				{
 					continue;
 				}
@@ -171,7 +185,7 @@ public class StoreAvailability_Helpers
 			item.details.SetColumns(maxNum, maxNum);
 			
 			item.cost = new Cost("0", 0);
-			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_levelup"), Singleton<Localizer>.instance.Parse(mainData["displayName"] ?? "Helper"), maxNum);
+			item.title = Singleton<Localizer>.instance.Parse(mainData["displayName"] ?? "Helper");
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(mainData["displayName"]);
 			item.details.AddSmallDescription((!mainData.hasAttribute("desc")) ? string.Empty : mainData["desc"]);
 			

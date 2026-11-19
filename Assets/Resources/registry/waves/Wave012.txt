@@ -117,3 +117,7 @@ scene = InGame_fallnight
 	Chochinobake
 	.25,.25
 	Chochinobake
+	/ SVZ2WaveAdditions
+	Akaname
+	1,1
+	Zombie_Split

@@ -4,7 +4,7 @@
 /--------------------------------------------------
 
 displayName = @helper_ninja_girl
-desc = @ helper_ninja_girl_desc
+desc = @helper_ninja_girl_desc
 prefab = Characters/PFFemaleWarriorBig
 lane = back
 HUDIcon = Sprites/Icons/ally_assassin

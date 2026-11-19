@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1127550643333652}
+  m_IsPrefabParent: 1
+--- !u!1 &1127550643333652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4220649641689750}
+  - component: {fileID: 114778657592877490}
+  m_Layer: 0
+  m_Name: HeroBalanced
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4220649641689750
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1127550643333652}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114778657592877490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1127550643333652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a601efe3b0ca39d5e3b419a22b773e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseTheme: {fileID: 114062154744917752, guid: 9311afcdf498b7d4e8af9cbf811d0d1f,
+    type: 2}
+  events:
+  - name: Attack
+    clips:
+    - {fileID: 8300000, guid: 860078cefefb8d945bf9fa3fb62fa875, type: 3}
+    - {fileID: 8300000, guid: 982e6db8afa49b0448559a7d3161ce50, type: 3}
+    - {fileID: 8300000, guid: 3c5947d5f3b997047a150f121c0b758d, type: 3}
+    - {fileID: 8300000, guid: 3ae5830d3febe294f950f3b335b91a45, type: 3}
+    - {fileID: 8300000, guid: ee3bdafe26499c24dbdac7016db5f4b3, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 2
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0
+  - name: AttackBig
+    clips:
+    - {fileID: 8300000, guid: 380b6d8e6708a5341915e4271a415fe2, type: 3}
+    - {fileID: 8300000, guid: 150559b2a0717924fa030e9610f06b19, type: 3}
+    - {fileID: 8300000, guid: 19863cb749f6f3f47a5a38cec40833aa, type: 3}
+    - {fileID: 8300000, guid: cdda19f1606f5a24392e586a7d18fa32, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 5
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0
+  - name: Death
+    clips:
+    - {fileID: 8300000, guid: 4a9f6e6702ec25f4480260a1994d6344, type: 3}
+    - {fileID: 8300000, guid: c543d2b1bda12104096ecf4e6b7c1702, type: 3}
+    - {fileID: 8300000, guid: 2dbcf7c9d78d69342af5dd834de64a2c, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0
+    volume: 1
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 5
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0
+  - name: Footstep
+    clips:
+    - {fileID: 8300000, guid: 724b0049111c43d4f8402bce066b0c33, type: 3}
+    - {fileID: 8300000, guid: 5a22ec444600c9c409488403f4e26887, type: 3}
+    - {fileID: 8300000, guid: b73a3d4b5d6741b4f98352c7a07f8893, type: 3}
+    - {fileID: 8300000, guid: d90a82048c681b245a634e9f2eb70776, type: 3}
+    - {fileID: 8300000, guid: fcd243d4a11316e4b8d7b6d36af11fb1, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 5
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0
+  - name: Spawn
+    clips:
+    - {fileID: 8300000, guid: 860078cefefb8d945bf9fa3fb62fa875, type: 3}
+    - {fileID: 8300000, guid: 982e6db8afa49b0448559a7d3161ce50, type: 3}
+    - {fileID: 8300000, guid: 3c5947d5f3b997047a150f121c0b758d, type: 3}
+    - {fileID: 8300000, guid: 3ae5830d3febe294f950f3b335b91a45, type: 3}
+    - {fileID: 8300000, guid: ee3bdafe26499c24dbdac7016db5f4b3, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0
+    volume: 1
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 5
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0
+  - name: Revive
+    clips:
+    - {fileID: 8300000, guid: 3a273f074840ad6448fe05a390f78bac, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0
+    volume: 1
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 5
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0
+  - name: AttackA
+    clips:
+    - {fileID: 8300000, guid: 860078cefefb8d945bf9fa3fb62fa875, type: 3}
+    - {fileID: 8300000, guid: 982e6db8afa49b0448559a7d3161ce50, type: 3}
+    - {fileID: 8300000, guid: 3c5947d5f3b997047a150f121c0b758d, type: 3}
+    - {fileID: 8300000, guid: 3ae5830d3febe294f950f3b335b91a45, type: 3}
+    - {fileID: 8300000, guid: ee3bdafe26499c24dbdac7016db5f4b3, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 2
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0

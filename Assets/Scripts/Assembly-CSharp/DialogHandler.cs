@@ -20,6 +20,10 @@ public class DialogHandler : WeakGlobalInstance<DialogHandler>
 	{
 		get
 		{
+			if (mFader == null || mCreators == null)
+			{
+				return true;
+			}
 			if ((mCurrentDialog != null && !mCurrentDialog.isDone) || mCreators.Count > 0)
 			{
 				return false;
@@ -92,6 +96,10 @@ public class DialogHandler : WeakGlobalInstance<DialogHandler>
 
 	public void Update()
 	{
+		if (mFader == null || mCreators == null)
+		{
+			return;
+		}
 		mFader.Update();
 		if (mCurrentDialog != null)
 		{

@@ -11,22 +11,40 @@ inBetweenDelay = 0.8
 	cost = 10000,0
 	delay = 15.0
 	helperID = Nobusuma
-	num = 2
+	num = 1
+	HUDIcon = Sprites/Icons/dfa_nobusuma_1x
 
 [002]
 	cost = 35000,0
 	delay = 14.0
 	helperID = Nobusuma
-	num = 3
+	num = 2
+	HUDIcon = Sprites/Icons/dfa_nobusuma_2x
 
 [003]
 	cost = 0,50
 	delay = 12.0
 	helperID = Nobusuma
-	num = 4
+	num = 3
+	HUDIcon = Sprites/Icons/dfa_nobusuma_3x
 
 [004]
+	cost = 0,80
+	delay = 11.0
+	helperID = TenguAir
+	num = 1
+	HUDIcon = Sprites/Icons/dfa_tenguair_1x
+
+[005]
+	cost = 0,105
+	delay = 10.5
+	helperID = TenguAir
+	num = 2
+	HUDIcon = Sprites/Icons/dfa_tenguair_2x
+
+[006]
 	cost = 0,125
 	delay = 10.0
 	helperID = TenguAir
 	num = 3
+	HUDIcon = Sprites/Icons/dfa_tenguair_3x

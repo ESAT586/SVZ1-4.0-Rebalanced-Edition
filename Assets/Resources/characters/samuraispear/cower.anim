@@ -2222,7 +2222,7 @@ AnimationClip:
     path: samuraispear:Sam_Skeleton_grp/samuraispear:Sam_spine_low_jnt/samuraispear:Sam_hip_jnt/samuraispear:LeftSkirt/samuraispear:LeftSkirt1
   m_FloatCurves: []
   m_SampleRate: 30
-  m_WrapMode: 0
+  m_WrapMode: 2
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}

@@ -720,7 +720,7 @@ public class SDFTree
 		case "f":
 		{
 			float result;
-			if (float.TryParse(str, out result))
+			if (float.TryParse(str, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out result))
 			{
 				return true;
 			}

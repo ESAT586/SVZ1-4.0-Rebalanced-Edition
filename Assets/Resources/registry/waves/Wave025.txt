@@ -122,6 +122,9 @@ scene = InGame_winterday
 	Chochinobake
 	1,1
 	Chochinobake
-	
-
-	
+	/ SVZ2WaveAdditions
+	Amanojaku
+	1,1
+	Harionago
+	1,1
+	Onmoraki

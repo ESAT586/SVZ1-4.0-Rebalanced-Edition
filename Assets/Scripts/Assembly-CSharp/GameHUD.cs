@@ -225,11 +225,7 @@ public class GameHUD
 
 	public bool CanUseDevWin()
 	{
-		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
-		{
-			return false;
-		}
-		return true;
+		return false;
 	}
 
 	public bool cheatClicked()

@@ -724,9 +724,9 @@
 	normalFrame = Sprites/Menus/stats_button
 	keepAspectRatio = true
 	scale = 0.25, 0.25
-	font = default32
+	font = default18
 	position = 600, 500
-	textOffset = 0, 5
+	textOffset = 0, 0
 	offsetWhenPressed = 4, 4
 	priority = 1001
 	text = English

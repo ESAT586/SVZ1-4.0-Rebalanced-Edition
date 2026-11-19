@@ -3,7 +3,7 @@
 / General
 /--------------------------------------------------
 
-displayName = Priest
+displayName = @helper_priest
 desc = @helper_priest_desc
 prefab = Characters/PFPriest
 HUDIcon = Sprites/Icons/ally_priest

@@ -283,3 +283,7 @@ scene = InGame_hell_green
 	Evil_Zombie_Gun
 	Evil_Zombie_Gun
 	Evil_Komusou
+	/ SVZ2WaveAdditions
+	Zombie_Split
+	1,1
+	Onmoraki_Alt

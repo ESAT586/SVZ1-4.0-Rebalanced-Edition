@@ -5,14 +5,14 @@
 / General
 /--------------------------------------------------
 
-displayName = SmallOni
+displayName = @helper_smalloni
 desc = @helper_oni_desc
 prefab = Characters/PFOniSmall
 HUDIcon = Sprites/Icons/enemy_smalloni
 weaponMeleePrefab = Props/PFClub
 waveToUnlock = 8
 resourcesCost = 10
-cooldownTimer = 1.5
+cooldownTimer = 2.0
 attackFrequency = 2.0
 
 
@@ -22,100 +22,100 @@ attackFrequency = 2.0
 
 [001]
 	cost = 300,0
-	health = 380
+	health = 220
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 34
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 16
+	knockbackPower = 25
+	knockbackResistance = 35
 
 [002]
 	cost = 650,0
-	health = 520
+	health = 300
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 46
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 22
+	knockbackPower = 25
+	knockbackResistance = 35
 
 [003]
 	cost = 1400,0
-	health = 720
+	health = 400
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 62
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 30
+	knockbackPower = 25
+	knockbackResistance = 35
 
 [004]
 	cost = 2800,0
-	health = 990
+	health = 530
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 84
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 40
+	knockbackPower = 25
+	knockbackResistance = 35
 
 [005]
 	cost = 5500,0
-	health = 1360
+	health = 700
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 114
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 52
+	knockbackPower = 25
+	knockbackResistance = 35
 
 [006]
 	cost = 0,10
-	health = 1860
+	health = 910
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 154
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 68
+	knockbackPower = 25
+	knockbackResistance = 35
 
 [007]
 	cost = 0,15
-	health = 2550
+	health = 1160
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 208
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 86
+	knockbackPower = 25
+	knockbackResistance = 35
 
 [008]
 	cost = 0,20
-	health = 3500
+	health = 1450
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 280
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 108
+	knockbackPower = 25
+	knockbackResistance = 35
 
 [009]
 	cost = 0,30
-	health = 4800
+	health = 1800
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 378
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 132
+	knockbackPower = 25
+	knockbackResistance = 35
 
 [010]
 	cost = 0,50
-	health = 6600
+	health = 2200
 	speedMin = 85
 	speedMax = 85
-	meleeRange = 90
-	meleeDamage = 510
-	knockbackPower = 40
-	knockbackResistance = 50
+	meleeRange = 95
+	meleeDamage = 160
+	knockbackPower = 25
+	knockbackResistance = 35

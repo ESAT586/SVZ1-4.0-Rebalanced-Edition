@@ -209,7 +209,10 @@ public class CharacterModelController : MonoBehaviour
 		string n = modelOrPrefabName.ToLowerInvariant();
 		return n.Contains("zombie") || n.Contains("undead") || n.Contains("necromancer") ||
 		       n.Contains("jurogumo") || n.Contains("nobosuma") || n.Contains("oni") ||
-		       n.Contains("onibaba") || n.Contains("torso") || n.Contains("chochin");
+		       n.Contains("onibaba") || n.Contains("torso") || n.Contains("chochin") ||
+		       n.Contains("shutendoji") || n.Contains("akaname") || n.Contains("amanojaku") ||
+		       n.Contains("harionago") || n.Contains("onmoraki") || n.Contains("nioguardian") ||
+		       n.Contains("crawling");
 	}
 
 	public static FacingType GetModelNativeFacing(string modelOrPrefabName)
@@ -227,7 +230,9 @@ public class CharacterModelController : MonoBehaviour
 		if (n.Contains("zombie") || n.Contains("undead") || n.Contains("necromancer") ||
 		    n.Contains("jurogumo") || n.Contains("nobosuma") || n.Contains("oni") ||
 		    n.Contains("onibaba") || n.Contains("torso") || n.Contains("chochin") ||
-		    n.Contains("tengu") || n.Contains("wayundo"))
+		    n.Contains("tengu") || n.Contains("wayundo") ||
+		    n.Contains("shutendoji") || n.Contains("akaname") || n.Contains("amanojaku") ||
+		    n.Contains("harionago") || n.Contains("onmoraki"))
 		{
 			return FacingType.Left;
 		}
@@ -577,6 +582,30 @@ public class CharacterModelController : MonoBehaviour
 		}
 	}
 
+	public void PlaySoundEventFromTaggedAnim(AnimationEvent theAnimEvent)
+	{
+		if (theAnimEvent != null)
+		{
+			PlaySoundEvent(theAnimEvent.stringParameter);
+		}
+	}
+
+	public void PlaySoundEventThisAnimOnly(AnimationEvent theAnimEvent)
+	{
+		if (theAnimEvent != null && (bool)mSoundPlayer)
+		{
+			mSoundPlayer.PlaySoundEventThisAnimOnly(theAnimEvent);
+		}
+	}
+
+	public void StopTrackedSoundEvent(AnimationEvent theAnimEvent)
+	{
+		if (theAnimEvent != null && (bool)mSoundPlayer)
+		{
+			mSoundPlayer.StopTrackedSoundEvent(theAnimEvent.stringParameter);
+		}
+	}
+
 	public GameObject SpawnEffectAtJoint(GameObject effectPrefab, string theJointLabel, bool andAttach)
 	{
 		return mAutoPaperdoll.InstantiateObjectOnJoint(effectPrefab, theJointLabel, andAttach);
@@ -677,6 +706,29 @@ public class CharacterModelController : MonoBehaviour
 			PlayAnimation("die");
 		}
 		mPostDeathAction = postDeathAction;
+	}
+
+	public void ForceCollapseForAscension()
+	{
+		mPlayingHurtAnim = false;
+		mPlayingVictoryAnim = false;
+		mStunnedTimer = 0f;
+		mKnockbackTime = 0f;
+		startedDieAnim = false;
+		Die("die", EPostDeathAction.stay);
+	}
+
+	public void ResetAfterAscension()
+	{
+		startedDieAnim = false;
+		mPlayingHurtAnim = false;
+		mPlayingVictoryAnim = false;
+		mStunnedTimer = 0f;
+		mKnockbackTime = 0f;
+		mPostDeathAction = EPostDeathAction.stay;
+		animEndedCallback = null;
+		mAnimPlayer.currAnimDoneCallback = null;
+		Idle();
 	}
 
 	public void StartPostDeathAction()

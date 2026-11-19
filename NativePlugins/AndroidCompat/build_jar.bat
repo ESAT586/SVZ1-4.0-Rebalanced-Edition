@@ -10,7 +10,7 @@ set OUT_JAR=%~dp0..\..\Assets\Plugins\Android\svz-android-compat.jar
 if exist "%OUT_CLS%" rmdir /s /q "%OUT_CLS%"
 mkdir "%OUT_CLS%"
 
-"%JDK_BIN%\javac.exe" -source 1.8 -target 1.8 -Xlint:unchecked -bootclasspath "%ANDROID_JAR%" -classpath "%UNITY_JAR%" -d "%OUT_CLS%" "%SRC_DIR%\com\svzrebalanced\compat\SVZAndroidBridge.java" "%SRC_DIR%\com\svzrebalanced\compat\SVZUnityPlayer.java" "%SRC_DIR%\com\svzrebalanced\compat\SVZUnityPlayerActivity.java"
+"%JDK_BIN%\javac.exe" -source 1.8 -target 1.8 -Xlint:unchecked -bootclasspath "%ANDROID_JAR%" -classpath "%UNITY_JAR%" -d "%OUT_CLS%" "%SRC_DIR%\com\svzrebalanced\compat\SVZAndroidBridge.java" "%SRC_DIR%\com\svzrebalanced\compat\SVZContextCompat.java" "%SRC_DIR%\com\svzrebalanced\compat\SVZApplication.java" "%SRC_DIR%\com\svzrebalanced\compat\SVZUnityPlayer.java" "%SRC_DIR%\com\svzrebalanced\compat\SVZUnityPlayerActivity.java"
 if errorlevel 1 exit /b 1
 
 "%JDK_BIN%\jar.exe" cf "%OUT_JAR%" -C "%OUT_CLS%" .

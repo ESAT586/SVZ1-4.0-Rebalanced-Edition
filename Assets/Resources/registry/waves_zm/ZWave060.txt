@@ -306,3 +306,10 @@ bonusHint = Gercek boss checkpoint; anti-air bosslar ve L2 savascilar ayni hatta
 	Takeda
 	Nobunaga
 	SpearHorseman
+	/ SVZ2WaveAdditions
+	1,1
+	Horse_Archer
+	1,1
+	Blind_Swordsman
+	1,1
+	Panzer_Enemy

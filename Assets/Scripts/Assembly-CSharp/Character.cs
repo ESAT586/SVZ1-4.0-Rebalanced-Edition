@@ -222,6 +222,11 @@ public class Character : Weakable
 			}
 			if (mStats.health <= 0f)
 			{
+				if (BloodMoonTerasuController.TryInterceptFatalBlow(this))
+				{
+					mStats.health = 1f;
+					return;
+				}
 				Die();
 			}
 		}
@@ -1022,7 +1027,7 @@ public class Character : Weakable
 
 	public virtual void RecievedAttack(EAttackType attackType, float damage)
 	{
-		if (health <= 0f)
+		if (health <= 0f || BloodMoonTerasuController.IsAscending(this))
 		{
 			return;
 		}
@@ -1118,7 +1123,7 @@ public class Character : Weakable
 		{
 			controller.SpawnEffectAtJoint(gameObject, "impact_target", false);
 		}
-		if (flag)
+		if (flag && !BloodMoonTerasuController.HasAscended(this))
 		{
 			ProceduralShaderManager.postShaderEvent(new DiffuseFadeInOutShaderEvent(mCtrl.gameObject, Color.red, 0f, 0f, 0.25f));
 		}
@@ -1149,7 +1154,7 @@ public class Character : Weakable
 
 	public bool TryKnockback(int attemptPower)
 	{
-		if (knockbackResistance >= 100 || attemptPower <= 0 || health <= 0f || isBase || isInKnockback)
+		if (knockbackResistance >= 100 || attemptPower <= 0 || health <= 0f || isBase || isInKnockback || BloodMoonTerasuController.IsAscending(this))
 		{
 			return false;
 		}

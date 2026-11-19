@@ -95,6 +95,11 @@ public class Enemy : Character
             return; // OpponentHero manages its own dedicated duelist hero AI!
         }
 
+        if (BloodMoonTerasuController.IsBusyWithSpecialAction(this))
+        {
+            return;
+        }
+
         if (base.health <= 0f || !base.isEffectivelyIdle || base.controller.impactPauseTime > 0f)
         {
             return;

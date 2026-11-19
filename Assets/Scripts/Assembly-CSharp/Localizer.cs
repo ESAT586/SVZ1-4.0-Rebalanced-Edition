@@ -11,7 +11,6 @@ public class Localizer : Singleton<Localizer>
     private string GetCurrentFontSet()
     {
         string lang = (mLanguageOverride != null) ? mLanguageOverride : Singleton<GameVersion>.instance.fontSet;
-        if (lang == "English" || lang == "Turkish" || lang == "Default") return "Default";
         if (lang == "Chinese") return "Chinese";
         if (lang == "Japanese") return "Japanese";
         if (lang == "Korean") return "Korean";

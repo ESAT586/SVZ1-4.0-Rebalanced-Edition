@@ -42,10 +42,24 @@ public class SelectHelpersController : SUIScrollList.IController
 		mListCursor = new IconGlowWidget();
 		mListCursor.priority = 0.5f;
 		mListCursor.visible = false;
+		SDFTreeNode activeModeHelpers = SingletonMonoBehaviour<ResourcesManager>.instance.Open("Registry/Helpers/AllHelpers");
+		HashSet<string> activeModeSet = null;
+		if (activeModeHelpers != null && activeModeHelpers.attributeCount > 0)
+		{
+			activeModeSet = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+			for (int i = 0; activeModeHelpers.hasAttribute(i); i++)
+			{
+				activeModeSet.Add(activeModeHelpers[i]);
+			}
+		}
 		string[] allIDs = Singleton<HelpersDatabase>.instance.allIDs;
 		foreach (string text in allIDs)
 		{
 			if (SVZMultiplayerManager.IsHiddenOrSubHelper(text))
+			{
+				continue;
+			}
+			if (activeModeSet != null && !activeModeSet.Contains(text))
 			{
 				continue;
 			}

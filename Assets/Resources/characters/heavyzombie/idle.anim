@@ -1849,7 +1849,7 @@ AnimationClip:
     path: hzombie:Zomb_rig_grp/hzombie:Zomb_spine_rig_grp/hzombie:Zomb_lowSpineCtrl_space_grp/hzombie:Zomb_spineLow_ctrl
   m_FloatCurves: []
   m_SampleRate: 30
-  m_WrapMode: 0
+  m_WrapMode: 2
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}

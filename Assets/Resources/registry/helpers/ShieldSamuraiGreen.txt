@@ -3,15 +3,15 @@
 / General
 /--------------------------------------------------
 
-displayName = Shield Samurai Green
-desc = Front lane Tank Samurai+
+displayName = @helper_shieldsamurai_green
+desc = @helper_shieldsamurai_green_desc
 prefab = Characters/PFSamuraiShieldGreen
 HUDIcon = Sprites/Icons/ally_shieldsamuraigreen
 weaponMeleePrefab = Props/PFSamuraishieldGreen
 waveToUnlock = 32
 resourcesCost = 55
-cooldownTimer = 1.0
-attackFrequency = 2.0
+cooldownTimer = 5.0
+attackFrequency = 2.2
 usesBladeWeapon = false
 
 achievementGC = SAMUZOMBIE_ACHIEVE_FROM_THE_FIELDS
@@ -22,18 +22,8 @@ achievementGC = SAMUZOMBIE_ACHIEVE_FROM_THE_FIELDS
 /--------------------------------------------------
 
 [001]
-    cost = 200,0
-    health = 4000
-    speedMin = 85
-    speedMax = 85
-    meleeRange = 100
-    meleeDamage = 16
-    knockbackPower = 15
-    knockbackResistance = 80
-
-[002]
-    cost = 4000
-    health = 5600
+    cost = 1500,0
+    health = 2600
     speedMin = 85
     speedMax = 85
     meleeRange = 100
@@ -41,82 +31,92 @@ achievementGC = SAMUZOMBIE_ACHIEVE_FROM_THE_FIELDS
     knockbackPower = 15
     knockbackResistance = 80
 
-[003]
-    cost = 6400
-    health = 7300
+[002]
+    cost = 4000,0
+    health = 3300
     speedMin = 85
     speedMax = 85
     meleeRange = 100
-    meleeDamage = 24
+    meleeDamage = 25
+    knockbackPower = 15
+    knockbackResistance = 80
+
+[003]
+    cost = 6400,0
+    health = 4100
+    speedMin = 85
+    speedMax = 85
+    meleeRange = 100
+    meleeDamage = 31
     knockbackPower = 15
     knockbackResistance = 80
 
 [004]
-    cost = 11400
-    health = 9200
+    cost = 11400,0
+    health = 5000
     speedMin = 85
     speedMax = 85
     meleeRange = 100
-    meleeDamage = 28
+    meleeDamage = 38
     knockbackPower = 15
     knockbackResistance = 80
 
 [005]
-    cost = 16800
-    health = 11400
+    cost = 16800,0
+    health = 6100
     speedMin = 85
     speedMax = 85
     meleeRange = 100
-    meleeDamage = 34
+    meleeDamage = 46
     knockbackPower = 15
     knockbackResistance = 80
 
 [006]
     cost = 0,14
-    health = 13800
+    health = 7400
     speedMin = 85
     speedMax = 85
     meleeRange = 100
-    meleeDamage = 41
+    meleeDamage = 55
     knockbackPower = 15
     knockbackResistance = 80
 
 [007]
-    cost = 0,15
-    health = 16500
+    cost = 0,16
+    health = 8900
     speedMin = 85
     speedMax = 85
     meleeRange = 100
-    meleeDamage = 49
+    meleeDamage = 65
     knockbackPower = 15
     knockbackResistance = 80
 
 [008]
     cost = 0,18
-    health = 19500
+    health = 10600
     speedMin = 85
     speedMax = 85
     meleeRange = 100
-    meleeDamage = 60
+    meleeDamage = 77
     knockbackPower = 15
     knockbackResistance = 80
 
 [009]
     cost = 0,22
-    health = 21800
+    health = 12500
     speedMin = 85
     speedMax = 85
     meleeRange = 100
-    meleeDamage = 73
+    meleeDamage = 90
     knockbackPower = 15
     knockbackResistance = 80
 
 [010]
     cost = 0,26
-    health = 23900
+    health = 14500
     speedMin = 85
     speedMax = 85
     meleeRange = 100
-    meleeDamage = 80
+    meleeDamage = 105
     knockbackPower = 15
     knockbackResistance = 80

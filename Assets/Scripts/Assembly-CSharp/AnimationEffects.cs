@@ -181,6 +181,14 @@ public class AnimationEffects : MonoBehaviour
 		}
 	}
 
+	public void AttachTargetToJoint(AnimationEvent theAnimEvent)
+	{
+	}
+
+	public void ShrinkTargetOverTime(AnimationEvent theAnimEvent)
+	{
+	}
+
 	public void ShakeCamera(float theShakeIntensity)
 	{
 		CameraShaker.RequestShake(base.transform.position, theShakeIntensity * cameraShakeIntensityMult);

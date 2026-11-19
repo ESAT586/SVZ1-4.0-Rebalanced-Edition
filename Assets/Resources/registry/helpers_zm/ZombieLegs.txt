@@ -1,0 +1,109 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Crawling Legs
+desc = Lower half spawned when Crawling Body dies.
+prefab = Characters/PFCrawlingLegs
+HUDIcon = Sprites/Icons/enemy_crawling_body
+waveToUnlock = 999
+resourcesCost = 3.0
+cooldownTimer = 3.0
+attackFrequency = 1.3
+hideInStore = True
+levelMatchOtherHelper = ZombieSplit
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	health = 6
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 10
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[002]
+	health = 8
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 23
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[003]
+	health = 11
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 38
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[004]
+	health = 16
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 50
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[005]
+	health = 22
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 57
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[006]
+	health = 28
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 76
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[007]
+	health = 40
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 94
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[008]
+	health = 51
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 120
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[009]
+	health = 69
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 148
+	knockbackPower = 5
+	knockbackResistance = 10
+
+[010]
+	health = 130
+	speedMin = 150
+	speedMax = 150
+	meleeRange = 100
+	meleeDamage = 185
+	knockbackPower = 5
+	knockbackResistance = 10

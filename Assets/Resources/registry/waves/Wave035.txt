@@ -145,3 +145,9 @@ scene = InGame_springday
 	H_Zombie_Bow_2
 	1,1
 	Onibaba
+	/ SVZ2WaveAdditions
+	Amanojaku
+	1,1
+	Harionago
+	1,1
+	Onmoraki_Alt

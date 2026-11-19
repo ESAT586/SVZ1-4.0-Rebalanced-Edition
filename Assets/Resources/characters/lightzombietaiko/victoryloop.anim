@@ -2427,7 +2427,7 @@ AnimationClip:
     path: lzombietaiko:Zomb_Skeleton_grp/lzombietaiko:Zomb_spine_low_jnt/lzombietaiko:Zomb_hip_jnt/lzombietaiko:RightSkirt/lzombietaiko:RightSkirt1
   m_FloatCurves: []
   m_SampleRate: 30
-  m_WrapMode: 0
+  m_WrapMode: 2
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}

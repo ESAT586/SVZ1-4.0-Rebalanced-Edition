@@ -1,0 +1,109 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_redcrawlinglegs_name
+desc = @helper_redcrawlinglegs_desc
+prefab = Characters/PFCrawlingLegsRed
+HUDIcon = Sprites/Icons/enemy_red_crawling_body
+waveToUnlock = 999
+resourcesCost = 12.0
+cooldownTimer = 3.5
+attackFrequency = 1.25
+hideInStore = True
+levelMatchOtherHelper = RedCrawlingBody
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	health = 30
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 32
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[002]
+	health = 48
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 56
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[003]
+	health = 76
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 90
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[004]
+	health = 115
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 135
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[005]
+	health = 165
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 188
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[006]
+	health = 228
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 250
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[007]
+	health = 305
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 318
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[008]
+	health = 395
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 390
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[009]
+	health = 495
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 465
+	knockbackPower = 10
+	knockbackResistance = 25
+
+[010]
+	health = 600
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 540
+	knockbackPower = 10
+	knockbackResistance = 25

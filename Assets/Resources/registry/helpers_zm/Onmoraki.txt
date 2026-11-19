@@ -1,0 +1,106 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Onmoraki
+desc = Flying flame-spitting crane demon.
+prefab = Characters/PFOnmoraki
+HUDIcon = Sprites/Icons/enemy_onmoraki
+flying = true
+waveToUnlock = 1
+resourcesCost = 35.0
+cooldownTimer = 5.0
+attackFrequency = 1.6
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 600,0
+	health = 780
+	speedMin = 140
+	speedMax = 140
+	bowRange = 340
+	bowDamage = 95
+	projectile = FireArrow
+	knockbackPower = 18
+	knockbackResistance = 25
+
+[002]
+	cost = 1400,0
+	health = 1014
+	speedMin = 140
+	speedMax = 140
+	bowRange = 340
+	bowDamage = 119
+	projectile = FireArrow
+	knockbackPower = 20
+	knockbackResistance = 28
+
+[003]
+	cost = 2800,0
+	health = 1318
+	speedMin = 140
+	speedMax = 140
+	bowRange = 340
+	bowDamage = 148
+	projectile = FireArrow
+	knockbackPower = 22
+	knockbackResistance = 31
+
+[004]
+	cost = 5500,0
+	health = 1714
+	speedMin = 140
+	speedMax = 140
+	bowRange = 340
+	bowDamage = 186
+	projectile = FireArrow
+	knockbackPower = 24
+	knockbackResistance = 34
+
+[005]
+	cost = 9500,0
+	health = 2228
+	speedMin = 140
+	speedMax = 140
+	bowRange = 340
+	bowDamage = 232
+	projectile = FireArrow
+	knockbackPower = 26
+	knockbackResistance = 37
+
+[006]
+	cost = 0,10
+	health = 2896
+	speedMin = 140
+	speedMax = 140
+	bowRange = 340
+	bowDamage = 290
+	projectile = FireArrow
+	knockbackPower = 28
+	knockbackResistance = 40
+
+[007]
+	cost = 0,16
+	health = 3765
+	speedMin = 140
+	speedMax = 140
+	bowRange = 340
+	bowDamage = 362
+	projectile = FireArrow
+	knockbackPower = 30
+	knockbackResistance = 43
+
+[008]
+	cost = 0,22
+	health = 4894
+	speedMin = 140
+	speedMax = 140
+	bowRange = 340
+	bowDamage = 453
+	projectile = FireArrow
+	knockbackPower = 32
+	knockbackResistance = 46

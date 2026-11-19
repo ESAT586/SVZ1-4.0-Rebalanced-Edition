@@ -1,0 +1,97 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Harionago
+desc = Barbed-hair demoness with wide reach.
+prefab = Characters/PFHarionago
+HUDIcon = Sprites/Icons/enemy_harionago
+waveToUnlock = 1
+resourcesCost = 30.0
+cooldownTimer = 4.5
+attackFrequency = 1.9
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 600,0
+	health = 1250
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 180
+	meleeDamage = 130
+	knockbackPower = 35
+	knockbackResistance = 60
+
+[002]
+	cost = 1400,0
+	health = 1625
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 180
+	meleeDamage = 162
+	knockbackPower = 37
+	knockbackResistance = 63
+
+[003]
+	cost = 2800,0
+	health = 2112
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 180
+	meleeDamage = 203
+	knockbackPower = 39
+	knockbackResistance = 66
+
+[004]
+	cost = 5500,0
+	health = 2746
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 180
+	meleeDamage = 254
+	knockbackPower = 41
+	knockbackResistance = 69
+
+[005]
+	cost = 9500,0
+	health = 3570
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 180
+	meleeDamage = 317
+	knockbackPower = 43
+	knockbackResistance = 72
+
+[006]
+	cost = 0,10
+	health = 4641
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 180
+	meleeDamage = 397
+	knockbackPower = 45
+	knockbackResistance = 75
+
+[007]
+	cost = 0,16
+	health = 6034
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 180
+	meleeDamage = 496
+	knockbackPower = 47
+	knockbackResistance = 78
+
+[008]
+	cost = 0,22
+	health = 7844
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 180
+	meleeDamage = 620
+	knockbackPower = 49
+	knockbackResistance = 81

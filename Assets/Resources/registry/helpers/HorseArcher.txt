@@ -1,0 +1,72 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Horse Archer
+desc = Fast mounted archer.
+prefab = Characters/PFHorseArcher
+HUDIcon = Sprites/Icons/ally_horsearcher
+weaponRangedPrefab = Props/weapons/saumraibow
+waveToUnlock = 1
+resourcesCost = 30.0
+cooldownTimer = 18.0
+attackFrequency = 1.4
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 300,0
+	health = 190
+	speedMin = 220
+	speedMax = 220
+	bowRange = 500
+	bowDamage = 70
+	projectile = Arrow
+
+[002]
+	cost = 750,0
+	health = 300
+	speedMin = 220
+	speedMax = 220
+	bowRange = 500
+	bowDamage = 90
+	projectile = Arrow
+
+[003]
+	cost = 1500,0
+	health = 470
+	speedMin = 220
+	speedMax = 220
+	bowRange = 500
+	bowDamage = 110
+	projectile = Arrow
+
+[004]
+	cost = 4500,0
+	health = 680
+	speedMin = 220
+	speedMax = 220
+	bowRange = 500
+	bowDamage = 130
+	projectile = Arrow
+
+[005]
+	cost = 9500,0
+	health = 820
+	speedMin = 220
+	speedMax = 220
+	bowRange = 500
+	bowDamage = 160
+	projectile = Arrow
+
+[006]
+	cost = 0,12
+	health = 970
+	speedMin = 220
+	speedMax = 220
+	bowRange = 500
+	bowDamage = 240
+	projectile = Arrow

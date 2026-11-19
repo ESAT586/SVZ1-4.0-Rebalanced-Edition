@@ -145,6 +145,10 @@ public class CharactersManager : WeakGlobalInstance<CharactersManager>
 	public void AddCharacter(Character c)
 	{
 		mCharacters.Add(c);
+		if (BloodMoonTerasuController.IsUndeadShogun(c))
+		{
+			BloodMoonTerasuController.GetOrAttach(c);
+		}
 	}
 
 	public void DestroyCharacter(Character c)
@@ -440,6 +444,10 @@ public class CharactersManager : WeakGlobalInstance<CharactersManager>
 			Character character = mCharacters[num];
 			if (character != null && character.health <= 0f && !character.isBase)
 			{
+				if (BloodMoonTerasuController.TryInterceptFatalBlow(character))
+				{
+					continue;
+				}
 				if (character.isEnemy)
 				{
 					if (WeakGlobalInstance<WaveManager>.instance != null)

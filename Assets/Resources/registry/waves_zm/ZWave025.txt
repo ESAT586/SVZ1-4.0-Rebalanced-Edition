@@ -110,3 +110,10 @@ bell = 3
 	NinjaGirl
 	SpearHorseman
 	NinjaGirl
+	/ SVZ2WaveAdditions
+	1,1
+	Warrior_Horse
+	1,1
+	Horse_Archer
+	1,1
+	Rocket_Farmer

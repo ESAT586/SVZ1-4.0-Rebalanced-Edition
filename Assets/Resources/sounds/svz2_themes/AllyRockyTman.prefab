@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1992191879034358}
+  m_IsPrefabParent: 1
+--- !u!1 &1992191879034358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4481177789816278}
+  - component: {fileID: 114306615183630268}
+  m_Layer: 0
+  m_Name: AllyRockyTman
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4481177789816278
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1992191879034358}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114306615183630268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1992191879034358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a601efe3b0ca39d5e3b419a22b773e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseTheme: {fileID: 114062154744917752, guid: 9311afcdf498b7d4e8af9cbf811d0d1f,
+    type: 2}
+  events:
+  - name: Death
+    clips:
+    - {fileID: 8300000, guid: 3bdb0119dcbf70949b0ac0f6a3f7719d, type: 3}
+    - {fileID: 8300000, guid: 67fb9f0521b7c7947b5834caf252727c, type: 3}
+    - {fileID: 8300000, guid: acd98d7a2b6eef84996569c150210054, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 2
+    maxDistanceOverride: 40
+    useLogarithmicRolloff: 0
+  - name: Loop
+    clips:
+    - {fileID: 8300000, guid: e4f19fa14d8706d4e980b6259b69fc69, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0.1
+    fadeOutTime: 0.1
+    customEffect: {fileID: 0}
+    loop: 1
+    minDistanceOverride: 1
+    maxDistanceOverride: 40
+    useLogarithmicRolloff: 0
+  - name: Start
+    clips:
+    - {fileID: 8300000, guid: d42aa772d838a6147b677c3ef14a4387, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 1
+    maxDistanceOverride: 40
+    useLogarithmicRolloff: 0
+  - name: Launch
+    clips:
+    - {fileID: 8300000, guid: d74bfd79f79c28b45a3f703d7f7a6690, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 1
+    maxDistanceOverride: 40
+    useLogarithmicRolloff: 0
+  - name: Spawn
+    clips:
+    - {fileID: 8300000, guid: 44f57930bb76fe84abd1df637c661567, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0
+    volume: 1
+    isVoice: 0
+    playLimit: -2
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 5
+    maxDistanceOverride: 90
+    useLogarithmicRolloff: 0

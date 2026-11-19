@@ -695,6 +695,157 @@ public class Profile : Singleton<Profile>
 		}
 	}
 
+	public static readonly int[] kLegionCooldownSeconds = new int[] { 40, 35, 30, 28, 26, 24, 22, 20, 18, 16, 15 };
+
+	public static readonly int[] kLegionCooldownGemCosts = new int[] { 10, 15, 20, 25, 30, 35, 40, 50, 60, 75 };
+
+	private static string GetModuleKeyPrefix(string moduleID)
+	{
+		return (moduleID == "DeathFromAbove") ? "deathFromAbove" : "legionOnTheLoose";
+	}
+
+	private static string GetModuleCooldownPrefix(string moduleID)
+	{
+		return (moduleID == "DeathFromAbove") ? "deathFromAboveCooldown" : "legionCooldown";
+	}
+
+	public int GetModuleUnlockedLevel(string moduleID)
+	{
+		return activeSavedData.GetValueInt(GetModuleKeyPrefix(moduleID), activeDataSubSection);
+	}
+
+	public void SetModuleUnlockedLevel(string moduleID, int level)
+	{
+		mSavedData.SetValueInt(GetModuleKeyPrefix(moduleID), level, playModeSubSection);
+	}
+
+	public int GetModuleSelectedLevel(string moduleID)
+	{
+		int maxLevel = GetModuleUnlockedLevel(moduleID);
+		if (maxLevel <= 0)
+		{
+			return 0;
+		}
+		int selected = mSavedData.GetValueInt(GetModuleKeyPrefix(moduleID) + "Selected", playModeSubSection);
+		if (selected <= 0 || selected > maxLevel)
+		{
+			return maxLevel;
+		}
+		return selected;
+	}
+
+	public void SetModuleSelectedLevel(string moduleID, int level)
+	{
+		int maxLevel = GetModuleUnlockedLevel(moduleID);
+		int clamped = (maxLevel <= 0) ? 0 : ((level < 1) ? 1 : ((level > maxLevel) ? maxLevel : level));
+		mSavedData.SetValueInt(GetModuleKeyPrefix(moduleID) + "Selected", clamped, playModeSubSection);
+	}
+
+	public bool IsModuleEnabled(string moduleID)
+	{
+		return !mSavedData.GetValueBool(GetModuleKeyPrefix(moduleID) + "Disabled", playModeSubSection);
+	}
+
+	public void SetModuleEnabled(string moduleID, bool enabled)
+	{
+		mSavedData.SetValueBool(GetModuleKeyPrefix(moduleID) + "Disabled", !enabled, playModeSubSection);
+	}
+
+	public int GetModuleCooldownLevel(string moduleID)
+	{
+		int val = mSavedData.GetValueInt(GetModuleCooldownPrefix(moduleID) + "Level", playModeSubSection);
+		int maxIdx = kLegionCooldownSeconds.Length - 1;
+		if (val < 0) return 0;
+		if (val > maxIdx) return maxIdx;
+		return val;
+	}
+
+	public void SetModuleCooldownLevel(string moduleID, int level)
+	{
+		int maxIdx = kLegionCooldownSeconds.Length - 1;
+		int clamped = (level < 0) ? 0 : ((level > maxIdx) ? maxIdx : level);
+		mSavedData.SetValueInt(GetModuleCooldownPrefix(moduleID) + "Level", clamped, playModeSubSection);
+	}
+
+	public int GetModuleCooldownSelectedLevel(string moduleID)
+	{
+		int maxUnlocked = GetModuleCooldownLevel(moduleID);
+		int stored = mSavedData.GetValueInt(GetModuleCooldownPrefix(moduleID) + "Selected", playModeSubSection);
+		if (stored <= 0)
+		{
+			return maxUnlocked;
+		}
+		int sel = stored - 1;
+		if (sel < 0 || sel > maxUnlocked)
+		{
+			return maxUnlocked;
+		}
+		return sel;
+	}
+
+	public void SetModuleCooldownSelectedLevel(string moduleID, int level)
+	{
+		int maxUnlocked = GetModuleCooldownLevel(moduleID);
+		int clamped = (level < 0) ? 0 : ((level > maxUnlocked) ? maxUnlocked : level);
+		mSavedData.SetValueInt(GetModuleCooldownPrefix(moduleID) + "Selected", clamped + 1, playModeSubSection);
+	}
+
+	public float GetModuleCooldownSeconds(string moduleID)
+	{
+		return (float)GetLegionCooldownSecondsForTier(GetModuleCooldownSelectedLevel(moduleID));
+	}
+
+	public int GetModuleNextCooldownGemCost(string moduleID)
+	{
+		int lvl = GetModuleCooldownLevel(moduleID);
+		if (lvl < 0 || lvl >= kLegionCooldownGemCosts.Length)
+		{
+			return -1;
+		}
+		return kLegionCooldownGemCosts[lvl];
+	}
+
+	public int legionOnTheLooseSelectedLevel
+	{
+		get { return GetModuleSelectedLevel("LegionOnTheLoose"); }
+		set { SetModuleSelectedLevel("LegionOnTheLoose", value); }
+	}
+
+	public bool legionOnTheLooseEnabled
+	{
+		get { return IsModuleEnabled("LegionOnTheLoose"); }
+		set { SetModuleEnabled("LegionOnTheLoose", value); }
+	}
+
+	public int legionCooldownLevel
+	{
+		get { return GetModuleCooldownLevel("LegionOnTheLoose"); }
+		set { SetModuleCooldownLevel("LegionOnTheLoose", value); }
+	}
+
+	public int legionCooldownSelectedLevel
+	{
+		get { return GetModuleCooldownSelectedLevel("LegionOnTheLoose"); }
+		set { SetModuleCooldownSelectedLevel("LegionOnTheLoose", value); }
+	}
+
+	public int GetLegionCooldownSecondsForTier(int tier)
+	{
+		if (tier < 0) tier = 0;
+		if (tier >= kLegionCooldownSeconds.Length) tier = kLegionCooldownSeconds.Length - 1;
+		return kLegionCooldownSeconds[tier];
+	}
+
+	public float GetCurrentLegionCooldownSeconds()
+	{
+		return GetModuleCooldownSeconds("LegionOnTheLoose");
+	}
+
+	public int GetNextLegionCooldownGemCost()
+	{
+		return GetModuleNextCooldownGemCost("LegionOnTheLoose");
+	}
+
 	public int deathFromAboveLevel
 	{
 		get
@@ -1120,6 +1271,9 @@ public class Profile : Singleton<Profile>
 				{
 					Directory.CreateDirectory(dir);
 				}
+				string probe = Path.Combine(dir, ".svz_write_test");
+				File.WriteAllText(probe, "1");
+				File.Delete(probe);
 				sCachedSaveDirectory = dir;
 				return sCachedSaveDirectory;
 			}
@@ -1688,6 +1842,19 @@ public class Profile : Singleton<Profile>
 		{
 			return false;
 		}
+		string modeHelpersPath = string.Equals(modeSection, "zombies", System.StringComparison.OrdinalIgnoreCase)
+			? "registry/helpers_zm/AllHelpers"
+			: "registry/helpers/AllHelpers";
+		SDFTreeNode modeHelpersNode = SingletonMonoBehaviour<ResourcesManager>.instance.Open(modeHelpersPath, false);
+		HashSet<string> modeHelperSet = null;
+		if (modeHelpersNode != null && modeHelpersNode.attributeCount > 0)
+		{
+			modeHelperSet = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+			for (int i = 0; modeHelpersNode.hasAttribute(i); i++)
+			{
+				modeHelperSet.Add(modeHelpersNode[i]);
+			}
+		}
 		SDFTreeNode helpersNode = modeNode.to("helperLevels");
 		if (helpersNode != null)
 		{
@@ -1705,6 +1872,15 @@ public class Profile : Singleton<Profile>
 					changed = true;
 					continue;
 				}
+				if (!Singleton<HelpersDatabase>.instance.Contains(key) || (modeHelperSet != null && !modeHelperSet.Contains(key)))
+				{
+					if (val != 0)
+					{
+						helpersNode[key] = "0";
+						changed = true;
+					}
+					continue;
+				}
 				int maxLvl = Singleton<HelpersDatabase>.instance.GetMaxLevel(key);
 				int clamped = Mathf.Clamp(val, 0, Mathf.Max(1, maxLvl));
 				if (clamped != val)
@@ -1720,7 +1896,10 @@ public class Profile : Singleton<Profile>
 			List<string> validHelpers = new List<string>();
 			foreach (string id in selectedHelpers)
 			{
-				if (!string.IsNullOrEmpty(id) && Singleton<HelpersDatabase>.instance.Contains(id) && !SVZMultiplayerManager.IsHiddenOrSubHelper(id))
+				if (!string.IsNullOrEmpty(id)
+					&& Singleton<HelpersDatabase>.instance.Contains(id)
+					&& (modeHelperSet == null || modeHelperSet.Contains(id))
+					&& !SVZMultiplayerManager.IsHiddenOrSubHelper(id))
 				{
 					int lvl = mSavedData.GetDictionaryValue<int>("helperLevels", id, modeSection);
 					if (lvl > 0 && !validHelpers.Contains(id) && validHelpers.Count < maxSelectedHelpers)

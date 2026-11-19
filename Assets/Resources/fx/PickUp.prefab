@@ -24,7 +24,6 @@ GameObject:
   - 12: {fileID: 12587413162531937}
   - 26: {fileID: 26080946884851082}
   - 114: {fileID: 114585277793624428}
-  - 114: {fileID: 114601914851918952}
   m_Layer: 0
   m_Name: PickUp
   m_TagString: Untagged
@@ -140,13 +139,3 @@ MonoBehaviour:
   sourcePrefabPath: Assets/Resources/FX/PickUp.prefab
   basePrefabPath:
   exemptObjects: []
---- !u!114 &114601914851918952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1078799044913432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name:

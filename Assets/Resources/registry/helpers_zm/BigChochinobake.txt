@@ -1,0 +1,119 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_bigchochinobake_name
+desc = @helper_bigchochinobake_desc
+prefab = Characters/PFChochinobakeRed
+HUDIcon = Sprites/Icons/enemy_big_chochinobake
+waveToUnlock = 1
+resourcesCost = 25.0
+cooldownTimer = 10.0
+attackFrequency = 1.0
+exploseOnMelee = True
+lane = front
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 2000,0
+	health = 220
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 260
+	knockbackPower = 120
+	knockbackResistance = 40
+
+[002]
+	cost = 4500,0
+	health = 300
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 380
+	knockbackPower = 120
+	knockbackResistance = 40
+
+[003]
+	cost = 9000,0
+	health = 400
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 520
+	knockbackPower = 120
+	knockbackResistance = 40
+
+[004]
+	cost = 18000,0
+	health = 520
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 700
+	knockbackPower = 120
+	knockbackResistance = 40
+
+[005]
+	cost = 32000,0
+	health = 650
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 920
+	knockbackPower = 120
+	knockbackResistance = 40
+
+[006]
+	cost = 0,10
+	health = 780
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 1160
+	knockbackPower = 120
+	knockbackResistance = 40
+
+[007]
+	cost = 0,14
+	health = 920
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 1420
+	knockbackPower = 120
+	knockbackResistance = 40
+
+[008]
+	cost = 0,18
+	health = 1070
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 1680
+	knockbackPower = 120
+	knockbackResistance = 40
+
+[009]
+	cost = 0,24
+	health = 1230
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 1940
+	knockbackPower = 120
+	knockbackResistance = 40
+
+[010]
+	cost = 0,30
+	health = 1400
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 2200
+	knockbackPower = 120
+	knockbackResistance = 40

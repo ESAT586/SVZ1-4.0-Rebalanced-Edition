@@ -5,6 +5,14 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : Component
 {
 	private static T mUniqueInstance;
 
+	public static bool Exists
+	{
+		get
+		{
+			return (UnityEngine.Object)mUniqueInstance != (UnityEngine.Object)null;
+		}
+	}
+
 	public static T instance
 	{
 		get

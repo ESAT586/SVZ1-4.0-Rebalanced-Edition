@@ -103,3 +103,10 @@ bell = 5
 	SamuraiRifleman
 	Takeda
 	Nobunaga
+	/ SVZ2WaveAdditions
+	1,1
+	Rocket_Farmer
+	1,1
+	Blind_Swordsman
+	1,1
+	Panzer_Enemy

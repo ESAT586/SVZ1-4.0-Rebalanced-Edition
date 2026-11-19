@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = Evil Farmer
-desc = Evil Farmer
+displayName = @helper_evilfarmer
+desc = @helper_evilfarmer_desc
 prefab = Characters/PFFarmerZombie
 HUDIcon = Sprites/Icons/enemy_evil_farmer
 weaponMeleePrefab = Props/PFFarmerssword
@@ -22,100 +22,100 @@ usesBladeWeapon = true
 
 [001]
 	cost = 250,0
-	health = 85
+	health = 60
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 18
+	meleeDamage = 14
 	knockbackPower = 8
 	knockbackResistance = 15
 
 [002]
 	cost = 750,0
-	health = 125
+	health = 88
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 26
+	meleeDamage = 20
 	knockbackPower = 8
 	knockbackResistance = 15
 
 [003]
 	cost = 1800,0
-	health = 180
+	health = 125
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 38
+	meleeDamage = 28
 	knockbackPower = 8
 	knockbackResistance = 15
 
 [004]
 	cost = 3600,0
-	health = 260
+	health = 175
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 55
+	meleeDamage = 40
 	knockbackPower = 10
 	knockbackResistance = 15
 
 [005]
 	cost = 6500,0
-	health = 370
+	health = 240
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 80
+	meleeDamage = 56
 	knockbackPower = 10
 	knockbackResistance = 18
 
 [006]
-	cost = 10500,0
-	health = 520
+	cost = 0,10
+	health = 330
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 115
+	meleeDamage = 78
 	knockbackPower = 10
 	knockbackResistance = 18
 
 [007]
-	cost = 15000,0
-	health = 720
+	cost = 0,15
+	health = 450
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 160
+	meleeDamage = 108
 	knockbackPower = 12
 	knockbackResistance = 20
 
 [008]
-	cost = 20000,0
-	health = 980
+	cost = 0,20
+	health = 610
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 215
+	meleeDamage = 145
 	knockbackPower = 12
 	knockbackResistance = 20
 
 [009]
-	cost = 28000,0
-	health = 1290
+	cost = 0,25
+	health = 810
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 285
+	meleeDamage = 188
 	knockbackPower = 15
 	knockbackResistance = 22
 
 [010]
-	cost = 38000,0
-	health = 1650
+	cost = 0,35
+	health = 1050
 	speedMin = 115
 	speedMax = 115
 	meleeRange = 100
-	meleeDamage = 360
+	meleeDamage = 240
 	knockbackPower = 15
 	knockbackResistance = 22

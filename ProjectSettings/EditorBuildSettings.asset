@@ -101,3 +101,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayModeMenu.unity
     guid: d7ae596134415ac4783094c7ab3cfb5d
+  - enabled: 1
+    path: Assets/Scenes/SVZ_CharacterTestLab.unity
+    guid: 8590254b6fa6b124aa92d7e2e94e1ef6

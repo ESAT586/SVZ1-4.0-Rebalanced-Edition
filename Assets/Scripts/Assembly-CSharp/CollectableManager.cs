@@ -269,7 +269,9 @@ public class CollectableManager : WeakGlobalInstance<CollectableManager>
 			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
 			{
 				Singleton<Profile>.instance.coins += coinVal;
-				SVZMultiplayerManager.AddChatMessage("[GANIMET]", "💰 +" + coinVal + " Altin toplandi!");
+				SVZMultiplayerManager.AddChatMessage(
+					LocalizationManager.T("[LOOT]", "[GANIMET]"),
+					"+" + coinVal + LocalizationManager.T(" Coins collected!", " Altin toplandi!"));
 			}
 			break;
 		case ECollectableType.leadership:
@@ -283,7 +285,9 @@ public class CollectableManager : WeakGlobalInstance<CollectableManager>
 			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
 			{
 				Singleton<Profile>.instance.gems += amount;
-				SVZMultiplayerManager.AddChatMessage("[GANIMET]", "💎 +" + amount + " Elmas toplandi!");
+				SVZMultiplayerManager.AddChatMessage(
+					LocalizationManager.T("[LOOT]", "[GANIMET]"),
+					"+" + amount + LocalizationManager.T(" Gems collected!", " Elmas toplandi!"));
 			}
 			break;
 		case ECollectableType.pachinkoball:
@@ -302,7 +306,9 @@ public class CollectableManager : WeakGlobalInstance<CollectableManager>
 			currentWaveSpoils.presents.Add(collectedPresent);
 			if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
 			{
-				SVZMultiplayerManager.AddChatMessage("[GANIMET]", "🎁 Gizemli Kutu toplandi!");
+				SVZMultiplayerManager.AddChatMessage(
+					LocalizationManager.T("[LOOT]", "[GANIMET]"),
+					LocalizationManager.T("Mystery Box collected!", "Gizemli Kutu toplandi!"));
 			}
 			break;
 		}

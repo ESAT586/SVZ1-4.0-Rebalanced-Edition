@@ -34,3 +34,7 @@ scene = InGame_evilnight
 	Evil_Wayundo_Metal
 	Evil_Wayundo_Metal
 	Chochinobake_alt
+	/ SVZ2WaveAdditions
+	Onmoraki_Alt
+	2,2
+	Shuten_Doji_Blue

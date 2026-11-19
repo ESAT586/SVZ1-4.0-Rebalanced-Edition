@@ -1,0 +1,120 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_redcrawlingbody_name
+desc = @helper_redcrawlingbody_desc
+prefab = Characters/PFCrawlingBodyRed
+HUDIcon = Sprites/Icons/enemy_red_crawling_body
+weaponMeleePrefab = Props/weapons/mace
+waveToUnlock = 1
+resourcesCost = 12.0
+cooldownTimer = 3.5
+attackFrequency = 1.0
+spawnOnDeath = RedCrawlingLegs
+spawnOnDeathCount = 1
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 1200,0
+	health = 42
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 44
+	knockbackPower = 14
+	knockbackResistance = 35
+
+[002]
+	cost = 2800,0
+	health = 68
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 78
+	knockbackPower = 14
+	knockbackResistance = 35
+
+[003]
+	cost = 6000,0
+	health = 108
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 124
+	knockbackPower = 14
+	knockbackResistance = 35
+
+[004]
+	cost = 12000,0
+	health = 165
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 184
+	knockbackPower = 14
+	knockbackResistance = 35
+
+[005]
+	cost = 24000,0
+	health = 240
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 256
+	knockbackPower = 14
+	knockbackResistance = 35
+
+[006]
+	cost = 48000,0
+	health = 335
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 340
+	knockbackPower = 14
+	knockbackResistance = 35
+
+[007]
+	cost = 80000,0
+	health = 450
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 432
+	knockbackPower = 14
+	knockbackResistance = 35
+
+[008]
+	cost = 0,12
+	health = 585
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 532
+	knockbackPower = 14
+	knockbackResistance = 35
+
+[009]
+	cost = 0,18
+	health = 735
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 636
+	knockbackPower = 14
+	knockbackResistance = 35
+
+[010]
+	cost = 0,24
+	health = 900
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 740
+	knockbackPower = 14
+	knockbackResistance = 35

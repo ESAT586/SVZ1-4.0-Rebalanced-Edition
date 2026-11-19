@@ -1,0 +1,78 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Rocket Man
+desc = Armored frontliner.
+prefab = Characters/PFRockyTMan
+HUDIcon = Sprites/Icons/ally_rockytman
+exploseOnMelee = true
+waveToUnlock = 1
+resourcesCost = 40.0
+cooldownTimer = 16.0
+attackFrequency = 1.9
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 1200,0
+	health = 1400
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 145
+	meleeDamage = 75
+	knockbackPower = 40
+	knockbackResistance = 75
+
+[002]
+	cost = 2600,0
+	health = 1950
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 145
+	meleeDamage = 105
+	knockbackPower = 45
+	knockbackResistance = 80
+
+[003]
+	cost = 5200,0
+	health = 2600
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 145
+	meleeDamage = 140
+	knockbackPower = 50
+	knockbackResistance = 85
+
+[004]
+	cost = 9800,0
+	health = 3400
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 145
+	meleeDamage = 185
+	knockbackPower = 55
+	knockbackResistance = 90
+
+[005]
+	cost = 18000,0
+	health = 4400
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 145
+	meleeDamage = 240
+	knockbackPower = 60
+	knockbackResistance = 95
+
+[006]
+	cost = 0,12
+	health = 5600
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 145
+	meleeDamage = 310
+	knockbackPower = 65
+	knockbackResistance = 100

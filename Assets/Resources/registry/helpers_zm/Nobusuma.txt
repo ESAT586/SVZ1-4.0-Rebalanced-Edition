@@ -2,10 +2,10 @@
 / General
 /--------------------------------------------------
 
-displayName = @enemy_l_zombie_u_name
+displayName = @helper_nobusuma_name
 desc = @helper_zombie_desc
 prefab = Characters/PFNobosuma
-HUDIcon = Sprites/Icons/enemy_zombie_melee
+HUDIcon = Sprites/Icons/upgrade_death_from_above
 waveToUnlock = 4
 resourcesCost = 5.0
 cooldownTimer = 2.0

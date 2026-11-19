@@ -5,14 +5,14 @@
 / General
 /--------------------------------------------------
 
-displayName = HeavyArcher
+displayName = @enemy_h_zombie_b_name
 desc = @enemy_h_zombie_b_name
 prefab = Characters/PFHZombieArcher
 HUDIcon = Sprites/Icons/enemy_heavyarcher
 weaponRangedPrefab = Props/PFhzombiebow
 waveToUnlock = 16
 resourcesCost = 20.0
-cooldownTimer = 2.5
+cooldownTimer = 3.0
 attackFrequency = 2.5
 
 
@@ -22,27 +22,37 @@ attackFrequency = 2.5
 
 [001]
 	cost = 750,0
-	health = 125
+	health = 90
 	speedMin = 85
 	speedMax = 85
 	bowRange = 350
-	bowDamage = 22
+	bowDamage = 18
 	projectile = Arrow
 	knockbackResistance = 25
 	
 [002]
 	cost = 1500,0
-	health = 175
+	health = 130
 	speedMin = 85
 	speedMax = 85
 	bowRange = 350
-	bowDamage = 35
+	bowDamage = 26
 	projectile = Arrow
 	knockbackResistance = 25
 
 [003]
 	cost = 3000,0
-	health = 240
+	health = 180
+	speedMin = 85
+	speedMax = 85
+	bowRange = 350
+	bowDamage = 36
+	projectile = Arrow
+	knockbackResistance = 25
+
+[004]
+	cost = 6000,0
+	health = 245
 	speedMin = 85
 	speedMax = 85
 	bowRange = 350
@@ -50,72 +60,62 @@ attackFrequency = 2.5
 	projectile = Arrow
 	knockbackResistance = 25
 
-[004]
-	cost = 6000,0
+[005]
+	cost = 12000,0
 	health = 330
 	speedMin = 85
 	speedMax = 85
 	bowRange = 350
-	bowDamage = 70
-	projectile = Arrow
-	knockbackResistance = 25
-
-[005]
-	cost = 12000,0
-	health = 450
-	speedMin = 85
-	speedMax = 85
-	bowRange = 350
-	bowDamage = 95
+	bowDamage = 68
 	projectile = Arrow
 	knockbackResistance = 25
 
 [006]
 	cost = 0,10
-	health = 600
+	health = 435
 	speedMin = 85
 	speedMax = 85
 	bowRange = 350
-	bowDamage = 130
+	bowDamage = 92
 	projectile = Arrow
 	knockbackResistance = 25
 
 [007]
 	cost = 0,15
-	health = 800
+	health = 560
 	speedMin = 85
 	speedMax = 85
 	bowRange = 350
-	bowDamage = 175
+	bowDamage = 120
 	projectile = Arrow
 	knockbackResistance = 25
 
 [008]
 	cost = 0,20
-	health = 1100
+	health = 700
 	speedMin = 85
 	speedMax = 85
 	bowRange = 350
-	bowDamage = 230
+	bowDamage = 150
 	projectile = Arrow
 	knockbackResistance = 25
 
 [009]
 	cost = 0,25
-	health = 1500
+	health = 860
 	speedMin = 85
 	speedMax = 85
 	bowRange = 350
-	bowDamage = 300
+	bowDamage = 185
 	projectile = Arrow
 	knockbackResistance = 25
 
 [010]
 	cost = 0,35
-	health = 2000
+	health = 1050
 	speedMin = 85
 	speedMax = 85
 	bowRange = 350
-	bowDamage = 380
+	bowDamage = 220
 	projectile = Arrow
 	knockbackResistance = 25

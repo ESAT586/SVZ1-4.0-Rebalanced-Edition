@@ -1,4 +1,4 @@
-﻿/------------------------------------------------------------------
+/------------------------------------------------------------------
 / Play Modes
 /------------------------------------------------------------------
 
@@ -121,6 +121,7 @@ helper_zombiearcher_name = Zombi Okçu
 helper_zombiehorseman_name = Zombi Süvari
 helper_zombie_name = Zombi
 helper_zombiespear_name = Mızraklı Zombi
+helper_iron_butcher_name = Demir Kasap Zombi
 
 /------------------------------------------------------------------
 / Helper Descriptions
@@ -154,6 +155,7 @@ helper_zombiearcher_desc = Uzun menzilli ama yakından tek yer.
 helper_zombiehorseman_desc = Bir zombi atını nasıl durdurursun? Beyinlerini çekerek.
 helper_zombie_desc = Ortalama bir dövüşçü... bir ölüye göre tabii.
 helper_zombiespear_desc = Tonla hasar... ama pek beyin yok.
+helper_iron_butcher_desc = Dev giyotin satırı savuran zırhlı kasap zombi.
 
 /------------------------------------------------------------------
 / Enemies
@@ -167,6 +169,7 @@ enemy_l_zombie_sp_name = Hafif Zombi (Mızraklı)
 enemy_l_zombie_b_name = Hafif Zombi (Okçu)
 enemy_h_zombie_u_name = Ağır Zombi (Silahsız)
 enemy_oni_name = Oni
+enemy_iron_butcher_name = Demir Kasap Zombi
 
 
 /------------------------------------------------------------------
@@ -371,9 +374,13 @@ store_format_purchase = {0} Satın Al
 
 store_format_zombiegate_levelup = Cehennem Geçidini {0}. Seviyeye Yükselt
 store_format_brains_levelup = Beyinleri {0}. Seviyeye Yükselt
+store_max_smithy_classic = Liderlik
+store_max_smithy_zombies = Beyinler
+store_max_gate_classic = Kutsal Geçit
+store_max_gate_zombies = Cehennem Geçidi
 
-undeath_levelup_name = Ölümsüzlük (Undeath)
-undeath_levelup_desc = Zombilerin can yenileme (regen) hızını artırır.
+undeath_levelup_name = Ölümsüzlük
+undeath_levelup_desc = Zombilerin can yenileme hızını artırır.
 
 store_currencytab0 = Altın Satın Al.
 store_currencytab1 = Glu Kredisi Satın Al.
@@ -394,10 +401,25 @@ revive_singular = 1 dirilme\nkaldı
 revive_none = Dirilme\nkalmadı
 
 legion_name = Başıboş Lejyon
-legion_desc = Belirli aralıklarla ölümsüz birliklerden oluşan lejyonlar çağırır.
+legion_desc = Belirli aralıklarla ölümsüz lejyon çağırır.
+legion_toggle_on = DESTEK: AÇIK
+legion_toggle_off = DESTEK: KAPALI
+legion_selected_format = SEÇİLİ: Sv.{0} {1} (x{2})
+legion_disabled_hint = KAPALI - DESTEK GÖNDERİLMEZ
+legion_lvl_short = Sv.{0}
+legion_badge_off = KAPALI
+legion_speed_btn = SÜRE: {0} SN
+legion_speed_title = BAŞIBOŞ LEJYON GELİŞ SÜRESİ
+legion_speed_desc = Başıboş Lejyon askerlerinin kaç saniyede bir geleceğini elmasla kısalt.
+legion_speed_cmp = MEVCUT: {0} SN   ->   SONRAKİ: {1} SN
+legion_speed_max = MAKSİMUM HIZ: HER {0} SANİYEDE BİR
+legion_sec_short = {0}sn
+dfa_speed_title = GÖKTEN GELEN ÖLÜM GELİŞ SÜRESİ
+dfa_speed_desc = Gökten Gelen Ölüm birliklerinin kaç saniyede bir geleceğini elmasla kısalt.
+helper_nobusuma_name = Nobusuma
 
 deathfromabove_name = Gökten Gelen Ölüm
-deathfromabove_desc = Belirli aralıklarla uçan birliklerden oluşan bir sürü çağırır.
+deathfromabove_desc = Belirli aralıklarla uçan birlik sürüsü çağırır.
 
 bitten_name = Isırılmış
 bitten_desc = Köy okçularını senin için savaşan zombilere dönüştür!
@@ -915,3 +937,123 @@ cancel_rating_android = Şimdi değil
 rate_it_android = Oyuna\npuan ver
 vip_btn_title = BEDAVA GLU KREDİSİ AL
 vip_btn_title_with_plan = avantajları gör
+
+/ Mod UI Localization
+mod_devtools_btn = DEV TOOLS
+mod_devtools_title = DEV TOOLS & CHEATS (KILITSIZ - GEMINI REBALANCED)
+mod_god_mode_on = GOD MODE: [ACIK]
+mod_god_mode_off = GOD MODE: [KAPALI]
+mod_leadership_inf = LIDERLIK: [SINIRSIZ]
+mod_leadership_norm = LIDERLIK: [NORMAL]
+mod_cooldown_zero = BEKLEME SURESI: [SIFIR]
+mod_cooldown_norm = BEKLEME SURESI: [NORMAL]
+mod_onehit_on = TEK VURUSTA OLDUR: [ACIK]
+mod_onehit_off = TEK VURUSTA OLDUR: [KAPALI]
+mod_kill_all = TUM DUSMANLARI YOK ET
+mod_win_wave = DALGAYI ANINDA KAZAN (WIN)
+mod_collect_loot = GANIMETLERI TOPLA
+mod_unlock_all = TUM OYUNU VE HER SEYI AC (WAVE 1-100 & MAGAZA)
+mod_max_all = TUM BIRLIK, YETENEK VE GELISTIRMELERI MAX SEVIYE YAP
+mod_get_rich = ZENGIN OL (+10M Altin, +500K Elmas, +9999 Pachinko)
+mod_almanac_btn = DUSMAN & MUTTEFIK REHBERI (ALMANAC) [B]
+mod_mp_btn = 1v1 PvP COK OYUNCULU MOD [M]
+mod_lang_switch = DIL DEGISTIR (30 DIL)
+mod_close = KAPAT
+mod_diff_easy = KOLAY (0.75x)
+mod_diff_normal = NORMAL (1.0x)
+mod_diff_hard = ZOR (1.35x)
+mod_diff_hell = KABUS / HELL (1.8x)
+mod_qol_speed = Hiz
+mod_qol_smithy = Oto-Demirci
+mod_qol_dash = Atilma
+mod_qol_ready = HAZIR
+mod_qol_diff = Zorluk
+mod_qol_guide = REHBER
+mod_qol_info = BILGI
+mod_qol_retry = TEKRAR DENE
+mod_qol_map = HARITA
+mod_almanac_title = SAMURAI VS ZOMBIES - REHBER & ALMANAC
+mod_almanac_enemies = DUSMANLAR (ZOMBILER)
+mod_almanac_allies = MUTTEFIKLER (SAMURAYLAR)
+mod_mp_lobby = OZEL OYUN LOBISI
+mod_mp_spells = Buyuler
+mod_mp_victory_p1 = 1. OYUNCU ZAFER KAZANDI!
+mod_mp_victory_p2 = 2. OYUNCU ZAFER KAZANDI!
+mod_mp_rematch = HEMEN ROVANS YAP (REMATCH)
+mod_mp_return = LOBIYE / ANA MENUYE DON
+mod_select_language = OYUN DILINI SEC (DUNYADAKI EN POPULER 30 DIL)
+
+/ Helper, Zombie & Achievement Registry Keys
+reg_ach_kill100_name = Zombi Avcısı
+reg_ach_kill100_desc = Herhangi bir modda 100 zombi öldür.
+reg_ach_level10_name = Samuray Ustası
+reg_ach_level10_desc = Klasik modda 10. dalgaya ulaş.
+reg_ach_firsthelper_name = Birlikten Kuvvet Doğar
+reg_ach_firsthelper_desc = İlk yardımcını işe al.
+reg_ach_zombiemaster_name = Zombi Komutanı
+reg_ach_zombiemaster_desc = Zombi modunda 5 maç kazan.
+reg_ach_shopaholic_name = Cömert Alıcı
+reg_ach_shopaholic_desc = Mağazada 1000 altın harca.
+enemy_FarmeronStilts = Sırıklı Çiftçi
+enemy_ShieldSamurai = Kalkanlı Samuray
+enemy_ShieldSamurai_Green = Yeşil Kalkanlı Samuray
+enemy_ShieldSamurai_Ice = Buz Kalkanlı Samuray
+enemy_h_zombie_b_name = Ağır Zombi Okçusu
+helper_farmeronstilts = Sırıklı Çiftçi
+helper_farmeronstilts_desc = Keskin dirgenli çok uzun çiftçi.
+helper_handmaiden = Nedime
+helper_handmaiden_desc = Çaylak Şifacı.
+helper_shieldsamurai = Kalkanlı Samuray
+helper_shieldsamurai_desc = Ön saf tank Samuray.
+helper_shieldsamurai_green = Yeşil Kalkanlı Samuray
+helper_shieldsamurai_green_desc = Güçlü ön saf tank Samuray+.
+helper_shieldsamurai_ice = Buz Kalkanlı Samuray
+helper_shieldsamurai_ice_desc = Elit buz ön saf tank Samuray++.
+helper_superninja = Süper Ninja
+helper_charmoni = Tılsım Oni
+helper_evilfarmer = Kötü Çiftçi
+helper_evilfarmer_desc = Zombi ordusu için savaşan ölümsüz çiftçi.
+helper_evilheavysamurai = Kötü Ağır Samuray
+helper_evilheavysamurai_desc = Ağır zırhlı ölümsüz samuray savaşçısı.
+helper_evilicearcher = Kötü Buz Okçusu
+helper_evilicearcher_desc = Oklarıyla düşmanları donduran ölümsüz okçu.
+helper_evilninja = Kötü Ninja
+helper_evilninja_desc = Katana ve shuriken kullanan hızlı ölümsüz ninja.
+helper_evilnobunaga = Kötü Nobunaga
+helper_evilnobunaga_desc = Korkunç güce sahip yozlaşmış ölümsüz savaş lordu.
+helper_eviltakeda = Kötü Takeda
+helper_eviltakeda_desc = Cehennemden hücum eden ölümsüz süvari komutanı.
+helper_smalloni = Küçük Oni
+helper_tengu = Tengu
+helper_tengu_desc = Tengu uçar, saldırır ve düşmanların dikkatini dağıtır.
+helper_tenguair = Hava Tengu
+helper_wanyudo = Wanyudo
+helper_wanyudo_desc = Canı düşük ama yuvarlanma hasarı çok yüksek.
+helper_wanyudofire = Ateş Wanyudo
+helper_wanyudometal = Metal Wanyudo
+helper_zombieaxe = Baltalı Zombi
+helper_zombieaxe_desc = Ağır balta savuran çılgın zombi.
+helper_zombiedrummer = Davulcu Zombi
+helper_zombiedrummer_desc = Zombi ordusunu coşturmak için savaş davulu çalar.
+helper_zombiesword = Kılıçlı Zombi
+helper_zombiesword_desc = Katana taşıyan ölümsüz samuray piyadesi.
+helper_zombierifleman = Tüfekli Zombi
+helper_zombierifleman_desc = Güçlü uzun menzilli atış yapan Zombi Tüfekçi.
+helper_zombiewarhammer = Balyozlu Zombi
+helper_zombiewarhammer_desc = Savunmacıları dev balyozuyla ezen iri ölümsüz.
+helper_cartofdoom_name = Kıyamet Arabası
+helper_cartofdoom_desc = Düşmanlara çarpıp büyük bir patlama yaratan patlayıcı savaş arabası.
+helper_bigchochinobake_name = Dev Kırmızı Fener
+helper_bigchochinobake_desc = Yavaş ilerler ama temasta dev bir patlama yaratır.
+helper_shutendojikin_name = Mavi Shuten Doji
+helper_shutendojikin_desc = Shuten Doji'nin korkunç mavi muhafız akrabası.
+helper_onmorakialt_name = Kanlı Onmoraki
+helper_onmorakialt_desc = Mavi alev püskürten seçkin uçan iblis kuşu.
+helper_elitecrawlingtorso_name = Elit Sürünen Gövde
+helper_elitecrawlingtorso_desc = Kızıl zırhlı, güçlü ve dayanıklı sürünen zombi.
+helper_redcrawlingbody_name = Kızıl Bölünen Zombi
+helper_redcrawlingbody_desc = Ölünce Kızıl Bacaklar çıkaran kızıl zırhlı gürzlü zombi.
+helper_redcrawlinglegs_name = Kızıl Bacaklar
+helper_redcrawlinglegs_desc = Kızıl Bölünen Zombi öldüğünde ortaya çıkan alt yarı.
+helper_elitenobusuma_name = Elit Nobusuma
+helper_elitenobusuma_desc = Havadan saldıran güçlü mor seçkin Nobusuma.

@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = Shield Samurai
-desc = Front lane Tank Samurai
+displayName = @helper_shieldsamurai
+desc = @helper_shieldsamurai_desc
 prefab = Characters/PFSamuraiShield
 HUDIcon = Sprites/Icons/ally_shieldsamurai
 weaponMeleePrefab = Props/PFSamuraishield

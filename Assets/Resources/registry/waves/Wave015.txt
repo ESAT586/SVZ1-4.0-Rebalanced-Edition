@@ -120,3 +120,9 @@ scene = InGame_fallday
 	.5,.5
 	chochinobake
 	.5,.5
+	/ SVZ2WaveAdditions
+	Akaname
+	1,1
+	Zombie_Split
+	1,1
+	Onmoraki

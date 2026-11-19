@@ -84,6 +84,10 @@ public class Helper : Character
 	public override void Update()
 	{
 		base.Update();
+		if (BloodMoonTerasuController.IsBusyWithSpecialAction(this))
+		{
+			return;
+		}
 		if (base.health == 0f || !base.isEffectivelyIdle || base.controller.impactPauseTime > 0f)
 		{
 			return;

@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = Evil Nobunaga
-desc = Evil Nobunaga
+displayName = @helper_evilnobunaga
+desc = @helper_evilnobunaga_desc
 prefab = Characters/PFNobunagaZombie
 lane = front
 HUDIcon = Sprites/Icons/enemy_evil_nabonaga

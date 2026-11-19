@@ -41,8 +41,8 @@ public class AchievementsDatabase : Singleton<AchievementsDatabase>
         {
             AchievementData data = new AchievementData();
             data.ID          = item.Key;
-            data.Name        = item.Value["Name"];
-            data.Description = item.Value["Desc"];
+            data.Name        = Singleton<Localizer>.instance.Parse(item.Value["Name"]);
+            data.Description = Singleton<Localizer>.instance.Parse(item.Value["Desc"]);
             data.IconPath    = item.Value["Icon"];
             data.RewardXP    = item.Value.hasAttribute("RewardXP") ? int.Parse(item.Value["RewardXP"]) : 0;
             data.RewardGems  = item.Value.hasAttribute("RewardGems") ? int.Parse(item.Value["RewardGems"]) : 0;

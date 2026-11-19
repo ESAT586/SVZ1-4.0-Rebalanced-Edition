@@ -46,24 +46,34 @@ public class SVZMultiplayerManager : MonoBehaviour
     public class UnitMeta
     {
         public string id;
-        public string displayName;
-        public string role;
+        private string mNameTr;
+        private string mNameEn;
+        private string mRoleTr;
+        private string mRoleEn;
         public int cost;
-        public string description;
+        private string mDescTr;
+        private string mDescEn;
         public int hp;
         public int damage;
         public int speed;
         public int range;
         public UnitFaction faction;
+        public string displayName { get { return LocalizationManager.IsTurkish ? mNameTr : mNameEn; } }
+        public string role { get { return LocalizationManager.IsTurkish ? mRoleTr : mRoleEn; } }
+        public string description { get { return LocalizationManager.IsTurkish ? mDescTr : mDescEn; } }
         public UnitTier tier { get { return GetUnitTier(id); } }
 
-        public UnitMeta(string id, string name, string role, int cost, string desc, int hp, int dmg, int spd, int rng, UnitFaction faction = UnitFaction.Samurai)
+        public UnitMeta(string id, string nameTr, string roleTr, int cost, string descTr, int hp, int dmg, int spd, int rng, UnitFaction faction = UnitFaction.Samurai,
+            string nameEn = null, string roleEn = null, string descEn = null)
         {
             this.id = id;
-            this.displayName = name;
-            this.role = role;
+            this.mNameTr = nameTr;
+            this.mNameEn = string.IsNullOrEmpty(nameEn) ? id : nameEn;
+            this.mRoleTr = roleTr;
+            this.mRoleEn = string.IsNullOrEmpty(roleEn) ? roleTr : roleEn;
             this.cost = cost;
-            this.description = desc;
+            this.mDescTr = descTr;
+            this.mDescEn = string.IsNullOrEmpty(descEn) ? descTr : descEn;
             this.hp = hp;
             this.damage = dmg;
             this.speed = spd;
@@ -76,20 +86,30 @@ public class SVZMultiplayerManager : MonoBehaviour
     public class SpellMeta
     {
         public string id;
-        public string displayName;
-        public string role;
+        private string mNameTr;
+        private string mNameEn;
+        private string mRoleTr;
+        private string mRoleEn;
         public float cooldown;
-        public string description;
+        private string mDescTr;
+        private string mDescEn;
         public string iconPath;
         public UnitFaction faction;
+        public string displayName { get { return LocalizationManager.IsTurkish ? mNameTr : mNameEn; } }
+        public string role { get { return LocalizationManager.IsTurkish ? mRoleTr : mRoleEn; } }
+        public string description { get { return LocalizationManager.IsTurkish ? mDescTr : mDescEn; } }
 
-        public SpellMeta(string id, string name, string role, float cd, string desc, string icon, UnitFaction faction)
+        public SpellMeta(string id, string nameTr, string roleTr, float cd, string descTr, string icon, UnitFaction faction,
+            string nameEn = null, string roleEn = null, string descEn = null)
         {
             this.id = id;
-            this.displayName = name;
-            this.role = role;
+            this.mNameTr = nameTr;
+            this.mNameEn = string.IsNullOrEmpty(nameEn) ? id : nameEn;
+            this.mRoleTr = roleTr;
+            this.mRoleEn = string.IsNullOrEmpty(roleEn) ? roleTr : roleEn;
             this.cooldown = cd;
-            this.description = desc;
+            this.mDescTr = descTr;
+            this.mDescEn = string.IsNullOrEmpty(descEn) ? descTr : descEn;
             this.iconPath = icon;
             this.faction = faction;
         }
@@ -127,7 +147,7 @@ public class SVZMultiplayerManager : MonoBehaviour
         "InGame_springday"
     };
 
-    public static readonly string[] sArenaNames = new string[]
+    private static readonly string[] sArenaNamesTr = new string[]
     {
         "🌸 Klasik Köy (Gündüz)",
         "❄️ Karlı Köy (Kış Gündüzü)",
@@ -141,6 +161,22 @@ public class SVZMultiplayerManager : MonoBehaviour
         "🌸 Kiraz Baharı"
     };
 
+    private static readonly string[] sArenaNamesEn = new string[]
+    {
+        "Classic Village (Day)",
+        "Snowy Village (Winter Day)",
+        "Snowy Night (Winter Night)",
+        "Hell Valley",
+        "Purple Flame Hell",
+        "Underworld",
+        "Evil Demon Village",
+        "Autumn Village",
+        "Summer Night Garden",
+        "Cherry Blossom"
+    };
+
+    public static string[] sArenaNames { get { return LocalizationManager.IsTurkish ? sArenaNamesTr : sArenaNamesEn; } }
+
     private string mSelectedArena = "InGame";
 
     // Match Mutators
@@ -151,19 +187,36 @@ public class SVZMultiplayerManager : MonoBehaviour
     private int mP1Perk = 0; // 0 = Çelik Zırh (+%20 Can), 1 = Disiplin (+%20 Liderlik), 2 = Ateşli Oklar (+%15 Hasar)
     private int mP2Perk = 0; // 0 = Zombi Vebası (+%20 Can), 1 = Vahşi Hücum (+%25 Hız), 2 = Beyin Şöleni (+%25 Beyin)
 
-    public static readonly string[] sP1PerkNames = new string[]
+    private static readonly string[] sP1PerkNamesTr = new string[]
     {
         "🛡️ Çelik Zırh (+%20 Birlik Canı)",
         "⚡ Samuray Disiplini (+%20 Liderlik)",
         "🏹 Ateşli Oklar (+%15 Hasar)"
     };
 
-    public static readonly string[] sP2PerkNames = new string[]
+    private static readonly string[] sP1PerkNamesEn = new string[]
+    {
+        "Steel Armor (+20% Unit HP)",
+        "Samurai Discipline (+20% Leadership)",
+        "Fire Arrows (+15% Damage)"
+    };
+
+    private static readonly string[] sP2PerkNamesTr = new string[]
     {
         "☣️ Veba Dayanıklılığı (+%20 Birlik Canı)",
         "🐎 Vahşi Hücum (+%25 Hareket Hızı)",
         "🧠 Beyin Şöleni (+%25 Beyin Üretimi)"
     };
+
+    private static readonly string[] sP2PerkNamesEn = new string[]
+    {
+        "Plague Resilience (+20% Unit HP)",
+        "Feral Rush (+25% Move Speed)",
+        "Brain Feast (+25% Brain Regen)"
+    };
+
+    public static string[] sP1PerkNames { get { return LocalizationManager.IsTurkish ? sP1PerkNamesTr : sP1PerkNamesEn; } }
+    public static string[] sP2PerkNames { get { return LocalizationManager.IsTurkish ? sP2PerkNamesTr : sP2PerkNamesEn; } }
 
     // Gates Health (1v1 PvP)
     private float mGate1Health = 5000f;
@@ -197,85 +250,150 @@ public class SVZMultiplayerManager : MonoBehaviour
     public static readonly List<SpellMeta> sAllSpells = new List<SpellMeta>
     {
         // Samurai Spells (7)
-        new SpellMeta("KatanaSlash", "Katana Darbesi", "⚔️ Yakın Alan Hasarı", 10f, "Ön saftaki düşmanları biçen ölümcül kılıç dalgası.", "Sprites/Icons/ab_katana_slash", UnitFaction.Samurai),
-        new SpellMeta("SummonLightning", "Yıldırım Çağrısı", "⚡ Gökyüzü Şimşeği", 15f, "Düşman hattına gökten yıkıcı şimşekler indirir.", "Sprites/Icons/ab_lightning_strike", UnitFaction.Samurai),
-        new SpellMeta("GroundShock", "Deprem Darbesi", "🌋 Sarsıntı & Geri İtme", 15f, "Yeri sarsarak düşmanları sersemletir ve geri savurur.", "Sprites/Icons/ab_burst_slam", UnitFaction.Samurai),
-        new SpellMeta("Lethargy", "Yavaşlatma Laneti", "🐌 Tüm Sahayı Yavaşlat", 23f, "Sahadaki tüm düşman birliklerini ağır çekime sokar.", "Sprites/Icons/ab_lethargy", UnitFaction.Samurai),
-        new SpellMeta("DivineIntervention", "İlahi Müdahale", "✨ Destek & Birlik Şifası", 25f, "Gökten takviye asker indirir ve dost birlikleri iyileştirir.", "Sprites/Icons/ab_divine_intervention", UnitFaction.Samurai),
-        new SpellMeta("SummonTornadoes", "Kasırga Hortumu", "🌪️ İlerleyen Hortum", 20f, "Koridor boyunca ilerleyip düşmanları biçen kasırga salar.", "Sprites/Icons/ab_katana_whirlwind", UnitFaction.Samurai),
-        new SpellMeta("GiantWave", "Süvari Hücumu", "🐎 Dev Süvari Dalgası", 45f, "Tüm koridoru boydan boya ezip geçen dev süvari ordusu.", "Sprites/Icons/ab_troop_trample", UnitFaction.Samurai),
+        new SpellMeta("KatanaSlash", "Katana Darbesi", "⚔️ Yakın Alan Hasarı", 10f, "Ön saftaki düşmanları biçen ölümcül kılıç dalgası.", "Sprites/Icons/ab_katana_slash", UnitFaction.Samurai,
+            "Katana Slash", "Melee AoE Slash", "Deadly blade wave slicing enemies right in front of you."),
+        new SpellMeta("SummonLightning", "Yıldırım Çağrısı", "⚡ Gökyüzü Şimşeği", 15f, "Düşman hattına gökten yıkıcı şimşekler indirir.", "Sprites/Icons/ab_lightning_strike", UnitFaction.Samurai,
+            "Summon Lightning", "Sky Bolt Strike", "Calls down devastating lightning bolts onto enemy ranks."),
+        new SpellMeta("GroundShock", "Deprem Darbesi", "🌋 Sarsıntı & Geri İtme", 15f, "Yeri sarsarak düşmanları sersemletir ve geri savurur.", "Sprites/Icons/ab_burst_slam", UnitFaction.Samurai,
+            "Ground Shock", "Stun & Knockback", "Slams the earth, stunning and knocking back nearby foes."),
+        new SpellMeta("Lethargy", "Yavaşlatma Laneti", "🐌 Tüm Sahayı Yavaşlat", 23f, "Sahadaki tüm düşman birliklerini ağır çekime sokar.", "Sprites/Icons/ab_lethargy", UnitFaction.Samurai,
+            "Lethargy", "Full-Lane Slow", "Slows all active enemy units across the battlefield."),
+        new SpellMeta("DivineIntervention", "İlahi Müdahale", "✨ Destek & Birlik Şifası", 25f, "Gökten takviye asker indirir ve dost birlikleri iyileştirir.", "Sprites/Icons/ab_divine_intervention", UnitFaction.Samurai,
+            "Divine Intervention", "Reinforce & Heal", "Drops sacred reinforcements and heals friendly troops."),
+        new SpellMeta("SummonTornadoes", "Kasırga Hortumu", "🌪️ İlerleyen Hortum", 20f, "Koridor boyunca ilerleyip düşmanları biçen kasırga salar.", "Sprites/Icons/ab_katana_whirlwind", UnitFaction.Samurai,
+            "Summon Tornadoes", "Sweeping Whirlwind", "Unleashes a tornado tearing through enemy lines."),
+        new SpellMeta("GiantWave", "Süvari Hücumu", "🐎 Dev Süvari Dalgası", 45f, "Tüm koridoru boydan boya ezip geçen dev süvari ordusu.", "Sprites/Icons/ab_troop_trample", UnitFaction.Samurai,
+            "Troop Trample", "Massive Cavalry Charge", "Summons a huge cavalry stampede crushing the whole lane."),
 
         // Zombie Spells (6)
-        new SpellMeta("LifeSteal", "Can Çalma", "🩸 Ruh Sömürüsü", 10f, "Düşmanların yaşam enerjisini çekip dost saflara aktarır.", "Sprites/Icons/ab_enemy_lifesteal", UnitFaction.Zombie),
-        new SpellMeta("GraveHands", "Mezar Elleri", "✋ Yeraltı Pençeleri", 15f, "Yerden çıkan iskelet eller düşmanları ezer ve mıhlar.", "Sprites/Icons/ab_enemy_grave_hands", UnitFaction.Zombie),
-        new SpellMeta("LethargyZM", "Karanlık Yavaşlatma", "☠️ Zehirli Yavaşlatma", 23f, "Düşman ordusunu karanlık büyüyle zehirler ve yavaşlatır.", "Sprites/Icons/ab_enemy_lethargy", UnitFaction.Zombie),
-        new SpellMeta("NightOfTheDead", "Ölüler Gecesi", "🌙 Karanlık Çılgınlık", 23f, "Dost birliklerin hızını artırır ve yaralarını sarar.", "Sprites/Icons/ab_enemy_night", UnitFaction.Zombie),
-        new SpellMeta("RaiseDead", "Ölüleri Dirilt", "🪦 Mezar Çağrısı", 25f, "Savaş alanının ortasında yerden zombi savaşçılar diriltir.", "Sprites/Icons/ab_enemy_raise_the_dead", UnitFaction.Zombie),
-        new SpellMeta("DragonAttack", "Ejderha Saldırısı", "🐉 Cehennem Ejderhası", 45f, "Tüm koridoru alevleriyle yakıp kül eden dev ejderha.", "Sprites/Icons/ab_enemy_dragon_damage", UnitFaction.Zombie)
+        new SpellMeta("LifeSteal", "Can Çalma", "🩸 Ruh Sömürüsü", 10f, "Düşmanların yaşam enerjisini çekip dost saflara aktarır.", "Sprites/Icons/ab_enemy_lifesteal", UnitFaction.Zombie,
+            "Life Steal", "Soul Drain", "Drains life energy from enemies to restore your own."),
+        new SpellMeta("GraveHands", "Mezar Elleri", "✋ Yeraltı Pençeleri", 15f, "Yerden çıkan iskelet eller düşmanları ezer ve mıhlar.", "Sprites/Icons/ab_enemy_grave_hands", UnitFaction.Zombie,
+            "Grave Hands", "Undead Snare", "Skeletal hands erupt from below to crush and snare foes."),
+        new SpellMeta("LethargyZM", "Karanlık Yavaşlatma", "☠️ Zehirli Yavaşlatma", 23f, "Düşman ordusunu karanlık büyüyle zehirler ve yavaşlatır.", "Sprites/Icons/ab_enemy_lethargy", UnitFaction.Zombie,
+            "Dark Lethargy", "Toxic Slow", "Curses the opposing army with toxic dark slowing magic."),
+        new SpellMeta("NightOfTheDead", "Ölüler Gecesi", "🌙 Karanlık Çılgınlık", 23f, "Dost birliklerin hızını artırır ve yaralarını sarar.", "Sprites/Icons/ab_enemy_night", UnitFaction.Zombie,
+            "Night of the Dead", "Dark Frenzy", "Empowers and heals allied zombie forces."),
+        new SpellMeta("RaiseDead", "Ölüleri Dirilt", "🪦 Mezar Çağrısı", 25f, "Savaş alanının ortasında yerden zombi savaşçılar diriltir.", "Sprites/Icons/ab_enemy_raise_the_dead", UnitFaction.Zombie,
+            "Raise Dead", "Grave Summon", "Raises zombie warriors straight from mid-field."),
+        new SpellMeta("DragonAttack", "Ejderha Saldırısı", "🐉 Cehennem Ejderhası", 45f, "Tüm koridoru alevleriyle yakıp kül eden dev ejderha.", "Sprites/Icons/ab_enemy_dragon_damage", UnitFaction.Zombie,
+            "Zombie Dragon", "Hellfire Breath", "Unleashes a giant zombie dragon scorching the entire lane.")
     };
 
     // --- FULL SAMURAI ROSTER (18 UNITS - Exact 1:1 with registry/helpers/) ---
     public static readonly List<UnitMeta> sUnitMetaP1 = new List<UnitMeta>
     {
-        new UnitMeta("Farmer", "Köylü", "🗡️ Ucuz Piyade", 5, "Hızlı üretilir, ön safta yem olur.", 40, 15, 75, 10, UnitFaction.Samurai),
-        new UnitMeta("NinjaGirl", "Gölge Ninja", "⚡ Hızlı Suikastçı", 5, "Yüksek hareket hızı ve seri darbeler.", 70, 70, 100, 20, UnitFaction.Samurai),
-        new UnitMeta("Samurai", "Kılıçlı Samuray", "⚔️ Dengeli Savaşçı", 10, "Standart dayanıklı yakın dövüşçü.", 85, 50, 70, 15, UnitFaction.Samurai),
-        new UnitMeta("SamuraiArcher", "Samuray Okçu", "🏹 Menzilli Destek", 10, "Uzaktan güvenli ok yağdırır.", 45, 35, 70, 95, UnitFaction.Samurai),
-        new UnitMeta("Rifleman", "Tüfekçi Asker", "💥 Okçu Geliştirici (Max 1)", 10, "Sahadaki okçuları tüfekçiye dönüştürür (Sınır: 1).", 55, 85, 55, 90, UnitFaction.Samurai),
-        new UnitMeta("Swordsmith", "Kılıç Ustası", "⚒️ Köylü Geliştirici (Max 1)", 10, "Köylüleri süper köylüye dönüştürür (Sınır: 1).", 85, 40, 65, 25, UnitFaction.Samurai),
-        new UnitMeta("FarmerOnStilts", "Uzunbacak Köylü", "🦗 Çevik Atlama", 15, "Uzun bacaklarıyla safları aşar.", 45, 20, 85, 15, UnitFaction.Samurai),
-        new UnitMeta("SpearSamurai", "Mızraklı Samuray", "🛡️ Anti-Süvari", 15, "Mızrağıyla atlıları ve canavarları durdurur.", 90, 45, 65, 30, UnitFaction.Samurai),
-        new UnitMeta("IceArcher", "Buz Okçusu", "❄️ Dondurucu Menzil", 20, "Düşmanları donduran buz okları atar.", 50, 40, 65, 95, UnitFaction.Samurai),
-        new UnitMeta("Handmaiden", "Hizmetçi Kız", "🌸 Hızlı Destek", 20, "Müttefiklerin moralini ve gücünü artırır.", 50, 15, 70, 30, UnitFaction.Samurai),
-        new UnitMeta("HeavySamurai", "Ağır Samuray", "🛡️ Zırhlı Savaşçı", 30, "Ağır zırhıyla darbeleri karşılar.", 110, 55, 60, 15, UnitFaction.Samurai),
-        new UnitMeta("Priest", "Şinto Rahibi", "✨ Şifacı Destek (Max 3)", 35, "Dost birliklerin canını yeniler (Sınır: 3).", 60, 10, 60, 50, UnitFaction.Samurai),
-        new UnitMeta("Shieldsamurai", "Kalkanlı Samuray", "🛡️ Mega Tank (Max 5)", 40, "Devasa canı ve kalkanıyla hasarı emer (Sınır: 5).", 160, 45, 50, 15, UnitFaction.Samurai),
-        new UnitMeta("SpearHorseman", "Mızraklı Atlı", "🐎 Ağır Süvari", 45, "Hızlı hücum eder, düşman hattını yarar.", 110, 80, 95, 35, UnitFaction.Samurai),
-        new UnitMeta("Nobunaga", "Oda Nobunaga", "👑 Efsanevi Hükümdar (Max 3)", 55, "Alandaki tüm birlikleri coşturup güçlendirir (Sınır: 3).", 140, 95, 75, 40, UnitFaction.Samurai),
-        new UnitMeta("ShieldSamuraiGreen", "Yeşil Kalkanlı", "💚 Zümrüt Muhafız (Max 5)", 55, "Zümrüt kalkanıyla kırılmaz bir hat kurar (Sınır: 5).", 180, 50, 48, 15, UnitFaction.Samurai),
-        new UnitMeta("Takeda", "Shingen Takeda", "🏇 Efsane Süvari (Max 3)", 65, "At sırtında korku salan dev komutan (Sınır: 3).", 150, 95, 90, 40, UnitFaction.Samurai),
-        new UnitMeta("ShieldSamuraiIce", "Buz Kalkanlı", "🧊 Buz Duvarı (Max 3)", 70, "Darbe aldığında saldıranları dondurur (Sınır: 3).", 200, 45, 45, 15, UnitFaction.Samurai)
+        new UnitMeta("Farmer", "Köylü", "🗡️ Ucuz Piyade", 5, "Hızlı üretilir, ön safta yem olur.", 40, 15, 75, 10, UnitFaction.Samurai,
+            "Farmer", "Cheap Infantry", "Fast to summon, great frontline meatshield."),
+        new UnitMeta("NinjaGirl", "Gölge Ninja", "⚡ Hızlı Suikastçı", 5, "Yüksek hareket hızı ve seri darbeler.", 70, 70, 100, 20, UnitFaction.Samurai,
+            "Ninja Girl", "Fast Assassin", "High movement speed and rapid melee combos."),
+        new UnitMeta("Samurai", "Kılıçlı Samuray", "⚔️ Dengeli Savaşçı", 10, "Standart dayanıklı yakın dövüşçü.", 85, 50, 70, 15, UnitFaction.Samurai,
+            "Samurai", "Balanced Fighter", "Reliable sturdy frontline swordsman."),
+        new UnitMeta("SamuraiArcher", "Samuray Okçu", "🏹 Menzilli Destek", 10, "Uzaktan güvenli ok yağdırır.", 45, 35, 70, 95, UnitFaction.Samurai,
+            "Samurai Archer", "Ranged Support", "Fires steady arrows safely from the backline."),
+        new UnitMeta("Rifleman", "Tüfekçi Asker", "💥 Okçu Geliştirici (Max 1)", 10, "Sahadaki okçuları tüfekçiye dönüştürür (Sınır: 1).", 55, 85, 55, 90, UnitFaction.Samurai,
+            "Rifleman", "Archer Upgrader (Max 1)", "Upgrades field archers into Riflemen (Limit: 1)."),
+        new UnitMeta("Swordsmith", "Kılıç Ustası", "⚒️ Köylü Geliştirici (Max 1)", 10, "Köylüleri süper köylüye dönüştürür (Sınır: 1).", 85, 40, 65, 25, UnitFaction.Samurai,
+            "Swordsmith", "Farmer Upgrader (Max 1)", "Equips Farmers for stronger combat (Limit: 1)."),
+        new UnitMeta("FarmerOnStilts", "Uzunbacak Köylü", "🦗 Çevik Atlama", 15, "Uzun bacaklarıyla safları aşar.", 45, 20, 85, 15, UnitFaction.Samurai,
+            "Farmer on Stilts", "Agile Leaper", "Rushes quickly on tall wooden stilts."),
+        new UnitMeta("SpearSamurai", "Mızraklı Samuray", "🛡️ Anti-Süvari", 15, "Mızrağıyla atlıları ve canavarları durdurur.", 90, 45, 65, 30, UnitFaction.Samurai,
+            "Spear Samurai", "Anti-Cavalry", "Long spear reach counters cavalry and large monsters."),
+        new UnitMeta("IceArcher", "Buz Okçusu", "❄️ Dondurucu Menzil", 20, "Düşmanları donduran buz okları atar.", 50, 40, 65, 95, UnitFaction.Samurai,
+            "Ice Archer", "Chilling Ranged", "Fires frost arrows that slow enemies down."),
+        new UnitMeta("Handmaiden", "Hizmetçi Kız", "🌸 Hızlı Destek", 20, "Müttefiklerin moralini ve gücünü artırır.", 50, 15, 70, 30, UnitFaction.Samurai,
+            "Handmaiden", "Support Aura", "Boosts allied morale and nearby speed/attack."),
+        new UnitMeta("HeavySamurai", "Ağır Samuray", "🛡️ Zırhlı Savaşçı", 30, "Ağır zırhıyla darbeleri karşılar.", 110, 55, 60, 15, UnitFaction.Samurai,
+            "Heavy Samurai", "Armored Warrior", "Heavy armor and two-handed strikes absorb hits."),
+        new UnitMeta("Priest", "Şinto Rahibi", "✨ Şifacı Destek (Max 3)", 35, "Dost birliklerin canını yeniler (Sınır: 3).", 60, 10, 60, 50, UnitFaction.Samurai,
+            "Shinto Priest", "Healer Support (Max 3)", "Restores health to allied warriors (Limit: 3)."),
+        new UnitMeta("Shieldsamurai", "Kalkanlı Samuray", "🛡️ Mega Tank (Max 5)", 40, "Devasa canı ve kalkanıyla hasarı emer (Sınır: 5).", 160, 45, 50, 15, UnitFaction.Samurai,
+            "Shield Samurai", "Heavy Tank (Max 5)", "Massive HP and steel shield block damage (Limit: 5)."),
+        new UnitMeta("SpearHorseman", "Mızraklı Atlı", "🐎 Ağır Süvari", 45, "Hızlı hücum eder, düşman hattını yarar.", 110, 80, 95, 35, UnitFaction.Samurai,
+            "Spear Horseman", "Heavy Cavalry", "Fast lance charge smashes through enemy lines."),
+        new UnitMeta("Nobunaga", "Oda Nobunaga", "👑 Efsanevi Hükümdar (Max 3)", 55, "Alandaki tüm birlikleri coşturup güçlendirir (Sınır: 3).", 140, 95, 75, 40, UnitFaction.Samurai,
+            "Oda Nobunaga", "Legendary Lord (Max 3)", "Rallies and empowers all units on the field (Limit: 3)."),
+        new UnitMeta("ShieldSamuraiGreen", "Yeşil Kalkanlı", "💚 Zümrüt Muhafız (Max 5)", 55, "Zümrüt kalkanıyla kırılmaz bir hat kurar (Sınır: 5).", 180, 50, 48, 15, UnitFaction.Samurai,
+            "Emerald Shield Samurai", "Emerald Guard (Max 5)", "Unbreakable emerald wall holding the line (Limit: 5)."),
+        new UnitMeta("Takeda", "Shingen Takeda", "🏇 Efsane Süvari (Max 3)", 65, "At sırtında korku salan dev komutan (Sınır: 3).", 150, 95, 90, 40, UnitFaction.Samurai,
+            "Takeda Shingen", "Legendary Rider (Max 3)", "Fearsome mounted general boosting cavalry charges (Limit: 3)."),
+        new UnitMeta("ShieldSamuraiIce", "Buz Kalkanlı", "🧊 Buz Duvarı (Max 3)", 70, "Darbe aldığında saldıranları dondurur (Sınır: 3).", 200, 45, 45, 15, UnitFaction.Samurai,
+            "Frost Shield Samurai", "Ice Wall (Max 3)", "Chills attackers on impact with frost armor (Limit: 3).")
     };
 
     // --- FULL ZOMBIE ROSTER (31 UNITS - Exact 1:1 with registry/helpers_zm/) ---
     public static readonly List<UnitMeta> sUnitMetaP2 = new List<UnitMeta>
     {
-        new UnitMeta("CrawlingTorso", "Sürünen Gövde", "🧟 Ucuz Yem", 2, "Çok ucuza çağrılan hızlı sürünen zombi.", 30, 10, 80, 10, UnitFaction.Zombie),
-        new UnitMeta("Zombie", "Yürüyen Zombi", "🧟 Temel Zombi", 3, "Sürü halinde saldıran temel ölümsüz.", 40, 15, 70, 10, UnitFaction.Zombie),
-        new UnitMeta("ZombieMelee", "Kılıçlı Zombi", "⚔️ Zombi Savaşçı", 5, "Kılıcıyla dengeli yakın dövüş yapan zombi.", 65, 25, 75, 15, UnitFaction.Zombie),
-        new UnitMeta("Chochinobake", "Alevli Fener", "🏮 Patlayan Ruh", 5, "Hedefe ulaştığında patlayarak alan hasarı verir.", 45, 55, 85, 20, UnitFaction.Zombie),
-        new UnitMeta("EvilFarmer", "Lanetli Köylü", "🗡️ Zombi Köylü", 8, "Karanlık tarafa geçmiş hızlı köylü savaşçı.", 55, 22, 80, 15, UnitFaction.Zombie),
-        new UnitMeta("ZombieAxe", "Baltalı Zombi", "🪓 Hızlı Hücumcu", 10, "Baltasıyla seri ve sert darbeler vurur.", 75, 35, 75, 15, UnitFaction.Zombie),
-        new UnitMeta("ZombieArcher", "Zombi Okçu", "🏹 Menzilli Zombi", 10, "Uzaktan zehirli oklar fırlatır.", 45, 35, 70, 90, UnitFaction.Zombie),
-        new UnitMeta("SmallOni", "Küçük Oni", "👹 Çevik İblis", 10, "Hızlı koşan ve pençeleriyle saldıran küçük iblis.", 80, 38, 85, 15, UnitFaction.Zombie),
-        new UnitMeta("GhostRonin", "Hayalet Ronin", "👻 Ruh Kılıççısı (Max 1)", 10, "Kılıcıyla ön safta çarpışan hayalet samuray (Sınır: 1).", 95, 45, 75, 20, UnitFaction.Zombie),
-        new UnitMeta("EvilNinja", "Kara Ninja", "👤 Gölge Katili", 10, "Hem yakın dövüş hem yıldız fırlatan zombi ninja.", 80, 75, 100, 50, UnitFaction.Zombie),
-        new UnitMeta("ZombieDrummer", "Taiko Davulcusu", "🥁 Güçlendirici (Max 1)", 10, "Davuluyla dost birliklerin hasarını artırır (Sınır: 1).", 85, 15, 60, 80, UnitFaction.Zombie),
-        new UnitMeta("ZombieSpearman", "Mızraklı Zombi", "🛡️ Anti-Süvari", 15, "Uzun mızrağıyla hücumları ve süvarileri durdurur.", 85, 42, 70, 35, UnitFaction.Zombie),
-        new UnitMeta("Tengu", "Tengu Savaşçısı", "🦅 İblis Savaşçı (Max 3)", 15, "Yüksek geri itme gücüne sahip Tengu (Sınır: 3, 10sn süre).", 90, 55, 80, 25, UnitFaction.Zombie),
-        new UnitMeta("HeavyArcher", "Ağır Zombi Okçu", "🏹 Elit Menzilli", 20, "Çelik uçlu ağır oklarla yüksek menzilli hasar verir.", 70, 55, 65, 95, UnitFaction.Zombie),
-        new UnitMeta("ZombieWarhammer", "Balyozlu Zombi", "🔨 Zırh Kırıcı", 20, "Ağır balyozuyla kalkanlı ve zırhlı hedefleri ezer.", 100, 60, 60, 20, UnitFaction.Zombie),
-        new UnitMeta("Komusou", "Flütçü Büyücü", "🎋 Destek Büyücüsü (Max 1)", 20, "Flütüyle dost ordunun saldırı gücünü artırır (Sınır: 1).", 85, 30, 65, 60, UnitFaction.Zombie),
-        new UnitMeta("Wanyudo", "Ahşap Çark", "🎡 Ağır Çark", 25, "Dönerek ilerleyen ve safları ezen dev tekerlek.", 130, 65, 60, 20, UnitFaction.Zombie),
-        new UnitMeta("Onibaba", "Onibaba Cadısı", "🧙‍♀️ Zombi Şifacı", 30, "Karanlık büyüsüyle yaralı zombileri iyileştirir.", 95, 45, 70, 60, UnitFaction.Zombie),
-        new UnitMeta("ZombieRifleman", "Zombi Tüfekçi", "💥 Barutlu Nişancı", 30, "Tüfeğiyle uzaktan zırh delici mermiler ateşler.", 75, 85, 60, 90, UnitFaction.Zombie),
-        new UnitMeta("EvilHeavySamurai", "Şeytani Panzer", "🛡️ Zırhlı Canavar", 30, "Ağır zırhlı ve yüksek dayanıklılığa sahip kara samuray.", 145, 70, 55, 20, UnitFaction.Zombie),
-        new UnitMeta("Oni", "Kırmızı Oni", "👹 Ezici Dev Tank", 35, "Devasa sopasıyla geniş alana yıkıcı hasar saçar.", 155, 85, 55, 25, UnitFaction.Zombie),
-        new UnitMeta("EvilIceArcher", "Karanlık Buz Okçusu", "❄️ Dondurucu Nişancı", 35, "Attığı buz oklarıyla düşmanları dondurur ve yavaşlatır.", 75, 65, 65, 95, UnitFaction.Zombie),
-        new UnitMeta("WanyudoFire", "Ateşli Çark", "🔥 Cehennem Çarkı", 40, "Önüne gelen her şeyi yakan alevli cehennem çarkı.", 155, 90, 65, 25, UnitFaction.Zombie),
-        new UnitMeta("Necromancer", "Ölüçağıran", "💀 Ruh Ustası (Max 1)", 40, "Sürekli yerden kılıçlı zombi savaşçılar diriltir (Sınır: 1).", 140, 60, 55, 70, UnitFaction.Zombie),
-        new UnitMeta("ZombieHorseman", "Zombi Atlısı", "🐎 Zombi Süvari", 50, "Dörtnala hücum ederek düşman hattını yarar.", 130, 85, 95, 35, UnitFaction.Zombie),
-        new UnitMeta("WanyudoMetal", "Demir Çark", "⚙️ Zırhlı Dev Çark", 55, "Çelik zırhla kaplı kırılmaz ölüm tekerleği.", 185, 95, 60, 25, UnitFaction.Zombie),
-        new UnitMeta("TenguAir", "Tengu Air", "🦅 Uçan Tengu (Max 3)", 55, "Havadan uçarak saldırır ve yakın dövüşten etkilenmez (Sınır: 3, 10sn).", 135, 75, 85, 30, UnitFaction.Zombie),
-        new UnitMeta("Jurogumo", "Jurogumo", "🕷️ Örümcek İblis", 70, "Öldüğünde yavru örümcekler çıkaran dev örümcek kadın.", 165, 85, 65, 35, UnitFaction.Zombie),
-        new UnitMeta("EvilNobunaga", "Karanlık Nobunaga", "👑 Şeytani Hükümdar (Max 2)", 75, "Cehennem ateşiyle yanan kara hükümdar (Sınır: 2).", 175, 100, 70, 35, UnitFaction.Zombie),
-        new UnitMeta("EvilTakeda", "Karanlık Takeda", "🏇 Kara Süvari (Max 2)", 85, "Karanlık zırhlı efsanevi süvari komutanı (Sınır: 2).", 180, 105, 90, 40, UnitFaction.Zombie),
-        new UnitMeta("Shogun", "Karanlık Şogun", "⚔️ Lanetli Lider (Max 1)", 100, "Zombi ordusunun en güçlü başkomutanı (Sınır: 1, 30sn süre).", 200, 115, 70, 35, UnitFaction.Zombie)
+        new UnitMeta("CrawlingTorso", "Sürünen Gövde", "🧟 Ucuz Yem", 2, "Çok ucuza çağrılan hızlı sürünen zombi.", 30, 10, 80, 10, UnitFaction.Zombie,
+            "Crawling Torso", "Cheap Swarm", "Ultra-cheap fast crawling undead."),
+        new UnitMeta("Zombie", "Yürüyen Zombi", "🧟 Temel Zombi", 3, "Sürü halinde saldıran temel ölümsüz.", 40, 15, 70, 10, UnitFaction.Zombie,
+            "Walking Zombie", "Basic Undead", "Standard shambling horde infantry."),
+        new UnitMeta("ZombieMelee", "Kılıçlı Zombi", "⚔️ Zombi Savaşçı", 5, "Kılıcıyla dengeli yakın dövüş yapan zombi.", 65, 25, 75, 15, UnitFaction.Zombie,
+            "Zombie Swordsman", "Melee Fighter", "Balanced melee zombie wielding a blade."),
+        new UnitMeta("Chochinobake", "Alevli Fener", "🏮 Patlayan Ruh", 5, "Hedefe ulaştığında patlayarak alan hasarı verir.", 45, 55, 85, 20, UnitFaction.Zombie,
+            "Chochinobake", "Exploding Spirit", "Detonates on contact for AoE burst damage."),
+        new UnitMeta("EvilFarmer", "Lanetli Köylü", "🗡️ Zombi Köylü", 8, "Karanlık tarafa geçmiş hızlı köylü savaşçı.", 55, 22, 80, 15, UnitFaction.Zombie,
+            "Evil Farmer", "Undead Peasant", "Corrupted fast-moving peasant fighter."),
+        new UnitMeta("ZombieAxe", "Baltalı Zombi", "🪓 Hızlı Hücumcu", 10, "Baltasıyla seri ve sert darbeler vurur.", 75, 35, 75, 15, UnitFaction.Zombie,
+            "Axe Zombie", "Fast Striker", "Delivers rapid heavy axe chops."),
+        new UnitMeta("ZombieArcher", "Zombi Okçu", "🏹 Menzilli Zombi", 10, "Uzaktan zehirli oklar fırlatır.", 45, 35, 70, 90, UnitFaction.Zombie,
+            "Zombie Archer", "Ranged Undead", "Fires arrows from behind the frontline."),
+        new UnitMeta("SmallOni", "Küçük Oni", "👹 Çevik İblis", 10, "Hızlı koşan ve pençeleriyle saldıran küçük iblis.", 80, 38, 85, 15, UnitFaction.Zombie,
+            "Small Oni", "Agile Demon", "Fast demon imp slashing with sharp claws."),
+        new UnitMeta("GhostRonin", "Hayalet Ronin", "👻 Ruh Kılıççısı (Max 1)", 10, "Kılıcıyla ön safta çarpışan hayalet samuray (Sınır: 1).", 95, 45, 75, 20, UnitFaction.Zombie,
+            "Ghost Ronin", "Spirit Blademaster (Max 1)", "Phantom swordsman leading the undead vanguard (Limit: 1)."),
+        new UnitMeta("EvilNinja", "Kara Ninja", "👤 Gölge Katili", 10, "Hem yakın dövüş hem yıldız fırlatan zombi ninja.", 80, 75, 100, 50, UnitFaction.Zombie,
+            "Evil Ninja", "Shadow Assassin", "Deadly undead ninja mixing melee and shurikens."),
+        new UnitMeta("ZombieDrummer", "Taiko Davulcusu", "🥁 Güçlendirici (Max 1)", 10, "Davuluyla dost birliklerin hasarını artırır (Sınır: 1).", 85, 15, 60, 80, UnitFaction.Zombie,
+            "Zombie Drummer", "War Buffer (Max 1)", "War drum boosts nearby undead attack damage (Limit: 1)."),
+        new UnitMeta("ZombieSpearman", "Mızraklı Zombi", "🛡️ Anti-Süvari", 15, "Uzun mızrağıyla hücumları ve süvarileri durdurur.", 85, 42, 70, 35, UnitFaction.Zombie,
+            "Zombie Spearman", "Anti-Cavalry", "Long spear counters incoming charges."),
+        new UnitMeta("Tengu", "Tengu Savaşçısı", "🦅 İblis Savaşçı (Max 3)", 15, "Yüksek geri itme gücüne sahip Tengu (Sınır: 3, 10sn süre).", 90, 55, 80, 25, UnitFaction.Zombie,
+            "Tengu Warrior", "Demon Brawler (Max 3)", "High-knockback Tengu fighter (Limit: 3, 10s duration)."),
+        new UnitMeta("HeavyArcher", "Ağır Zombi Okçu", "🏹 Elit Menzilli", 20, "Çelik uçlu ağır oklarla yüksek menzilli hasar verir.", 70, 55, 65, 95, UnitFaction.Zombie,
+            "Heavy Zombie Archer", "Elite Ranged", "Fires heavy armor-biting arrows from afar."),
+        new UnitMeta("ZombieWarhammer", "Balyozlu Zombi", "🔨 Zırh Kırıcı", 20, "Ağır balyozuyla kalkanlı ve zırhlı hedefleri ezer.", 100, 60, 60, 20, UnitFaction.Zombie,
+            "Warhammer Zombie", "Armor Breaker", "Heavy mallet crushes shielded defenders."),
+        new UnitMeta("Komusou", "Flütçü Büyücü", "🎋 Destek Büyücüsü (Max 1)", 20, "Flütüyle dost ordunun saldırı gücünü artırır (Sınır: 1).", 85, 30, 65, 60, UnitFaction.Zombie,
+            "Komusou Flutist", "Support Mystic (Max 1)", "Mystic flute empowers allied zombie troops (Limit: 1)."),
+        new UnitMeta("Wanyudo", "Ahşap Çark", "🎡 Ağır Çark", 25, "Dönerek ilerleyen ve safları ezen dev tekerlek.", 130, 65, 60, 20, UnitFaction.Zombie,
+            "Wanyudo (Wood)", "Rolling Wheel", "Giant spinning demon wheel crushing defenders."),
+        new UnitMeta("Onibaba", "Onibaba Cadısı", "🧙‍♀️ Zombi Şifacı", 30, "Karanlık büyüsüyle yaralı zombileri iyileştirir.", 95, 45, 70, 60, UnitFaction.Zombie,
+            "Onibaba Witch", "Undead Healer", "Heals injured undead allies with dark magic."),
+        new UnitMeta("ZombieRifleman", "Zombi Tüfekçi", "💥 Barutlu Nişancı", 30, "Tüfeğiyle uzaktan zırh delici mermiler ateşler.", 75, 85, 60, 90, UnitFaction.Zombie,
+            "Zombie Rifleman", "Gunpowder Sniper", "Fires high-damage armor-piercing shots."),
+        new UnitMeta("EvilHeavySamurai", "Şeytani Panzer", "🛡️ Zırhlı Canavar", 30, "Ağır zırhlı ve yüksek dayanıklılığa sahip kara samuray.", 145, 70, 55, 20, UnitFaction.Zombie,
+            "Evil Heavy Samurai", "Armored Juggernaut", "Dark heavy samurai tanking massive damage."),
+        new UnitMeta("Oni", "Kırmızı Oni", "👹 Ezici Dev Tank", 35, "Devasa sopasıyla geniş alana yıkıcı hasar saçar.", 155, 85, 55, 25, UnitFaction.Zombie,
+            "Crimson Oni", "Crushing Giant", "Giant demon swinging a devastating AoE club."),
+        new UnitMeta("EvilIceArcher", "Karanlık Buz Okçusu", "❄️ Dondurucu Nişancı", 35, "Attığı buz oklarıyla düşmanları dondurur ve yavaşlatır.", 75, 65, 65, 95, UnitFaction.Zombie,
+            "Evil Ice Archer", "Frost Sniper", "Chills and slows enemy armies with dark frost arrows."),
+        new UnitMeta("WanyudoFire", "Ateşli Çark", "🔥 Cehennem Çarkı", 40, "Önüne gelen her şeyi yakan alevli cehennem çarkı.", 155, 90, 65, 25, UnitFaction.Zombie,
+            "Wanyudo (Fire)", "Inferno Wheel", "Blazing wheel scorching everything in its path."),
+        new UnitMeta("Necromancer", "Ölüçağıran", "💀 Ruh Ustası (Max 1)", 40, "Sürekli yerden kılıçlı zombi savaşçılar diriltir (Sınır: 1).", 140, 60, 55, 70, UnitFaction.Zombie,
+            "Necromancer", "Master of Souls (Max 1)", "Continuously raises zombie swordsmen (Limit: 1)."),
+        new UnitMeta("ZombieHorseman", "Zombi Atlısı", "🐎 Zombi Süvari", 50, "Dörtnala hücum ederek düşman hattını yarar.", 130, 85, 95, 35, UnitFaction.Zombie,
+            "Zombie Horseman", "Undead Cavalry", "Galloping charge tears deep into enemy lines."),
+        new UnitMeta("WanyudoMetal", "Demir Çark", "⚙️ Zırhlı Dev Çark", 55, "Çelik zırhla kaplı kırılmaz ölüm tekerleği.", 185, 95, 60, 25, UnitFaction.Zombie,
+            "Wanyudo (Metal)", "Iron Wheel", "Steel-plated rolling fortress of doom."),
+        new UnitMeta("TenguAir", "Tengu Air", "🦅 Uçan Tengu (Max 3)", 55, "Havadan uçarak saldırır ve yakın dövüşten etkilenmez (Sınır: 3, 10sn).", 135, 75, 85, 30, UnitFaction.Zombie,
+            "Flying Tengu", "Aerial Demon (Max 3)", "Strikes from the sky immune to melee (Limit: 3, 10s)."),
+        new UnitMeta("IronButcher", "Demir Kasap", "🪓 Zırhlı Kasap Zombi", 60, "Dev giyotin satırı savuran zırhlı kasap zombi.", 195, 105, 65, 32, UnitFaction.Zombie,
+            "Iron Butcher", "Armored Butcher", "Armored zombie swinging a giant guillotine cleaver."),
+        new UnitMeta("Jurogumo", "Jurogumo", "🕷️ Örümcek İblis", 70, "Öldüğünde yavru örümcekler çıkaran dev örümcek kadın.", 165, 85, 65, 35, UnitFaction.Zombie,
+            "Jorogumo", "Spider Demon", "Giant spider demon spawning spiderlings on death."),
+        new UnitMeta("EvilNobunaga", "Karanlık Nobunaga", "👑 Şeytani Hükümdar (Max 2)", 75, "Cehennem ateşiyle yanan kara hükümdar (Sınır: 2).", 175, 100, 70, 35, UnitFaction.Zombie,
+            "Evil Nobunaga", "Dark Overlord (Max 2)", "Hellfire dark warlord inspiring nearby undead (Limit: 2)."),
+        new UnitMeta("EvilTakeda", "Karanlık Takeda", "🏇 Kara Süvari (Max 2)", 85, "Karanlık zırhlı efsanevi süvari komutanı (Sınır: 2).", 180, 105, 90, 40, UnitFaction.Zombie,
+            "Evil Takeda", "Dark Cavalry Boss (Max 2)", "Demonic mounted commander crushing defenses (Limit: 2)."),
+        new UnitMeta("Shogun", "Karanlık Şogun", "⚔️ Lanetli Lider (Max 1)", 100, "Zombi ordusunun en güçlü başkomutanı (Sınır: 1, 30sn süre).", 200, 115, 70, 35, UnitFaction.Zombie,
+            "Dark Shogun", "Cursed Warlord (Max 1)", "Supreme commander of the undead horde (Limit: 1, 30s).")
     };
 
     public static bool IsHiddenOrSubHelper(string unitId)
     {
         if (string.IsNullOrEmpty(unitId)) return false;
+        if (unitId.StartsWith("Charm", StringComparison.OrdinalIgnoreCase)) return true;
         switch (unitId)
         {
             case "SuperFarmer":
@@ -287,7 +405,9 @@ public class SVZMultiplayerManager : MonoBehaviour
             case "CharmWanyudoMetal":
             case "CharmJurogumo":
             case "JurogumoBaby":
+            case "ZombieLegs":
             case "ZombieMelee_Summon":
+            case "Nobusuma":
                 return true;
             default:
                 return false;
@@ -456,6 +576,7 @@ public class SVZMultiplayerManager : MonoBehaviour
             case "HeavyArcher":
             case "ZombieWarhammer":
             case "Komusou":
+            case "IronButcher":
                 return UnitTier.Elite;
 
             // --- ⚔️ TEMEL BİRLİKLER (En az 2 Adet!) ---
@@ -494,7 +615,7 @@ public class SVZMultiplayerManager : MonoBehaviour
         failureReason = string.Empty;
         if (currentDeck == null || targetSlotIndex < 0 || targetSlotIndex >= currentDeck.Count)
         {
-            failureReason = "Geçersiz deste yuvası.";
+            failureReason = LocalizationManager.T("Invalid deck slot.", "Geçersiz deste yuvası.");
             return false;
         }
 
@@ -504,7 +625,10 @@ public class SVZMultiplayerManager : MonoBehaviour
             if (i != targetSlotIndex && currentDeck[i] == newUnitId)
             {
                 UnitMeta meta = GetUnitMeta(newUnitId);
-                failureReason = "⚠️ '" + (meta != null ? meta.displayName : newUnitId) + "' destede zaten mevcut!";
+                string uName = (meta != null ? meta.displayName : newUnitId);
+                failureReason = LocalizationManager.T(
+                    "'" + uName + "' is already in this deck!",
+                    "⚠️ '" + uName + "' destede zaten mevcut!");
                 return false;
             }
         }
@@ -543,14 +667,18 @@ public class SVZMultiplayerManager : MonoBehaviour
         {
             UnitMeta meta = GetUnitMeta(newUnitId);
             string newName = (meta != null) ? meta.displayName : newUnitId;
-            failureReason = "⚠️ KOTA SINIRI: Destede en fazla 1 Efsanevi (Boss) birim bulunabilir!\n'" + existingLegendaryName + "' varken '" + newName + "' seçilemez.";
+            failureReason = LocalizationManager.T(
+                "QUOTA LIMIT: Maximum 1 Legendary (Boss) unit per deck!\nCannot pick '" + newName + "' while '" + existingLegendaryName + "' is equipped.",
+                "⚠️ KOTA SINIRI: Destede en fazla 1 Efsanevi (Boss) birim bulunabilir!\n'" + existingLegendaryName + "' varken '" + newName + "' seçilemez.");
             return false;
         }
 
         // 3. Elite Quota: Maximum 2 Elite units per deck
         if (newTier == UnitTier.Elite && otherElite >= 2)
         {
-            failureReason = "⚠️ KOTA SINIRI: Destede en fazla 2 Elit birim bulunabilir!\nOrdunuzu dengelemek için diğer yuvalara Temel birlik seçmelisiniz.";
+            failureReason = LocalizationManager.T(
+                "QUOTA LIMIT: Maximum 2 Elite units per deck!\nPick Core units in the remaining slots to balance your army.",
+                "⚠️ KOTA SINIRI: Destede en fazla 2 Elit birim bulunabilir!\nOrdunuzu dengelemek için diğer yuvalara Temel birlik seçmelisiniz.");
             return false;
         }
 
@@ -1816,6 +1944,7 @@ public class SVZMultiplayerManager : MonoBehaviour
             case "L_Zombie_Warhammer":
             case "Wayundo_wood":
             case "Wayundo_Fire":
+            case "IronButcher":
                 return UnitTacticalRole.ArmorBreaker;
 
             // Ranged DPS & Anti-Air
@@ -2730,6 +2859,7 @@ public class SVZMultiplayerManager : MonoBehaviour
             case "ZombieHorseman": return "Sprites/Icons/enemy_zombie_horseman";
             case "WanyudoMetal": return "Sprites/Icons/enemy_wanyudometal";
             case "TenguAir": return "Sprites/Icons/enemy_tenguair";
+            case "IronButcher": return "Sprites/Icons/enemy_iron_butcher";
             case "Jurogumo": return "Sprites/Icons/enemy_jurogumo";
             case "EvilNobunaga": return "Sprites/Icons/enemy_evil_nabonaga";
             case "EvilTakeda": return "Sprites/Icons/enemy_evil_takeda_shingen";

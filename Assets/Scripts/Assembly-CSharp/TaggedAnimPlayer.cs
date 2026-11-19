@@ -499,12 +499,27 @@ public class TaggedAnimPlayer : MonoBehaviour
 			specificAnimSettings = null;
 		}
 		actionAnimFadeOutSpeed = defaultBlendSpeed;
+		if (mTaggedAnimation != null)
+		{
+			mTaggedAnimation.Stop();
+		}
 		if (jointAnimation != null)
 		{
+			jointAnimation.Stop();
 			mTaggedAnimation.wrapMode = jointAnimation.wrapMode;
 			if (jointAnimation.playAutomatically && jointAnimation.clip != null)
 			{
 				SetBaseAnim(jointAnimation.clip.name);
+			}
+		}
+		if (alsoPlayOnAllChildren)
+		{
+			foreach (Animation extraAnimPlayer in extraAnimPlayers)
+			{
+				if (extraAnimPlayer != null)
+				{
+					extraAnimPlayer.Stop();
+				}
 			}
 		}
 		if (mTaggedAnimation.playAutomatically && mTaggedAnimation.clip != null)
@@ -694,14 +709,14 @@ public class TaggedAnimPlayer : MonoBehaviour
 					continue;
 				}
 				AnimationState animationState3 = extraAnimPlayer[theAnimName];
-				if (animationState3 != null && animationState3.clip != extraAnimPlayer.clip)
+				if (animationState3 != null && (!extraAnimPlayer.IsPlaying(theAnimName) || animationState3.clip != extraAnimPlayer.clip))
 				{
 					extraAnimPlayer.clip = animationState3.clip;
 					if (!IsLoopingAnim(animationState3))
 					{
 						animationState3.clip.wrapMode = WrapMode.Loop;
 					}
-					PlayAnimOnPlayer(extraAnimPlayer, animationState3.clip.name, theBlendSpeed, animationState3.clip.wrapMode, thePlaybackSpeed, -10);
+					PlayAnimOnPlayer(extraAnimPlayer, animationState3.clip.name, theBlendSpeed, WrapMode.Loop, thePlaybackSpeed, -10);
 				}
 			}
 		}
@@ -793,7 +808,7 @@ public class TaggedAnimPlayer : MonoBehaviour
 		}
 		if (mBaseAnim == null)
 		{
-			mBaseAnim = PlayAnimOnPlayer(mTaggedAnimation, mBaseJointAnim.clip.name, 0f, WrapMode.Default, mBaseJointAnim.speed, -10);
+			mBaseAnim = PlayAnimOnPlayer(mTaggedAnimation, mBaseJointAnim.clip.name, 0f, WrapMode.Loop, mBaseJointAnim.speed, -10);
 			mActiveBaseAnims[0] = mBaseAnim;
 		}
 		mBaseAnim.enabled = true;
@@ -1077,6 +1092,7 @@ public class TaggedAnimPlayer : MonoBehaviour
 			{
 				animationState.wrapMode = WrapMode.ClampForever;
 			}
+			WrapMode resolvedWrapMode = animationState.wrapMode;
 			animationState.speed = thePlaybackSpeed;
 			bool flag = !theAnimPlayer.enabled;
 			if (flag)
@@ -1102,7 +1118,12 @@ public class TaggedAnimPlayer : MonoBehaviour
 			{
 				theAnimPlayer.CrossFade(theAnimName, theBlendSpeed, PlayMode.StopSameLayer);
 			}
-			animationState.speed = thePlaybackSpeed;
+			if (animationState != null)
+			{
+				animationState.layer = theLayer;
+				animationState.wrapMode = resolvedWrapMode;
+				animationState.speed = thePlaybackSpeed;
+			}
 			if (flag)
 			{
 				theAnimPlayer.Sample();
@@ -1122,7 +1143,7 @@ public class TaggedAnimPlayer : MonoBehaviour
 		{
 			if (mBaseAnim == null)
 			{
-				mBaseAnim = PlayAnimOnPlayer(mTaggedAnimation, mBaseJointAnim.clip.name, 0f, WrapMode.Default, mBaseJointAnim.speed, -10);
+				mBaseAnim = PlayAnimOnPlayer(mTaggedAnimation, mBaseJointAnim.clip.name, 0f, WrapMode.Loop, mBaseJointAnim.speed, -10);
 				mActiveBaseAnims[0] = mBaseAnim;
 			}
 			mBaseAnim.enabled = true;
@@ -1144,11 +1165,24 @@ public class TaggedAnimPlayer : MonoBehaviour
 
 	private void BlendOutActionAnim(Animation animPlayer, AnimationState actionAnim, float theFadeOutTime)
 	{
-		if (!(animPlayer == null))
+		if (animPlayer == null || actionAnim == null)
 		{
-			animPlayer.Blend(actionAnim.name, 0f, theFadeOutTime);
-			StartCoroutine(ConfirmActionAnimBlendingOut(actionAnim));
+			return;
 		}
+		if (!actionAnim.enabled)
+		{
+			string queuedName = actionAnim.name + " - Queued Clone";
+			foreach (AnimationState state in animPlayer)
+			{
+				if (state.enabled && string.Equals(queuedName, state.name))
+				{
+					actionAnim = state;
+					break;
+				}
+			}
+		}
+		animPlayer.Blend(actionAnim.name, 0f, theFadeOutTime);
+		StartCoroutine(ConfirmActionAnimBlendingOut(actionAnim));
 	}
 
 	private IEnumerator ConfirmActionAnimBlendingOut(AnimationState theAnim)

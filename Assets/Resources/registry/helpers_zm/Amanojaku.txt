@@ -1,0 +1,121 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Amanojaku
+desc = Hybrid horned yokai warrior.
+prefab = Characters/PFAmanojaku
+HUDIcon = Sprites/Icons/enemy_amanojaku
+waveToUnlock = 1
+resourcesCost = 28.0
+cooldownTimer = 4.5
+attackFrequency = 1.8
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 600,0
+	health = 1100
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 110
+	bowRange = 360
+	bowDamage = 88
+	projectile = Arrow
+	knockbackPower = 38
+	knockbackResistance = 60
+
+[002]
+	cost = 1400,0
+	health = 1430
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 138
+	bowRange = 360
+	bowDamage = 110
+	projectile = Arrow
+	knockbackPower = 40
+	knockbackResistance = 63
+
+[003]
+	cost = 2800,0
+	health = 1859
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 172
+	bowRange = 360
+	bowDamage = 138
+	projectile = Arrow
+	knockbackPower = 42
+	knockbackResistance = 66
+
+[004]
+	cost = 5500,0
+	health = 2417
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 215
+	bowRange = 360
+	bowDamage = 172
+	projectile = Arrow
+	knockbackPower = 44
+	knockbackResistance = 69
+
+[005]
+	cost = 9500,0
+	health = 3142
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 269
+	bowRange = 360
+	bowDamage = 215
+	projectile = Arrow
+	knockbackPower = 46
+	knockbackResistance = 72
+
+[006]
+	cost = 0,10
+	health = 4084
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 336
+	bowRange = 360
+	bowDamage = 269
+	projectile = Arrow
+	knockbackPower = 48
+	knockbackResistance = 75
+
+[007]
+	cost = 0,16
+	health = 5309
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 420
+	bowRange = 360
+	bowDamage = 336
+	projectile = Arrow
+	knockbackPower = 50
+	knockbackResistance = 78
+
+[008]
+	cost = 0,22
+	health = 6902
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 525
+	bowRange = 360
+	bowDamage = 420
+	projectile = Arrow
+	knockbackPower = 52
+	knockbackResistance = 81

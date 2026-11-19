@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = HandMaiden
-desc = Rookie Healer
+displayName = @helper_handmaiden
+desc = @helper_handmaiden_desc
 prefab = Characters/PFHandmaiden
 HUDIcon = Sprites/Icons/ally_handmaiden
 weaponMeleePrefab = Props/PFHandmaidenfan
@@ -20,90 +20,90 @@ attackFrequency = 3.0
 
 [001]
 	cost = 300,0
-	health = 55
+	health = 50
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
-	bowDamage = 16
+	bowRange = 350
+	bowDamage = 15
 	projectile = HealBolt
 
 [002]
 	cost = 750,0
-	health = 80
+	health = 70
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
+	bowRange = 350
 	bowDamage = 22
 	projectile = HealBolt
 
 [003]
 	cost = 1500,0
-	health = 115
+	health = 95
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
-	bowDamage = 31
+	bowRange = 350
+	bowDamage = 30
 	projectile = HealBolt
 
 [004]
 	cost = 4500,0
-	health = 160
+	health = 130
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
+	bowRange = 350
 	bowDamage = 42
 	projectile = HealBolt
 
 [005]
 	cost = 9500,0
-	health = 220
+	health = 175
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
-	bowDamage = 58
+	bowRange = 350
+	bowDamage = 55
 	projectile = HealBolt
 
 [006]
 	cost = 0,12
-	health = 300
+	health = 235
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
-	bowDamage = 78
+	bowRange = 350
+	bowDamage = 72
 	projectile = HealBolt
 
 [007]
 	cost = 0,18
-	health = 400
+	health = 310
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
-	bowDamage = 100
+	bowRange = 350
+	bowDamage = 92
 	projectile = HealBolt
 
 [008]
 	cost = 0,22
-	health = 530
+	health = 405
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
-	bowDamage = 125
+	bowRange = 350
+	bowDamage = 115
 	projectile = HealBolt
 
 [009]
 	cost = 0,26
-	health = 690
+	health = 515
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
-	bowDamage = 152
+	bowRange = 350
+	bowDamage = 140
 	projectile = HealBolt
 
 [010]
 	cost = 0,30
-	health = 880
+	health = 650
 	speedMin = 100
 	speedMax = 100
-	bowRange = 450
-	bowDamage = 185
+	bowRange = 350
+	bowDamage = 170
 	projectile = HealBolt

@@ -1,34 +1,34 @@
 [Kill100Zombies]
-	Name = Zombie Hunter
-	Desc = Kill 100 zombies in any mode.
+	Name = @reg_ach_kill100_name
+	Desc = @reg_ach_kill100_desc
 	Icon = Sprites/Menus/achievement_kill
 	RewardXP = 100
 	RewardGems = 5
 
 [Level10]
-	Name = Samurai Master
-	Desc = Reach wave 10 in Classic mode.
+	Name = @reg_ach_level10_name
+	Desc = @reg_ach_level10_desc
 	Icon = Sprites/Menus/achievement_wave
 	RewardXP = 250
 	RewardGems = 10
 
 [FirstHelper]
-	Name = Strength in Numbers
-	Desc = Recruit your first helper.
+	Name = @reg_ach_firsthelper_name
+	Desc = @reg_ach_firsthelper_desc
 	Icon = Sprites/Menus/achievement_recruit
 	RewardXP = 50
 	RewardGems = 2
 
 [ZombieMaster]
-	Name = Zombie Commander
-	Desc = Win 5 matches in Zombie mode.
+	Name = @reg_ach_zombiemaster_name
+	Desc = @reg_ach_zombiemaster_desc
 	Icon = Sprites/Menus/achievement_zombie
 	RewardXP = 300
 	RewardGems = 15
 
 [ShopAholic]
-	Name = Big Spender
-	Desc = Spend 1000 gold in the shop.
+	Name = @reg_ach_shopaholic_name
+	Desc = @reg_ach_shopaholic_desc
 	Icon = Sprites/Menus/achievement_gold
 	RewardXP = 150
 	RewardGems = 5

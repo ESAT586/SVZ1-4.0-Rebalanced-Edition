@@ -1,0 +1,120 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Crawling Body
+desc = Split undead maceman. Spawns Crawling Legs on death.
+prefab = Characters/PFCrawlingBody
+HUDIcon = Sprites/Icons/enemy_crawling_body
+weaponMeleePrefab = Props/weapons/mace
+waveToUnlock = 1
+resourcesCost = 3.0
+cooldownTimer = 3.0
+attackFrequency = 1.0
+spawnOnDeath = ZombieLegs
+spawnOnDeathCount = 1
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 300,0
+	health = 9
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 13
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[002]
+	cost = 1500,0
+	health = 13
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 31
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[003]
+	cost = 3000,0
+	health = 18
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 51
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[004]
+	cost = 6000,0
+	health = 26
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 66
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[005]
+	cost = 12000,0
+	health = 36
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 76
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[006]
+	cost = 24000,0
+	health = 46
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 101
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[007]
+	cost = 48000,0
+	health = 67
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 125
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[008]
+	cost = 96000,0
+	health = 85
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 160
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[009]
+	cost = 192000,0
+	health = 115
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 197
+	knockbackPower = 8
+	knockbackResistance = 15
+
+[010]
+	cost = 384000,0
+	health = 217
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 110
+	meleeDamage = 247
+	knockbackPower = 8
+	knockbackResistance = 15

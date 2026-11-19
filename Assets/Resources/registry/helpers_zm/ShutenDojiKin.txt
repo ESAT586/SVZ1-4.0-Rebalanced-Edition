@@ -1,0 +1,99 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_shutendojikin_name
+desc = @helper_shutendojikin_desc
+prefab = Characters/PFShutendojiBlue
+HUDIcon = Sprites/Icons/enemy_shutendoji_kin
+weaponMeleePrefab = Props/weapons/shutendojiclub
+unique = true
+waveToUnlock = 1
+resourcesCost = 80.0
+cooldownTimer = 16.0
+attackFrequency = 2.6
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 800,0
+	health = 4800
+	speedMin = 92
+	speedMax = 92
+	meleeRange = 220
+	meleeDamage = 250
+	knockbackPower = 90
+	knockbackResistance = 100
+
+[002]
+	cost = 1800,0
+	health = 6300
+	speedMin = 92
+	speedMax = 92
+	meleeRange = 220
+	meleeDamage = 310
+	knockbackPower = 92
+	knockbackResistance = 100
+
+[003]
+	cost = 3600,0
+	health = 8200
+	speedMin = 92
+	speedMax = 92
+	meleeRange = 220
+	meleeDamage = 385
+	knockbackPower = 94
+	knockbackResistance = 100
+
+[004]
+	cost = 6800,0
+	health = 10600
+	speedMin = 92
+	speedMax = 92
+	meleeRange = 220
+	meleeDamage = 475
+	knockbackPower = 96
+	knockbackResistance = 100
+
+[005]
+	cost = 12000,0
+	health = 13500
+	speedMin = 92
+	speedMax = 92
+	meleeRange = 220
+	meleeDamage = 580
+	knockbackPower = 98
+	knockbackResistance = 100
+
+[006]
+	cost = 0,10
+	health = 16800
+	speedMin = 92
+	speedMax = 92
+	meleeRange = 220
+	meleeDamage = 680
+	knockbackPower = 100
+	knockbackResistance = 100
+
+[007]
+	cost = 0,16
+	health = 20500
+	speedMin = 92
+	speedMax = 92
+	meleeRange = 220
+	meleeDamage = 770
+	knockbackPower = 102
+	knockbackResistance = 100
+
+[008]
+	cost = 0,24
+	health = 24500
+	speedMin = 92
+	speedMax = 92
+	meleeRange = 220
+	meleeDamage = 860
+	knockbackPower = 104
+	knockbackResistance = 100

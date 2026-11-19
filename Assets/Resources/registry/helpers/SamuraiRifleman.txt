@@ -3,12 +3,14 @@
 / General
 /--------------------------------------------------
 
-displayName = @helper_samurai_archer
+displayName = @helper_rifleman
 desc = @helper_samurai_archer_desc
 prefab = Characters/PFSamuraiRifleman
 HUDIcon = Sprites/Icons/ally_rifleman
 weaponRangedPrefab = Props/PFRifle
-waveToUnlock = 60
+waveToUnlock = 999
+hideInStore = True
+levelMatchOtherHelper = SamuraiArcher
 resourcesCost = 10.0
 cooldownTimer = 3.0
 attackFrequency = 2.0

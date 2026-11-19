@@ -1,0 +1,72 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Rocket Farmer
+desc = Heavy artillery farmer.
+prefab = Characters/PFRocketFarmer
+HUDIcon = Sprites/Icons/ally_rocketfarmer
+weaponRangedPrefab = Props/weapons/rocketlauncher
+waveToUnlock = 1
+resourcesCost = 20.0
+cooldownTimer = 10.0
+attackFrequency = 2.6
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 350,0
+	health = 180
+	speedMin = 120
+	speedMax = 120
+	bowRange = 460
+	bowDamage = 65
+	projectile = Bullet
+
+[002]
+	cost = 800,0
+	health = 260
+	speedMin = 120
+	speedMax = 120
+	bowRange = 460
+	bowDamage = 90
+	projectile = Bullet
+
+[003]
+	cost = 1800,0
+	health = 360
+	speedMin = 120
+	speedMax = 120
+	bowRange = 460
+	bowDamage = 120
+	projectile = Bullet
+
+[004]
+	cost = 4000,0
+	health = 490
+	speedMin = 120
+	speedMax = 120
+	bowRange = 460
+	bowDamage = 155
+	projectile = Bullet
+
+[005]
+	cost = 8500,0
+	health = 650
+	speedMin = 120
+	speedMax = 120
+	bowRange = 460
+	bowDamage = 195
+	projectile = Bullet
+
+[006]
+	cost = 0,10
+	health = 850
+	speedMin = 120
+	speedMax = 120
+	bowRange = 460
+	bowDamage = 250
+	projectile = Bullet

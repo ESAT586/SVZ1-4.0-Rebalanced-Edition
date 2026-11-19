@@ -3,14 +3,14 @@
 / General
 /--------------------------------------------------
 
-displayName = Shield Samurai Ice
-desc = Front lane Tank Samurai++
+displayName = @helper_shieldsamurai_ice
+desc = @helper_shieldsamurai_ice_desc
 prefab = Characters/PFSamuraiShieldIce
 HUDIcon = Sprites/Icons/ally_shieldsamuraiice
 weaponMeleePrefab = Props/PFSamuraishieldIce
 waveToUnlock = 50
 resourcesCost = 70
-cooldownTimer = 1.0
+cooldownTimer = 5.0
 attackFrequency = 2.5
 usesBladeWeapon = false
 
@@ -22,102 +22,112 @@ achievementGC = SAMUZOMBIE_ACHIEVE_FROM_THE_FIELDS
 /--------------------------------------------------
 
 [001]
-    cost = 200,0
-    health = 5400
+    cost = 2500,0
+    health = 3200
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 21
+    meleeDamage = 25
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 
 [002]
-    cost = 4700
-    health = 6700
+    cost = 4700,0
+    health = 4000
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 24
+    meleeDamage = 31
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 
 [003]
-    cost = 6400
-    health = 7900
+    cost = 6400,0
+    health = 5000
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 29
+    meleeDamage = 38
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 
 [004]
     cost = 9600,0
-    health = 9600
+    health = 6200
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 35
+    meleeDamage = 46
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 
 [005]
     cost = 14400,0
-    health = 11900
+    health = 7600
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 39
+    meleeDamage = 55
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 
 [006]
     cost = 0,14
-    health = 13700
+    health = 9200
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 47
+    meleeDamage = 66
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 
 [007]
     cost = 0,17
-    health = 16900
+    health = 11000
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 55
+    meleeDamage = 78
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 
 [008]
-    cost = 0,26
-    health = 20400
+    cost = 0,22
+    health = 13000
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 72
+    meleeDamage = 92
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 
 [009]
     cost = 0,26
-    health = 24800
+    health = 15400
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 85
+    meleeDamage = 108
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 
 [010]
     cost = 0,34
-    health = 29600
+    health = 18000
     speedMin = 70
     speedMax = 75
     meleeRange = 100
-    meleeDamage = 99
+    meleeDamage = 125
+    meleeFreeze = 2.0
     knockbackPower = 15
     knockbackResistance = 90
 

@@ -1,0 +1,121 @@
+
+/ NOTE: Iron Butcher - 60-cost Armored Undead Executioner (Meshy rigged + 3-cleave combo)
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_iron_butcher_name
+desc = @helper_iron_butcher_desc
+prefab = Characters/PFIronButcher
+HUDIcon = Sprites/Icons/enemy_iron_butcher
+waveToUnlock = 1
+resourcesCost = 60.0
+cooldownTimer = 5.0
+attackFrequency = 2.0
+usesBladeWeapon = true
+
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 1000,0
+	health = 1450
+	speedMin = 80
+	speedMax = 80
+	meleeRange = 135
+	meleeDamage = 160
+	knockbackPower = 65
+	knockbackResistance = 90
+
+[002]
+	cost = 2200,0
+	health = 1750
+	speedMin = 80
+	speedMax = 80
+	meleeRange = 135
+	meleeDamage = 190
+	knockbackPower = 66
+	knockbackResistance = 91
+
+[003]
+	cost = 4000,0
+	health = 2080
+	speedMin = 80
+	speedMax = 80
+	meleeRange = 136
+	meleeDamage = 222
+	knockbackPower = 68
+	knockbackResistance = 92
+
+[004]
+	cost = 6500,0
+	health = 2420
+	speedMin = 81
+	speedMax = 81
+	meleeRange = 136
+	meleeDamage = 256
+	knockbackPower = 70
+	knockbackResistance = 93
+
+[005]
+	cost = 10500,0
+	health = 2780
+	speedMin = 82
+	speedMax = 82
+	meleeRange = 137
+	meleeDamage = 290
+	knockbackPower = 72
+	knockbackResistance = 94
+
+[006]
+	cost = 0,12
+	health = 3140
+	speedMin = 82
+	speedMax = 82
+	meleeRange = 138
+	meleeDamage = 326
+	knockbackPower = 74
+	knockbackResistance = 95
+
+[007]
+	cost = 0,18
+	health = 3500
+	speedMin = 83
+	speedMax = 83
+	meleeRange = 138
+	meleeDamage = 364
+	knockbackPower = 75
+	knockbackResistance = 96
+
+[008]
+	cost = 0,24
+	health = 3860
+	speedMin = 84
+	speedMax = 84
+	meleeRange = 139
+	meleeDamage = 402
+	knockbackPower = 77
+	knockbackResistance = 98
+
+[009]
+	cost = 0,32
+	health = 4230
+	speedMin = 84
+	speedMax = 84
+	meleeRange = 139
+	meleeDamage = 440
+	knockbackPower = 78
+	knockbackResistance = 99
+
+[010]
+	cost = 0,40
+	health = 4600
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 140
+	meleeDamage = 480
+	knockbackPower = 80
+	knockbackResistance = 100

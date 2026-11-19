@@ -1088,11 +1088,324 @@
 	damageBuffPercent = 0.10
 	projectile = SpawnEnemy
 	spawnFriendID = Evil_Panzer
-	attackFrequency = 2.0
+	attackFrequency = 7.5
 	knockbackPower = 50
 	knockbackResistance = 100
 	award = 750
 	resourceDropMin = 10
 	resourceDropMax = 15
 	previewPriority = 2
+
+
+[Iron_Butcher]
+	displayName = @enemy_iron_butcher_name
+	prefab = Characters/PFIronButcher
+	HUDIcon = Sprites/Icons/enemy_iron_butcher
+	usesBladeWeapon = true
+	health = 1650
+	speedMin = 80
+	speedMax = 80
+	meleeRange = 135
+	meleeDamage = 185
+	attackFrequency = 2.0
+	knockbackPower = 65
+	knockbackResistance = 90
+	award = 60
+	resourceDropMin = 4
+	resourceDropMax = 8
+	previewPriority = 1
+
+
+[Shuten_Doji]
+	displayName = Shuten Doji
+	prefab = Characters/PFShutendoji
+	HUDIcon = Sprites/Icons/story_shutendoji
+	weaponMeleePrefab = Props/weapons/shutendojiclub
+	boss = true
+	health = 35000
+	speedMin = 85
+	speedMax = 85
+	meleeRange = 220
+	meleeDamage = 650
+	attackFrequency = 3.2
+	knockbackPower = 110
+	knockbackResistance = 100
+	award = 1200
+	resourceDropMin = 10
+	resourceDropMax = 15
+	previewPriority = 1
+
+
+[Amanojaku]
+	displayName = Amanojaku
+	prefab = Characters/PFAmanojaku
+	HUDIcon = Sprites/Icons/enemy_amanojaku
+	health = 2800
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 130
+	meleeDamage = 165
+	bowRange = 360
+	bowDamage = 120
+	projectile = Arrow
+	attackFrequency = 2.4
+	knockbackPower = 40
+	knockbackResistance = 60
+	award = 120
+	resourceDropMin = 3
+	resourceDropMax = 6
+	previewPriority = 1
+
+
+[Akaname]
+	displayName = Akaname
+	prefab = Characters/PFAkaname
+	health = 450
+	speedMin = 120
+	speedMax = 120
+	meleeRange = 110
+	meleeDamage = 48
+	attackFrequency = 1.9
+	knockbackPower = 15
+	knockbackResistance = 20
+	award = 35
+	resourceDropMin = 1
+	resourceDropMax = 3
+	previewPriority = 0
+
+
+[Harionago]
+	displayName = Harionago
+	prefab = Characters/PFHarionago
+	health = 2400
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 180
+	meleeDamage = 190
+	attackFrequency = 2.3
+	knockbackPower = 35
+	knockbackResistance = 60
+	award = 110
+	resourceDropMin = 3
+	resourceDropMax = 5
+	previewPriority = 1
+
+
+[Onmoraki]
+	displayName = Onmoraki
+	prefab = Characters/PFOnmoraki
+	flying = true
+	health = 950
+	speedMin = 140
+	speedMax = 140
+	bowRange = 325
+	bowDamage = 85
+	projectile = FireArrow
+	attackFrequency = 1.6
+	knockbackPower = 20
+	knockbackResistance = 15
+	award = 70
+	resourceDropMin = 2
+	resourceDropMax = 4
+	previewPriority = 1
+
+
+[Nio_Guardian]
+	displayName = Nio Guardian
+	prefab = Characters/PFNioguardian
+	boss = true
+	health = 9500
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 160
+	meleeDamage = 380
+	attackFrequency = 2.6
+	knockbackPower = 80
+	knockbackResistance = 95
+	award = 450
+	resourceDropMin = 6
+	resourceDropMax = 10
+	previewPriority = 1
+
+
+[Panzer_Enemy]
+	displayName = Rocket Man
+	prefab = Characters/PFRockyTMan
+	HUDIcon = Sprites/Icons/ally_rockytman
+	exploseOnMelee = true
+	health = 5200
+	speedMin = 110
+	speedMax = 110
+	meleeRange = 145
+	meleeDamage = 210
+	attackFrequency = 2.1
+	knockbackPower = 55
+	knockbackResistance = 90
+	award = 220
+	resourceDropMin = 4
+	resourceDropMax = 8
+	previewPriority = 1
+
+
+[Zombie_Split]
+	displayName = Crawling Body
+	prefab = Characters/PFCrawlingBody
+	HUDIcon = Sprites/Icons/enemy_crawling_torso
+	weaponMeleePrefab = Props/weapons/mace
+	spawnOnDeath = Zombie_Legs
+	spawnOnDeathCount = 1
+	health = 600
+	speedMin = 125
+	speedMax = 125
+	meleeRange = 120
+	meleeDamage = 95
+	attackFrequency = 1.0
+	knockbackPower = 40
+	knockbackResistance = 50
+	award = 45
+	resourceDropMin = 1
+	resourceDropMax = 3
+	previewPriority = 1
+
+
+[Zombie_Legs]
+	displayName = Crawling Legs
+	prefab = Characters/PFCrawlingLegs
+	HUDIcon = Sprites/Icons/enemy_crawling_torso
+	gateRusher = true
+	health = 800
+	speedMin = 200
+	speedMax = 200
+	meleeRange = 120
+	meleeDamage = 80
+	attackFrequency = 1.5
+	knockbackPower = 20
+	knockbackResistance = 45
+	award = 50
+	resourceDropMin = 1
+	resourceDropMax = 3
+	previewPriority = 0
+
+
+[Shuten_Doji_Blue]
+	displayName = Blue Shuten Doji
+	prefab = Characters/PFShutendojiBlue
+	HUDIcon = Sprites/Icons/story_shutendoji
+	weaponMeleePrefab = Props/weapons/shutendojiclub
+	boss = true
+	health = 45000
+	speedMin = 95
+	speedMax = 95
+	meleeRange = 220
+	meleeDamage = 800
+	attackFrequency = 2.8
+	knockbackPower = 120
+	knockbackResistance = 100
+	award = 1500
+	resourceDropMin = 10
+	resourceDropMax = 15
+	previewPriority = 1
+
+
+[Onmoraki_Alt]
+	displayName = Blood Onmoraki
+	prefab = Characters/PFOnmorakiAlt
+	flying = true
+	health = 1500
+	speedMin = 150
+	speedMax = 150
+	bowRange = 350
+	bowDamage = 120
+	projectile = BlueFireArrow
+	attackFrequency = 1.5
+	knockbackPower = 25
+	knockbackResistance = 30
+	award = 110
+	resourceDropMin = 2
+	resourceDropMax = 5
+	previewPriority = 1
+
+
+[Chochinobake_Red]
+	displayName = @helper_bigchochinobake_name
+	prefab = Characters/PFChochinobakeRed
+	HUDIcon = Sprites/Icons/enemy_big_chochinobake
+	exploseOnMelee = True
+	lane = front
+	gateRusher = true
+	health = 900
+	speedMin = 115
+	speedMax = 115
+	meleeRange = 120
+	meleeDamage = 450
+	attackFrequency = 1.0
+	knockbackPower = 120
+	knockbackResistance = 40
+	award = 65
+	resourceDropMin = 2
+	resourceDropMax = 5
+	previewPriority = 1
+
+
+[CrawlingTorso_Hard]
+	displayName = @helper_elitecrawlingtorso_name
+	prefab = Characters/PFCrawlingTorsoRed
+	HUDIcon = Sprites/Icons/enemy_elite_crawling_torso
+	weaponMeleePrefab = Props/PFKatana
+	usesBladeWeapon = true
+	health = 420
+	speedMin = 95
+	speedMax = 105
+	meleeRange = 105
+	meleeDamage = 85
+	attackFrequency = 1.0
+	knockbackPower = 12
+	knockbackResistance = 35
+	award = 40
+	resourceDropMin = 1
+	resourceDropMax = 3
+	previewPriority = 1
+
+
+[Zombie_Split_2]
+	displayName = @helper_redcrawlingbody_name
+	prefab = Characters/PFCrawlingBodyRed
+	HUDIcon = Sprites/Icons/enemy_red_crawling_body
+	weaponMeleePrefab = Props/weapons/mace
+	spawnOnDeath = Zombie_Legs_2
+	spawnOnDeathCount = 1
+	health = 850
+	speedMin = 100
+	speedMax = 110
+	meleeRange = 115
+	meleeDamage = 135
+	attackFrequency = 1.0
+	knockbackPower = 35
+	knockbackResistance = 55
+	award = 60
+	resourceDropMin = 1
+	resourceDropMax = 4
+	previewPriority = 1
+
+
+[Zombie_Legs_2]
+	displayName = @helper_redcrawlinglegs_name
+	prefab = Characters/PFCrawlingLegsRed
+	HUDIcon = Sprites/Icons/enemy_red_crawling_body
+	gateRusher = true
+	health = 620
+	speedMin = 165
+	speedMax = 165
+	meleeRange = 105
+	meleeDamage = 95
+	attackFrequency = 1.25
+	knockbackPower = 20
+	knockbackResistance = 45
+	award = 45
+	resourceDropMin = 1
+	resourceDropMax = 3
+	previewPriority = 0
+
+
+
 

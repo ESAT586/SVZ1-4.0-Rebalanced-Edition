@@ -89,7 +89,7 @@ public class StoreAvailability_Abilities
 			{
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 			}
-			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
+			item.title = isMaxLevel ? Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]) : string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);
 			items.Add(item);
@@ -145,7 +145,7 @@ public class StoreAvailability_Abilities
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 			}
 			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
-			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
+			item.title = isMaxLevel ? Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]) : string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);
 			items.Add(item);
@@ -201,7 +201,7 @@ public class StoreAvailability_Abilities
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 			}
 			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
-			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
+			item.title = isMaxLevel ? Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]) : string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);
 			items.Add(item);
@@ -258,7 +258,7 @@ public class StoreAvailability_Abilities
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 			}
 			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
-			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
+			item.title = isMaxLevel ? Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]) : string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);
 			items.Add(item);
@@ -314,7 +314,7 @@ public class StoreAvailability_Abilities
 				item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 			}
 			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor(abilityID));
-			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
+			item.title = isMaxLevel ? Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]) : string.Format(Singleton<Localizer>.instance.Get("store_format_upgrade_tolevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num.ToString());
 			item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);
 			items.Add(item);

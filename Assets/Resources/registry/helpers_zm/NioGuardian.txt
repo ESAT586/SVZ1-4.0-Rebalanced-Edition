@@ -1,0 +1,97 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Nio Guardian
+desc = Titanic temple brawler.
+prefab = Characters/PFNioguardian
+HUDIcon = Sprites/Icons/enemy_nioguardian
+waveToUnlock = 1
+resourcesCost = 55.0
+cooldownTimer = 10.0
+attackFrequency = 2.0
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 600,0
+	health = 3600
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 160
+	meleeDamage = 210
+	knockbackPower = 75
+	knockbackResistance = 92
+
+[002]
+	cost = 1400,0
+	health = 4608
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 160
+	meleeDamage = 258
+	knockbackPower = 77
+	knockbackResistance = 93
+
+[003]
+	cost = 2800,0
+	health = 5898
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 160
+	meleeDamage = 318
+	knockbackPower = 79
+	knockbackResistance = 94
+
+[004]
+	cost = 5500,0
+	health = 7550
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 160
+	meleeDamage = 391
+	knockbackPower = 81
+	knockbackResistance = 95
+
+[005]
+	cost = 9500,0
+	health = 9664
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 160
+	meleeDamage = 481
+	knockbackPower = 83
+	knockbackResistance = 96
+
+[006]
+	cost = 0,10
+	health = 12370
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 160
+	meleeDamage = 591
+	knockbackPower = 85
+	knockbackResistance = 97
+
+[007]
+	cost = 0,16
+	health = 15833
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 160
+	meleeDamage = 727
+	knockbackPower = 87
+	knockbackResistance = 98
+
+[008]
+	cost = 0,22
+	health = 20266
+	speedMin = 100
+	speedMax = 100
+	meleeRange = 160
+	meleeDamage = 894
+	knockbackPower = 89
+	knockbackResistance = 99

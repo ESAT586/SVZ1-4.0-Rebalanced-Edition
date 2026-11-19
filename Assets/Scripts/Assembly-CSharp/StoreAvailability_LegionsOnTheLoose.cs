@@ -2,6 +2,15 @@ using System.Collections.Generic;
 
 public class StoreAvailability_LegionsOnTheLoose
 {
+	public static string GetLocalizedOrFallback(string key, string fallback)
+	{
+		if (Singleton<Localizer>.instance.Has(key))
+		{
+			return Singleton<Localizer>.instance.Get(key);
+		}
+		return fallback;
+	}
+
 	public static void GetAll(List<StoreData.Item> items)
 	{
 		if (Singleton<PlayModesManager>.instance.selectedMode == "zombies")
@@ -62,13 +71,21 @@ public class StoreAvailability_LegionsOnTheLoose
 		{
 			item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 		}
-		if (num == 1)
+		if (isMaxLevel)
+		{
+			item.title = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
+		}
+		else if (num == 1)
 		{
 			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_purchase"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num);
 		}
 		else
 		{
 			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_levelup"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num);
+		}
+		if ((powerID == "LegionOnTheLoose" || powerID == "DeathFromAbove") && currentLevel >= 1 && !Singleton<Profile>.instance.IsModuleEnabled(powerID))
+		{
+			item.title += " (" + GetLocalizedOrFallback("legion_badge_off", "KAPALI") + ")";
 		}
 		item.details.AddSmallDescription(Singleton<Localizer>.instance.Parse(sDFTreeNode["desc"]));
 		item.unlockTitle = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
@@ -77,17 +94,27 @@ public class StoreAvailability_LegionsOnTheLoose
 		items.Add(item);
 	}
 
+	private static void UpgradeModule(string moduleID, string analyticsEvent)
+	{
+		int prevLevel = Singleton<Profile>.instance.GetModuleUnlockedLevel(moduleID);
+		int prevSelected = Singleton<Profile>.instance.GetModuleSelectedLevel(moduleID);
+		int nextLevel = prevLevel + 1;
+		Singleton<Profile>.instance.SetModuleUnlockedLevel(moduleID, nextLevel);
+		if (prevLevel <= 0 || prevSelected <= 0 || prevSelected == prevLevel)
+		{
+			Singleton<Profile>.instance.SetModuleSelectedLevel(moduleID, nextLevel);
+		}
+		Singleton<Profile>.instance.Save();
+		Singleton<Analytics>.instance.LogEvent(analyticsEvent, string.Empty);
+	}
+
 	private static void UpgradeLegion()
 	{
-		Singleton<Profile>.instance.legionOnTheLooseLevel++;
-		Singleton<Profile>.instance.Save();
-		Singleton<Analytics>.instance.LogEvent("Upgrade_LegionOnTheLoose", string.Empty);
+		UpgradeModule("LegionOnTheLoose", "Upgrade_LegionOnTheLoose");
 	}
 
 	private static void UpgradeDeathFromAbove()
 	{
-		Singleton<Profile>.instance.deathFromAboveLevel++;
-		Singleton<Profile>.instance.Save();
-		Singleton<Analytics>.instance.LogEvent("Upgrade_DeathFromAbove", string.Empty);
+		UpgradeModule("DeathFromAbove", "Upgrade_DeathFromAbove");
 	}
 }

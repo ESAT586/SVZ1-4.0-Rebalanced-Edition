@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = Evil Heavy Samurai
-desc = Evil Heavy Samurai
+displayName = @helper_evilheavysamurai
+desc = @helper_evilheavysamurai_desc
 prefab = Characters/PFHSamuraiZombie
 HUDIcon = Sprites/Icons/enemy_evil_heavy_samurai
 weaponMeleePrefab = Props/PFHeavysamuraisword

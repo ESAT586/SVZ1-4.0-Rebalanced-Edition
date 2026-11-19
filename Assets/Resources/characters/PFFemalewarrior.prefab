@@ -27,7 +27,6 @@ GameObject:
   - 114: {fileID: 114939445690442675}
   - 114: {fileID: 114786726381836697}
   - 114: {fileID: 114866260555544301}
-  - 114: {fileID: 114837371356231666}
   m_Layer: 0
   m_Name: PFFemalewarrior
   m_TagString: Untagged
@@ -222,16 +221,6 @@ MonoBehaviour:
     minDistanceOverride: 0
     maxDistanceOverride: 0
     useLogarithmicRolloff: 0
---- !u!114 &114837371356231666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1082097269487878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name:
 --- !u!1 &1827208280563077
 GameObject:
   serializedVersion: 3

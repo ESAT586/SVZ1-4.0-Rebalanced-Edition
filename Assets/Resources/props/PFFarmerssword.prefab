@@ -22,7 +22,6 @@ GameObject:
   - 4: {fileID: 4427307938353280}
   - 111: {fileID: 111537819642418725}
   - 114: {fileID: 114002094597752847}
-  - 114: {fileID: 114581543672679197}
   m_Layer: 0
   m_Name: PFFarmerssword
   m_TagString: Untagged
@@ -75,16 +74,6 @@ MonoBehaviour:
   exemptObjects:
   - {fileID: 114002094597752847}
   - {fileID: 23550931693098806}
---- !u!114 &114581543672679197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1566336275853963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name:
 --- !u!1 &1885146369675716
 GameObject:
   serializedVersion: 3

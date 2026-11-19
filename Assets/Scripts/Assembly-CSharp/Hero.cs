@@ -303,7 +303,7 @@ public class Hero : Character
 
 	public override void RecievedAttack(EAttackType attackType, float damage)
 	{
-		if (Singleton<Profile>.instance.inBonusWave)
+		if (DevCheatOverlay.sGodMode || Singleton<Profile>.instance.inBonusWave)
 		{
 			base.health = base.maxHealth;
 			return;

@@ -1,0 +1,222 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1253138350519146}
+  m_IsPrefabParent: 1
+--- !u!1 &1253138350519146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4223122172360106}
+  - component: {fileID: 114172868725533332}
+  m_Layer: 0
+  m_Name: EnemyNioGuardian
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4223122172360106
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1253138350519146}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114172868725533332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1253138350519146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a601efe3b0ca39d5e3b419a22b773e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseTheme: {fileID: 114062154744917752, guid: 9311afcdf498b7d4e8af9cbf811d0d1f,
+    type: 2}
+  events:
+  - name: Attack
+    clips:
+    - {fileID: 8300000, guid: 4ec83da8aa93c624b9d498ab119aac3c, type: 3}
+    - {fileID: 8300000, guid: 612450076d98c6a41847c30c095e77a7, type: 3}
+    - {fileID: 8300000, guid: d54e9d9b967bb0f409af41b979ce8df6, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: Footstep
+    clips:
+    - {fileID: 8300000, guid: 7f124cf6557ae6f4e990469460435eca, type: 3}
+    - {fileID: 8300000, guid: ab46266ec40447a4ba403225af901a6b, type: 3}
+    - {fileID: 8300000, guid: 53b5349da166cf44286340112a94f411, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: Spawn
+    clips:
+    - {fileID: 8300000, guid: 49c06ef767d01f2408df5c2e22f99e8a, type: 3}
+    - {fileID: 8300000, guid: d614ae3d19c72a34bbaf9eb8d4b6c951, type: 3}
+    - {fileID: 8300000, guid: fcb52a997a5357343a6d77e57efcbdb7, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0
+  - name: Death
+    clips:
+    - {fileID: 8300000, guid: 1808f4defa1c0764589c3eb130f6ae1d, type: 3}
+    - {fileID: 8300000, guid: a9bfd908c27618645a287a3ea67ca318, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: Pain
+    clips:
+    - {fileID: 8300000, guid: 1808f4defa1c0764589c3eb130f6ae1d, type: 3}
+    - {fileID: 8300000, guid: a9bfd908c27618645a287a3ea67ca318, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: BluntWepImpact
+    clips:
+    - {fileID: 8300000, guid: 6e29ab3409dd027469e880db99c86d12, type: 3}
+    - {fileID: 8300000, guid: e58880d6299ecf0478507d481f22aa14, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: Bodyfall
+    clips:
+    - {fileID: 8300000, guid: d3e00b38da1f4c84898b794548a16398, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: AttackBig
+    clips:
+    - {fileID: 8300000, guid: d3a0ffaac0ad8d544925da881726d21f, type: 3}
+    - {fileID: 8300000, guid: 61c91f7ac493d7c46b6bc412de9dc5f1, type: 3}
+    - {fileID: 8300000, guid: fdca655c406b0c847886f028b8ad3603, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0
+  - name: AttackA
+    clips:
+    - {fileID: 8300000, guid: 4ec83da8aa93c624b9d498ab119aac3c, type: 3}
+    - {fileID: 8300000, guid: 612450076d98c6a41847c30c095e77a7, type: 3}
+    - {fileID: 8300000, guid: d54e9d9b967bb0f409af41b979ce8df6, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0

@@ -1,0 +1,99 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Shuten Doji
+desc = Supreme oni warlord boss.
+prefab = Characters/PFShutendoji
+HUDIcon = Sprites/Icons/enemy_shutendoji
+weaponMeleePrefab = Props/weapons/shutendojiclub
+unique = true
+waveToUnlock = 1
+resourcesCost = 110.0
+cooldownTimer = 18.0
+attackFrequency = 2.4
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 600,0
+	health = 6500
+	speedMin = 90
+	speedMax = 90
+	meleeRange = 220
+	meleeDamage = 320
+	knockbackPower = 100
+	knockbackResistance = 100
+
+[002]
+	cost = 1400,0
+	health = 8320
+	speedMin = 90
+	speedMax = 90
+	meleeRange = 220
+	meleeDamage = 390
+	knockbackPower = 102
+	knockbackResistance = 100
+
+[003]
+	cost = 2800,0
+	health = 10650
+	speedMin = 90
+	speedMax = 90
+	meleeRange = 220
+	meleeDamage = 476
+	knockbackPower = 104
+	knockbackResistance = 100
+
+[004]
+	cost = 5500,0
+	health = 13631
+	speedMin = 90
+	speedMax = 90
+	meleeRange = 220
+	meleeDamage = 581
+	knockbackPower = 106
+	knockbackResistance = 100
+
+[005]
+	cost = 9500,0
+	health = 17448
+	speedMin = 90
+	speedMax = 90
+	meleeRange = 220
+	meleeDamage = 709
+	knockbackPower = 108
+	knockbackResistance = 100
+
+[006]
+	cost = 0,10
+	health = 22334
+	speedMin = 90
+	speedMax = 90
+	meleeRange = 220
+	meleeDamage = 865
+	knockbackPower = 110
+	knockbackResistance = 100
+
+[007]
+	cost = 0,16
+	health = 28587
+	speedMin = 90
+	speedMax = 90
+	meleeRange = 220
+	meleeDamage = 1055
+	knockbackPower = 112
+	knockbackResistance = 100
+
+[008]
+	cost = 0,22
+	health = 36592
+	speedMin = 90
+	speedMax = 90
+	meleeRange = 220
+	meleeDamage = 1287
+	knockbackPower = 114
+	knockbackResistance = 100

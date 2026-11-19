@@ -178,6 +178,14 @@ public class ApplicationUtilities : MonoBehaviour
 		}
 	}
 
+	public static bool HasInstance
+	{
+		get
+		{
+			return This != null;
+		}
+	}
+
 	public static ApplicationUtilities instance
 	{
 		get
@@ -476,6 +484,10 @@ public class ApplicationUtilities : MonoBehaviour
 
 	private void OnDestroy()
 	{
+		if (This == this)
+		{
+			This = null;
+		}
 		DestroyPlugins();
 		Singleton<Analytics>.instance.LogEvent("CoinsOnExit", PlayerPrefs.GetInt("asvz.coins").ToString());
 		Singleton<Analytics>.instance.LogEvent("GemsOnExit", PlayerPrefs.GetInt("asvz.gems").ToString());
@@ -483,6 +495,10 @@ public class ApplicationUtilities : MonoBehaviour
 
 	private void OnApplicationQuit()
 	{
+		if (This == this)
+		{
+			This = null;
+		}
 		Singleton<Analytics>.instance.LogEvent("CurrentLevelOnQuit", Application.loadedLevelName);
 		if (this.onApplicationQuit != null)
 		{

@@ -404,6 +404,30 @@ namespace Unity2017Mcp
                     return HandleExecuteMenuItem(args, out statusCode);
                 case "build_player":
                     return HandleBuildPlayer(args, out statusCode);
+                case "capture_screenshot":
+                    return HandleCaptureScreenshot(args, out statusCode);
+                case "instantiate_prefab":
+                    return HandleInstantiatePrefab(args, out statusCode);
+                case "inspect_bounds":
+                    return HandleInspectBounds(args, out statusCode);
+                case "sample_animation":
+                    return HandleSampleAnimation(args, out statusCode);
+                case "create_prefab":
+                    return HandleCreatePrefab(args, out statusCode);
+                case "destroy_object":
+                    return HandleDestroyObject(args, out statusCode);
+                case "set_material":
+                    return HandleSetMaterial(args, out statusCode);
+                case "play_spawn_character":
+                    return HandlePlaySpawnCharacter(args, out statusCode);
+                case "play_get_characters":
+                    return HandlePlayGetCharacters(args, out statusCode);
+                case "dump_skeleton":
+                    return HandleDumpSkeleton(args, out statusCode);
+                case "build_legacy_anim":
+                    return HandleBuildLegacyAnim(args, out statusCode);
+                case "register_character_clips":
+                    return HandleRegisterCharacterClips(args, out statusCode);
                 default:
                     statusCode = 400;
                     return BuildErrorJson("Unknown action: " + action);
@@ -1035,6 +1059,1062 @@ namespace Unity2017Mcp
                 { "outputPath", outputPath },
                 { "sizeBytes", size },
                 { "sceneCount", scenesList.Count }
+            });
+        }
+
+        private static string HandleCaptureScreenshot(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string mode = GetString(args, "mode", "camera").ToLowerInvariant();
+            string outputPath = GetString(args, "outputPath", "");
+            int width = Mathf.Clamp(GetInt(args, "width", 1280), 64, 4096);
+            int height = Mathf.Clamp(GetInt(args, "height", 720), 64, 4096);
+            string cameraPath = GetString(args, "cameraPath", "");
+
+            if (IsNullOrBlank(outputPath))
+            {
+                outputPath = Path.Combine(Directory.GetCurrentDirectory(), "Temp/unity2017_capture.png");
+            }
+            if (!Path.IsPathRooted(outputPath))
+            {
+                outputPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), outputPath));
+            }
+            string dir = Path.GetDirectoryName(outputPath);
+            if (!IsNullOrBlank(dir) && !Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            if (mode == "screen")
+            {
+                ScreenCapture.CaptureScreenshot(outputPath);
+                return JsonSerialize(new Dictionary<string, object>
+                {
+                    { "ok", true },
+                    { "mode", "screen" },
+                    { "outputPath", outputPath },
+                    { "isPlaying", EditorApplication.isPlaying },
+                    { "note", "ScreenCapture queued; written at end of next rendered frame." }
+                });
+            }
+
+            Camera cam = null;
+            if (mode == "scene")
+            {
+                SceneView sv = SceneView.lastActiveSceneView;
+                if (sv != null) cam = sv.camera;
+                if (cam == null && SceneView.sceneViews != null && SceneView.sceneViews.Count > 0)
+                {
+                    SceneView first = SceneView.sceneViews[0] as SceneView;
+                    if (first != null) cam = first.camera;
+                }
+            }
+            else
+            {
+                if (!IsNullOrBlank(cameraPath))
+                {
+                    GameObject go = FindGameObjectByPath(EditorSceneManager.GetActiveScene(), cameraPath);
+                    if (go != null) cam = go.GetComponent<Camera>();
+                }
+                if (cam == null) cam = Camera.main;
+                if (cam == null)
+                {
+                    Camera[] cams = UnityEngine.Object.FindObjectsOfType<Camera>();
+                    for (int i = 0; i < cams.Length; i++)
+                    {
+                        if (cams[i] != null && cams[i].enabled) { cam = cams[i]; break; }
+                    }
+                    if (cam == null && cams.Length > 0) cam = cams[0];
+                }
+            }
+
+            if (cam == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("No suitable Camera found for screenshot mode '" + mode + "'.");
+            }
+
+            RenderTexture rt = RenderTexture.GetTemporary(width, height, 24, RenderTextureFormat.ARGB32);
+            RenderTexture prevCamTarget = cam.targetTexture;
+            RenderTexture prevActive = RenderTexture.active;
+            Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
+            try
+            {
+                cam.targetTexture = rt;
+                cam.Render();
+                RenderTexture.active = rt;
+                tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+                tex.Apply();
+                byte[] pngBytes = tex.EncodeToPNG();
+                File.WriteAllBytes(outputPath, pngBytes);
+                return JsonSerialize(new Dictionary<string, object>
+                {
+                    { "ok", true },
+                    { "mode", mode },
+                    { "camera", cam.name },
+                    { "width", width },
+                    { "height", height },
+                    { "outputPath", outputPath },
+                    { "sizeBytes", pngBytes.Length }
+                });
+            }
+            finally
+            {
+                cam.targetTexture = prevCamTarget;
+                RenderTexture.active = prevActive;
+                UnityEngine.Object.DestroyImmediate(tex);
+                RenderTexture.ReleaseTemporary(rt);
+            }
+        }
+
+        private static string HandleInstantiatePrefab(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string assetPath = GetString(args, "assetPath", "");
+            if (IsNullOrBlank(assetPath))
+            {
+                statusCode = 400;
+                return BuildErrorJson("assetPath is required.");
+            }
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+            if (prefab == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("Prefab/Model asset not found at: " + assetPath);
+            }
+
+            GameObject inst = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+            if (inst == null)
+            {
+                inst = UnityEngine.Object.Instantiate(prefab) as GameObject;
+            }
+            if (inst == null)
+            {
+                statusCode = 500;
+                return BuildErrorJson("Failed to instantiate asset: " + assetPath);
+            }
+
+            string customName = GetString(args, "name", "");
+            if (!IsNullOrBlank(customName)) inst.name = customName;
+
+            string parentPath = GetString(args, "parentPath", "");
+            if (!IsNullOrBlank(parentPath))
+            {
+                GameObject parentGo = FindGameObjectByPath(EditorSceneManager.GetActiveScene(), parentPath);
+                if (parentGo == null)
+                {
+                    UnityEngine.Object.DestroyImmediate(inst);
+                    statusCode = 404;
+                    return BuildErrorJson("parentPath not found: " + parentPath);
+                }
+                inst.transform.SetParent(parentGo.transform, false);
+            }
+
+            Vector3 pos = inst.transform.localPosition;
+            Vector3 rot = inst.transform.localEulerAngles;
+            Vector3 scl = inst.transform.localScale;
+            if (args.ContainsKey("x")) pos.x = GetFloat(args, "x", pos.x);
+            if (args.ContainsKey("y")) pos.y = GetFloat(args, "y", pos.y);
+            if (args.ContainsKey("z")) pos.z = GetFloat(args, "z", pos.z);
+            if (args.ContainsKey("rx")) rot.x = GetFloat(args, "rx", rot.x);
+            if (args.ContainsKey("ry")) rot.y = GetFloat(args, "ry", rot.y);
+            if (args.ContainsKey("rz")) rot.z = GetFloat(args, "rz", rot.z);
+            if (args.ContainsKey("sx")) scl.x = GetFloat(args, "sx", scl.x);
+            if (args.ContainsKey("sy")) scl.y = GetFloat(args, "sy", scl.y);
+            if (args.ContainsKey("sz")) scl.z = GetFloat(args, "sz", scl.z);
+            inst.transform.localPosition = pos;
+            inst.transform.localEulerAngles = rot;
+            inst.transform.localScale = scl;
+
+            Undo.RegisterCreatedObjectUndo(inst, "MCP Instantiate Prefab");
+            return JsonSerialize(new Dictionary<string, object>
+            {
+                { "ok", true },
+                { "name", inst.name },
+                { "assetPath", assetPath },
+                { "localPosition", Vec3ToDict(inst.transform.localPosition) },
+                { "worldPosition", Vec3ToDict(inst.transform.position) }
+            });
+        }
+
+        private static string HandleInspectBounds(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string goPath = GetString(args, "path", "");
+            string assetPath = GetString(args, "assetPath", "");
+            GameObject targetGo = null;
+            bool tempSpawned = false;
+
+            if (!IsNullOrBlank(goPath))
+            {
+                targetGo = FindGameObjectByPath(EditorSceneManager.GetActiveScene(), goPath);
+            }
+            else if (!IsNullOrBlank(assetPath))
+            {
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+                if (prefab != null)
+                {
+                    targetGo = UnityEngine.Object.Instantiate(prefab) as GameObject;
+                    tempSpawned = true;
+                }
+            }
+
+            if (targetGo == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("Target GameObject or asset not found.");
+            }
+
+            try
+            {
+                Renderer[] renderers = targetGo.GetComponentsInChildren<Renderer>(true);
+                MeshFilter[] filters = targetGo.GetComponentsInChildren<MeshFilter>(true);
+                Bounds worldBounds = new Bounds(targetGo.transform.position, Vector3.zero);
+                bool hasWorld = false;
+                for (int i = 0; i < renderers.Length; i++)
+                {
+                    if (renderers[i] == null) continue;
+                    if (!hasWorld) { worldBounds = renderers[i].bounds; hasWorld = true; }
+                    else worldBounds.Encapsulate(renderers[i].bounds);
+                }
+
+                var meshInfos = new List<object>();
+                for (int i = 0; i < filters.Length; i++)
+                {
+                    if (filters[i] == null || filters[i].sharedMesh == null) continue;
+                    Bounds lb = filters[i].sharedMesh.bounds;
+                    meshInfos.Add(new Dictionary<string, object>
+                    {
+                        { "object", filters[i].gameObject.name },
+                        { "localPos", Vec3ToDict(filters[i].transform.localPosition) },
+                        { "meshMin", Vec3ToDict(lb.min) },
+                        { "meshMax", Vec3ToDict(lb.max) },
+                        { "meshSize", Vec3ToDict(lb.size) }
+                    });
+                }
+
+                return JsonSerialize(new Dictionary<string, object>
+                {
+                    { "ok", true },
+                    { "name", targetGo.name },
+                    { "rendererCount", renderers.Length },
+                    { "worldCenter", Vec3ToDict(worldBounds.center) },
+                    { "worldSize", Vec3ToDict(worldBounds.size) },
+                    { "worldMin", Vec3ToDict(worldBounds.min) },
+                    { "worldMax", Vec3ToDict(worldBounds.max) },
+                    { "meshes", meshInfos }
+                });
+            }
+            finally
+            {
+                if (tempSpawned && targetGo != null)
+                {
+                    UnityEngine.Object.DestroyImmediate(targetGo);
+                }
+            }
+        }
+
+        private static string HandleSampleAnimation(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string goPath = GetString(args, "path", "");
+            string clipName = GetString(args, "clipName", "");
+            float normalizedTime = Mathf.Clamp01(GetFloat(args, "normalizedTime", 0.5f));
+            GameObject go = FindGameObjectByPath(EditorSceneManager.GetActiveScene(), goPath);
+            if (go == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("GameObject not found: " + goPath);
+            }
+
+            Animation[] anims = go.GetComponentsInChildren<Animation>(true);
+            var available = new List<string>();
+            AnimationState matchedState = null;
+            Animation matchedAnim = null;
+
+            for (int i = 0; i < anims.Length; i++)
+            {
+                Animation anim = anims[i];
+                if (anim == null) continue;
+                foreach (AnimationState st in anim)
+                {
+                    if (st == null || st.clip == null) continue;
+                    available.Add(anim.gameObject.name + ":" + st.name + " (" + st.length.ToString("F2", CultureInfo.InvariantCulture) + "s)");
+                    if (!IsNullOrBlank(clipName) && (string.Equals(st.name, clipName, StringComparison.OrdinalIgnoreCase) || st.name.ToLowerInvariant().Contains(clipName.ToLowerInvariant())))
+                    {
+                        matchedState = st;
+                        matchedAnim = anim;
+                    }
+                }
+            }
+
+            if (matchedState != null && matchedAnim != null)
+            {
+                matchedState.clip.SampleAnimation(matchedAnim.gameObject, normalizedTime * matchedState.length);
+                SkinnedMeshRenderer[] smrs = matchedAnim.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+                for (int i = 0; i < smrs.Length; i++)
+                {
+                    if (smrs[i] != null)
+                    {
+                        smrs[i].updateWhenOffscreen = true;
+                        smrs[i].enabled = false;
+                        smrs[i].enabled = true;
+                    }
+                }
+                return JsonSerialize(new Dictionary<string, object>
+                {
+                    { "ok", true },
+                    { "sampledClip", matchedState.name },
+                    { "onObject", matchedAnim.gameObject.name },
+                    { "timeSec", Math.Round(normalizedTime * matchedState.length, 3) },
+                    { "availableClips", available }
+                });
+            }
+
+            return JsonSerialize(new Dictionary<string, object>
+            {
+                { "ok", IsNullOrBlank(clipName) },
+                { "note", IsNullOrBlank(clipName) ? "Listed available animation clips." : "Clip not found: " + clipName },
+                { "availableClips", available }
+            });
+        }
+
+        private static string HandleCreatePrefab(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string goPath = GetString(args, "path", "");
+            string assetPath = GetString(args, "assetPath", "");
+            if (IsNullOrBlank(goPath) || IsNullOrBlank(assetPath))
+            {
+                statusCode = 400;
+                return BuildErrorJson("path and assetPath are required.");
+            }
+            GameObject go = FindGameObjectByPath(EditorSceneManager.GetActiveScene(), goPath);
+            if (go == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("GameObject not found: " + goPath);
+            }
+            string dir = Path.GetDirectoryName(assetPath);
+            if (!IsNullOrBlank(dir) && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            UnityEngine.Object existing = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+            GameObject saved;
+            if (existing != null)
+            {
+                saved = PrefabUtility.ReplacePrefab(go, existing, ReplacePrefabOptions.ReplaceNameBased);
+            }
+            else
+            {
+                saved = PrefabUtility.CreatePrefab(assetPath, go, ReplacePrefabOptions.ConnectToPrefab);
+            }
+            AssetDatabase.SaveAssets();
+            return JsonSerialize(new Dictionary<string, object>
+            {
+                { "ok", saved != null },
+                { "assetPath", assetPath },
+                { "prefabName", saved != null ? saved.name : "" }
+            });
+        }
+
+        private static string HandleDestroyObject(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string goPath = GetString(args, "path", "");
+            GameObject go = FindGameObjectByPath(EditorSceneManager.GetActiveScene(), goPath);
+            if (go == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("GameObject not found: " + goPath);
+            }
+            Undo.DestroyObjectImmediate(go);
+            return JsonSerialize(new Dictionary<string, object> { { "ok", true }, { "destroyed", goPath } });
+        }
+
+        private static string HandleSetMaterial(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string goPath = GetString(args, "path", "");
+            string shaderName = GetString(args, "shader", "Standard");
+            string matAssetPath = GetString(args, "materialAssetPath", "");
+            string texPath = GetString(args, "texturePath", "");
+            string hexColor = GetString(args, "color", "");
+            string hexEmission = GetString(args, "emission", "");
+            float metallic = GetFloat(args, "metallic", -1f);
+            float gloss = GetFloat(args, "glossiness", -1f);
+            bool includeChildren = GetBool(args, "includeChildren", false);
+
+            GameObject go = FindGameObjectByPath(EditorSceneManager.GetActiveScene(), goPath);
+            if (go == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("GameObject not found: " + goPath);
+            }
+
+            Material mat = null;
+            if (!IsNullOrBlank(matAssetPath))
+            {
+                mat = AssetDatabase.LoadAssetAtPath<Material>(matAssetPath);
+            }
+            if (mat == null)
+            {
+                Shader sh = Shader.Find(shaderName);
+                if (sh == null) sh = Shader.Find("Standard");
+                mat = new Material(sh);
+                if (!IsNullOrBlank(matAssetPath))
+                {
+                    string dir = Path.GetDirectoryName(matAssetPath);
+                    if (!IsNullOrBlank(dir) && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                    AssetDatabase.CreateAsset(mat, matAssetPath);
+                }
+            }
+
+            Color col;
+            if (!IsNullOrBlank(hexColor) && ColorUtility.TryParseHtmlString(hexColor, out col))
+            {
+                mat.color = col;
+            }
+            if (!IsNullOrBlank(texPath))
+            {
+                Texture2D tex = AssetDatabase.LoadAssetAtPath<Texture2D>(texPath);
+                if (tex != null) mat.mainTexture = tex;
+            }
+            if (metallic >= 0f && mat.HasProperty("_Metallic")) mat.SetFloat("_Metallic", metallic);
+            if (gloss >= 0f && mat.HasProperty("_Glossiness")) mat.SetFloat("_Glossiness", gloss);
+            if (!IsNullOrBlank(hexEmission) && ColorUtility.TryParseHtmlString(hexEmission, out col))
+            {
+                if (mat.HasProperty("_EmissionColor"))
+                {
+                    mat.EnableKeyword("_EMISSION");
+                    mat.SetColor("_EmissionColor", col);
+                }
+            }
+            EditorUtility.SetDirty(mat);
+
+            Renderer[] renderers = includeChildren ? go.GetComponentsInChildren<Renderer>(true) : new Renderer[] { go.GetComponent<Renderer>() };
+            int assigned = 0;
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                if (renderers[i] != null)
+                {
+                    renderers[i].sharedMaterial = mat;
+                    assigned++;
+                }
+            }
+            return JsonSerialize(new Dictionary<string, object>
+            {
+                { "ok", assigned > 0 },
+                { "assignedRenderers", assigned },
+                { "materialAssetPath", matAssetPath }
+            });
+        }
+
+        private static string HandlePlaySpawnCharacter(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            if (!EditorApplication.isPlaying)
+            {
+                statusCode = 400;
+                return BuildErrorJson("Editor must be in Play Mode.");
+            }
+            WaveManager wm = WeakGlobalInstance<WaveManager>.instance;
+            InGameImpl ig = WeakGlobalSceneBehavior<InGameImpl>.instance;
+            if (wm == null || ig == null)
+            {
+                statusCode = 400;
+                return BuildErrorJson("WaveManager or InGameImpl is not active in the current scene.");
+            }
+            if (GetBool(args, "unpause", true))
+            {
+                Application.runInBackground = true;
+                TerasuPlaytestMenu.ClearBlockingPauseDialog();
+                Time.timeScale = 1f;
+            }
+
+            string enemyId = GetString(args, "enemyId", "Shogun");
+            bool isAlly = GetBool(args, "isAlly", false);
+            float zOffsetFromHero = GetFloat(args, "zOffsetFromHero", 350f);
+            bool hasExplicitZ = args != null && args.ContainsKey("z");
+
+            Vector3 spawnPos = (ig.enemiesSpawnArea != null) ? ig.enemiesSpawnArea.transform.position : Vector3.zero;
+            if (ig.hero != null)
+            {
+                spawnPos = ig.hero.position;
+                spawnPos.z += zOffsetFromHero;
+            }
+            if (hasExplicitZ)
+            {
+                spawnPos.z = GetFloat(args, "z", spawnPos.z);
+            }
+
+            Character spawned = wm.ConstructEnemyAt(enemyId, spawnPos, isAlly);
+            if (spawned == null && WeakGlobalInstance<Smithy>.instance != null)
+            {
+                spawned = WeakGlobalInstance<Smithy>.instance.ForceSpawnAt(enemyId, spawnPos, !isAlly);
+            }
+            if (spawned == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("Failed to construct character: " + enemyId);
+            }
+
+            string weaponChild = "";
+            if (spawned.controlledObject != null)
+            {
+                Transform[] trs = spawned.controlledObject.GetComponentsInChildren<Transform>(true);
+                for (int i = 0; i < trs.Length; i++)
+                {
+                    if (trs[i].name.IndexOf("Spear", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        trs[i].name.IndexOf("Sword", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        trs[i].name.IndexOf("Yari", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        weaponChild = trs[i].name;
+                        break;
+                    }
+                }
+            }
+
+            return JsonSerialize(new Dictionary<string, object>
+            {
+                { "ok", true },
+                { "enemyId", enemyId },
+                { "isAlly", isAlly },
+                { "health", spawned.health },
+                { "maxHealth", spawned.maxHealth },
+                { "meleeDamage", spawned.meleeDamage },
+                { "meleeRange", spawned.meleeAttackRange },
+                { "position", Vec3ToDict(spawned.position) },
+                { "meleeWeaponPrefab", spawned.meleeWeaponPrefab != null ? spawned.meleeWeaponPrefab.name : "" },
+                { "equippedWeaponChild", weaponChild },
+                { "objectName", spawned.controlledObject != null ? spawned.controlledObject.name : "" }
+            });
+        }
+
+        private static string HandlePlayGetCharacters(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            if (!EditorApplication.isPlaying)
+            {
+                statusCode = 400;
+                return BuildErrorJson("Editor must be in Play Mode.");
+            }
+            CharactersManager cm = WeakGlobalInstance<CharactersManager>.instance;
+            if (cm == null)
+            {
+                statusCode = 400;
+                return BuildErrorJson("CharactersManager is not active.");
+            }
+            if (GetBool(args, "unpause", false))
+            {
+                Application.runInBackground = true;
+                TerasuPlaytestMenu.ClearBlockingPauseDialog();
+                Time.timeScale = 1f;
+            }
+
+            var list = new List<object>();
+            List<Character> alive = cm.allAlive;
+            for (int i = 0; i < alive.Count; i++)
+            {
+                Character c = alive[i];
+                if (c == null) continue;
+                string animName = "";
+                if (c.controller != null)
+                {
+                    animName = c.controller.currentAnimation ?? "";
+                }
+                string weaponChild = "";
+                var playingClips = new List<object>();
+                if (c.controlledObject != null)
+                {
+                    Transform[] trs = c.controlledObject.GetComponentsInChildren<Transform>(true);
+                    for (int k = 0; k < trs.Length; k++)
+                    {
+                        if (trs[k].name.IndexOf("PFZombieShogunSpear", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                            trs[k].name.IndexOf("PFUndeadShogunSword", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            weaponChild = trs[k].name;
+                            break;
+                        }
+                    }
+                    TaggedAnimPlayer tap = (c.controller != null && c.controller.animPlayer != null)
+                        ? c.controller.animPlayer
+                        : c.controlledObject.GetComponentInChildren<TaggedAnimPlayer>();
+                    if (tap != null)
+                    {
+                        AnimationState js = tap.currJointAnimState;
+                        if (js != null && js.clip != null)
+                        {
+                            playingClips.Add(js.clip.name + "@" + js.normalizedTime.ToString("F2"));
+                        }
+                        string tc = tap.currAnim;
+                        if (!string.IsNullOrEmpty(tc))
+                        {
+                            float nt = (tap.currAnimState != null) ? tap.currAnimState.normalizedTime : 0f;
+                            playingClips.Add("tag:" + tc + "@" + nt.ToString("F2"));
+                        }
+                    }
+                    Animation[] anims = c.controlledObject.GetComponentsInChildren<Animation>(true);
+                    for (int k = 0; k < anims.Length; k++)
+                    {
+                        if (anims[k] == null) continue;
+                        foreach (AnimationState st in anims[k])
+                        {
+                            if (st != null && st.enabled)
+                            {
+                                playingClips.Add(st.name + "@" + st.normalizedTime.ToString("F2"));
+                            }
+                        }
+                    }
+                }
+                list.Add(new Dictionary<string, object>
+                {
+                    { "uniqueID", c.uniqueID ?? "" },
+                    { "type", c.GetType().Name },
+                    { "isEnemy", c.isEnemy },
+                    { "health", Math.Round(c.health, 2) },
+                    { "maxHealth", Math.Round(c.maxHealth, 2) },
+                    { "position", Vec3ToDict(c.position) },
+                    { "currentAnimation", animName },
+                    { "playingClips", playingClips },
+                    { "meleeWeaponPrefab", c.meleeWeaponPrefab != null ? c.meleeWeaponPrefab.name : "" },
+                    { "equippedWeaponChild", weaponChild },
+                    { "objectName", c.controlledObject != null ? c.controlledObject.name : "" }
+                });
+            }
+
+            return JsonSerialize(new Dictionary<string, object>
+            {
+                { "ok", true },
+                { "count", list.Count },
+                { "characters", list }
+            });
+        }
+
+        private static string GetRelPath(Transform root, Transform node)
+        {
+            if (node == null || node == root) return "";
+            var parts = new List<string>();
+            Transform cur = node;
+            while (cur != null && cur != root)
+            {
+                parts.Add(cur.name);
+                cur = cur.parent;
+            }
+            parts.Reverse();
+            return string.Join("/", parts.ToArray());
+        }
+
+        private static string HandleDumpSkeleton(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string assetPath = GetString(args, "assetPath", "");
+            string clipName = GetString(args, "clipName", "idle");
+            float normalizedTime = Mathf.Clamp01(GetFloat(args, "normalizedTime", 0f));
+            string objExportPath = GetString(args, "objExportPath", "");
+            string jsonOutPath = GetString(args, "jsonOutPath", "");
+
+            if (IsNullOrBlank(assetPath))
+            {
+                statusCode = 400;
+                return BuildErrorJson("assetPath is required.");
+            }
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+            if (prefab == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("Prefab not found: " + assetPath);
+            }
+
+            GameObject tempGo = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            try
+            {
+                tempGo.transform.position = Vector3.zero;
+                tempGo.transform.rotation = Quaternion.identity;
+                tempGo.transform.localScale = Vector3.one;
+
+                Animation jointAnim = null;
+                TaggedAnimPlayer tap = tempGo.GetComponent<TaggedAnimPlayer>();
+                if (tap != null && tap.jointAnimation != null)
+                {
+                    foreach (AnimationState st in tap.jointAnimation)
+                    {
+                        if (st != null && st.clip != null && string.Equals(st.name, clipName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            jointAnim = tap.jointAnimation;
+                            st.clip.SampleAnimation(jointAnim.gameObject, normalizedTime * st.length);
+                            break;
+                        }
+                    }
+                }
+                if (jointAnim == null)
+                {
+                    Animation[] anims = tempGo.GetComponentsInChildren<Animation>(true);
+                    for (int i = anims.Length - 1; i >= 0; i--)
+                    {
+                        foreach (AnimationState st in anims[i])
+                        {
+                            if (st != null && st.clip != null && string.Equals(st.name, clipName, StringComparison.OrdinalIgnoreCase))
+                            {
+                                jointAnim = anims[i];
+                                st.clip.SampleAnimation(anims[i].gameObject, normalizedTime * st.length);
+                                break;
+                            }
+                        }
+                        if (jointAnim != null) break;
+                    }
+                }
+
+                Transform animRoot = (jointAnim != null) ? jointAnim.transform : tempGo.transform;
+                Transform[] all = tempGo.GetComponentsInChildren<Transform>(true);
+                var bones = new List<object>();
+                for (int i = 0; i < all.Length; i++)
+                {
+                    Transform t = all[i];
+                    string animPath = GetRelPath(animRoot, t);
+                    string parentAnimPath = (t.parent != null) ? GetRelPath(animRoot, t.parent) : "";
+                    bones.Add(new Dictionary<string, object>
+                    {
+                        { "name", t.name },
+                        { "animPath", animPath },
+                        { "parentAnimPath", parentAnimPath },
+                        { "localPosition", Vec3ToDict(t.localPosition) },
+                        { "localRotation", new Dictionary<string, object>
+                            {
+                                { "x", Math.Round(t.localRotation.x, 6) },
+                                { "y", Math.Round(t.localRotation.y, 6) },
+                                { "z", Math.Round(t.localRotation.z, 6) },
+                                { "w", Math.Round(t.localRotation.w, 6) }
+                            }
+                        },
+                        { "worldPosition", Vec3ToDict(t.position) },
+                        { "worldRight", Vec3ToDict(t.right) },
+                        { "worldUp", Vec3ToDict(t.up) },
+                        { "worldForward", Vec3ToDict(t.forward) }
+                    });
+                }
+
+                bool wroteObj = false;
+                if (!IsNullOrBlank(objExportPath))
+                {
+                    StringBuilder sbObj = new StringBuilder();
+                    int vOffset = 1;
+                    SkinnedMeshRenderer[] smrs = tempGo.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+                    for (int s = 0; s < smrs.Length; s++)
+                    {
+                        Mesh baked = new Mesh();
+                        smrs[s].BakeMesh(baked);
+                        // In Unity, SkinnedMeshRenderer.BakeMesh already outputs vertices scaled by transform.lossyScale.
+                        Matrix4x4 mat = Matrix4x4.TRS(smrs[s].transform.position, smrs[s].transform.rotation, Vector3.one);
+                        Vector3[] verts = baked.vertices;
+                        sbObj.AppendLine("o " + smrs[s].gameObject.name);
+                        for (int vi = 0; vi < verts.Length; vi++)
+                        {
+                            Vector3 wp = mat.MultiplyPoint3x4(verts[vi]);
+                            sbObj.AppendFormat(CultureInfo.InvariantCulture, "v {0:F5} {1:F5} {2:F5}\n", wp.x, wp.y, wp.z);
+                        }
+                        int[] tris = baked.triangles;
+                        for (int ti = 0; ti + 2 < tris.Length; ti += 3)
+                        {
+                            sbObj.AppendFormat(CultureInfo.InvariantCulture, "f {0} {1} {2}\n", tris[ti] + vOffset, tris[ti + 1] + vOffset, tris[ti + 2] + vOffset);
+                        }
+                        vOffset += verts.Length;
+                        UnityEngine.Object.DestroyImmediate(baked);
+                    }
+                    string dir = Path.GetDirectoryName(objExportPath);
+                    if (!IsNullOrBlank(dir) && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                    File.WriteAllText(objExportPath, sbObj.ToString(), Encoding.UTF8);
+                    wroteObj = true;
+                }
+
+                var resultDict = new Dictionary<string, object>
+                {
+                    { "ok", true },
+                    { "assetPath", assetPath },
+                    { "animRootName", animRoot.name },
+                    { "sampledClip", clipName },
+                    { "boneCount", bones.Count },
+                    { "objExported", wroteObj },
+                    { "bones", bones }
+                };
+                string jsonStr = JsonSerialize(resultDict);
+                if (!IsNullOrBlank(jsonOutPath))
+                {
+                    string jdir = Path.GetDirectoryName(jsonOutPath);
+                    if (!IsNullOrBlank(jdir) && !Directory.Exists(jdir)) Directory.CreateDirectory(jdir);
+                    File.WriteAllText(jsonOutPath, jsonStr, Encoding.UTF8);
+                    return JsonSerialize(new Dictionary<string, object>
+                    {
+                        { "ok", true },
+                        { "boneCount", bones.Count },
+                        { "objExported", wroteObj },
+                        { "jsonOutPath", jsonOutPath }
+                    });
+                }
+                return jsonStr;
+            }
+            finally
+            {
+                if (tempGo != null) UnityEngine.Object.DestroyImmediate(tempGo);
+            }
+        }
+
+        private static string HandleBuildLegacyAnim(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string jsonPath = GetString(args, "jsonPath", "");
+            if (IsNullOrBlank(jsonPath) || !File.Exists(jsonPath))
+            {
+                statusCode = 400;
+                return BuildErrorJson("Existing jsonPath is required.");
+            }
+            Dictionary<string, object> spec = ParseJsonObject(File.ReadAllText(jsonPath, Encoding.UTF8));
+            string clipName = GetString(spec, "clipName", "");
+            string outAnimPath = GetString(spec, "outAnimPath", "");
+            float fps = GetFloat(spec, "fps", 30f);
+            float duration = GetFloat(spec, "duration", 1.5f);
+
+            if (IsNullOrBlank(clipName) || IsNullOrBlank(outAnimPath))
+            {
+                statusCode = 400;
+                return BuildErrorJson("spec.clipName and spec.outAnimPath are required.");
+            }
+
+            AnimationClip clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(outAnimPath);
+            bool isNew = (clip == null);
+            if (isNew)
+            {
+                clip = new AnimationClip();
+            }
+            else
+            {
+                clip.ClearCurves();
+            }
+            clip.name = clipName;
+            clip.legacy = true;
+            clip.frameRate = fps;
+            clip.wrapMode = WrapMode.Once;
+
+            object tracksObj;
+            int curveCount = 0;
+            if (spec.TryGetValue("tracks", out tracksObj) && tracksObj is IList<object>)
+            {
+                IList<object> tracks = (IList<object>)tracksObj;
+                for (int i = 0; i < tracks.Count; i++)
+                {
+                    Dictionary<string, object> tr = tracks[i] as Dictionary<string, object>;
+                    if (tr == null) continue;
+                    string path = GetString(tr, "path", "");
+                    string prop = GetString(tr, "property", "");
+                    IList<object> times = tr["times"] as IList<object>;
+                    IList<object> vals = tr["values"] as IList<object>;
+                    if (IsNullOrBlank(prop) || times == null || vals == null || times.Count != vals.Count) continue;
+                    Keyframe[] kfs = new Keyframe[times.Count];
+                    for (int k = 0; k < times.Count; k++)
+                    {
+                        kfs[k] = new Keyframe(Convert.ToSingle(times[k], CultureInfo.InvariantCulture), Convert.ToSingle(vals[k], CultureInfo.InvariantCulture));
+                    }
+                    AnimationCurve curve = new AnimationCurve(kfs);
+                    for (int k = 0; k < kfs.Length; k++)
+                    {
+                        AnimationUtility.SetKeyLeftTangentMode(curve, k, AnimationUtility.TangentMode.Auto);
+                        AnimationUtility.SetKeyRightTangentMode(curve, k, AnimationUtility.TangentMode.Auto);
+                    }
+                    clip.SetCurve(path, typeof(Transform), prop, curve);
+                    curveCount++;
+                }
+            }
+            clip.EnsureQuaternionContinuity();
+
+            string dir = Path.GetDirectoryName(outAnimPath);
+            if (!IsNullOrBlank(dir) && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            if (isNew)
+            {
+                AssetDatabase.CreateAsset(clip, outAnimPath);
+            }
+            else
+            {
+                EditorUtility.SetDirty(clip);
+            }
+
+            string outTagPath = "";
+            object tagObj;
+            if (spec.TryGetValue("tagClip", out tagObj) && tagObj is Dictionary<string, object>)
+            {
+                Dictionary<string, object> tagSpec = (Dictionary<string, object>)tagObj;
+                outTagPath = GetString(tagSpec, "outTagPath", "");
+                if (!IsNullOrBlank(outTagPath))
+                {
+                    AnimationClip tClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(outTagPath);
+                    bool tNew = (tClip == null);
+                    if (tNew) tClip = new AnimationClip();
+                    else tClip.ClearCurves();
+
+                    tClip.name = clipName;
+                    tClip.legacy = true;
+                    tClip.frameRate = fps;
+                    tClip.wrapMode = WrapMode.Once;
+
+                    AnimationCurve frameCurve = new AnimationCurve(
+                        new Keyframe(0f, 0f, 0f, fps),
+                        new Keyframe(duration, duration * fps, fps, 0f)
+                    );
+                    AnimationUtility.SetEditorCurve(tClip, EditorCurveBinding.FloatCurve("", typeof(TaggedAnimPlayer), "animFrame"), frameCurve);
+
+                    float atkTime = GetFloat(tagSpec, "attackActiveTime", duration * 0.55f);
+                    Keyframe k0 = new Keyframe(0f, 0f);
+                    Keyframe k1 = new Keyframe(atkTime, 1f);
+                    AnimationCurve atkCurve = new AnimationCurve(k0, k1);
+                    AnimationUtility.SetKeyRightTangentMode(atkCurve, 0, AnimationUtility.TangentMode.Constant);
+                    AnimationUtility.SetKeyLeftTangentMode(atkCurve, 1, AnimationUtility.TangentMode.Constant);
+                    AnimationUtility.SetEditorCurve(tClip, EditorCurveBinding.FloatCurve("", typeof(CharacterModelController), "attackActive"), atkCurve);
+
+                    var animEvents = new List<AnimationEvent>();
+                    object evsObj;
+                    if (tagSpec.TryGetValue("events", out evsObj) && evsObj is IList<object>)
+                    {
+                        IList<object> evList = (IList<object>)evsObj;
+                        for (int ei = 0; ei < evList.Count; ei++)
+                        {
+                            Dictionary<string, object> ed = evList[ei] as Dictionary<string, object>;
+                            if (ed == null) continue;
+                            AnimationEvent ae = new AnimationEvent();
+                            ae.time = GetFloat(ed, "time", 0f);
+                            ae.functionName = GetString(ed, "fn", "");
+                            ae.stringParameter = GetString(ed, "data", "");
+                            animEvents.Add(ae);
+                        }
+                    }
+                    AnimationUtility.SetAnimationEvents(tClip, animEvents.ToArray());
+
+                    string tdir = Path.GetDirectoryName(outTagPath);
+                    if (!IsNullOrBlank(tdir) && !Directory.Exists(tdir)) Directory.CreateDirectory(tdir);
+                    if (tNew) AssetDatabase.CreateAsset(tClip, outTagPath);
+                    else EditorUtility.SetDirty(tClip);
+                }
+            }
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            return JsonSerialize(new Dictionary<string, object>
+            {
+                { "ok", true },
+                { "clipName", clipName },
+                { "outAnimPath", outAnimPath },
+                { "outTagPath", outTagPath },
+                { "curveCount", curveCount }
+            });
+        }
+
+        private static string HandleRegisterCharacterClips(Dictionary<string, object> args, out int statusCode)
+        {
+            statusCode = 200;
+            string prefabPath = GetString(args, "prefabPath", "");
+            if (IsNullOrBlank(prefabPath))
+            {
+                statusCode = 400;
+                return BuildErrorJson("prefabPath is required.");
+            }
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            if (prefab == null)
+            {
+                statusCode = 404;
+                return BuildErrorJson("Prefab not found: " + prefabPath);
+            }
+
+            TaggedAnimPlayer tap = prefab.GetComponent<TaggedAnimPlayer>();
+            Animation rootAnim = prefab.GetComponent<Animation>();
+            Animation jointAnim = (tap != null) ? tap.jointAnimation : null;
+            CharacterModelController cmc = prefab.GetComponent<CharacterModelController>();
+
+            int addedJoint = 0;
+            int addedTag = 0;
+            int addedSet = 0;
+
+            object jointListObj;
+            if (jointAnim != null && args.TryGetValue("jointAnimPaths", out jointListObj) && jointListObj is IList<object>)
+            {
+                SerializedObject soJ = new SerializedObject(jointAnim);
+                SerializedProperty spArr = soJ.FindProperty("m_Animations");
+                IList<object> jPaths = (IList<object>)jointListObj;
+                for (int i = 0; i < jPaths.Count; i++)
+                {
+                    AnimationClip clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(jPaths[i].ToString());
+                    if (clip == null) continue;
+                    bool exists = false;
+                    for (int k = 0; k < spArr.arraySize; k++)
+                    {
+                        if (spArr.GetArrayElementAtIndex(k).objectReferenceValue == clip) { exists = true; break; }
+                    }
+                    if (!exists)
+                    {
+                        int idx = spArr.arraySize;
+                        spArr.InsertArrayElementAtIndex(idx);
+                        spArr.GetArrayElementAtIndex(idx).objectReferenceValue = clip;
+                        addedJoint++;
+                    }
+                }
+                soJ.ApplyModifiedProperties();
+            }
+
+            object tagListObj;
+            if (rootAnim != null && args.TryGetValue("tagAnimPaths", out tagListObj) && tagListObj is IList<object>)
+            {
+                SerializedObject soR = new SerializedObject(rootAnim);
+                SerializedProperty spArr = soR.FindProperty("m_Animations");
+                IList<object> tPaths = (IList<object>)tagListObj;
+                for (int i = 0; i < tPaths.Count; i++)
+                {
+                    AnimationClip clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(tPaths[i].ToString());
+                    if (clip == null) continue;
+                    bool exists = false;
+                    for (int k = 0; k < spArr.arraySize; k++)
+                    {
+                        if (spArr.GetArrayElementAtIndex(k).objectReferenceValue == clip) { exists = true; break; }
+                    }
+                    if (!exists)
+                    {
+                        int idx = spArr.arraySize;
+                        spArr.InsertArrayElementAtIndex(idx);
+                        spArr.GetArrayElementAtIndex(idx).objectReferenceValue = clip;
+                        addedTag++;
+                    }
+                    if (cmc != null)
+                    {
+                        SerializedObject soCmc = new SerializedObject(cmc);
+                        SerializedProperty sets = soCmc.FindProperty("randomAnimSets");
+                        for (int s = 0; s < sets.arraySize; s++)
+                        {
+                            SerializedProperty setElem = sets.GetArrayElementAtIndex(s);
+                            if (setElem.FindPropertyRelative("name").stringValue == "attack")
+                            {
+                                SerializedProperty clipsProp = setElem.FindPropertyRelative("clips");
+                                bool inSet = false;
+                                for (int ci = 0; ci < clipsProp.arraySize; ci++)
+                                {
+                                    if (clipsProp.GetArrayElementAtIndex(ci).objectReferenceValue == clip) { inSet = true; break; }
+                                }
+                                if (!inSet)
+                                {
+                                    int idx = clipsProp.arraySize;
+                                    clipsProp.InsertArrayElementAtIndex(idx);
+                                    clipsProp.GetArrayElementAtIndex(idx).objectReferenceValue = clip;
+                                    addedSet++;
+                                }
+                            }
+                        }
+                        soCmc.ApplyModifiedProperties();
+                    }
+                }
+                soR.ApplyModifiedProperties();
+            }
+
+            EditorUtility.SetDirty(prefab);
+            AssetDatabase.SaveAssets();
+            return JsonSerialize(new Dictionary<string, object>
+            {
+                { "ok", true },
+                { "addedJointClips", addedJoint },
+                { "addedTagClips", addedTag },
+                { "addedToAttackSet", addedSet }
             });
         }
 

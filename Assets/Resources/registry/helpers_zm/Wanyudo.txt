@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = Wanyudo 
-desc = Low health but high damage
+displayName = @helper_wanyudo
+desc = @helper_wanyudo_desc
 prefab = Characters/PFWayundo
 HUDIcon = Sprites/Icons/enemy_wanyudo
 weaponMeleePrefab = 

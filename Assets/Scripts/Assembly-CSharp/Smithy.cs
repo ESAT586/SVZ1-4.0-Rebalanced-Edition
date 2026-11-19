@@ -183,7 +183,7 @@ public class Smithy : WeakGlobalInstance<Smithy>
 			float.TryParse(Singleton<HelpersDatabase>.instance.GetAttributeOrNull(helperID, "meleeDamage"), NumberStyles.Float, CultureInfo.InvariantCulture, out meleeDamage);
 			float.TryParse(Singleton<HelpersDatabase>.instance.GetAttributeOrNull(helperID, "bowDamage"), NumberStyles.Float, CultureInfo.InvariantCulture, out bowDamage);
 			float.TryParse(Singleton<HelpersDatabase>.instance.GetAttribute(helperID, "attackFrequency"), NumberStyles.Float, CultureInfo.InvariantCulture, out attackFrequency);
-			float.TryParse(Singleton<HelpersDatabase>.instance.GetAttributeOrNull(helperID, "damageBuffPercent"), out damageBuffPercent);
+			float.TryParse(Singleton<HelpersDatabase>.instance.GetAttributeOrNull(helperID, "damageBuffPercent"), NumberStyles.Float, CultureInfo.InvariantCulture, out damageBuffPercent);
 			bool.TryParse(Singleton<HelpersDatabase>.instance.GetAttributeOrNull(helperID, "usesBladeWeapon"), out bladedWeapon);
 			int.TryParse(Singleton<HelpersDatabase>.instance.GetAttributeOrNull(helperID, "knockbackPower"), out knockbackPower);
 			int.TryParse(Singleton<HelpersDatabase>.instance.GetAttributeOrNull(helperID, "knockbackResistance"), out knockbackResistance);
@@ -463,7 +463,7 @@ public class Smithy : WeakGlobalInstance<Smithy>
 		{
 			mMaxLevel--;
 		}
-		mAbsoluteMaxResources = float.Parse(mSmithyData.to(mMaxLevel)["maxResource"]);
+		mAbsoluteMaxResources = float.Parse(mSmithyData.to(mMaxLevel)["maxResource"], CultureInfo.InvariantCulture);
 		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
 		{
 			if (SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly)
@@ -900,7 +900,7 @@ public class Smithy : WeakGlobalInstance<Smithy>
 		bool marchRight = SVZMultiplayerManager.ShouldUnitMarchRight(false, mIsLeftToRightGameplay);
 		float num = Mathf.Max(data.swordAttackRange, data.bowAttackRange);
 		float zTarget = ((!marchRight) ? (mHelpersZTarget + num) : (mHelpersZTarget - num));
-		spawnPos.x = WeakGlobalInstance<CharactersManager>.instance.GetBestSpawnXPos(spawnPos, sizeOfSpawnArea, data.lanePref, false, false, data.bowAttackRange > 0f);
+		spawnPos.x = WeakGlobalInstance<CharactersManager>.instance.GetBestSpawnXPos(spawnPos, sizeOfSpawnArea, data.lanePref, false, data.isFlying, data.bowAttackRange > 0f);
 		Helper helper = new Helper(data.prefab, zTarget, spawnPos, data.weaponPrefabLocation, data.rangedWeapon);
 		InitializeHelper(ref data, helper, false);
 		if (data.spawnOnDeathType != null && data.spawnOnDeathType != string.Empty && data.spawnOnDeathNum > 0)

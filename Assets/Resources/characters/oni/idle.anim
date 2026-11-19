@@ -1347,7 +1347,7 @@ AnimationClip:
     path: oni:oni_Skeleton_grp/oni:oni_spine_low_jnt/oni:oni_hip_jnt/oni:oni_rt_upLeg_jnt/oni:oni_rt_knee_jnt/oni:oni_rt_ankle_jnt/oni:oni_rt_ball_jnt
   m_FloatCurves: []
   m_SampleRate: 30
-  m_WrapMode: 0
+  m_WrapMode: 2
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}

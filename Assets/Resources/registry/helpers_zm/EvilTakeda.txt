@@ -3,8 +3,8 @@
 / General
 /--------------------------------------------------
 
-displayName = Evil Takeda
-desc = Evil Takeda
+displayName = @helper_eviltakeda
+desc = @helper_eviltakeda_desc
 lane = front
 prefab = Characters/PFTakedaZombie
 weaponMeleePrefab = Props/PFTakedasword

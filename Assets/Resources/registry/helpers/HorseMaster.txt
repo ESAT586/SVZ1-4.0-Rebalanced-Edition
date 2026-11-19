@@ -1,0 +1,78 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = Horse Master
+desc = Mounted banner commander. Boosts nearby allies' attack damage.
+prefab = Characters/PFHorseMaster
+HUDIcon = Sprites/Icons/ally_horsemaster
+waveToUnlock = 1
+resourcesCost = 20.0
+cooldownTimer = 10.0
+attackFrequency = 1.0
+unique = true
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 2500,0
+	health = 1400
+	speedMin = 200
+	speedMax = 200
+	bowRange = 450
+	knockbackPower = 15
+	knockbackResistance = 60
+	damageBuffPercent = .20
+
+[002]
+	cost = 5000,0
+	health = 1900
+	speedMin = 200
+	speedMax = 200
+	bowRange = 450
+	knockbackPower = 15
+	knockbackResistance = 65
+	damageBuffPercent = .25
+
+[003]
+	cost = 9500,0
+	health = 2500
+	speedMin = 200
+	speedMax = 200
+	bowRange = 450
+	knockbackPower = 15
+	knockbackResistance = 70
+	damageBuffPercent = .30
+
+[004]
+	cost = 16500,0
+	health = 3200
+	speedMin = 200
+	speedMax = 200
+	bowRange = 450
+	knockbackPower = 15
+	knockbackResistance = 75
+	damageBuffPercent = .35
+
+[005]
+	cost = 28000,0
+	health = 4100
+	speedMin = 200
+	speedMax = 200
+	bowRange = 450
+	knockbackPower = 15
+	knockbackResistance = 80
+	damageBuffPercent = .40
+
+[006]
+	cost = 0,14
+	health = 5200
+	speedMin = 200
+	speedMax = 200
+	bowRange = 450
+	knockbackPower = 15
+	knockbackResistance = 85
+	damageBuffPercent = .45

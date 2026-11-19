@@ -25,7 +25,6 @@ GameObject:
   - 111: {fileID: 111109617375149178}
   - 114: {fileID: 114843654273265265}
   - 114: {fileID: 114237831528957497}
-  - 114: {fileID: 114099443048686550}
   m_Layer: 0
   m_Name: PFArrow
   m_TagString: Untagged
@@ -140,13 +139,3 @@ MonoBehaviour:
     minDistanceOverride: 0
     maxDistanceOverride: 0
     useLogarithmicRolloff: 0
---- !u!114 &114099443048686550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1526237939233763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name:

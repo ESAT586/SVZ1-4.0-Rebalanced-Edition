@@ -1,7 +1,7 @@
 /--------------------------------------------------
 
-displayName = Evil Ice Archer
-desc = EvilIceArcher
+displayName = @helper_evilicearcher
+desc = @helper_evilicearcher_desc
 prefab = Characters/PFSamuraiarchericeZombie
 HUDIcon = Sprites/Icons/IceArcherZomibe
 weaponRangedPrefab = Props/PFsamuraibow

@@ -11,11 +11,14 @@ import android.net.LinkProperties;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Looper;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowInsets;
 import android.view.WindowManager;
+
+import com.unity3d.player.UnityPlayer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -107,7 +110,31 @@ public final class SVZAndroidBridge {
         return false;
     }
 
+    public static void applyCurrentActivityWindowCompatibility() {
+        try {
+            applyWindowCompatibility(UnityPlayer.currentActivity);
+        } catch (Throwable ignored) {
+        }
+    }
+
     public static void applyWindowCompatibility(final Activity activity) {
+        if (activity == null) return;
+        try {
+            if (Looper.myLooper() != Looper.getMainLooper()) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        applyWindowCompatibilityOnUiThread(activity);
+                    }
+                });
+                return;
+            }
+            applyWindowCompatibilityOnUiThread(activity);
+        } catch (Throwable ignored) {
+        }
+    }
+
+    private static void applyWindowCompatibilityOnUiThread(final Activity activity) {
         if (activity == null) return;
         try {
             final Window window = activity.getWindow();

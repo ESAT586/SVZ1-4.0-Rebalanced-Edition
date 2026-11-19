@@ -1,0 +1,119 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_cartofdoom_name
+desc = @helper_cartofdoom_desc
+prefab = Characters/PFCartofDoom
+HUDIcon = Sprites/Icons/ally_cartofdoom
+waveToUnlock = 1
+resourcesCost = 25.0
+cooldownTimer = 10.0
+attackFrequency = 1.0
+exploseOnMelee = True
+lane = front
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 1500,0
+	health = 180
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 320
+	knockbackPower = 120
+	knockbackResistance = 80
+
+[002]
+	cost = 3500,0
+	health = 240
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 440
+	knockbackPower = 120
+	knockbackResistance = 80
+
+[003]
+	cost = 7000,0
+	health = 320
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 600
+	knockbackPower = 120
+	knockbackResistance = 80
+
+[004]
+	cost = 14000,0
+	health = 410
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 800
+	knockbackPower = 120
+	knockbackResistance = 80
+
+[005]
+	cost = 25000,0
+	health = 520
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 1050
+	knockbackPower = 120
+	knockbackResistance = 80
+
+[006]
+	cost = 0,10
+	health = 630
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 1320
+	knockbackPower = 120
+	knockbackResistance = 80
+
+[007]
+	cost = 0,14
+	health = 740
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 1600
+	knockbackPower = 120
+	knockbackResistance = 80
+
+[008]
+	cost = 0,18
+	health = 860
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 1920
+	knockbackPower = 120
+	knockbackResistance = 80
+
+[009]
+	cost = 0,24
+	health = 980
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 2250
+	knockbackPower = 120
+	knockbackResistance = 80
+
+[010]
+	cost = 0,30
+	health = 1100
+	speedMin = 220
+	speedMax = 220
+	meleeRange = 120
+	meleeDamage = 2600
+	knockbackPower = 120
+	knockbackResistance = 80

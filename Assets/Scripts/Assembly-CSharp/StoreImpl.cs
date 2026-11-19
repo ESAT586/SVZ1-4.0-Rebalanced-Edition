@@ -461,6 +461,12 @@ public class StoreImpl : SceneBehaviour
 			mListController.ReloadDataSource(mTabs[mSelectedTab].items);
 			mPurchaseList.ForceRedrawList();
 		};
+		storeItemDisplayDialog.onSettingsChanged = delegate
+		{
+			mTabs[mSelectedTab].ReloadItems();
+			mListController.ReloadDataSource(mTabs[mSelectedTab].items);
+			mPurchaseList.ForceRedrawList();
+		};
 		mDialogHandler = new DialogHandler(499.5f, storeItemDisplayDialog);
 		if (itemDesc.isNovelty || itemDesc.isEvent)
 		{

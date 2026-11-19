@@ -120,3 +120,8 @@ bell = 5
 	Frostie
 	1,1
 	Frostie
+	/ SVZ2WaveAdditions
+	1,1
+	Horse_Archer
+	1,1
+	Blind_Swordsman

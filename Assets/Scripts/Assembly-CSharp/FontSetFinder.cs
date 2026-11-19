@@ -47,8 +47,11 @@ internal class FontSetFinder : Singleton<FontSetFinder>
 			lang = Singleton<GameVersion>.instance.fontSet;
 		}
 
-		string fontSet = lang;
-        if (lang == "English" || lang == "Turkish" || lang == "Default") fontSet = "Default";
+		string fontSet = "Default";
+		if (lang == "Chinese" || lang == "Japanese" || lang == "Korean")
+		{
+			fontSet = lang;
+		}
 
 		mConfig = mConfig.to(fontSet);
 		if (mConfig != null)

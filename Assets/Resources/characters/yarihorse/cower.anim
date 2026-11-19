@@ -1871,7 +1871,7 @@ AnimationClip:
     path: yarihorse:horse_Skeleton_grp/yarihorse:horse_spine_low_jnt/yarihorse:horse_tail1_jnt/yarihorse:horse_tail2_jnt/yarihorse:horse_tail3_jnt
   m_FloatCurves: []
   m_SampleRate: 30
-  m_WrapMode: 0
+  m_WrapMode: 2
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}

@@ -199,5 +199,7 @@ scene = InGame_springnight
 	H_Zombie_Bow_2
 	H_Zombie_Bow_2
 	H_Zombie_Warhammer
-		
-	
+	/ SVZ2WaveAdditions
+	Nio_Guardian
+	1,1
+	Onmoraki_Alt

@@ -32,9 +32,19 @@ public class ReviveSFX : MonoBehaviour
 	{
 		if (!mAttemptingToQuit)
 		{
-			SoundThemeManager.Instance.globalVolume = mAudioVolume;
+			if (SoundThemeManager.HasInstance)
+			{
+				SoundThemeManager.Instance.globalVolume = mAudioVolume;
+			}
 			GameObject gameObject = GameObject.Find("Main Camera");
-			gameObject.GetComponent<AudioSource>().volume = mMusicVolume;
+			if (gameObject != null)
+			{
+				AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+				if (audioSource != null)
+				{
+					audioSource.volume = mMusicVolume;
+				}
+			}
 		}
 	}
 }

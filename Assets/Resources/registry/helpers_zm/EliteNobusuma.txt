@@ -1,0 +1,106 @@
+
+/--------------------------------------------------
+/ General
+/--------------------------------------------------
+
+displayName = @helper_elitenobusuma_name
+desc = @helper_elitenobusuma_desc
+prefab = Characters/PFNobosumaAlt
+HUDIcon = Sprites/Icons/enemy_elite_nobusuma
+flying = true
+waveToUnlock = 1
+resourcesCost = 18.0
+cooldownTimer = 4.0
+attackFrequency = 1.4
+
+/--------------------------------------------------
+/ Levels
+/--------------------------------------------------
+
+[001]
+	cost = 700,0
+	health = 450
+	speedMin = 135
+	speedMax = 145
+	meleeRange = 125
+	meleeDamage = 55
+	knockbackPower = 18
+	knockbackResistance = 55
+	flying = true
+
+[002]
+	cost = 1500,0
+	health = 650
+	speedMin = 135
+	speedMax = 145
+	meleeRange = 125
+	meleeDamage = 80
+	knockbackPower = 20
+	knockbackResistance = 55
+	flying = true
+
+[003]
+	cost = 3000,0
+	health = 920
+	speedMin = 135
+	speedMax = 145
+	meleeRange = 125
+	meleeDamage = 115
+	knockbackPower = 22
+	knockbackResistance = 55
+	flying = true
+
+[004]
+	cost = 6000,0
+	health = 1260
+	speedMin = 135
+	speedMax = 145
+	meleeRange = 125
+	meleeDamage = 158
+	knockbackPower = 24
+	knockbackResistance = 55
+	flying = true
+
+[005]
+	cost = 11000,0
+	health = 1660
+	speedMin = 135
+	speedMax = 145
+	meleeRange = 125
+	meleeDamage = 208
+	knockbackPower = 26
+	knockbackResistance = 55
+	flying = true
+
+[006]
+	cost = 0,10
+	health = 2120
+	speedMin = 135
+	speedMax = 145
+	meleeRange = 125
+	meleeDamage = 262
+	knockbackPower = 28
+	knockbackResistance = 55
+	flying = true
+
+[007]
+	cost = 0,14
+	health = 2640
+	speedMin = 135
+	speedMax = 145
+	meleeRange = 125
+	meleeDamage = 320
+	knockbackPower = 30
+	knockbackResistance = 55
+	flying = true
+
+[008]
+	cost = 0,18
+	health = 3200
+	speedMin = 135
+	speedMax = 145
+	meleeRange = 125
+	meleeDamage = 380
+	knockbackPower = 32
+	knockbackResistance = 55
+	flying = true

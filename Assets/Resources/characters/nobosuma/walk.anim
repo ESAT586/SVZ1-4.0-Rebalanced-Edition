@@ -2508,7 +2508,7 @@ AnimationClip:
     path: nobusuma:Nobo_rig_grp/nobusuma:Nobo_spine_rig_grp/nobusuma:Nobo_lowSpineCtrl_space_grp/nobusuma:Nobo_spineLow_ctrl
   m_FloatCurves: []
   m_SampleRate: 30
-  m_WrapMode: 0
+  m_WrapMode: 2
   m_Bounds:
     m_Center: {x: -2.0096588, y: 196.04822, z: -12.775803}
     m_Extent: {x: 38.337875, y: 38.94922, z: 64.86371}

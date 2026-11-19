@@ -1,0 +1,187 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1284033236642344}
+  m_IsPrefabParent: 1
+--- !u!1 &1284033236642344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4718850508931504}
+  - component: {fileID: 114351899976046142}
+  m_Layer: 0
+  m_Name: EnemyOnmoraki
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4718850508931504
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284033236642344}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114351899976046142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284033236642344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a601efe3b0ca39d5e3b419a22b773e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseTheme: {fileID: 114062154744917752, guid: 9311afcdf498b7d4e8af9cbf811d0d1f,
+    type: 2}
+  events:
+  - name: Attack
+    clips:
+    - {fileID: 8300000, guid: fb344c72559f14542a591fd94b7c4645, type: 3}
+    - {fileID: 8300000, guid: d1d09aaea2ec2e24bb3c2f8800d3d8b3, type: 3}
+    - {fileID: 8300000, guid: 177e4d4c188b3264eae6d876922de4d9, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 0.7
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: Flap
+    clips:
+    - {fileID: 8300000, guid: 184de9c4af56ddc458e307fa8d21e73e, type: 3}
+    - {fileID: 8300000, guid: 3c16bce957c3b18479765945f91b92f9, type: 3}
+    - {fileID: 8300000, guid: 0ef04fd6c108d4c4787cc78375dc6cf3, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.2
+    volume: 0.5
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: Pain
+    clips:
+    - {fileID: 8300000, guid: 0056661139f8d8e4b876a6f183c7a5fa, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: Death
+    clips:
+    - {fileID: 8300000, guid: 6f90b0ade027a994caf53981b8eb96bb, type: 3}
+    - {fileID: 8300000, guid: 9a2316510397b6b449267255d65d09e8, type: 3}
+    - {fileID: 8300000, guid: 45161c960384a5347a8d2b3ea97e1434, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 0.7
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: Spawn
+    clips:
+    - {fileID: 8300000, guid: 115a40049e099da449c20e2c963711eb, type: 3}
+    - {fileID: 8300000, guid: e413cecdec2d4174d88b75eeddaadfbd, type: 3}
+    - {fileID: 8300000, guid: 30ebff1fc204cc743b8de4a42cec5903, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 0.7
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 0
+    useLogarithmicRolloff: 0
+  - name: Cast
+    clips:
+    - {fileID: 8300000, guid: 53f4ab1c4214033428bb6b49cdac130e, type: 3}
+    - {fileID: 8300000, guid: 0e62a9df3b6918b4d9c076ac1bcfc2d5, type: 3}
+    - {fileID: 8300000, guid: e5c9261dec388894982ae806ede7ac85, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 1
+    isVoice: 0
+    playLimit: 0
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0
+  - name: AttackA
+    clips:
+    - {fileID: 8300000, guid: fb344c72559f14542a591fd94b7c4645, type: 3}
+    - {fileID: 8300000, guid: d1d09aaea2ec2e24bb3c2f8800d3d8b3, type: 3}
+    - {fileID: 8300000, guid: 177e4d4c188b3264eae6d876922de4d9, type: 3}
+    percentChanceNone: 0
+    pitchVariance: 0.1
+    volume: 0.7
+    isVoice: 0
+    playLimit: 1
+    priority: 128
+    trackPositionAndLifetime: 0
+    fadeInTime: 0
+    fadeOutTime: 0
+    customEffect: {fileID: 0}
+    loop: 0
+    minDistanceOverride: 0
+    maxDistanceOverride: 30
+    useLogarithmicRolloff: 0

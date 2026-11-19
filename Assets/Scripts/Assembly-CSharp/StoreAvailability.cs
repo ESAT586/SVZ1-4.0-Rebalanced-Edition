@@ -174,7 +174,10 @@ public class StoreAvailability
 			if (isMaxLevel) item.isMaxLevel = true;
 			item.id = "Smithy";
 			item.icon = Singleton<PlayModesManager>.instance.selectedModeData["leadershipIcon"];
-			item.title = string.Format(Singleton<Localizer>.instance.Parse(sDFTreeNode["purchase_" + Singleton<PlayModesManager>.instance.selectedMode]), num);
+			string curMode = Singleton<PlayModesManager>.instance.selectedMode;
+			item.title = isMaxLevel
+				? StoreAvailability_LegionsOnTheLoose.GetLocalizedOrFallback("store_max_smithy_" + curMode, (curMode == "zombies") ? "Beyinler" : "Liderlik")
+				: string.Format(Singleton<Localizer>.instance.Parse(sDFTreeNode["purchase_" + curMode]), num);
 			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["storeCost"], Singleton<SalesDatabase>.instance.GetSaleFor("smithy", num.ToString()));
 			string text = "desc_" + Singleton<PlayModesManager>.instance.selectedMode;
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute(text)) ? string.Empty : sDFTreeNode[text]);
@@ -210,7 +213,10 @@ public class StoreAvailability
 			}
 			item.id = "Base";
 			item.icon = sDFTreeNode2["icon"];
-			item.title = string.Format(Singleton<Localizer>.instance.Parse(sDFTreeNode["storeTitle"]), num);
+			string baseMode = Singleton<PlayModesManager>.instance.selectedMode;
+			item.title = isMaxLevel
+				? StoreAvailability_LegionsOnTheLoose.GetLocalizedOrFallback("store_max_gate_" + baseMode, (baseMode == "zombies") ? "Cehennem Geçidi" : "Kutsal Geçit")
+				: string.Format(Singleton<Localizer>.instance.Parse(sDFTreeNode["storeTitle"]), num);
 			item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor("base", num.ToString()));
 			item.details.AddSmallDescription((!sDFTreeNode.hasAttribute("desc")) ? string.Empty : sDFTreeNode["desc"]);
 			items.Add(item);
@@ -268,7 +274,11 @@ public class StoreAvailability
 			item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 		}
 		item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor("bell", num.ToString()));
-		if (Singleton<Profile>.instance.bellLevel == 0)
+		if (isMaxLevel)
+		{
+			item.title = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
+		}
+		else if (Singleton<Profile>.instance.bellLevel == 0)
 		{
 			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_purchase_atlevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num);
 		}
@@ -332,7 +342,11 @@ public class StoreAvailability
 			item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 		}
 		item.cost = isMaxLevel ? new Cost("0", 0) : new Cost(sDFTreeNode2["cost"], Singleton<SalesDatabase>.instance.GetSaleFor("villageArchers", num.ToString()));
-		if (Singleton<Profile>.instance.archerLevel == 0)
+		if (isMaxLevel)
+		{
+			item.title = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
+		}
+		else if (Singleton<Profile>.instance.archerLevel == 0)
 		{
 			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_purchase_atlevel"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num);
 		}
@@ -395,7 +409,11 @@ public class StoreAvailability
 		{
 			item.unlockCondition = string.Format(Singleton<Localizer>.instance.Get("store_unlockatwave"), item.unlockAtWave);
 		}
-		if (num == 1)
+		if (isMaxLevel)
+		{
+			item.title = Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]);
+		}
+		else if (num == 1)
 		{
 			item.title = string.Format(Singleton<Localizer>.instance.Get("store_format_purchase"), Singleton<Localizer>.instance.Parse(sDFTreeNode["displayName"]), num);
 		}

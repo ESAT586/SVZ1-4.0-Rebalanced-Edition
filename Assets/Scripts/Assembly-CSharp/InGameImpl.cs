@@ -333,6 +333,14 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private void Start()
 	{
+		if (WeakGlobalSceneBehavior<InGameImpl>.instance != null && WeakGlobalSceneBehavior<InGameImpl>.instance != this)
+		{
+			Debug.LogWarning("[InGameImpl] Duplicate InGameImpl detected on '" + base.gameObject.name + "' - destroying duplicate.");
+			UnityEngine.Object.Destroy(base.gameObject);
+			return;
+		}
+		mBaseTimeScale = 1f;
+		Time.timeScale = 1f;
 		SetUniqueInstance(this);
 		mGameDirection = Singleton<PlayModesManager>.instance.gameDirection;
 		ApplicationUtilities.instance.onApplicationPause += OnApplicationPause;
@@ -351,62 +359,6 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 				if (currentAspect < targetAspect) // Narrower than 16:9 (e.g. 4:3)
 				{
 					gameCamera.orthographicSize = baseOrtho * (targetAspect / currentAspect);
-				}
-			}
-		}
-
-		if (currentAspect > targetAspect)
-		{
-			float aspectMultiplier = currentAspect / targetAspect;
-			if (heroWalkLeftEdge != null && heroWalkRightEdge != null)
-			{
-				float centerZ = (heroWalkRightEdge.position.z + heroWalkLeftEdge.position.z) / 2f;
-				float halfWidth = Mathf.Abs(heroWalkRightEdge.position.z - heroWalkLeftEdge.position.z) / 2f;
-				float newHalfWidth = halfWidth * aspectMultiplier;
-
-				Vector3 rightPos = heroWalkRightEdge.position;
-				rightPos.z = centerZ + newHalfWidth;
-				heroWalkRightEdge.position = rightPos;
-
-				Vector3 leftPos = heroWalkLeftEdge.position;
-				leftPos.z = centerZ - newHalfWidth;
-				heroWalkLeftEdge.position = leftPos;
-
-				if (enemiesSpawnAreaRight != null && enemiesSpawnAreaLeft != null)
-				{
-					Vector3 esRightPos = enemiesSpawnAreaRight.transform.position;
-					esRightPos.z = centerZ + newHalfWidth;
-					enemiesSpawnAreaRight.transform.position = esRightPos;
-					Vector3 esLeftPos = enemiesSpawnAreaLeft.transform.position;
-					esLeftPos.z = centerZ - newHalfWidth;
-					enemiesSpawnAreaLeft.transform.position = esLeftPos;
-				}
-				if (helpersSpawnAreaRight != null && helpersSpawnAreaLeft != null)
-				{
-					Vector3 hsRightPos = helpersSpawnAreaRight.transform.position;
-					hsRightPos.z = centerZ + newHalfWidth;
-					helpersSpawnAreaRight.transform.position = hsRightPos;
-					Vector3 hsLeftPos = helpersSpawnAreaLeft.transform.position;
-					hsLeftPos.z = centerZ - newHalfWidth;
-					helpersSpawnAreaLeft.transform.position = hsLeftPos;
-				}
-				if (enemiesTargetRight != null && enemiesTargetLeft != null)
-				{
-					Vector3 etRightPos = enemiesTargetRight.transform.position;
-					etRightPos.z = centerZ + newHalfWidth;
-					enemiesTargetRight.transform.position = etRightPos;
-					Vector3 etLeftPos = enemiesTargetLeft.transform.position;
-					etLeftPos.z = centerZ - newHalfWidth;
-					enemiesTargetLeft.transform.position = etLeftPos;
-				}
-				if (heroSpawnPointRight != null && heroSpawnPointLeft != null)
-				{
-					Vector3 hspRight = heroSpawnPointRight.position;
-					hspRight.z = centerZ + newHalfWidth;
-					heroSpawnPointRight.position = hspRight;
-					Vector3 hspLeft = heroSpawnPointLeft.position;
-					hspLeft.z = centerZ - newHalfWidth;
-					heroSpawnPointLeft.position = hspLeft;
 				}
 			}
 		}
@@ -550,7 +502,10 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 	private void OnDestroy()
 	{
 		Time.timeScale = 1f;
-		ApplicationUtilities.instance.onApplicationPause -= OnApplicationPause;
+		if (ApplicationUtilities.HasInstance)
+		{
+			ApplicationUtilities.instance.onApplicationPause -= OnApplicationPause;
+		}
 	}
 
 	private void Update()
@@ -558,6 +513,16 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 		if (SceneBehaviourUpdate() || WeakGlobalInstance<SUIScreen>.instance.fader.onFadingDone != null)
 		{
 			return;
+		}
+		if (SVZCharacterLabController.IsLabActive)
+		{
+			if (mDialogHandler != null)
+			{
+				mDialogHandler.Destroy();
+				mDialogHandler = null;
+			}
+			mNarrativeManager = null;
+			mTutorial = null;
 		}
 		if (mNarrativeManager != null)
 		{
@@ -601,6 +566,10 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 			}
 		}
 		gamePaused = false;
+		if (DevCheatOverlay.sGodMode && mHero != null)
+		{
+			mHero.health = mHero.maxHealth;
+		}
 		if (mWaveBanner != null)
 		{
 			mWaveBanner.Update();
@@ -833,6 +802,10 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private void UpdateCamera()
 	{
+		if (SVZCharacterLabController.IsLabCameraActive)
+		{
+			return;
+		}
 		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive && SVZMultiplayerManager.Instance.CurrentGameMode == SVZMultiplayerManager.MultiplayerGameMode.ArmyOnly)
 		{
 			if (gameCamera != null)
@@ -925,6 +898,10 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private void CheckWinLoseConditions()
 	{
+		if (SVZCharacterLabController.IsLabActive)
+		{
+			return;
+		}
 		if (SVZMultiplayerManager.Instance != null && SVZMultiplayerManager.Instance.IsActive)
 		{
 			return;
@@ -1166,6 +1143,10 @@ public class InGameImpl : WeakGlobalSceneBehavior<InGameImpl>
 
 	private void OnApplicationPause(bool paused)
 	{
+		if (SVZCharacterLabController.IsLabActive)
+		{
+			return;
+		}
 		if (!gamePaused)
 		{
 			ApplicationUtilities.instance.HideAds();

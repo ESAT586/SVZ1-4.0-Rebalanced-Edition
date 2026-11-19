@@ -5,6 +5,9 @@ scene = InGame_hell_purple
 	gems, 500
 
 [Commands]
+	@bossalert
+	Shogun
+	2.5,2.5
 	Evil_Ninja
 	Evil_Ninja
 	Evil_Ninja
@@ -30,8 +33,6 @@ scene = InGame_hell_purple
 	Nobusuma_alt
 	)
 	1.0,1.0
-	@bossalert
-	Shogun
 	Evil_Nobunaga
 	Evil_Takeda
 	Oni_boss
@@ -45,3 +46,9 @@ scene = InGame_hell_purple
 	Chochinobake_alt
 	Chochinobake_alt
 	Chochinobake_alt
+	/ SVZ2WaveAdditions
+	Onmoraki_Alt
+	1,1
+	Nio_Guardian
+	2,2
+	Shuten_Doji_Blue

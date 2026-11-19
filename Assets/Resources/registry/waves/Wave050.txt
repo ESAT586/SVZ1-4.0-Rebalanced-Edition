@@ -184,7 +184,8 @@ scene = InGame_evilnight
 	H_Zombie_Bow_3
 	1,1
 	H_Zombie_Bow_3
-	
-	
-
-	
+	/ SVZ2WaveAdditions
+	2,2
+	Onmoraki_Alt
+	1,1
+	Shuten_Doji

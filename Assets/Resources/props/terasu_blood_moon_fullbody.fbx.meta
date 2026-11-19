@@ -1,0 +1,223 @@
+fileFormatVersion: 2
+guid: 45c5fded8f11a7f4389c5969f1b15205
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Terasu_EclipseHaloDisc
+    100004: Terasu_EnergyWings
+    100006: Terasu_ForearmL
+    100008: Terasu_ForearmR
+    100010: Terasu_HeadOniMask
+    100012: Terasu_LegL
+    100014: Terasu_LegR
+    100016: Terasu_PelvisTassets
+    100018: Terasu_ShoulderL
+    100020: Terasu_ShoulderR
+    100022: Terasu_TorsoCuirass
+    100024: Terasu_UpperArmL
+    100026: Terasu_UpperArmR
+    100028: Terasu_HaloOrb_0
+    100030: Terasu_HaloOrb_1
+    100032: Terasu_HaloOrb_2
+    100034: Terasu_HaloOrb_3
+    100036: Terasu_HaloOrb_4
+    100038: Terasu_HaloOrb_5
+    100040: Terasu_LeftVortexOrb
+    100042: Terasu_LeftFingers
+    100044: Terasu_LeftThumb
+    100046: Terasu_ShinL
+    100048: Terasu_ShinR
+    100050: Terasu_ThighL
+    100052: Terasu_ThighR
+    400000: //RootNode
+    400002: Terasu_EclipseHaloDisc
+    400004: Terasu_EnergyWings
+    400006: Terasu_ForearmL
+    400008: Terasu_ForearmR
+    400010: Terasu_HeadOniMask
+    400012: Terasu_LegL
+    400014: Terasu_LegR
+    400016: Terasu_PelvisTassets
+    400018: Terasu_ShoulderL
+    400020: Terasu_ShoulderR
+    400022: Terasu_TorsoCuirass
+    400024: Terasu_UpperArmL
+    400026: Terasu_UpperArmR
+    400028: Terasu_HaloOrb_0
+    400030: Terasu_HaloOrb_1
+    400032: Terasu_HaloOrb_2
+    400034: Terasu_HaloOrb_3
+    400036: Terasu_HaloOrb_4
+    400038: Terasu_HaloOrb_5
+    400040: Terasu_LeftVortexOrb
+    400042: Terasu_LeftFingers
+    400044: Terasu_LeftThumb
+    400046: Terasu_ShinL
+    400048: Terasu_ShinR
+    400050: Terasu_ThighL
+    400052: Terasu_ThighR
+    2100000: Mat_CrimsonEclipseGlow
+    2100002: Mat_BloodGoldTrim
+    2100004: Mat_ObsidianArmor
+    2100006: Mat_GhostSilverMane
+    2100008: Mat_TerasuArmor
+    2100010: Mat_TerasuCrimsonGlow
+    2300000: Terasu_EclipseHaloDisc
+    2300002: Terasu_EnergyWings
+    2300004: Terasu_ForearmL
+    2300006: Terasu_ForearmR
+    2300008: Terasu_HeadOniMask
+    2300010: Terasu_LegL
+    2300012: Terasu_LegR
+    2300014: Terasu_PelvisTassets
+    2300016: Terasu_ShoulderL
+    2300018: Terasu_ShoulderR
+    2300020: Terasu_TorsoCuirass
+    2300022: Terasu_UpperArmL
+    2300024: Terasu_UpperArmR
+    2300026: Terasu_HaloOrb_0
+    2300028: Terasu_HaloOrb_1
+    2300030: Terasu_HaloOrb_2
+    2300032: Terasu_HaloOrb_3
+    2300034: Terasu_HaloOrb_4
+    2300036: Terasu_HaloOrb_5
+    2300038: Terasu_LeftVortexOrb
+    2300040: Terasu_LeftFingers
+    2300042: Terasu_LeftThumb
+    2300044: Terasu_ShinL
+    2300046: Terasu_ShinR
+    2300048: Terasu_ThighL
+    2300050: Terasu_ThighR
+    3300000: Terasu_EclipseHaloDisc
+    3300002: Terasu_EnergyWings
+    3300004: Terasu_ForearmL
+    3300006: Terasu_ForearmR
+    3300008: Terasu_HeadOniMask
+    3300010: Terasu_LegL
+    3300012: Terasu_LegR
+    3300014: Terasu_PelvisTassets
+    3300016: Terasu_ShoulderL
+    3300018: Terasu_ShoulderR
+    3300020: Terasu_TorsoCuirass
+    3300022: Terasu_UpperArmL
+    3300024: Terasu_UpperArmR
+    3300026: Terasu_HaloOrb_0
+    3300028: Terasu_HaloOrb_1
+    3300030: Terasu_HaloOrb_2
+    3300032: Terasu_HaloOrb_3
+    3300034: Terasu_HaloOrb_4
+    3300036: Terasu_HaloOrb_5
+    3300038: Terasu_LeftVortexOrb
+    3300040: Terasu_LeftFingers
+    3300042: Terasu_LeftThumb
+    3300044: Terasu_ShinL
+    3300046: Terasu_ShinR
+    3300048: Terasu_ThighL
+    3300050: Terasu_ThighR
+    4300000: Terasu_EclipseHaloDisc
+    4300002: Terasu_EnergyWings
+    4300004: Terasu_ForearmL
+    4300006: Terasu_ForearmR
+    4300008: Terasu_HeadOniMask
+    4300010: Terasu_LegL
+    4300012: Terasu_LegR
+    4300014: Terasu_PelvisTassets
+    4300016: Terasu_ShoulderL
+    4300018: Terasu_ShoulderR
+    4300020: Terasu_TorsoCuirass
+    4300022: Terasu_UpperArmL
+    4300024: Terasu_UpperArmR
+    4300026: Terasu_HaloOrb_0
+    4300028: Terasu_HaloOrb_1
+    4300030: Terasu_HaloOrb_2
+    4300032: Terasu_HaloOrb_3
+    4300034: Terasu_HaloOrb_4
+    4300036: Terasu_HaloOrb_5
+    4300038: Terasu_LeftVortexOrb
+    4300040: Terasu_LeftFingers
+    4300042: Terasu_LeftThumb
+    4300044: Terasu_ShinL
+    4300046: Terasu_ShinR
+    4300048: Terasu_ThighL
+    4300050: Terasu_ThighR
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

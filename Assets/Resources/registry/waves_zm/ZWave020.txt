@@ -123,3 +123,8 @@ bell = 1
 	SpearHorseman
 	SamuraiRifleman
 	SamuraiRifleman
+	/ SVZ2WaveAdditions
+	1,1
+	Rocket_Farmer
+	1,1
+	Blind_Swordsman

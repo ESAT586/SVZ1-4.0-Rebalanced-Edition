@@ -202,7 +202,7 @@ AnimationClip:
     path:
   m_FloatCurves: []
   m_SampleRate: 30
-  m_WrapMode: 0
+  m_WrapMode: 2
   m_Bounds:
     m_Center: {x: 7.340084, y: 69.977936, z: -46.187134}
     m_Extent: {x: 50.511265, y: 95.93973, z: 76.24519}
