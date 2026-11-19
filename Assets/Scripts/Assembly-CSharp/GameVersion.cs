@@ -5,17 +5,17 @@ public class GameVersion : Singleton<GameVersion>
 {
 	public const string OBB_FILE_NAME_MASK = "main.{0}.com.glu.samuzombie.obb";
 
-	public const int VersionCode = 50;
+	public const int VersionCode = 51;
 
 	public int major = 5;
 
-	public int minor = 0;
+	public int minor = 1;
 
 	public int revision;
 
 	public int bundleMajor = 5;
 
-	public int bundleMinor = 0;
+	public int bundleMinor = 1;
 
 	public int bundleRevision;
 

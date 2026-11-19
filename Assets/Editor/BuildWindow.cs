@@ -13,8 +13,9 @@ public class BuildWindow : EditorWindow
 
     public static void EnsureReleaseSigningSettings()
     {
-        PlayerSettings.bundleVersion = "5.0";
-        PlayerSettings.Android.bundleVersionCode = 50;
+        PlayerSettings.productName = "Samurai Vs Zombies Rebalanced";
+        PlayerSettings.bundleVersion = "5.1";
+        PlayerSettings.Android.bundleVersionCode = 51;
         string keystorePath = System.IO.Path.GetFullPath("PASSWORD IS decandrec.keystore");
         if (System.IO.File.Exists(keystorePath))
         {
@@ -63,7 +64,7 @@ public class BuildWindow : EditorWindow
     public static void BuildAndroidApkSilent()
     {
         ApplyUniversalAndroid64BitSettings();
-        BuildTargetOutput(BuildTarget.Android, "Samurai-Vs-Zombies-Universal-v5.0", false);
+        BuildTargetOutput(BuildTarget.Android, "Samurai-Vs-Zombies-Universal-v5.1", false);
     }
 
     [MenuItem("Build Tools/Apply Steam Deck & Linux Optimization Settings")]
@@ -84,7 +85,7 @@ public class BuildWindow : EditorWindow
     {
         EnsureReleaseSigningSettings();
         PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, "com.esat586.svz1rebalanced");
-        PlayerSettings.iOS.buildNumber = "50";
+        PlayerSettings.iOS.buildNumber = "51";
         PlayerSettings.iOS.targetOSVersionString = "11.0";
         PlayerSettings.iOS.sdkVersion = iOSSdkVersion.DeviceSDK;
         PlayerSettings.iOS.targetDevice = iOSTargetDevice.iPhoneAndiPad;
@@ -182,7 +183,7 @@ public class BuildWindow : EditorWindow
         if (GUILayout.Button("Build Universal Android / TV / Chromebook APK (.apk)", GUILayout.Height(34)))
         {
             ApplyUniversalAndroid64BitSettings();
-            StartBuild(BuildTarget.Android, "Samurai-Vs-Zombies-Universal-v5.0");
+            StartBuild(BuildTarget.Android, "Samurai-Vs-Zombies-Universal-v5.1");
         }
 
         if (GUILayout.Button("Build Apple iOS Xcode Project (iPhone 11+ -> macOS/Xcode)", GUILayout.Height(34)))

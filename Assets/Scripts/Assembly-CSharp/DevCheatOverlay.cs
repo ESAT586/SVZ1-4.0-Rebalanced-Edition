@@ -289,7 +289,7 @@ public class DevCheatOverlay : MonoBehaviour
 			GUILayout.BeginVertical();
 			GUILayout.Space(10f);
 			string headerStatus = string.IsNullOrEmpty(mStatus)
-				? LocalizationManager.L("mod_devtools_title", "DEV TOOLS & CHEATS (UNLOCKED - GEMINI REBALANCED)", "DEV TOOLS & CHEATS (KILITSIZ - GEMINI REBALANCED)")
+				? LocalizationManager.L("mod_devtools_title", "DEV TOOLS & CHEATS (UNLOCKED - REBALANCED)", "DEV TOOLS & CHEATS (KILITSIZ - REBALANCED)")
 				: mStatus;
 			GUILayout.Label(headerStatus);
 			GUILayout.Space(8f);
@@ -1247,7 +1247,7 @@ public class DevCheatOverlay : MonoBehaviour
 		mScroll = Vector2.zero;
 		mConfirmReset = false;
 		mConfirmSaveRestore = false;
-		mStatus = "DEV TOOLS & CHEATS (KILITSIZ - GEMINI REBALANCED)";
+		mStatus = "DEV TOOLS & CHEATS (KILITSIZ - REBALANCED)";
 	}
 
 	private void RestoreFullProgress()

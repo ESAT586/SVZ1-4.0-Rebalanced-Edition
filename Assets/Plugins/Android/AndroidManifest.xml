@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.esat586.svz1rebalanced"
     android:installLocation="auto"
-    android:versionCode="50"
-    android:versionName="5.0">
+    android:versionCode="51"
+    android:versionName="5.1">
 
     <!-- Universal compatibility from Android 5.0 (API 21) up to Android 14/15/16 (API 34/35/36+) -->
     <uses-sdk

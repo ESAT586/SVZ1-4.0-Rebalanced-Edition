@@ -10,5 +10,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed3a25f44abd793de466b44957f21073, type: 3}
   m_Name: BuildInfo
-  m_appVersion: 5.0
-  m_buildTag: SVZ_20261113_V50
+  m_appVersion: 5.1
+  m_buildTag: SVZ_20261119_V51

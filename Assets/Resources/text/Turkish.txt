@@ -940,7 +940,7 @@ vip_btn_title_with_plan = avantajları gör
 
 / Mod UI Localization
 mod_devtools_btn = DEV TOOLS
-mod_devtools_title = DEV TOOLS & CHEATS (KILITSIZ - GEMINI REBALANCED)
+mod_devtools_title = DEV TOOLS & CHEATS (KILITSIZ - REBALANCED)
 mod_god_mode_on = GOD MODE: [ACIK]
 mod_god_mode_off = GOD MODE: [KAPALI]
 mod_leadership_inf = LIDERLIK: [SINIRSIZ]
