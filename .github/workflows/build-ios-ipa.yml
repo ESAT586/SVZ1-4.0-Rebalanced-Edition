@@ -17,9 +17,14 @@ jobs:
 
       - name: Download Exported Unity Xcode Project
         run: |
-          curl -L --retry 3 -o SVZ1-iOS-Xcode.zip "https://github.com/ESAT586/SVZ1-4.0-Rebalanced-Edition/releases/download/5.1/SVZ1-iOS-Xcode.zip"
+          curl -fL --retry 3 -o SVZ1-iOS-Xcode.zip "https://github.com/ESAT586/SVZ1-4.0-Rebalanced-Edition/releases/download/5.2/SVZ_iOS_Build.zip" || \
+          curl -fL --retry 3 -o SVZ1-iOS-Xcode.zip "https://github.com/ESAT586/SVZ1-4.0-Rebalanced-Edition/releases/download/5.2/SVZ1-iOS-Xcode.zip"
           mkdir -p ios_proj
           unzip -q SVZ1-iOS-Xcode.zip -d ios_proj
+          if [ -d "ios_proj/SVZ_iOS_Build/Unity-iPhone.xcodeproj" ]; then
+            mv ios_proj/SVZ_iOS_Build/* ios_proj/
+            rmdir ios_proj/SVZ_iOS_Build 2>/dev/null || true
+          fi
           find ios_proj -name "*.sh" -exec chmod +x {} +
           chmod +x ios_proj/MapFileParser 2>/dev/null || true
           ls -la ios_proj
@@ -68,22 +73,22 @@ jobs:
           APP_PATH=$(find build_derived/Build/Products/Release-iphoneos -maxdepth 1 -name "*.app" | head -n 1)
           echo "Found app: $APP_PATH"
           test -n "$APP_PATH"
-          rm -rf Payload SamuraiVsZombies-v5.1-iPhone11.ipa
+          rm -rf Payload SamuraiVsZombies-v5.2-iPhone11.ipa
           mkdir -p Payload
           cp -R "$APP_PATH" Payload/
           rm -rf Payload/*.app/_CodeSignature
-          zip -r -y -q SamuraiVsZombies-v5.1-iPhone11.ipa Payload
-          ls -lh SamuraiVsZombies-v5.1-iPhone11.ipa
+          zip -r -y -q SamuraiVsZombies-v5.2-iPhone11.ipa Payload
+          ls -lh SamuraiVsZombies-v5.2-iPhone11.ipa
 
-      - name: Upload .ipa to Release 5.1
+      - name: Upload .ipa to Release 5.2
         continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload 5.1 SamuraiVsZombies-v5.1-iPhone11.ipa -R "${{ github.repository }}" --clobber
+          gh release upload 5.2 SamuraiVsZombies-v5.2-iPhone11.ipa -R "${{ github.repository }}" --clobber
 
       - name: Upload Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SamuraiVsZombies-v5.1-iPhone11-ipa
-          path: SamuraiVsZombies-v5.1-iPhone11.ipa
+          name: SamuraiVsZombies-v5.2-iPhone11-ipa
+          path: SamuraiVsZombies-v5.2-iPhone11.ipa
